@@ -63,15 +63,15 @@ sealed class SistemaDeBatalha : MonoBehaviour
 
     public void DefinirFeedbackVisual(string feedback) //função para definir quais feedbacks visuais serão usados
     {
-        if(feedback == "animação")
+        if(feedback == "animação") //feedback visual de animação
         {
             usarAnimações = !usarAnimações;
         }
-        else if (feedback == "sfx")
+        else if (feedback == "sfx") //feedback visual de sfx
         {
             usarSfxs = !usarSfxs;
         }
-        else if (feedback == "slider")
+        else if (feedback == "slider") //feedback visual de slider do hp do personagem
         {
             usarSliders = !usarSliders;
         }
