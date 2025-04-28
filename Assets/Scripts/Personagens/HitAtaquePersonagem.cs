@@ -12,6 +12,8 @@ sealed class HitAtaquePersonagem : MonoBehaviour
 
     [HideInInspector]
     public bool longaDistancia; //variável para verificar se este ataque é de longa distancia
+    [HideInInspector]
+    public bool usarSFX; //variável para verificar se deve usar SFX
 
     private void OnEnable() //quando for ativado
     {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum ControladorDoPersonagem { PERSONAGEM_DO_JOGADOR, PERSONAGEM_INIMIGO } //quem controla o personagem, se é controlado pelo jogador ou pela IA inimiga
 public enum TipoDePersonagem { CURTA_DISTANCIA, LONGA_DISTANCIA } //características referente ao comportamento de ataque personagem, se é um ataque de curta ou longa distância
@@ -21,7 +22,7 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("HP")]
     [SerializeField]
     private float _hpMaximoEInicial = 100f; //valor inicial que o hp atual do player terá ao iniciar a batalha, e valor máximo que ele pode ter
-    //[HideInInspector]
+    [HideInInspector]
     public float hpAtual = 100f; //valor atual do hp (vida) do personagem
 
     //área referente ao movimento do personagem
@@ -38,6 +39,15 @@ public class IAPersonagemBase : MonoBehaviour
     private float _cooldownAtual = 0f; //tempo atual para o personagem poder atacar novamente
     private bool _podeAtacar; //variável que verifica se o personagem pode atacar
 
+    //Área referente aos sfx
+    [Header("SFX")]
+    [SerializeField]
+    private AudioSource _audio;
+    [SerializeField]
+    private AudioClip _contatoSFX;
+    [SerializeField]
+    private AudioClip _projetilSFX;
+
     [HideInInspector]
     public IAPersonagemBase _personagemAlvo; //alvo de ataques do personagem
     private Transform _alvoAtual; //transform do personagem alvo
@@ -47,32 +57,31 @@ public class IAPersonagemBase : MonoBehaviour
 
     //Área de feedback visuais
     private Animator _animator; //animator do personagem
+    private Slider _slider; //slider do hp do personagem
     private bool _usarAnimações; //variável para verificar se deve usar as animações
     private bool _usarSliders; //variável para verificar se deve usar os sliders
+    private bool _usarSFX; //variável para verificar se deve usar os sfxs
 
     public void IniciarBatalha() //função chamada ao inicar a batalha e define os valores e comportamentos iniciais do personagem
     {
         _sistemaDeBatalha = GameObject.FindGameObjectWithTag("SistemaDeBatalha").GetComponent<SistemaDeBatalha>(); //encontra o sistema de batalha na cena
         _hitAtaquePersonagem = transform.GetComponentInChildren<HitAtaquePersonagem>(true); //encontra o hit do personagem dentro de si
         hpAtual = _hpMaximoEInicial; //define o hp atual do personagem igual ao valor máximo e inicial
+
         //encontra a malha do personagem caso tenha
         if(gameObject.GetComponentInChildren<SkinnedMeshRenderer>() != null )
         {
             _malha = GetComponentInChildren<SkinnedMeshRenderer>();
         }
-        SelecionarAlvo(); //chama a função para o personagem encontrar seu alvo
 
-        _usarAnimações = _sistemaDeBatalha.usarAnimações; //verifica se deve usar animações referente o sistema de batalha
-        if (_usarAnimações)
+        //encontra o slider do personagem caso tenha
+        if (gameObject.GetComponentInChildren<Slider>() != null)
         {
-            //encontra o animator no objeto
-            _animator = GetComponent<Animator>();
-            if(_animator == null)
-            {
-                Debug.Log("Não há animator");
-            }
+            _slider = GetComponentInChildren<Slider>();
         }
-        _usarSliders = _sistemaDeBatalha.usarSliders; //verifica se deve usar sliders referente o sistema de batalha
+
+        FeedbacksVisuais(); //chama a função para verificar quais feedbacks visuais irá usar
+        SelecionarAlvo(); //chama a função para o personagem encontrar seu alvo
     }
 
     private void VerificarComportamento(string comportamento) //função que verifica qual deve ser o comportamento do personagem
@@ -337,12 +346,20 @@ public class IAPersonagemBase : MonoBehaviour
         if (_hitAtaquePersonagem != null)
         {
             _hitAtaquePersonagem.gameObject.SetActive(true);
+            _hitAtaquePersonagem.usarSFX = _usarSFX;
 
             //se é um personagem de longa distancia, transtorma o hit em um ataque de longa distancia
             if(_tipo == TipoDePersonagem.LONGA_DISTANCIA)
             {
                 _hitAtaquePersonagem.ResetarPosição(); //reseta a posição do hit
                 _hitAtaquePersonagem.MoverAteAlvo(_alvoAtual, velocidadeDoProjetil); //faz com que ele se mova até o alvo
+
+                //toca o sfx de projétil se deve usar os sfxs
+                if (_usarSFX)
+                {
+                    _audio.clip = _projetilSFX;
+                    _audio.Play();
+                }
             }
         }
     }
@@ -355,6 +372,13 @@ public class IAPersonagemBase : MonoBehaviour
         if (personagem.controlador != this.controlador && personagem == _personagemAlvo)
         {
             personagem.SofrerDano(_danoAtaqueBasico);
+
+            //toca o sfx de contato se deve usar os sfxs
+            if (_usarSFX)
+            {
+                _audio.clip = _contatoSFX;
+                _audio.Play();
+            }
         }
     }
 
@@ -362,13 +386,21 @@ public class IAPersonagemBase : MonoBehaviour
     {
         hpAtual -= dano; //sofre o dano
 
+        if (_usarSliders)
+        {
+            //atualiza o slider
+            _slider.value = hpAtual;
+        }
+
         if(hpAtual <= 0)
         {
+            hpAtual = 0;
             VerificarComportamento("morrer");
         }
     }
     #endregion
 
+    #region Morte
     private void Morrer() //função de morte do personagem
     {
         //caso deva usar as animações
@@ -388,4 +420,50 @@ public class IAPersonagemBase : MonoBehaviour
         }
         _hitAtaquePersonagem.gameObject.SetActive(false); //desativa o hit
     }
+    #endregion
+
+    #region Feedbacks Visuais
+    private void FeedbacksVisuais() //função para verificar feedbacks visuais
+    {
+        _usarAnimações = _sistemaDeBatalha.usarAnimações; //verifica se deve usar animações referente o sistema de batalha
+        _usarSliders = _sistemaDeBatalha.usarSliders; //verifica se deve usar sliders de hp referente ao sistema de batalha
+        _usarSFX = _sistemaDeBatalha.usarSfxs; //verifica se deve usar sfxs referente ao sistema de batalha
+
+        if (_usarAnimações)
+        {
+            //encontra o animator no objeto
+            _animator = GetComponent<Animator>();
+            if (_animator == null)
+            {
+                Debug.Log("Não há animator");
+            }
+        }
+
+        if (_usarSliders)
+        {
+            if (_slider == null)
+            {
+                Debug.Log("Não há slider");
+            }
+            else
+            {
+                //referencia o hp ao slider
+                _slider.maxValue = _hpMaximoEInicial;
+                _slider.value = hpAtual;
+            }
+        }
+        else
+        {
+            _slider.gameObject.SetActive(false);
+        }
+
+        if (_usarSFX)
+        {
+            if(_hitAtaquePersonagem != null)
+            {
+                _hitAtaquePersonagem.usarSFX = _usarSFX;
+            }
+        }
+    }
+    #endregion
 }
