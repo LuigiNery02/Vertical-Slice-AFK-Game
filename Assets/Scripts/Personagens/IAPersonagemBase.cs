@@ -48,12 +48,17 @@ public class IAPersonagemBase : MonoBehaviour
     [SerializeField]
     private AudioClip _projetilSFX;
 
-    [HideInInspector]
+    //[HideInInspector]
     public IAPersonagemBase _personagemAlvo; //alvo de ataques do personagem
     private Transform _alvoAtual; //transform do personagem alvo
     private SistemaDeBatalha _sistemaDeBatalha; //sistema de batalha
     private HitAtaquePersonagem _hitAtaquePersonagem; //hit do personagem
     private SkinnedMeshRenderer _malha; //malha do personagem
+    [HideInInspector] 
+    public Vector3 posicaoInicial; //posição inicial do personagem
+    [HideInInspector]
+    public Quaternion rotacaoInicial; //rotação inicial do personagem
+
 
     //Área de feedback visuais
     private Animator _animator; //animator do personagem
@@ -117,6 +122,17 @@ public class IAPersonagemBase : MonoBehaviour
         }
     }
 
+    public void ResetarEstado() //funções para resetar os estados do personagem
+    {
+        transform.position = posicaoInicial; //restaura a posição
+        transform.rotation = rotacaoInicial; //restaura a rotação
+        hpAtual = _hpMaximoEInicial; //restaura hp
+        _cooldownAtual = 0; //restaura cooldown
+        _comportamento = EstadoDoPersonagem.IDLE;
+        FeedbacksVisuais();
+        _animator.Rebind();
+    }
+
     private void Update()
     {
         //checa se o personagem não está morto
@@ -142,7 +158,7 @@ public class IAPersonagemBase : MonoBehaviour
     #region SeleçãoDeAlvo
     private void SelecionarAlvo() //função que seleciona o alvo de ataques do personagem
     {
-        if(_sistemaDeBatalha != null) //caso tenha encontrado o sistema de batalha na cena anteriormente
+        if(_sistemaDeBatalha != null || !_sistemaDeBatalha.fimDeBatalha) //caso tenha encontrado o sistema de batalha na cena anteriormente e não seja fim de batalha pode selecionar um alvo
         {
             _cooldownAtual = 0; //resetar cooldown para novo alvo
 
@@ -220,10 +236,6 @@ public class IAPersonagemBase : MonoBehaviour
             _personagemAlvo = alvoProximo;
             _alvoAtual = _personagemAlvo.transform;
             VerificarComportamento("perseguir"); //personagem deve perseguir
-        }
-        else
-        {
-            Debug.Log("Nenhum inimigo encontrado");
         }
     }
     #endregion
@@ -403,6 +415,16 @@ public class IAPersonagemBase : MonoBehaviour
     #region Morte
     private void Morrer() //função de morte do personagem
     {
+        //se remove do time em que faz parte
+        if(controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
+        {
+            _sistemaDeBatalha.AtualizarTime(("remover"), ("jogador"), this);
+        }
+        else if(controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
+        {
+            _sistemaDeBatalha.AtualizarTime(("remover"), ("inimigo"), this);
+        }
+
         //caso deva usar as animações
         if (_sistemaDeBatalha.usarAnimações && _animator != null)
         {

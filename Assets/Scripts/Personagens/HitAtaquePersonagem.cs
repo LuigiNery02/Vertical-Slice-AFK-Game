@@ -25,7 +25,18 @@ sealed class HitAtaquePersonagem : MonoBehaviour
         //se for um hit de longa distancia, se move até o alvo
         if(longaDistancia)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _alvo.position, _velocidade * Time.deltaTime); //move o ataque
+            if (_alvo != null)
+            {
+                //move o ataque com base na posição do alvo
+                Vector3 posicaoAtual = transform.position;
+                Vector3 posicaoAlvo = _alvo.position;
+
+                //mantém o mesmo y da posição atual
+                posicaoAlvo.y = posicaoAtual.y;
+
+                //move apenas em X e Z (altura fica fixa)
+                transform.position = Vector3.MoveTowards(posicaoAtual, posicaoAlvo, _velocidade * Time.deltaTime);
+            }
         }
     }
     private void OnTriggerEnter(Collider other) //quando colidir com um objeto
