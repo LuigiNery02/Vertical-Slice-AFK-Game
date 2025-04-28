@@ -519,6 +519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlador: 1
   _tipo: 1
+  _comportamento: 0
   distanciaMinimaParaAtacar: 10
   velocidadeDoProjetil: 7
   _hpMaximoEInicial: 100
@@ -526,6 +527,7 @@ MonoBehaviour:
   _velocidade: 2
   _danoAtaqueBasico: 10
   _cooldown: 3
+  _personagemAlvo: {fileID: 0}
 --- !u!136 &386247875
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -988,6 +990,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlador: 0
   _tipo: 0
+  _comportamento: 0
   distanciaMinimaParaAtacar: 5
   velocidadeDoProjetil: 0
   _hpMaximoEInicial: 100
@@ -995,6 +998,7 @@ MonoBehaviour:
   _velocidade: 2
   _danoAtaqueBasico: 10
   _cooldown: 2
+  _personagemAlvo: {fileID: 0}
 --- !u!136 &643234049
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2549,7 +2553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   estado: 0
-  primeiroAlvo: 0
+  primeiroAlvo: 1
   "usarAnima\xE7\xF5es": 1
   usarSfxs: 0
   usarSliders: 0
@@ -2735,6 +2739,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlador: 0
   _tipo: 0
+  _comportamento: 0
   distanciaMinimaParaAtacar: 5
   velocidadeDoProjetil: 0
   _hpMaximoEInicial: 100
@@ -2742,6 +2747,7 @@ MonoBehaviour:
   _velocidade: 2
   _danoAtaqueBasico: 15
   _cooldown: 1
+  _personagemAlvo: {fileID: 0}
 --- !u!136 &1589998364
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2844,6 +2850,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1769399929, guid: 7df524699deb44341b3693c8538df185, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2115219942, guid: 7df524699deb44341b3693c8538df185, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2880,6 +2894,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlador: 1
   _tipo: 0
+  _comportamento: 0
   distanciaMinimaParaAtacar: 5
   velocidadeDoProjetil: 0
   _hpMaximoEInicial: 100
@@ -2887,6 +2902,7 @@ MonoBehaviour:
   _velocidade: 1.5
   _danoAtaqueBasico: 20
   _cooldown: 3
+  _personagemAlvo: {fileID: 0}
 --- !u!136 &1618859767
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2961,6 +2977,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlador: 1
   _tipo: 0
+  _comportamento: 0
   distanciaMinimaParaAtacar: 5
   velocidadeDoProjetil: 0
   _hpMaximoEInicial: 100
@@ -2968,6 +2985,7 @@ MonoBehaviour:
   _velocidade: 2
   _danoAtaqueBasico: 10
   _cooldown: 2
+  _personagemAlvo: {fileID: 0}
 --- !u!136 &1620992051
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3261,6 +3279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlador: 0
   _tipo: 1
+  _comportamento: 0
   distanciaMinimaParaAtacar: 10
   velocidadeDoProjetil: 7
   _hpMaximoEInicial: 100
@@ -3268,6 +3287,7 @@ MonoBehaviour:
   _velocidade: 2
   _danoAtaqueBasico: 10
   _cooldown: 3
+  _personagemAlvo: {fileID: 0}
 --- !u!54 &1834572854
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3382,6 +3402,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1398770797}
     m_Modifications:
+    - target: {fileID: 1417232764561640, guid: c647a6e9ba715004ebbf4dc6d7bd1e7a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1476429006119878, guid: c647a6e9ba715004ebbf4dc6d7bd1e7a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1835885862194036, guid: c647a6e9ba715004ebbf4dc6d7bd1e7a, type: 3}
       propertyPath: m_Name
       value: Personagem1

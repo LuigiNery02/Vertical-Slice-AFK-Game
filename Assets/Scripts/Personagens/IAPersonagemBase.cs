@@ -11,8 +11,9 @@ public class IAPersonagemBase : MonoBehaviour
     //área referente às definições do personagem
     [Header("Definições")]
     public ControladorDoPersonagem controlador;
-    [SerializeField]
     public TipoDePersonagem _tipo;
+    [HideInInspector]
+    public EstadoDoPersonagem _comportamento;
     public float distanciaMinimaParaAtacar = 5f; //distancia minima que um personagem de longa distancia deve ter para atacar
     public float velocidadeDoProjetil; //velocidade do projetil do ataque do personagem de longa distancia
 
@@ -36,12 +37,13 @@ public class IAPersonagemBase : MonoBehaviour
     private float _cooldown = 1f; //valor do tempo de espera para cada ataque básico do personagem
     private float _cooldownAtual = 0f; //tempo atual para o personagem poder atacar novamente
     private bool _podeAtacar; //variável que verifica se o personagem pode atacar
-    
-    private EstadoDoPersonagem _comportamento;
-    private IAPersonagemBase _personagemAlvo; //alvo de ataques do personagem
+
+    [HideInInspector]
+    public IAPersonagemBase _personagemAlvo; //alvo de ataques do personagem
     private Transform _alvoAtual; //transform do personagem alvo
     private SistemaDeBatalha _sistemaDeBatalha; //sistema de batalha
     private HitAtaquePersonagem _hitAtaquePersonagem; //hit do personagem
+    private SkinnedMeshRenderer _malha; //malha do personagem
 
     //Área de feedback visuais
     private Animator _animator; //animator do personagem
@@ -53,6 +55,11 @@ public class IAPersonagemBase : MonoBehaviour
         _sistemaDeBatalha = GameObject.FindGameObjectWithTag("SistemaDeBatalha").GetComponent<SistemaDeBatalha>(); //encontra o sistema de batalha na cena
         _hitAtaquePersonagem = transform.GetComponentInChildren<HitAtaquePersonagem>(true); //encontra o hit do personagem dentro de si
         hpAtual = _hpMaximoEInicial; //define o hp atual do personagem igual ao valor máximo e inicial
+        //encontra a malha do personagem caso tenha
+        if(gameObject.GetComponentInChildren<SkinnedMeshRenderer>() != null )
+        {
+            _malha = GetComponentInChildren<SkinnedMeshRenderer>();
+        }
         SelecionarAlvo(); //chama a função para o personagem encontrar seu alvo
 
         _usarAnimações = _sistemaDeBatalha.usarAnimações; //verifica se deve usar animações referente o sistema de batalha
@@ -77,25 +84,50 @@ public class IAPersonagemBase : MonoBehaviour
         else if (comportamento == "atacar") 
         {
             _comportamento = EstadoDoPersonagem.ATACANDO; //personagem ataca
+
+            //faz o personagem olhar para o novo alvo imediatamente
+            if (_alvoAtual != null)
+            {
+                Vector3 direcao = (_alvoAtual.position - transform.position).normalized;
+                direcao.y = 0; //impede que ele rotacione no eixo Y se houver diferença de altura
+                if (direcao != Vector3.zero)
+                {
+                    transform.forward = direcao;
+                }
+            }
         }
         else if (comportamento == "selecionarAlvo")
         {
             _comportamento = EstadoDoPersonagem.IDLE;
             SelecionarAlvo();
         }
+        else if(comportamento == "morrer") //personagem morre
+        {
+            _comportamento = EstadoDoPersonagem.MORTO;
+            Morrer();
+        }
     }
 
     private void Update()
     {
-        //checa atualizadamente os estados de comportamento do personagem
-        if(_comportamento == EstadoDoPersonagem.PERSEGUINDO)
+        //checa se o personagem não está morto
+        if(_comportamento != EstadoDoPersonagem.MORTO)
         {
-            Perseguir();
-        }
-        else if(_comportamento == EstadoDoPersonagem.ATACANDO)
-        {
-            Atacar();
-        }
+            //checa atualizadamente os estados de comportamento do personagem
+            if (_comportamento == EstadoDoPersonagem.PERSEGUINDO)
+            {
+                Perseguir();
+            }
+            else if (_comportamento == EstadoDoPersonagem.ATACANDO)
+            {
+                Atacar();
+            }
+
+            if(_personagemAlvo != null && _personagemAlvo._comportamento == EstadoDoPersonagem.MORTO)
+            {
+                VerificarComportamento("selecionarAlvo");
+            }
+        }   
     }
 
     #region SeleçãoDeAlvo
@@ -103,6 +135,8 @@ public class IAPersonagemBase : MonoBehaviour
     {
         if(_sistemaDeBatalha != null) //caso tenha encontrado o sistema de batalha na cena anteriormente
         {
+            _cooldownAtual = 0; //resetar cooldown para novo alvo
+
             //verifica o tipo de comportamento deve ter para selecionar seu alvo
             if(_sistemaDeBatalha.primeiroAlvo == PrimeiroAlvo.ALVO_VISTO) 
             {
@@ -128,8 +162,8 @@ public class IAPersonagemBase : MonoBehaviour
             //verifica se o raycast colidiu com um personagem
             _personagemAlvo = hit.collider.GetComponent<IAPersonagemBase>();
 
-            //verifica se o personagem visto é seu inimigo
-            if (_personagemAlvo != null && _personagemAlvo.controlador != controlador)
+            //verifica se o personagem visto é seu inimigo e se não está morto
+            if (_personagemAlvo != null && _personagemAlvo.controlador != controlador && _personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
             {
                 _alvoAtual = _personagemAlvo.transform;
                 VerificarComportamento("perseguir"); //personagem deve perseguir
@@ -137,7 +171,7 @@ public class IAPersonagemBase : MonoBehaviour
         }
         else
         {
-            Debug.Log(gameObject.name + "Detectou:" + "Nada atingido pelo raycast");
+            SelecionarAlvoProximo();
         }
     }
 
@@ -151,8 +185,8 @@ public class IAPersonagemBase : MonoBehaviour
 
         foreach (var outro in personagens)
         {
-            //ignora a si mesmo
-            if(outro == this)
+            //ignora a si mesmo e um personagem morto
+            if(outro == this || outro._comportamento == EstadoDoPersonagem.MORTO)
             {
                 continue;
             }
@@ -192,7 +226,6 @@ public class IAPersonagemBase : MonoBehaviour
         if (_tipo == TipoDePersonagem.CURTA_DISTANCIA)
         {
             float distancia = Vector3.Distance(transform.position, _alvoAtual.position); //define a distância do personagem e seu alvo
-
             if (distancia > 2f) //verifica se está próximo para atacar
             {
                 //move o personagem
@@ -244,9 +277,8 @@ public class IAPersonagemBase : MonoBehaviour
         if (_cooldownAtual > 0f)
         {
             _cooldownAtual -= Time.deltaTime;
+            _podeAtacar = false; //personagem não pode atacar
         }
-
-        _podeAtacar = false; //personagem não pode atacar
 
         //checa o tipo de personagem
         if(_tipo == TipoDePersonagem.CURTA_DISTANCIA)
@@ -316,6 +348,7 @@ public class IAPersonagemBase : MonoBehaviour
     }
     #endregion
 
+    #region Dano
     public void CausarDano(IAPersonagemBase personagem) //função de causar dano a um personagem
     {
         //causa dano ao personagem se ele for um personagem inimigo e é o alvo atual deste personagem
@@ -331,7 +364,28 @@ public class IAPersonagemBase : MonoBehaviour
 
         if(hpAtual <= 0)
         {
-            gameObject.SetActive(false);
+            VerificarComportamento("morrer");
         }
+    }
+    #endregion
+
+    private void Morrer() //função de morte do personagem
+    {
+        //caso deva usar as animações
+        if (_sistemaDeBatalha.usarAnimações && _animator != null)
+        {
+            _animator.ResetTrigger("Perseguir");
+            _animator.ResetTrigger("Atacar");
+            _animator.SetTrigger("Morrer");
+        }
+        else
+        {
+            //desativa a malha
+            if(_malha != null)
+            {
+                _malha.gameObject.SetActive(false);
+            }
+        }
+        _hitAtaquePersonagem.gameObject.SetActive(false); //desativa o hit
     }
 }

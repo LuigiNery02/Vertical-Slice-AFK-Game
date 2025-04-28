@@ -28,12 +28,18 @@ sealed class HitAtaquePersonagem : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other) //quando colidir com um objeto
     {
-        if(other.GetComponent<IAPersonagemBase>() != null && other != _personagemPai) //se o objeto for um personagem
+        if(other.GetComponent<IAPersonagemBase>() != null) //se colidiu com um personagem
         {
-            //define para o personagem que este ataque colidiu com um personagem
-            IAPersonagemBase alvoDoDAno = other.GetComponent<IAPersonagemBase>();
-            _personagemPai.CausarDano(alvoDoDAno);
-            gameObject.SetActive(false);
+            IAPersonagemBase alvo = other.GetComponent<IAPersonagemBase>(); //define o personagem colidido como alvo
+
+            //checa se o alvo não é o personagem que criou este ataque, se o alvo não está morto e se o alvo é o atual alvo do personagem que criou este ataque
+            if(other != _personagemPai && alvo._comportamento != EstadoDoPersonagem.MORTO && alvo == _personagemPai._personagemAlvo)
+            {
+                //define para o personagem que este ataque colidiu com um personagem
+                IAPersonagemBase alvoDoDAno = other.GetComponent<IAPersonagemBase>();
+                _personagemPai.CausarDano(alvoDoDAno);
+                gameObject.SetActive(false);
+            }
         }
     }
 

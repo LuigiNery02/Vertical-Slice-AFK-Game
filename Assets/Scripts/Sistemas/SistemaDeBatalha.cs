@@ -59,6 +59,8 @@ sealed class SistemaDeBatalha : MonoBehaviour
         {
             personagem.IniciarBatalha(); //chama a função "IniciarBatalha" de todos os personagens encontrados
         }
+
+        primeiroAlvo = PrimeiroAlvo.ALVO_PROXIMO; //define a batalha como alvo próximo para os próximos alvos dos personagens
     }
 
     public void DefinirFeedbackVisual(string feedback) //função para definir quais feedbacks visuais serão usados
