@@ -29,6 +29,8 @@ sealed class SistemaDeBatalha : MonoBehaviour
     private GameObject _telasDeResultaDeVitoria; //tela de resultado de vitoria
     [SerializeField]
     private GameObject _telasDeResultaDeDerrota; //tela de resultado de derrota
+    [SerializeField]
+    private GameObject _botaoConfiguracao; //botao de configurações do jogo
 
     //Área de SFX
     [Header("SFX")]
@@ -41,11 +43,11 @@ sealed class SistemaDeBatalha : MonoBehaviour
 
     //Área referente os feedbacks visuais
     [Header("Feedbacks Visuais")]
-    //[HideInInspector]
+    [HideInInspector]
     public bool usarAnimações; //variável para verificar se os personagens devem usar as animações
-    //[HideInInspector]
+    [HideInInspector]
     public bool usarSfxs; //variável para verificar se deve haver SFX
-    //[HideInInspector]
+    [HideInInspector]
     public bool usarSliders; //variável para verificar se os personagens devem ter sliders para representar suas vidas
 
     //Área referente aos times
@@ -54,16 +56,18 @@ sealed class SistemaDeBatalha : MonoBehaviour
     private int _integrantesTimeJogador; //número de integrantes do time do jogador
     private int _integrantesTimeInimigo; //número de integrantes do time inimigo
 
-    private bool _batalhaIniciou; //variável que define se a batalha foi iniciada 
+    [HideInInspector]
+    public bool batalhaIniciou; //variável que define se a batalha foi iniciada 
     private bool _batalhaAlvoVisto; //variável para verificar se inicialmente é uma batalha de primeiro alvo visto
 
     [HideInInspector]
     public bool fimDeBatalha; //variável para verificar o fim da batalha
     public void IniciarBatalha() //função que inicia a batalha
     {
-        if(!_batalhaIniciou) //checa se a batalha já não foi iniciada
+        if(!batalhaIniciou) //checa se a batalha já não foi iniciada
         {
-            _batalhaIniciou = true; //define a batalha como iniciada
+            batalhaIniciou = true; //define a batalha como iniciada
+            _botaoConfiguracao.SetActive(false); //desativa o botão de configurações
             if(primeiroAlvo == PrimeiroAlvo.ALVO_VISTO)
             {
                 _batalhaAlvoVisto = true;
@@ -99,10 +103,12 @@ sealed class SistemaDeBatalha : MonoBehaviour
 
         foreach (IAPersonagemBase personagem in personagens)
         {
-            //salvar posição e rotação inicial dos personagens
-            personagem.posicaoInicial = personagem.transform.position;
-            personagem.rotacaoInicial = personagem.transform.rotation;
-
+            if (personagem.controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR) //verifica se é personagem do jogador
+            {
+                //salvar posição e rotação inicial dos personagens
+                personagem.posicaoInicial = personagem.transform.position;
+                personagem.rotacaoInicial = personagem.transform.rotation;
+            }
             //define os times
             if (personagem.controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
             {
@@ -164,6 +170,7 @@ sealed class SistemaDeBatalha : MonoBehaviour
 
     IEnumerator FimDeBatalha(string resultado) //função que determina o resultado da batalha
     {
+        batalhaIniciou = false;
         fimDeBatalha = true;
 
         yield return new WaitForSeconds(1.5f); //aguarda 1,5 segundo
@@ -174,11 +181,12 @@ sealed class SistemaDeBatalha : MonoBehaviour
         }
         else if(resultado == "derrota")
         {
+            estado = EstadoDeBatalha.MANUAL;
             _quandoPerder.Invoke(); //chama o evento de derrota
         }
 
         //recomeça a batalha se o estado de batalha for continua
-        if(estado == EstadoDeBatalha.CONTINUA)
+        if (estado == EstadoDeBatalha.CONTINUA)
         {
             yield return new WaitForSeconds(1f);
             if(resultado == "vitoria")
@@ -199,7 +207,9 @@ sealed class SistemaDeBatalha : MonoBehaviour
 
     public void RecomeçarBatalha() //função para resetar a batalha
     {
-        _batalhaIniciou = false;
+        _integrantesTimeInimigo = 0;
+        _integrantesTimeJogador = 0;
+        _botaoConfiguracao.SetActive(true); //reativa o botão de configurações
         if (_batalhaAlvoVisto)
         {
             primeiroAlvo = PrimeiroAlvo.ALVO_VISTO;
@@ -209,7 +219,7 @@ sealed class SistemaDeBatalha : MonoBehaviour
 
         foreach (IAPersonagemBase personagem in personagens)
         {
-            personagem.ResetarEstado(); //chama alguma função para resetar HP, animação, status, etc.
+            personagem.ResetarEstado(); //chama a função para resetar HP, animação, status, etc.
         }
     }
 

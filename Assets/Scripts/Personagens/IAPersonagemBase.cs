@@ -15,8 +15,13 @@ public class IAPersonagemBase : MonoBehaviour
     public TipoDePersonagem _tipo;
     [HideInInspector]
     public EstadoDoPersonagem _comportamento;
-    public float distanciaMinimaParaAtacar = 5f; //distancia minima que um personagem de longa distancia deve ter para atacar
-    public float velocidadeDoProjetil; //velocidade do projetil do ataque do personagem de longa distancia
+
+    //área referente às definições do personagem de longa distancia
+    [Header("Definições Longa Distancia")]
+    [SerializeField]
+    private float distanciaMinimaParaAtacar = 5f; //distancia minima que um personagem de longa distancia deve ter para atacar
+    [SerializeField]
+    private float velocidadeDoProjetil; //velocidade do projetil do ataque do personagem de longa distancia
 
     //área referente ao hp (vida) do personagem
     [Header("HP")]
@@ -48,7 +53,7 @@ public class IAPersonagemBase : MonoBehaviour
     [SerializeField]
     private AudioClip _projetilSFX;
 
-    //[HideInInspector]
+    [HideInInspector]
     public IAPersonagemBase _personagemAlvo; //alvo de ataques do personagem
     private Transform _alvoAtual; //transform do personagem alvo
     private SistemaDeBatalha _sistemaDeBatalha; //sistema de batalha
@@ -67,23 +72,44 @@ public class IAPersonagemBase : MonoBehaviour
     private bool _usarSliders; //variável para verificar se deve usar os sliders
     private bool _usarSFX; //variável para verificar se deve usar os sfxs
 
-    public void IniciarBatalha() //função chamada ao inicar a batalha e define os valores e comportamentos iniciais do personagem
+    private void Start()
     {
         _sistemaDeBatalha = GameObject.FindGameObjectWithTag("SistemaDeBatalha").GetComponent<SistemaDeBatalha>(); //encontra o sistema de batalha na cena
-        _hitAtaquePersonagem = transform.GetComponentInChildren<HitAtaquePersonagem>(true); //encontra o hit do personagem dentro de si
-        hpAtual = _hpMaximoEInicial; //define o hp atual do personagem igual ao valor máximo e inicial
-
-        //encontra a malha do personagem caso tenha
-        if(gameObject.GetComponentInChildren<SkinnedMeshRenderer>() != null )
-        {
-            _malha = GetComponentInChildren<SkinnedMeshRenderer>();
-        }
 
         //encontra o slider do personagem caso tenha
         if (gameObject.GetComponentInChildren<Slider>() != null)
         {
             _slider = GetComponentInChildren<Slider>();
         }
+
+        //encontra a malha do personagem caso tenha
+        if (gameObject.GetComponentInChildren<SkinnedMeshRenderer>() != null)
+        {
+            _malha = GetComponentInChildren<SkinnedMeshRenderer>();
+        }
+    }
+
+    private void OnEnable()
+    {
+        _sistemaDeBatalha = GameObject.FindGameObjectWithTag("SistemaDeBatalha").GetComponent<SistemaDeBatalha>(); //encontra o sistema de batalha na cena
+
+        //encontra o slider do personagem caso tenha
+        if (gameObject.GetComponentInChildren<Slider>() != null)
+        {
+            _slider = GetComponentInChildren<Slider>();
+        }
+
+        //encontra a malha do personagem caso tenha
+        if (gameObject.GetComponentInChildren<SkinnedMeshRenderer>() != null)
+        {
+            _malha = GetComponentInChildren<SkinnedMeshRenderer>();
+        }
+    }
+
+    public void IniciarBatalha() //função chamada ao inicar a batalha e define os valores e comportamentos iniciais do personagem
+    {
+        _hitAtaquePersonagem = transform.GetComponentInChildren<HitAtaquePersonagem>(true); //encontra o hit do personagem dentro de si
+        hpAtual = _hpMaximoEInicial; //define o hp atual do personagem igual ao valor máximo e inicial
 
         FeedbacksVisuais(); //chama a função para verificar quais feedbacks visuais irá usar
         SelecionarAlvo(); //chama a função para o personagem encontrar seu alvo
@@ -124,19 +150,30 @@ public class IAPersonagemBase : MonoBehaviour
 
     public void ResetarEstado() //funções para resetar os estados do personagem
     {
-        transform.position = posicaoInicial; //restaura a posição
-        transform.rotation = rotacaoInicial; //restaura a rotação
+        if(controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR) //verifica se é personagem do jogador
+        {
+            transform.position = posicaoInicial; //restaura a posição
+            transform.rotation = rotacaoInicial; //restaura a rotação
+        }
         hpAtual = _hpMaximoEInicial; //restaura hp
         _cooldownAtual = 0; //restaura cooldown
         _comportamento = EstadoDoPersonagem.IDLE;
         FeedbacksVisuais();
-        _animator.Rebind();
+        if (_usarAnimações)
+        {
+            _malha.gameObject.SetActive(true);
+            _animator.Rebind();
+        }
+        else
+        {
+            _malha.gameObject.SetActive(true);
+        }
     }
 
     private void Update()
     {
-        //checa se o personagem não está morto
-        if(_comportamento != EstadoDoPersonagem.MORTO)
+        //checa se o personagem não está morto, se a batalha iniciou e se o personagem não está em idle
+        if(_comportamento != EstadoDoPersonagem.MORTO && _sistemaDeBatalha.batalhaIniciou && _comportamento != EstadoDoPersonagem.IDLE)
         {
             //checa atualizadamente os estados de comportamento do personagem
             if (_comportamento == EstadoDoPersonagem.PERSEGUINDO)
@@ -463,6 +500,7 @@ public class IAPersonagemBase : MonoBehaviour
 
         if (_usarSliders)
         {
+            _slider.gameObject.SetActive(true);
             if (_slider == null)
             {
                 Debug.Log("Não há slider");

@@ -22,6 +22,11 @@ sealed class HitAtaquePersonagem : MonoBehaviour
 
     private void Update()
     {
+        //se desativa caso o personagem que criou este ataque está morto
+        if(_personagemPai._comportamento != EstadoDoPersonagem.ATACANDO)
+        {
+            gameObject.SetActive(false);
+        }
         //se for um hit de longa distancia, se move até o alvo
         if(longaDistancia)
         {
