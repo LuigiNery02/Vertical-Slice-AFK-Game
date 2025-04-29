@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public enum EstadoDeBatalha { MANUAL, CONTINUA} //estados do sistema de batalha
 public enum PrimeiroAlvo { ALVO_PROXIMO, ALVO_VISTO} //tipos de como os personagens vão definir seus alvos na batalha
@@ -26,11 +27,15 @@ sealed class SistemaDeBatalha : MonoBehaviour
     //Área referente à UI
     [Header("UI")]
     [SerializeField]
+    private Button _botaoBatalhaContinua;
+    [SerializeField]
     private GameObject _telasDeResultaDeVitoria; //tela de resultado de vitoria
     [SerializeField]
     private GameObject _telasDeResultaDeDerrota; //tela de resultado de derrota
     [SerializeField]
     private GameObject _botaoConfiguracao; //botao de configurações do jogo
+    [SerializeField]
+    private Dropdown _dropdown; //dropdown de seleção de estado de batalha
 
     //Área de SFX
     [Header("SFX")]
@@ -59,14 +64,21 @@ sealed class SistemaDeBatalha : MonoBehaviour
     [HideInInspector]
     public bool batalhaIniciou; //variável que define se a batalha foi iniciada 
     private bool _batalhaAlvoVisto; //variável para verificar se inicialmente é uma batalha de primeiro alvo visto
+    private bool _podeComeçarBatalha = true; //variável para verificar se pode iniciar batalha
 
     [HideInInspector]
     public bool fimDeBatalha; //variável para verificar o fim da batalha
+
+    private void Start()
+    {
+        _dropdown.onValueChanged.AddListener(MudarEstadoDeBatalha);
+    }
     public void IniciarBatalha() //função que inicia a batalha
     {
-        if(!batalhaIniciou) //checa se a batalha já não foi iniciada
+        if(!batalhaIniciou && _podeComeçarBatalha) //checa se a batalha já não foi iniciada e se pode começar
         {
             batalhaIniciou = true; //define a batalha como iniciada
+            _podeComeçarBatalha = false; //não pode começara batalha novamente
             _botaoConfiguracao.SetActive(false); //desativa o botão de configurações
             if(primeiroAlvo == PrimeiroAlvo.ALVO_VISTO)
             {
@@ -201,6 +213,7 @@ sealed class SistemaDeBatalha : MonoBehaviour
 
             yield return new WaitForSeconds(0.5f);
 
+            _podeComeçarBatalha = true;
             IniciarBatalha();
         }
     }
@@ -209,7 +222,15 @@ sealed class SistemaDeBatalha : MonoBehaviour
     {
         _integrantesTimeInimigo = 0;
         _integrantesTimeJogador = 0;
-        _botaoConfiguracao.SetActive(true); //reativa o botão de configurações
+        if (estado == EstadoDeBatalha.CONTINUA)
+        {
+            _botaoConfiguracao.SetActive(false);
+        }
+        else
+        {
+            _botaoConfiguracao.SetActive(true); //reativa o botão de configurações
+            _podeComeçarBatalha = true;
+        }
         if (_batalhaAlvoVisto)
         {
             primeiroAlvo = PrimeiroAlvo.ALVO_VISTO;
@@ -221,6 +242,39 @@ sealed class SistemaDeBatalha : MonoBehaviour
         {
             personagem.ResetarEstado(); //chama a função para resetar HP, animação, status, etc.
         }
+    }
+
+    public void VerificarBotao()
+    {
+        if(estado == EstadoDeBatalha.CONTINUA)
+        {
+            _botaoBatalhaContinua.image.color = Color.white;
+        }
+        else
+        {
+            _botaoBatalhaContinua.image.color = Color.gray;
+        }
+    }
+
+    private void MudarEstadoDeBatalha(int indice) //função que muda o estado de batalha
+    {
+        string opcaoSelecionada = _dropdown.options[indice].text;
+
+        if(opcaoSelecionada == "Alvo Próximo")
+        {
+            _batalhaAlvoVisto = false;
+            primeiroAlvo = PrimeiroAlvo.ALVO_PROXIMO;
+        }
+        else if(opcaoSelecionada == "Alvo Visto")
+        {
+            _batalhaAlvoVisto = true;
+            primeiroAlvo = PrimeiroAlvo.ALVO_VISTO;
+        }
+    }
+
+    public void SairDoJogo() //função para sair do jogo
+    {
+        Application.Quit();
     }
 
     public void ChecarSFX(string sfx) //função para checar quais sfx utilizar
