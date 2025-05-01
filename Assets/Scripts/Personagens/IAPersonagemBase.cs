@@ -76,8 +76,10 @@ public class IAPersonagemBase : MonoBehaviour
     public Quaternion rotacaoInicial; //rotação inicial do personagem
     [HideInInspector]
     public int movimentoEspecialAtual; //identificação do movimento especial do personagem
-    [HideInInspector]
+    //[HideInInspector]
     public bool executandoMovimentoEspecial; //variável para verificar se o personagem está executando o movimento especial
+    [HideInInspector]
+    public bool imuneADanos; //variável que verifica se o personagem é imune a danos
 
 
     //Área de feedback visuais
@@ -462,6 +464,15 @@ public class IAPersonagemBase : MonoBehaviour
                 StartCoroutine(TempoMovimentoEspecial(movimento));
             }
         }
+        else if(movimento == 2)
+        {
+            if (_sistemaDeBatalha.usarAnimações && _animator != null)
+            {
+                _animator.ResetTrigger("Perseguir");
+                _animator.ResetTrigger("Atacar");
+                _animator.SetTrigger("Defender");
+            }
+        }
     }
 
     public void FinalizarMovimentoEspecial() //função que finaliza o movimento especial externamente
@@ -527,18 +538,21 @@ public class IAPersonagemBase : MonoBehaviour
 
     public void SofrerDano(float dano) //função para sofrer dano
     {
-        hpAtual -= dano; //sofre o dano
-
-        if (_usarSliders)
+        if (!imuneADanos)
         {
-            //atualiza o slider
-            _slider.value = hpAtual;
-        }
+            hpAtual -= dano; //sofre o dano
 
-        if(hpAtual <= 0)
-        {
-            hpAtual = 0;
-            VerificarComportamento("morrer");
+            if (_usarSliders)
+            {
+                //atualiza o slider
+                _slider.value = hpAtual;
+            }
+
+            if (hpAtual <= 0)
+            {
+                hpAtual = 0;
+                VerificarComportamento("morrer");
+            }
         }
     }
     #endregion
