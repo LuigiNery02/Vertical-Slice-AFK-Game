@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public enum ControladorDoPersonagem { PERSONAGEM_DO_JOGADOR, PERSONAGEM_INIMIGO } //quem controla o personagem, se é controlado pelo jogador ou pela IA inimiga
 public enum TipoDePersonagem { CURTA_DISTANCIA, LONGA_DISTANCIA } //características referente ao comportamento de ataque personagem, se é um ataque de curta ou longa distância
-public enum EstadoDoPersonagem { IDLE, PERSEGUINDO, ATACANDO, MORTO } //estados de comportamento do personagem
+public enum EstadoDoPersonagem { IDLE, PERSEGUINDO, ATACANDO, MORTO, MOVIMENTO_ESPECIAL } //estados de comportamento do personagem
 
 public class IAPersonagemBase : MonoBehaviour
 {
@@ -13,7 +13,7 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("Definições")]
     public ControladorDoPersonagem controlador;
     public TipoDePersonagem _tipo;
-    [HideInInspector]
+    //[HideInInspector]
     public EstadoDoPersonagem _comportamento;
 
     //área referente às definições do personagem de longa distancia
@@ -74,6 +74,10 @@ public class IAPersonagemBase : MonoBehaviour
     public Vector3 posicaoInicial; //posição inicial do personagem
     [HideInInspector]
     public Quaternion rotacaoInicial; //rotação inicial do personagem
+    [HideInInspector]
+    public int movimentoEspecialAtual; //identificação do movimento especial do personagem
+    [HideInInspector]
+    public bool executandoMovimentoEspecial; //variável para verificar se o personagem está executando o movimento especial
 
 
     //Área de feedback visuais
@@ -126,7 +130,7 @@ public class IAPersonagemBase : MonoBehaviour
         SelecionarAlvo(); //chama a função para o personagem encontrar seu alvo
     }
 
-    private void VerificarComportamento(string comportamento) //função que verifica qual deve ser o comportamento do personagem
+    public void VerificarComportamento(string comportamento) //função que verifica qual deve ser o comportamento do personagem
     {
         if (comportamento == "perseguir")
         {
@@ -156,6 +160,11 @@ public class IAPersonagemBase : MonoBehaviour
         {
             _comportamento = EstadoDoPersonagem.MORTO;
             Morrer();
+        }
+        else if(comportamento == "movimentoEspecial")
+        {
+            _comportamento = EstadoDoPersonagem.MOVIMENTO_ESPECIAL;
+            MovimentoEspecial(movimentoEspecialAtual);
         }
     }
 
@@ -195,12 +204,16 @@ public class IAPersonagemBase : MonoBehaviour
             {
                 Atacar();
             }
+            else if (_comportamento == EstadoDoPersonagem.MOVIMENTO_ESPECIAL)
+            {
+                MovimentoEspecial(movimentoEspecialAtual);
+            }
 
-            if(_personagemAlvo != null && _personagemAlvo._comportamento == EstadoDoPersonagem.MORTO)
+            if (_personagemAlvo != null && _personagemAlvo._comportamento == EstadoDoPersonagem.MORTO)
             {
                 VerificarComportamento("selecionarAlvo");
             }
-        }   
+        } 
     }
 
     #region SeleçãoDeAlvo
@@ -421,6 +434,76 @@ public class IAPersonagemBase : MonoBehaviour
                     _audio.Play();
                 }
             }
+        }
+    }
+    #endregion
+
+    #region Movimento Especial
+    private void MovimentoEspecial(int movimento) //função do movimento especial do personagem
+    {
+        //retorna caso já esteja executando o movimento especial
+        if(executandoMovimentoEspecial)
+        {
+            return;
+        }
+
+        executandoMovimentoEspecial = true;
+
+        if (movimento == 1)
+        {
+            if(_sistemaDeBatalha.usarAnimações && _animator != null)
+            {
+                _animator.ResetTrigger("Perseguir");
+                _animator.ResetTrigger("Atacar");
+                _animator.SetTrigger("Combo");
+            }
+            else
+            {
+                StartCoroutine(TempoMovimentoEspecial(movimento));
+            }
+        }
+    }
+
+    public void FinalizarMovimentoEspecial() //função que finaliza o movimento especial externamente
+    {
+        if(movimentoEspecialAtual == 1)
+        {
+            Habilidade2 habilidade2 = GetComponent<Habilidade2>();
+            habilidade2.RemoverEfeito();
+        }
+
+        if (_personagemAlvo != null && _personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
+        {
+            VerificarComportamento("perseguir");
+        }
+        else
+        {
+            VerificarComportamento("selecionarAlvo");
+        }
+    }
+
+    IEnumerator TempoMovimentoEspecial(int movimento) //função de movimento especial que utiliza tempo
+    {
+        if(movimento == 1)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                _hitAtaquePersonagem.gameObject.SetActive(true);
+                yield return new WaitForSeconds(0.5f);
+                _hitAtaquePersonagem.gameObject.SetActive(false);
+            }
+
+            Habilidade2 habilidade2 = GetComponent<Habilidade2>();
+            habilidade2.RemoverEfeito();
+        }
+
+        if (_personagemAlvo != null && _personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
+        {
+            VerificarComportamento("perseguir");
+        }
+        else
+        {
+            VerificarComportamento("selecionarAlvo");
         }
     }
     #endregion

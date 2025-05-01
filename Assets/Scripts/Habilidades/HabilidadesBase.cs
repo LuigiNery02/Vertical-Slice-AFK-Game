@@ -5,11 +5,13 @@ using UnityEngine;
 public class HabilidadesBase : MonoBehaviour
 {
     public string tituloHabilidade; //titulo da habilidade
+    [TextArea]
     public string descrição; //descrição da habilidade
+    public bool temTempoDeEfeito; //variável que define se o personagem possui tempo de efeito
     public float tempoDeEfeito; //tempo do efeito da habilidade
     public float tempoDeRecarga; //tempo de recarga da habilidade
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool podeAtivarEfeito = true; //variável que determina se pode ou não ativar o efeito
 
     public IAPersonagemBase personagem; //personagem que utilizará a habilidade
@@ -26,7 +28,10 @@ public class HabilidadesBase : MonoBehaviour
         {
             podeAtivarEfeito = false;
             efeitoHabilidade();
-            StartCoroutine(TempoDeEfeito());
+            if (temTempoDeEfeito)
+            {
+                StartCoroutine(TempoDeEfeito());
+            }
         }
     }
 
@@ -37,7 +42,13 @@ public class HabilidadesBase : MonoBehaviour
         StartCoroutine(TempoDeRecargaDoEfeito());
     }
 
-    public void RemoverEfeito() //função que remove o efeito da habilidade de forma externa
+    public void RemoverEfeito() //função que desativa o efeito da habilidade que não possui tempo de efeito
+    {
+        removerEfeitoHabilidade();
+        StartCoroutine(TempoDeRecargaDoEfeito());
+    }
+
+    public void RemoverEfeitoExternamente() //função que remove o efeito da habilidade de forma externa
     {
         removerEfeitoHabilidade();
     }

@@ -191,7 +191,7 @@ sealed class SistemaDeBatalha : MonoBehaviour
         foreach (HabilidadesBase habilidade in habilidades)
         {
             habilidade.StopAllCoroutines();
-            habilidade.RemoverEfeito();
+            habilidade.RemoverEfeitoExternamente();
             habilidade.podeAtivarEfeito = true;
         }
 

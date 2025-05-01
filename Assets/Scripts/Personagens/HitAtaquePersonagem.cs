@@ -23,7 +23,7 @@ sealed class HitAtaquePersonagem : MonoBehaviour
     private void Update()
     {
         //se desativa caso o personagem que criou este ataque está morto
-        if(_personagemPai._comportamento != EstadoDoPersonagem.ATACANDO)
+        if(_personagemPai._comportamento != EstadoDoPersonagem.ATACANDO && _personagemPai._comportamento != EstadoDoPersonagem.MOVIMENTO_ESPECIAL)
         {
             gameObject.SetActive(false);
         }
@@ -50,8 +50,16 @@ sealed class HitAtaquePersonagem : MonoBehaviour
         {
             IAPersonagemBase alvo = other.GetComponent<IAPersonagemBase>(); //define o personagem colidido como alvo
 
+            //verifica se o persomagem que criou este ataque está lançando um ataque especial
+            if(other != _personagemPai && _personagemPai._comportamento == EstadoDoPersonagem.MOVIMENTO_ESPECIAL)
+            {
+                Debug.Log("ataque de movimento especial");
+                IAPersonagemBase alvoDoDAno = other.GetComponent<IAPersonagemBase>();
+                _personagemPai.CausarDano(alvoDoDAno);
+                gameObject.SetActive(false);
+            }
             //checa se o alvo não é o personagem que criou este ataque, se o alvo não está morto e se o alvo é o atual alvo do personagem que criou este ataque
-            if(other != _personagemPai && alvo._comportamento != EstadoDoPersonagem.MORTO && alvo == _personagemPai._personagemAlvo)
+            else if(other != _personagemPai && alvo._comportamento != EstadoDoPersonagem.MORTO && alvo == _personagemPai._personagemAlvo)
             {
                 //define para o personagem que este ataque colidiu com um personagem
                 IAPersonagemBase alvoDoDAno = other.GetComponent<IAPersonagemBase>();
