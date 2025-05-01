@@ -35,21 +35,17 @@ public class IAPersonagemBase : MonoBehaviour
 
     //área referente ao hp (vida) do personagem
     [Header("HP")]
-    [HideInInspector]
     public float _hpMaximoEInicial = 100f; //valor inicial que o hp atual do player terá ao iniciar a batalha, e valor máximo que ele pode ter
     [HideInInspector]
     public float hpAtual = 100f; //valor atual do hp (vida) do personagem
 
     //área referente ao movimento do personagem
     [Header("Movimento")]
-    [HideInInspector]
     public float _velocidade = 2f; //valor do ataque básico do personagem
 
     //área referente ao ataque do personagem
     [Header("Ataque")]
-    [HideInInspector]
     public float _danoAtaqueBasico = 10f; //valor do dano do ataque básico do personagem
-    [HideInInspector]
     public float _cooldown = 1f; //valor do tempo de espera para cada ataque básico do personagem
     private float _cooldownAtual = 0f; //tempo atual para o personagem poder atacar novamente
     private bool _podeAtacar; //variável que verifica se o personagem pode atacar

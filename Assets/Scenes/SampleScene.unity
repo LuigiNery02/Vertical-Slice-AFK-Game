@@ -5975,7 +5975,10 @@ MonoBehaviour:
   tituloHabilidade: "Prote\xE7\xE3o"
   "descri\xE7\xE3o": Adiciona um escudo em todos os aliados que diminui o dano recebido
     em 25% por 10 segundos
+  tempoDeEfeito: 0
   tempoDeRecarga: 10
+  podeAtivarEfeito: 1
+  personagem: {fileID: 643234048}
 --- !u!114 &643234056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5991,7 +5994,10 @@ MonoBehaviour:
   tituloHabilidade: Super Defesa
   "descri\xE7\xE3o": "Defende todos os ataques e cria uma \xE1rea em volta de si
     que causa dano por segundo por 5s"
+  tempoDeEfeito: 0
   tempoDeRecarga: 10
+  podeAtivarEfeito: 1
+  personagem: {fileID: 643234048}
 --- !u!1 &643351137
 GameObject:
   m_ObjectHideFlags: 0
@@ -15522,7 +15528,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tituloHabilidade: Combo
   "descri\xE7\xE3o": Faz um combo atacando um inimigo de cada vez
+  tempoDeEfeito: 0
   tempoDeRecarga: 5
+  podeAtivarEfeito: 1
+  personagem: {fileID: 1589998363}
 --- !u!114 &1589998371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15537,7 +15546,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tituloHabilidade: "Refor\xE7o"
   "descri\xE7\xE3o": Melhora todas as habilidades do jogador
+  tempoDeEfeito: 5
   tempoDeRecarga: 10
+  podeAtivarEfeito: 1
+  personagem: {fileID: 1589998363}
+  _dano: 30
+  _cooldown: 0.5
+  _velocidade: 4
 --- !u!1001 &1618859763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17871,7 +17886,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tituloHabilidade: Multiplos Ataques
   "descri\xE7\xE3o": "Lan\xE7a um proj\xE9til em cada inimigo"
+  tempoDeEfeito: 0
   tempoDeRecarga: 10
+  podeAtivarEfeito: 1
+  personagem: {fileID: 1834572851}
 --- !u!114 &1834572861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17886,7 +17904,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tituloHabilidade: Cura
   "descri\xE7\xE3o": Cura todos os aliados
+  tempoDeEfeito: 0
   tempoDeRecarga: 10
+  podeAtivarEfeito: 1
+  personagem: {fileID: 1834572851}
 --- !u!1 &1839889200
 GameObject:
   m_ObjectHideFlags: 0

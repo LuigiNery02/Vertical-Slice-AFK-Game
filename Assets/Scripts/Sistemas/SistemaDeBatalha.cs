@@ -185,6 +185,16 @@ sealed class SistemaDeBatalha : MonoBehaviour
         batalhaIniciou = false;
         fimDeBatalha = true;
 
+        //reseta todas as habilidades
+        HabilidadesBase[] habilidades = FindObjectsOfType<HabilidadesBase>();
+
+        foreach (HabilidadesBase habilidade in habilidades)
+        {
+            habilidade.StopAllCoroutines();
+            habilidade.RemoverEfeito();
+            habilidade.podeAtivarEfeito = true;
+        }
+
         yield return new WaitForSeconds(1.5f); //aguarda 1,5 segundo
 
         if(resultado == "vitoria")
