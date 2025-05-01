@@ -23,26 +23,41 @@ public class IAPersonagemBase : MonoBehaviour
     [SerializeField]
     private float velocidadeDoProjetil; //velocidade do projetil do ataque do personagem de longa distancia
 
+    //área referente ao id do personagem
+    [Header("ID")]
+    public int id; //variável para verificar o id do personagem
+
+    //área referente aos equipamentos do personagem
+    [Header("Equipamentos")]
+    public int numeroDeEquipamentos; //número de equipamentos do personagem (apenas visualmente demonstrativo)
+    public Sprite[] spriteEquipamentos; //sprites dos equipamentos do personagem 
+    
+
     //área referente ao hp (vida) do personagem
     [Header("HP")]
-    [SerializeField]
-    private float _hpMaximoEInicial = 100f; //valor inicial que o hp atual do player terá ao iniciar a batalha, e valor máximo que ele pode ter
+    [HideInInspector]
+    public float _hpMaximoEInicial = 100f; //valor inicial que o hp atual do player terá ao iniciar a batalha, e valor máximo que ele pode ter
     [HideInInspector]
     public float hpAtual = 100f; //valor atual do hp (vida) do personagem
 
     //área referente ao movimento do personagem
     [Header("Movimento")]
-    [SerializeField]
-    private float _velocidade = 2f; //valor do ataque básico do personagem
+    [HideInInspector]
+    public float _velocidade = 2f; //valor do ataque básico do personagem
 
     //área referente ao ataque do personagem
     [Header("Ataque")]
-    [SerializeField]
-    private float _danoAtaqueBasico = 10f; //valor do dano do ataque básico do personagem
-    [SerializeField]
-    private float _cooldown = 1f; //valor do tempo de espera para cada ataque básico do personagem
+    [HideInInspector]
+    public float _danoAtaqueBasico = 10f; //valor do dano do ataque básico do personagem
+    [HideInInspector]
+    public float _cooldown = 1f; //valor do tempo de espera para cada ataque básico do personagem
     private float _cooldownAtual = 0f; //tempo atual para o personagem poder atacar novamente
     private bool _podeAtacar; //variável que verifica se o personagem pode atacar
+
+    //área referente à habilidades
+    [Header("Habilidades")]
+    public HabilidadesBase habilidade1;
+    public HabilidadesBase habilidade2;
 
     //Área referente aos sfx
     [Header("SFX")]
