@@ -320,7 +320,7 @@ public class IAPersonagemBase : MonoBehaviour
                 transform.forward = direcao; //rotaciona o personagem em direção ao seu alvo
 
                 //caso deva usar as animações
-                if (_sistemaDeBatalha.usarAnimações && _animator != null)
+                if (SistemaDeBatalha.usarAnimações && _animator != null)
                 {
                     _animator.ResetTrigger("Atacar"); //reseta a animação de atacar
                     _animator.SetTrigger("Perseguir"); //aciona a animação de perseguir
@@ -343,7 +343,7 @@ public class IAPersonagemBase : MonoBehaviour
                 transform.forward = direcao; //rotaciona o personagem em direção ao seu alvo
 
                 //caso deva usar as animações
-                if (_sistemaDeBatalha.usarAnimações && _animator != null)
+                if (SistemaDeBatalha.usarAnimações && _animator != null)
                 {
                     _animator.ResetTrigger("Atacar"); //reseta a animação de atacar
                     _animator.SetTrigger("Perseguir"); //aciona a animação de perseguir
@@ -406,7 +406,7 @@ public class IAPersonagemBase : MonoBehaviour
         _cooldownAtual = _cooldown; //reinicia o cooldown
 
         //caso deva usar as animações
-        if (_sistemaDeBatalha.usarAnimações && _animator != null)
+        if (SistemaDeBatalha.usarAnimações && _animator != null)
         {
             _animator.ResetTrigger("Perseguir"); //reseta a animação de perseguir
             _animator.SetTrigger("Atacar"); //aciona a animação de atacar
@@ -455,7 +455,7 @@ public class IAPersonagemBase : MonoBehaviour
 
         if (movimento == 1)
         {
-            if(_sistemaDeBatalha.usarAnimações && _animator != null)
+            if(SistemaDeBatalha.usarAnimações && _animator != null)
             {
                 _animator.ResetTrigger("Perseguir");
                 _animator.ResetTrigger("Atacar");
@@ -468,7 +468,7 @@ public class IAPersonagemBase : MonoBehaviour
         }
         else if(movimento == 2)
         {
-            if (_sistemaDeBatalha.usarAnimações && _animator != null)
+            if (SistemaDeBatalha.usarAnimações && _animator != null)
             {
                 _animator.ResetTrigger("Perseguir");
                 _animator.ResetTrigger("Atacar");
@@ -589,7 +589,7 @@ public class IAPersonagemBase : MonoBehaviour
         }
 
         //caso deva usar as animações
-        if (_sistemaDeBatalha.usarAnimações && _animator != null)
+        if (SistemaDeBatalha.usarAnimações && _animator != null)
         {
             _animator.ResetTrigger("Perseguir");
             _animator.ResetTrigger("Atacar");
@@ -610,9 +610,9 @@ public class IAPersonagemBase : MonoBehaviour
     #region Feedbacks Visuais
     private void FeedbacksVisuais() //função para verificar feedbacks visuais
     {
-        _usarAnimações = _sistemaDeBatalha.usarAnimações; //verifica se deve usar animações referente o sistema de batalha
-        _usarSliders = _sistemaDeBatalha.usarSliders; //verifica se deve usar sliders de hp referente ao sistema de batalha
-        _usarSFX = _sistemaDeBatalha.usarSfxs; //verifica se deve usar sfxs referente ao sistema de batalha
+        _usarAnimações = SistemaDeBatalha.usarAnimações; //verifica se deve usar animações referente o sistema de batalha
+        _usarSliders = SistemaDeBatalha.usarSliders; //verifica se deve usar sliders de hp referente ao sistema de batalha
+        _usarSFX = SistemaDeBatalha.usarSfxs; //verifica se deve usar sfxs referente ao sistema de batalha
 
         if (_usarAnimações)
         {

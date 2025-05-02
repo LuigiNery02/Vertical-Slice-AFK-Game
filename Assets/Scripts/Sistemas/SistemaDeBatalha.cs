@@ -48,12 +48,9 @@ sealed class SistemaDeBatalha : MonoBehaviour
 
     //Área referente os feedbacks visuais
     [Header("Feedbacks Visuais")]
-    [HideInInspector]
-    public bool usarAnimações; //variável para verificar se os personagens devem usar as animações
-    [HideInInspector]
-    public bool usarSfxs; //variável para verificar se deve haver SFX
-    [HideInInspector]
-    public bool usarSliders; //variável para verificar se os personagens devem ter sliders para representar suas vidas
+    public static bool usarAnimações = true; //variável para verificar se os personagens devem usar as animações
+    public static bool usarSfxs = true; //variável para verificar se deve haver SFX
+    public static bool usarSliders = true; //variável para verificar se os personagens devem ter sliders para representar suas vidas
 
     //Área referente aos times
     private List<IAPersonagemBase> _personagensJogador = new List<IAPersonagemBase>(); //time do jogador
@@ -65,13 +62,14 @@ sealed class SistemaDeBatalha : MonoBehaviour
     public bool batalhaIniciou; //variável que define se a batalha foi iniciada 
     private bool _batalhaAlvoVisto; //variável para verificar se inicialmente é uma batalha de primeiro alvo visto
     private bool _podeComeçarBatalha = true; //variável para verificar se pode iniciar batalha
-
     [HideInInspector]
     public bool fimDeBatalha; //variável para verificar o fim da batalha
+    private SistemaDeDrop _sisemaDeDrop; //sistema de drop
 
     private void Start()
     {
         _dropdown.onValueChanged.AddListener(MudarEstadoDeBatalha);
+        _sisemaDeDrop = FindObjectOfType<SistemaDeDrop>();
     }
     public void IniciarBatalha() //função que inicia a batalha
     {
@@ -167,6 +165,7 @@ sealed class SistemaDeBatalha : MonoBehaviour
             }
             else if (time == "inimigo")
             {
+                _sisemaDeDrop.Dropar(personagem.transform);
                 _personagensInimigos.Remove(personagem);
                 _integrantesTimeInimigo--;
 

@@ -92,49 +92,52 @@ public class SelecaoDePersonagem : MonoBehaviour
 
     public void AtualizarSeleção() //função para atualizar a seleção com os dados do personagem selecionado
     {
-        //atualiza visualmente os dados do personagem selecionado
-        _textos[0].text = "HP: " + _hp;
-        _textos[1].text = "Velocidade: " + _velocidade;
-        _textos[2].text = "Dano: " + _dano;
-        _textos[3].text = "Cooldown: " + _cooldown;
-
-        //atualiza visualmente as imagens das habilidades do personagem selecionado
-        _imagemHabilidade1Funções.sprite = _spriteHabilidade1[_id];
-        _imagemHabilidade2Funções.sprite = _spriteHabilidade2[_id];
-        _imagemHabilidade1.sprite = _spriteHabilidade1[_id];
-        _imagemHabilidade2.sprite = _spriteHabilidade2[_id];
-        if (_personagemSelecionado.habilidade1.podeAtivarEfeito)
+        if(_personagemSelecionado != null)
         {
-            _imagemHabilidade1Funções.color = Color.white;
-        }
-        else
-        {
-            _imagemHabilidade1Funções.color = Color.gray;
-        }
+            //atualiza visualmente os dados do personagem selecionado
+            _textos[0].text = "HP: " + _hp;
+            _textos[1].text = "Velocidade: " + _velocidade;
+            _textos[2].text = "Dano: " + _dano;
+            _textos[3].text = "Cooldown: " + _cooldown;
 
-        if (_personagemSelecionado.habilidade2.podeAtivarEfeito)
-        {
-            _imagemHabilidade2Funções.color = Color.white;
-        }
-        else
-        {
-            _imagemHabilidade2Funções.color = Color.gray;
-        }
+            //atualiza visualmente as imagens das habilidades do personagem selecionado
+            _imagemHabilidade1Funções.sprite = _spriteHabilidade1[_id];
+            _imagemHabilidade2Funções.sprite = _spriteHabilidade2[_id];
+            _imagemHabilidade1.sprite = _spriteHabilidade1[_id];
+            _imagemHabilidade2.sprite = _spriteHabilidade2[_id];
+            if (_personagemSelecionado.habilidade1.podeAtivarEfeito)
+            {
+                _imagemHabilidade1Funções.color = Color.white;
+            }
+            else
+            {
+                _imagemHabilidade1Funções.color = Color.gray;
+            }
 
-        //atualiza visualmente as imagens referente ao personagem
-        _imagemPersonagem.sprite = _spritePersonagem[_id];
-        for(int i = 0; i < _slotsEquipamento;  i++)
-        {
-            _imagensEquipamentos[i].sprite = _spriteEquipamento[i];
+            if (_personagemSelecionado.habilidade2.podeAtivarEfeito)
+            {
+                _imagemHabilidade2Funções.color = Color.white;
+            }
+            else
+            {
+                _imagemHabilidade2Funções.color = Color.gray;
+            }
+
+            //atualiza visualmente as imagens referente ao personagem
+            _imagemPersonagem.sprite = _spritePersonagem[_id];
+            for (int i = 0; i < _slotsEquipamento; i++)
+            {
+                _imagensEquipamentos[i].sprite = _spriteEquipamento[i];
+            }
+
+            //atualiza os textos das habilidades
+            _textoTituloHabilidade1.text = _tituloHabilidade1;
+            _textoTituloHabilidade2.text = _tituloHabilidade2;
+            _textoDescricaoHabilidade1.text = _detalheHabilidade1;
+            _textoDescricaoHabilidade2.text = _detalheHabilidade2;
+
+            _funções.SetActive(true); //ativa as funções do personagem 
         }
-
-        //atualiza os textos das habilidades
-        _textoTituloHabilidade1.text = _tituloHabilidade1;
-        _textoTituloHabilidade2.text = _tituloHabilidade2;
-        _textoDescricaoHabilidade1.text = _detalheHabilidade1;
-        _textoDescricaoHabilidade2.text = _detalheHabilidade2;
-
-        _funções.SetActive(true); //ativa as funções do personagem 
     }
 
     public void AtivarHabilidade1() //função que ativa a habilidade 1 do personagem selecionado
@@ -145,5 +148,10 @@ public class SelecaoDePersonagem : MonoBehaviour
     public void AtivarHabilidade2() //função que ativa a habilidade 2 do personagem selecionado
     {
         _personagemSelecionado.habilidade2.AtivarEfeito();
+    }
+
+    public void DesativarFunções() //desativa as funções 
+    {
+        _funções.SetActive(false);
     }
 }
