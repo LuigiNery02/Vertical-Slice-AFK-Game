@@ -21,7 +21,7 @@ sealed class Habilidade5 : HabilidadesBase
 
         foreach (IAPersonagemBase personagem in personagens)
         {
-            if(personagem.controlador == _personagemPai.controlador) //verifica se é personagem aliado
+            if(personagem.controlador == _personagemPai.controlador && personagem._comportamento != EstadoDoPersonagem.MORTO) //verifica se é personagem aliado
             {
                 personagem.ReceberHP(_cura); //aplica cura em todos os aliados e em si mesmo
             }

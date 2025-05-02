@@ -10,8 +10,9 @@ public class HabilidadesBase : MonoBehaviour
     public bool temTempoDeEfeito; //variável que define se o personagem possui tempo de efeito
     public float tempoDeEfeito; //tempo do efeito da habilidade
     public float tempoDeRecarga; //tempo de recarga da habilidade
+    public SelecaoDePersonagem selecaoDePersonagem;
 
-    //[HideInInspector]
+    [HideInInspector]
     public bool podeAtivarEfeito = true; //variável que determina se pode ou não ativar o efeito
 
     public IAPersonagemBase personagem; //personagem que utilizará a habilidade
@@ -24,7 +25,7 @@ public class HabilidadesBase : MonoBehaviour
 
     public void AtivarEfeito() //função que ativa o efeito da habilidade
     {
-        if (podeAtivarEfeito)
+        if (podeAtivarEfeito && personagem._comportamento != EstadoDoPersonagem.MORTO)
         {
             podeAtivarEfeito = false;
             efeitoHabilidade();
@@ -32,6 +33,7 @@ public class HabilidadesBase : MonoBehaviour
             {
                 StartCoroutine(TempoDeEfeito());
             }
+            selecaoDePersonagem.AtualizarSeleção();
         }
     }
 
@@ -51,11 +53,14 @@ public class HabilidadesBase : MonoBehaviour
     public void RemoverEfeitoExternamente() //função que remove o efeito da habilidade de forma externa
     {
         removerEfeitoHabilidade();
+        podeAtivarEfeito = true;
+        selecaoDePersonagem.AtualizarSeleção();
     }
 
     IEnumerator TempoDeRecargaDoEfeito() //função que conta em segundos o tempo para recaregar a habilidade
     {
         yield return new WaitForSeconds(tempoDeRecarga);
         podeAtivarEfeito = true;
+        selecaoDePersonagem.AtualizarSeleção();
     }
 }

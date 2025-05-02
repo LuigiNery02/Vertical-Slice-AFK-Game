@@ -53,7 +53,6 @@ sealed class HitAtaquePersonagem : MonoBehaviour
             //verifica se o persomagem que criou este ataque está lançando um ataque especial
             if(other != _personagemPai && _personagemPai._comportamento == EstadoDoPersonagem.MOVIMENTO_ESPECIAL)
             {
-                Debug.Log("ataque de movimento especial");
                 IAPersonagemBase alvoDoDAno = other.GetComponent<IAPersonagemBase>();
                 _personagemPai.CausarDano(alvoDoDAno);
                 gameObject.SetActive(false);

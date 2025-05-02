@@ -4470,7 +4470,7 @@ MonoBehaviour:
   _spriteHabilidade2:
   - {fileID: 21300000, guid: 9c63d6a9ca485ec489eb598b0edc441f, type: 3}
   - {fileID: 21300000, guid: 0b7014c211fd2a24db3b8c55e59fc1b4, type: 3}
-  - {fileID: 21300000, guid: 8a68a819d13e75644a627b6dc7eaf628, type: 3}
+  - {fileID: 21300000, guid: 308cd602ff4e4ba49ab67a526424151d, type: 3}
   _spritePersonagem:
   - {fileID: 21300000, guid: a058d07954bb9a9499af11ec60f64ff1, type: 3}
   - {fileID: 21300000, guid: 3a4e3cbb405490f46912283060179e64, type: 3}
@@ -6198,11 +6198,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tituloHabilidade: "Prote\xE7\xE3o"
-  "descri\xE7\xE3o": "-Adiciona um escudo que reduz o dano recebido em 20% em todos
-    os aliados\n-Dura\xE7\xE3o: 7 segundos\n-Tempo de Recarga: 10 segundos"
+  "descri\xE7\xE3o": "-Adiciona um escudo que reduz em 20% o dano recebido por todos
+    os aliados e por si mesmo\n-Dura\xE7\xE3o: 7 segundos\n-Tempo de Recarga: 10
+    segundos"
   temTempoDeEfeito: 1
   tempoDeEfeito: 7
   tempoDeRecarga: 10
+  selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
   personagem: {fileID: 643234048}
   _escudosPai: {fileID: 1606783793}
@@ -6224,12 +6226,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tituloHabilidade: Defesa
-  "descri\xE7\xE3o": "-Fica imune a todos os ataques\n-Cria uma \xE1rea em volta
-    de si que causa 5 de dano a cada segundo\n-Dura\xE7\xE3o: 6 segundos\n-Tempo
+  "descri\xE7\xE3o": "-Defende-se e torna-se imune a todos os ataques\n-Cria uma
+    \xE1rea ao redor que causa 5 de dano por segundo\n-Dura\xE7\xE3o: 6 segundos\n-Tempo
     de Recarga: 10 segundos"
   temTempoDeEfeito: 1
   tempoDeEfeito: 6
   tempoDeRecarga: 10
+  selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
   personagem: {fileID: 643234048}
   _area: {fileID: 161510071}
@@ -17278,11 +17281,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tituloHabilidade: "Ataque R\xE1pido"
-  "descri\xE7\xE3o": "-Realiza um movimento especial de dois ataques r\xE1pidos\n-Tempo
+  "descri\xE7\xE3o": "-Executa um movimento especial com dois ataques r\xE1pidos\n-Tempo
     de Recarga: 5 segundos"
   temTempoDeEfeito: 0
   tempoDeEfeito: 0
   tempoDeRecarga: 5
+  selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
   personagem: {fileID: 1589998363}
 --- !u!114 &1589998371
@@ -17298,11 +17302,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tituloHabilidade: "Refor\xE7o"
-  "descri\xE7\xE3o": "-Dobra seu ataque\n-Dobra sua velocidade\n-Diminui pela metade
-    seu cooldown\n-Dura\xE7\xE3o: 3,5 segundos\n-Tempo de Recarga: 10 segundos"
+  "descri\xE7\xE3o": "-Dobra o ataque\n-Dobra a velocidade\n-Reduz o cooldown pela
+    metade\n-Dura\xE7\xE3o: 3,5 segundos\n-Tempo de Recarga: 10 segundos"
   temTempoDeEfeito: 1
   tempoDeEfeito: 3.5
   tempoDeRecarga: 10
+  selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
   personagem: {fileID: 1589998363}
   _dano: 30
@@ -19690,14 +19695,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tituloHabilidade: "Lentid\xE3o"
-  "descri\xE7\xE3o": "-Diminui pela metade a velocidade e cooldown de seu alvo\n-Dura\xE7\xE3o:
-    6 Segundos\n-Tempo de Recarga: 10 segundos"
+  "descri\xE7\xE3o": "-Reduz pela metade a velocidade do alvo\n-Dobra o cooldown
+    do alvo\n-Dura\xE7\xE3o: 6 Segundos\n-Tempo de Recarga: 10 segundos"
   temTempoDeEfeito: 1
   tempoDeEfeito: 6
   tempoDeRecarga: 10
+  selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
   personagem: {fileID: 1834572851}
-  _personagemAlvo: {fileID: 0}
 --- !u!114 &1834572861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19711,13 +19716,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tituloHabilidade: Cura
-  "descri\xE7\xE3o": '-Cura todos os aliados em 25 HP
+  "descri\xE7\xE3o": '-Restaura 25 de HP para todos os aliados e para si mesmo
 
-    -Tempo de Recarga: 10
-    segundos'
+    -Tempo
+    de Recarga: 10 segundos'
   temTempoDeEfeito: 0
   tempoDeEfeito: 0
   tempoDeRecarga: 10
+  selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
   personagem: {fileID: 1834572851}
   _cura: 25

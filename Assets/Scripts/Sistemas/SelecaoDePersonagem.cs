@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-sealed class SelecaoDePersonagem : MonoBehaviour
+public class SelecaoDePersonagem : MonoBehaviour
 {
     //área referente a UI
     [Header("UI")]
@@ -90,7 +90,7 @@ sealed class SelecaoDePersonagem : MonoBehaviour
         AtualizarSeleção();
     }
 
-    private void AtualizarSeleção() //função para atualizar a seleção com os dados do personagem selecionado
+    public void AtualizarSeleção() //função para atualizar a seleção com os dados do personagem selecionado
     {
         //atualiza visualmente os dados do personagem selecionado
         _textos[0].text = "HP: " + _hp;
@@ -103,6 +103,23 @@ sealed class SelecaoDePersonagem : MonoBehaviour
         _imagemHabilidade2Funções.sprite = _spriteHabilidade2[_id];
         _imagemHabilidade1.sprite = _spriteHabilidade1[_id];
         _imagemHabilidade2.sprite = _spriteHabilidade2[_id];
+        if (_personagemSelecionado.habilidade1.podeAtivarEfeito)
+        {
+            _imagemHabilidade1Funções.color = Color.white;
+        }
+        else
+        {
+            _imagemHabilidade1Funções.color = Color.gray;
+        }
+
+        if (_personagemSelecionado.habilidade2.podeAtivarEfeito)
+        {
+            _imagemHabilidade2Funções.color = Color.white;
+        }
+        else
+        {
+            _imagemHabilidade2Funções.color = Color.gray;
+        }
 
         //atualiza visualmente as imagens referente ao personagem
         _imagemPersonagem.sprite = _spritePersonagem[_id];

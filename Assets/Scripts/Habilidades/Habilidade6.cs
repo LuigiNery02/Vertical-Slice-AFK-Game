@@ -6,10 +6,8 @@ sealed class Habilidade6 : HabilidadesBase
 {
     private float _velocidadeOriginal; //velocidade original do alvo
     private float _cooldownOriginal; //cooldown original do alvo
-    private bool _efeitoRemovido; //variável que verifica se o efeito foi removido
 
     private IAPersonagemBase _personagemPai;
-    [SerializeField]
     private IAPersonagemBase _personagemAlvo;
     private void Start()
     {
@@ -21,7 +19,6 @@ sealed class Habilidade6 : HabilidadesBase
     {
         if(_personagemPai._personagemAlvo != null)
         {
-            _efeitoRemovido = false;
             _personagemAlvo = _personagemPai._personagemAlvo;
             _velocidadeOriginal = _personagemAlvo._velocidade; //guarda a velocidade original
             _cooldownOriginal = _personagemAlvo._cooldown; //guarda o cooldowm original
@@ -38,9 +35,8 @@ sealed class Habilidade6 : HabilidadesBase
 
     private void RemoverEfeitoHabilidade6() //função de remover efeito da habilidade 6
     {
-        if (!_efeitoRemovido)
+        if (_personagemAlvo != null)
         {
-            _efeitoRemovido = true;
             //retira o efeito do personagem alvo
             _personagemAlvo._velocidade = _velocidadeOriginal;
             _personagemAlvo._cooldown = _cooldownOriginal;
