@@ -1425,7 +1425,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 742fb4dfa4350064ab87cd286f882a31, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19689,13 +19689,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f44049ab1996d488c05b8f61baedee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tituloHabilidade: Multiplos Ataques
-  "descri\xE7\xE3o": "Lan\xE7a um proj\xE9til em cada inimigo"
-  temTempoDeEfeito: 0
-  tempoDeEfeito: 0
+  tituloHabilidade: "Lentid\xE3o"
+  "descri\xE7\xE3o": "-Diminui pela metade a velocidade e cooldown de seu alvo\n-Dura\xE7\xE3o:
+    6 Segundos\n-Tempo de Recarga: 10 segundos"
+  temTempoDeEfeito: 1
+  tempoDeEfeito: 6
   tempoDeRecarga: 10
   podeAtivarEfeito: 1
   personagem: {fileID: 1834572851}
+  _personagemAlvo: {fileID: 0}
 --- !u!114 &1834572861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19709,12 +19711,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tituloHabilidade: Cura
-  "descri\xE7\xE3o": Cura todos os aliados
+  "descri\xE7\xE3o": '-Cura todos os aliados em 25 HP
+
+    -Tempo de Recarga: 10
+    segundos'
   temTempoDeEfeito: 0
   tempoDeEfeito: 0
   tempoDeRecarga: 10
   podeAtivarEfeito: 1
   personagem: {fileID: 1834572851}
+  _cura: 25
 --- !u!1 &1839889200
 GameObject:
   m_ObjectHideFlags: 0
