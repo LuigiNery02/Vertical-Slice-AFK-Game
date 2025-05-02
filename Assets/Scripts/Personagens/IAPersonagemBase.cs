@@ -36,7 +36,7 @@ public class IAPersonagemBase : MonoBehaviour
     //área referente ao hp (vida) do personagem
     [Header("HP")]
     public float _hpMaximoEInicial = 100f; //valor inicial que o hp atual do player terá ao iniciar a batalha, e valor máximo que ele pode ter
-    [HideInInspector]
+    //[HideInInspector]
     public float hpAtual = 100f; //valor atual do hp (vida) do personagem
 
     //área referente ao movimento do personagem
@@ -80,6 +80,8 @@ public class IAPersonagemBase : MonoBehaviour
     public bool executandoMovimentoEspecial; //variável para verificar se o personagem está executando o movimento especial
     [HideInInspector]
     public bool imuneADanos; //variável que verifica se o personagem é imune a danos
+    [HideInInspector]
+    public int reducaoDeDano = 0; //valor da redução de dano do personagem
 
 
     //Área de feedback visuais
@@ -540,7 +542,7 @@ public class IAPersonagemBase : MonoBehaviour
     {
         if (!imuneADanos)
         {
-            hpAtual -= dano; //sofre o dano
+            hpAtual -= Mathf.RoundToInt(dano * (1f - (reducaoDeDano / 100f))); //sofre o dano
 
             if (_usarSliders)
             {
