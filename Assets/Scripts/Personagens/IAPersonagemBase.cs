@@ -521,7 +521,7 @@ public class IAPersonagemBase : MonoBehaviour
     }
     #endregion
 
-    #region Dano
+    #region HP
     public void CausarDano(IAPersonagemBase personagem) //função de causar dano a um personagem
     {
         //causa dano ao personagem se ele for um personagem inimigo e é o alvo atual deste personagem
@@ -555,6 +555,22 @@ public class IAPersonagemBase : MonoBehaviour
                 hpAtual = 0;
                 VerificarComportamento("morrer");
             }
+        }
+    }
+
+    public void ReceberHP(float cura) //função para receber hp
+    {
+        hpAtual += cura; //recebe hp
+
+        if (hpAtual >= _hpMaximoEInicial)
+        {
+            hpAtual = _hpMaximoEInicial;
+        }
+
+        if (_usarSliders)
+        {
+            //atualiza o slider
+            _slider.value = hpAtual;
         }
     }
     #endregion
