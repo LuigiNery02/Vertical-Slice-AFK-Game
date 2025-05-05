@@ -36,6 +36,8 @@ sealed class SistemaDeBatalha : MonoBehaviour
     private GameObject _botaoConfiguracao; //botao de configurações do jogo
     [SerializeField]
     private Dropdown _dropdown; //dropdown de seleção de estado de batalha
+    [SerializeField]
+    private GameObject _telaDuracaoBatalha; //tela de duração da batalha
 
     //Área de SFX
     [Header("SFX")]
@@ -65,6 +67,10 @@ sealed class SistemaDeBatalha : MonoBehaviour
     [HideInInspector]
     public bool fimDeBatalha; //variável para verificar o fim da batalha
     private SistemaDeDrop _sisemaDeDrop; //sistema de drop
+    [HideInInspector]
+    public float duracaoBatalhaContinua; //duração em segundos da batalha continua
+    [HideInInspector]
+    public bool acontecendoBatalhaContinua; //variável para verificar se a batalha continua está acontecendo
 
     private void Start()
     {
@@ -83,7 +89,22 @@ sealed class SistemaDeBatalha : MonoBehaviour
                 _batalhaAlvoVisto = true;
             }
             EncontrarPersonagens(); //chama a função de encontrar personagens
+            if(estado == EstadoDeBatalha.CONTINUA)
+            {
+                StartCoroutine(BatalhaContinua());
+            }
         }
+    }
+
+    public void IniciarBatalhaContinua(float duracao) //função que inicia a batalha continua
+    {
+        duracaoBatalhaContinua = duracao;
+
+        //define a batalha como continua
+        estado = EstadoDeBatalha.CONTINUA;
+
+        //chama a função de iniciar a batalha
+        IniciarBatalha();
     }
 
     public void DefinirBatalhaContinua() //define se o estado da batalha é continuo ou não
@@ -92,14 +113,27 @@ sealed class SistemaDeBatalha : MonoBehaviour
         if(estado == EstadoDeBatalha.MANUAL)
         {
             estado = EstadoDeBatalha.CONTINUA;
+            if (!batalhaIniciou)
+            {
+                _telaDuracaoBatalha.SetActive(true); //ativa a tela de duração de batalha
+            }
         }
         else
         {
             estado = EstadoDeBatalha.MANUAL;
         }
+    }
 
-        //chama a função de iniciar a batalha
-        IniciarBatalha();
+    IEnumerator BatalhaContinua() //função que determina quanto tempo a batalha continua está em andamento
+    {
+        acontecendoBatalhaContinua = true;
+
+        yield return new WaitForSeconds(duracaoBatalhaContinua); //aguarda o tempo de duração da batalha continua
+
+        //reseta a batalha continua
+        acontecendoBatalhaContinua = false;
+        estado = EstadoDeBatalha.MANUAL;
+        VerificarBotao();
     }
 
     private void EncontrarPersonagens() //função que encontra todos os personagens na cena
