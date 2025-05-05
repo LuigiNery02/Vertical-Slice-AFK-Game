@@ -38,13 +38,17 @@ public class SistemaDeDrop : MonoBehaviour
 
     public void Dropar(Transform inimigo) //função que faz o inimigo dropar
     {
-        _dropsAtivos++;
-        _dropsVisuais[_dropsAtivos - 1].gameObject.SetActive(true);
-        _dropsVisuais[_dropsAtivos - 1].transform.parent = inimigo;
-        _dropsVisuais[_dropsAtivos - 1].transform.localPosition = new Vector3(0, 2, 0);
-        if (SistemaDeBatalha.usarSfxs)
+        int probabilidade = Random.Range(0, 4); //cria uma probabilidade de drop
+        if(probabilidade > 0)
         {
-            _sfx.Play();
+            _dropsAtivos++;
+            _dropsVisuais[_dropsAtivos - 1].gameObject.SetActive(true);
+            _dropsVisuais[_dropsAtivos - 1].transform.parent = inimigo;
+            _dropsVisuais[_dropsAtivos - 1].transform.localPosition = new Vector3(0, 2, 0);
+            if (SistemaDeBatalha.usarSfxs)
+            {
+                _sfx.Play();
+            }
         }
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 public enum EstadoDeBatalha { MANUAL, CONTINUA} //estados do sistema de batalha
 public enum PrimeiroAlvo { ALVO_PROXIMO, ALVO_VISTO} //tipos de como os personagens vão definir seus alvos na batalha
 
-sealed class SistemaDeBatalha : MonoBehaviour
+sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
 {
     //Área referente aos estados da batalha
     [Header("Estado de Batalha")]
@@ -38,7 +39,8 @@ sealed class SistemaDeBatalha : MonoBehaviour
     private Dropdown _dropdown; //dropdown de seleção de estado de batalha
     [SerializeField]
     private GameObject _telaDuracaoBatalha; //tela de duração da batalha
-
+    [SerializeField]
+    private GameObject _telaRecompensasDrop; //tela de recompensas do drop
     //Área de SFX
     [Header("SFX")]
     [SerializeField]
@@ -49,7 +51,6 @@ sealed class SistemaDeBatalha : MonoBehaviour
     private AudioClip _vitoriaClip;
 
     //Área referente os feedbacks visuais
-    [Header("Feedbacks Visuais")]
     public static bool usarAnimações = true; //variável para verificar se os personagens devem usar as animações
     public static bool usarSfxs = true; //variável para verificar se deve haver SFX
     public static bool usarSliders = true; //variável para verificar se os personagens devem ter sliders para representar suas vidas
@@ -60,6 +61,17 @@ sealed class SistemaDeBatalha : MonoBehaviour
     private int _integrantesTimeJogador; //número de integrantes do time do jogador
     private int _integrantesTimeInimigo; //número de integrantes do time inimigo
 
+    //Área referente ao save
+    private DateTime _tempo; //tempo do sistema de batalha
+    private float _duracaoBatalhaContinua; //duração em segundos da batalha continua
+    private float _tempoAtualBatalhaContinua; //tempo atual da batalha contínua
+    private bool _acontecendoBatalhaContinua; //variável para verificar se a batalha continua está acontecendo
+
+    //Área referente à simulação
+    private int _batalhasRestantesSimuladas; //valor de batalhas simuladas
+    private float _tempoPorBatalha = 30f; //tempo médio para uma batalha terminar em segundos
+
+
     [HideInInspector]
     public bool batalhaIniciou; //variável que define se a batalha foi iniciada 
     private bool _batalhaAlvoVisto; //variável para verificar se inicialmente é uma batalha de primeiro alvo visto
@@ -67,15 +79,74 @@ sealed class SistemaDeBatalha : MonoBehaviour
     [HideInInspector]
     public bool fimDeBatalha; //variável para verificar o fim da batalha
     private SistemaDeDrop _sisemaDeDrop; //sistema de drop
-    [HideInInspector]
-    public float duracaoBatalhaContinua; //duração em segundos da batalha continua
-    [HideInInspector]
-    public bool acontecendoBatalhaContinua; //variável para verificar se a batalha continua está acontecendo
+
+    public void CarregarSave(GameData data) //função de carregar os dados do save
+    {
+        _tempo = DateTime.Parse(data.tempo);
+        _tempoAtualBatalhaContinua = data.duracaoBatalhaContinua;
+        _acontecendoBatalhaContinua = data.acontecendoBatalhaContinua;
+    }
+
+    public void SalvarSave(GameData data) //função de salvar os dados do save
+    {
+        if (_acontecendoBatalhaContinua)
+        {
+            if (_tempoAtualBatalhaContinua < 0f)
+            {
+                _tempoAtualBatalhaContinua = 0f;
+            }
+        }
+
+        data.tempo = DateTime.Now.ToString();
+        data.duracaoBatalhaContinua = _tempoAtualBatalhaContinua;
+        data.acontecendoBatalhaContinua = _acontecendoBatalhaContinua;
+    }
 
     private void Start()
     {
         _dropdown.onValueChanged.AddListener(MudarEstadoDeBatalha);
         _sisemaDeDrop = FindObjectOfType<SistemaDeDrop>();
+
+        //verifica se ao iniciar a batalha continua estava como verdadeira ao sair do jogo
+        if (_acontecendoBatalhaContinua)
+        {
+            estado = EstadoDeBatalha.CONTINUA;
+            TimeSpan tempoPassado = DateTime.Now - _tempo;
+
+            if (tempoPassado.TotalSeconds >= _duracaoBatalhaContinua)
+            {
+                _telaRecompensasDrop.SetActive(true);
+            }
+            else
+            {
+                //continua a batalha contínua
+                TimeSpan duracao = TimeSpan.FromSeconds(_duracaoBatalhaContinua);
+                TimeSpan tempoRestante = duracao - tempoPassado;
+                if (tempoRestante < TimeSpan.Zero)
+                {
+                    tempoRestante = TimeSpan.Zero;
+                }
+                float tempoConvertido = (float)tempoRestante.TotalSeconds;
+                VerificarBotao();
+                IniciarBatalhaContinua(tempoConvertido);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (_acontecendoBatalhaContinua)
+        {
+            _tempoAtualBatalhaContinua -= Time.deltaTime;
+
+            if (_tempoAtualBatalhaContinua <= 0f)
+            {
+                _tempoAtualBatalhaContinua = 0f;
+                _acontecendoBatalhaContinua = false;
+                estado = EstadoDeBatalha.MANUAL;
+                VerificarBotao();
+            }
+        }
     }
     public void IniciarBatalha() //função que inicia a batalha
     {
@@ -91,14 +162,15 @@ sealed class SistemaDeBatalha : MonoBehaviour
             EncontrarPersonagens(); //chama a função de encontrar personagens
             if(estado == EstadoDeBatalha.CONTINUA)
             {
-                StartCoroutine(BatalhaContinua());
+                _acontecendoBatalhaContinua = true;
             }
         }
     }
 
     public void IniciarBatalhaContinua(float duracao) //função que inicia a batalha continua
     {
-        duracaoBatalhaContinua = duracao;
+        _duracaoBatalhaContinua = duracao;
+        _tempoAtualBatalhaContinua = duracao;
 
         //define a batalha como continua
         estado = EstadoDeBatalha.CONTINUA;
@@ -113,6 +185,7 @@ sealed class SistemaDeBatalha : MonoBehaviour
         if(estado == EstadoDeBatalha.MANUAL)
         {
             estado = EstadoDeBatalha.CONTINUA;
+            _acontecendoBatalhaContinua = true;
             if (!batalhaIniciou)
             {
                 _telaDuracaoBatalha.SetActive(true); //ativa a tela de duração de batalha
@@ -120,20 +193,9 @@ sealed class SistemaDeBatalha : MonoBehaviour
         }
         else
         {
+            _acontecendoBatalhaContinua = false;
             estado = EstadoDeBatalha.MANUAL;
         }
-    }
-
-    IEnumerator BatalhaContinua() //função que determina quanto tempo a batalha continua está em andamento
-    {
-        acontecendoBatalhaContinua = true;
-
-        yield return new WaitForSeconds(duracaoBatalhaContinua); //aguarda o tempo de duração da batalha continua
-
-        //reseta a batalha continua
-        acontecendoBatalhaContinua = false;
-        estado = EstadoDeBatalha.MANUAL;
-        VerificarBotao();
     }
 
     private void EncontrarPersonagens() //função que encontra todos os personagens na cena
@@ -165,6 +227,8 @@ sealed class SistemaDeBatalha : MonoBehaviour
 
             personagem.IniciarBatalha(); //chama a função "IniciarBatalha" de todos os personagens encontrados
         }
+
+        SimularBatalha();
 
         primeiroAlvo = PrimeiroAlvo.ALVO_PROXIMO; //define a batalha como alvo próximo para os próximos alvos dos personagens
     }
@@ -313,6 +377,40 @@ sealed class SistemaDeBatalha : MonoBehaviour
             _batalhaAlvoVisto = true;
             primeiroAlvo = PrimeiroAlvo.ALVO_VISTO;
         }
+    }
+
+    private void SimularBatalha() //função que simula a batalha
+    {
+        float numeroDeBatalhas = 0;
+        int probabilidadeDeVitoria = 5;
+        int vitorias = 0;
+        int vitoriasConfirmadas = 0;
+        int probabilidadeDeDrop = 0;
+        int dropsRecebidos = 0;
+
+        numeroDeBatalhas = _duracaoBatalhaContinua / _tempoPorBatalha;
+
+        for(int i = 0; i < numeroDeBatalhas; i++)
+        {
+            vitorias = UnityEngine.Random.Range(0, probabilidadeDeVitoria);
+            
+            if(vitorias > 0)
+            {
+                vitoriasConfirmadas++;
+            }
+        }
+        Debug.Log("o número de vitórias é: " + vitoriasConfirmadas);
+
+        for(int i = 0; i < vitoriasConfirmadas; i++)
+        {
+            probabilidadeDeDrop = UnityEngine.Random.Range(0, 3);
+
+            if(probabilidadeDeDrop > 0)
+            {
+                dropsRecebidos++;
+            }
+        }
+        Debug.Log("o número de drops é: " + dropsRecebidos);
     }
 
     public void SairDoJogo() //função para sair do jogo
