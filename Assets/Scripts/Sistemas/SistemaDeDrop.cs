@@ -29,7 +29,6 @@ public class SistemaDeDrop : MonoBehaviour, Salvamento
     private AudioSource _sfx; //sfx do drop
 
     private int _drops; //valor dos drops do player
-    [SerializeField]
     private int _dropsAtivos; //variável que verifica o número de drops visuais ativos
 
     public void CarregarSave(GameData data) //função que carrega os dados do save

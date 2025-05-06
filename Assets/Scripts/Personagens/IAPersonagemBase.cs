@@ -13,7 +13,7 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("Definições")]
     public ControladorDoPersonagem controlador;
     public TipoDePersonagem _tipo;
-    //[HideInInspector]
+    [HideInInspector]
     public EstadoDoPersonagem _comportamento;
 
     //área referente às definições do personagem de longa distancia
@@ -76,7 +76,7 @@ public class IAPersonagemBase : MonoBehaviour
     public Quaternion rotacaoInicial; //rotação inicial do personagem
     [HideInInspector]
     public int movimentoEspecialAtual; //identificação do movimento especial do personagem
-    //[HideInInspector]
+    [HideInInspector]
     public bool executandoMovimentoEspecial; //variável para verificar se o personagem está executando o movimento especial
     [HideInInspector]
     public bool imuneADanos; //variável que verifica se o personagem é imune a danos

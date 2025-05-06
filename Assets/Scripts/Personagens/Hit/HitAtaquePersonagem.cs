@@ -66,6 +66,10 @@ sealed class HitAtaquePersonagem : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public void MoverAteAlvo(Transform alvo, float velocidade) //função que recebe variáveis necessárias para que o hit se mova

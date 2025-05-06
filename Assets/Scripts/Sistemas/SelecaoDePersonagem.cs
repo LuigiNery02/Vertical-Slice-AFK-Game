@@ -148,7 +148,7 @@ public class SelecaoDePersonagem : MonoBehaviour
 
     public void AtivarHabilidade1() //função que ativa a habilidade 1 do personagem selecionado
     {
-        if(_sistemaDeBatalha.batalhaIniciou && !_sistemaDeBatalha.fimDeBatalha)
+        if(_sistemaDeBatalha.batalhaIniciou)
         {
             _personagemSelecionado.habilidade1.AtivarEfeito();
         }
@@ -156,7 +156,7 @@ public class SelecaoDePersonagem : MonoBehaviour
 
     public void AtivarHabilidade2() //função que ativa a habilidade 2 do personagem selecionado
     {
-        if (_sistemaDeBatalha.batalhaIniciou && !_sistemaDeBatalha.fimDeBatalha)
+        if (_sistemaDeBatalha.batalhaIniciou)
         {
             _personagemSelecionado.habilidade2.AtivarEfeito();
         }  

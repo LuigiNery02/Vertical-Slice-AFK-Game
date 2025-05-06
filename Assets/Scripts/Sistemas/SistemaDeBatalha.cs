@@ -67,15 +67,11 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
     //Área referente ao save
     private DateTime _tempo; //tempo do sistema de batalha
     private float _duracaoBatalhaContinua; //duração em segundos da batalha continua
-    [SerializeField]
     private float _tempoAtualBatalhaContinua; //tempo atual da batalha contínua
-    [SerializeField]
     private bool _acontecendoBatalhaContinua; //variável para verificar se a batalha continua está acontecendo
 
     //Área referente à simulação
-    [SerializeField]
     private int _batalhasRestantesSimuladas = 0; //valor de batalhas simuladas
-    [SerializeField]
     private int _dropsRestantes = 0;
     private float _tempoPorBatalha = 30f; //tempo médio para uma batalha terminar em segundos
     private bool _simular; //variável que verifica se deve simular a batalha
