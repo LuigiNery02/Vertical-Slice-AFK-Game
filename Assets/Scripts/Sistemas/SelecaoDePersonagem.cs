@@ -45,6 +45,7 @@ public class SelecaoDePersonagem : MonoBehaviour
     private Sprite[] _spriteEquipamento; //sprite do equipamento do personagem
 
     private IAPersonagemBase _personagemSelecionado; //variável que representa o personagem selecionado
+    private SistemaDeBatalha _sistemaDeBatalha; //sistema de batalha
     private float _hp; //variável que representa o hp do personagem selecionado
     private float _velocidade; //variável que representa a velocidade do personagem selecionado
     private float _dano; //variável que representa o dano de ataque do personagem selecionado
@@ -56,6 +57,11 @@ public class SelecaoDePersonagem : MonoBehaviour
     private string _tituloHabilidade2; //variável que representa o título da segunda habilidade do personagem;
     private string _detalheHabilidade1; //variável que representa os detalhes da primeira habilidade do personagem;
     private string _detalheHabilidade2; //variável que representa os detalhes da segunda habilidade do personagem;
+
+    private void Start()
+    {
+        _sistemaDeBatalha = FindObjectOfType<SistemaDeBatalha>();
+    }
 
     public void SelecionarPersonagem(IAPersonagemBase personagem) //função para identificar o personagem selecionado
     {
@@ -142,12 +148,18 @@ public class SelecaoDePersonagem : MonoBehaviour
 
     public void AtivarHabilidade1() //função que ativa a habilidade 1 do personagem selecionado
     {
-        _personagemSelecionado.habilidade1.AtivarEfeito();
+        if(_sistemaDeBatalha.batalhaIniciou && !_sistemaDeBatalha.fimDeBatalha)
+        {
+            _personagemSelecionado.habilidade1.AtivarEfeito();
+        }
     }
 
     public void AtivarHabilidade2() //função que ativa a habilidade 2 do personagem selecionado
     {
-        _personagemSelecionado.habilidade2.AtivarEfeito();
+        if (_sistemaDeBatalha.batalhaIniciou && !_sistemaDeBatalha.fimDeBatalha)
+        {
+            _personagemSelecionado.habilidade2.AtivarEfeito();
+        }  
     }
 
     public void DesativarFunções() //desativa as funções 
