@@ -48,7 +48,7 @@ public class SistemaDeDrop : MonoBehaviour, Salvamento
         _drops += drops;
         AtualizarDrops();
     }
-    private void AtualizarDrops() //função para atualizar visualmente os drops
+    public void AtualizarDrops() //função para atualizar visualmente os drops
     {
         _textoDosDrops.text = _drops.ToString();
     }
