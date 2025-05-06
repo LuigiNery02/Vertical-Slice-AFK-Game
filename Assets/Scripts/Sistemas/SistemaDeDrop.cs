@@ -1,10 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SistemaDeDrop : MonoBehaviour
+public class SistemaDeDrop : MonoBehaviour, Salvamento
 {
+    //área referente ao sistema de batalha
+    [Header("Sistema de Batalha")]
+    [SerializeField]
+    private SistemaDeBatalha _sistemaDeBatalha;
+
     //área referente ao texto visual dos drops
     [Header("Texto")]
     [SerializeField]
@@ -26,6 +32,17 @@ public class SistemaDeDrop : MonoBehaviour
     [SerializeField]
     private int _dropsAtivos; //variável que verifica o número de drops visuais ativos
 
+    public void CarregarSave(GameData data) //função que carrega os dados do save
+    {
+        _drops = data.drops;
+    }
+
+
+    public void SalvarSave(GameData data) //função de salvar os dados do save
+    {
+        data.drops = _drops;
+    }
+
     public void Receberdrops(int drops) //função para receber drops
     {
         _drops += drops;
@@ -38,13 +55,14 @@ public class SistemaDeDrop : MonoBehaviour
 
     public void Dropar(Transform inimigo) //função que faz o inimigo dropar
     {
-        int probabilidade = Random.Range(0, 4); //cria uma probabilidade de drop
+        int probabilidade = UnityEngine.Random.Range(0, 4); //cria uma probabilidade de drop
         if(probabilidade > 0)
         {
             _dropsAtivos++;
             _dropsVisuais[_dropsAtivos - 1].gameObject.SetActive(true);
             _dropsVisuais[_dropsAtivos - 1].transform.parent = inimigo;
             _dropsVisuais[_dropsAtivos - 1].transform.localPosition = new Vector3(0, 2, 0);
+            _sistemaDeBatalha.RemoverSimulação(2);
             if (SistemaDeBatalha.usarSfxs)
             {
                 _sfx.Play();

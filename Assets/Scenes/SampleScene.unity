@@ -8753,6 +8753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a9122aac7ffda46b6f57565a9d7802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sistemaDeBatalha: {fileID: 1436877195}
   _textoDosDrops: {fileID: 320051376}
   _dropPai: {fileID: 649038313}
   _dropsVisuais:
@@ -16967,9 +16968,14 @@ MonoBehaviour:
   _dropdown: {fileID: 2108430904}
   _telaDuracaoBatalha: {fileID: 1830912837}
   _telaRecompensasDrop: {fileID: 825230346}
+  _textoRecompensasDrop: {fileID: 831259640}
   _audio: {fileID: 1436877196}
   _botaoClip: {fileID: 8300000, guid: 94312712002cb7841a5f140d39b19917, type: 3}
   _vitoriaClip: {fileID: 8300000, guid: 7db2fe46c447a3449b7a88357dcfe6e8, type: 3}
+  _tempoAtualBatalhaContinua: 0
+  _acontecendoBatalhaContinua: 0
+  _batalhasRestantesSimuladas: 0
+  _dropsRestantes: 0
   batalhaIniciou: 0
   fimDeBatalha: 0
 --- !u!82 &1436877196

@@ -41,6 +41,9 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
     private GameObject _telaDuracaoBatalha; //tela de duração da batalha
     [SerializeField]
     private GameObject _telaRecompensasDrop; //tela de recompensas do drop
+    [SerializeField]
+    private Text _textoRecompensasDrop; //texto de recompensas de drop;
+
     //Área de SFX
     [Header("SFX")]
     [SerializeField]
@@ -64,12 +67,19 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
     //Área referente ao save
     private DateTime _tempo; //tempo do sistema de batalha
     private float _duracaoBatalhaContinua; //duração em segundos da batalha continua
+    [SerializeField]
     private float _tempoAtualBatalhaContinua; //tempo atual da batalha contínua
+    [SerializeField]
     private bool _acontecendoBatalhaContinua; //variável para verificar se a batalha continua está acontecendo
 
     //Área referente à simulação
-    private int _batalhasRestantesSimuladas; //valor de batalhas simuladas
+    [SerializeField]
+    private int _batalhasRestantesSimuladas = 0; //valor de batalhas simuladas
+    [SerializeField]
+    private int _dropsRestantes = 0;
     private float _tempoPorBatalha = 30f; //tempo médio para uma batalha terminar em segundos
+    private bool _simular; //variável que verifica se deve simular a batalha
+    private int _dropsGanhos; //valor dos drops que o jogador ganhou enquanto estava afk
 
 
     [HideInInspector]
@@ -80,12 +90,30 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
     public bool fimDeBatalha; //variável para verificar o fim da batalha
     private SistemaDeDrop _sisemaDeDrop; //sistema de drop
 
-    public void CarregarSave(GameData data) //função de carregar os dados do save
+    public void CarregarSave(GameData data) //função que carrega os dados do save
     {
         _tempo = DateTime.Parse(data.tempo);
-        _tempoAtualBatalhaContinua = data.duracaoBatalhaContinua;
+        _duracaoBatalhaContinua = data.duracaoBatalhaContinua;
         _acontecendoBatalhaContinua = data.acontecendoBatalhaContinua;
+        _batalhasRestantesSimuladas = data.batalhasRestantes;
+        _dropsRestantes = data.dropsRestantes;
+
+        if (_acontecendoBatalhaContinua)
+        {
+            TimeSpan tempoPassado = DateTime.Now - _tempo;
+
+            _tempoAtualBatalhaContinua = data.tempoAtualBatalhaContinua - (float)tempoPassado.TotalSeconds;
+            if (_tempoAtualBatalhaContinua < 0f)
+            {
+                _tempoAtualBatalhaContinua = 0f;
+            }
+        }
+        else
+        {
+            _tempoAtualBatalhaContinua = 0f;
+        }
     }
+
 
     public void SalvarSave(GameData data) //função de salvar os dados do save
     {
@@ -98,8 +126,11 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         }
 
         data.tempo = DateTime.Now.ToString();
-        data.duracaoBatalhaContinua = _tempoAtualBatalhaContinua;
+        data.tempoAtualBatalhaContinua = _tempoAtualBatalhaContinua;
+        data.duracaoBatalhaContinua = _duracaoBatalhaContinua;
         data.acontecendoBatalhaContinua = _acontecendoBatalhaContinua;
+        data.batalhasRestantes = _batalhasRestantesSimuladas;
+        data.dropsRestantes = _dropsRestantes;
     }
 
     private void Start()
@@ -110,26 +141,42 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         //verifica se ao iniciar a batalha continua estava como verdadeira ao sair do jogo
         if (_acontecendoBatalhaContinua)
         {
-            estado = EstadoDeBatalha.CONTINUA;
-            TimeSpan tempoPassado = DateTime.Now - _tempo;
-
-            if (tempoPassado.TotalSeconds >= _duracaoBatalhaContinua)
+            if (_tempoAtualBatalhaContinua <= 0)
             {
                 _telaRecompensasDrop.SetActive(true);
+                _dropsGanhos = _dropsRestantes;
+                _tempoAtualBatalhaContinua = 0f;
+                _batalhasRestantesSimuladas = 0;
             }
             else
             {
-                //continua a batalha contínua
-                TimeSpan duracao = TimeSpan.FromSeconds(_duracaoBatalhaContinua);
-                TimeSpan tempoRestante = duracao - tempoPassado;
-                if (tempoRestante < TimeSpan.Zero)
+                float tempoPassado = _duracaoBatalhaContinua - _tempoAtualBatalhaContinua;
+                int batalhasQueJaAconteceram = Mathf.FloorToInt((tempoPassado / 2) / _tempoPorBatalha);
+                _batalhasRestantesSimuladas -= batalhasQueJaAconteceram;
+
+                if(_batalhasRestantesSimuladas < 0)
                 {
-                    tempoRestante = TimeSpan.Zero;
+                    _batalhasRestantesSimuladas = 0;
                 }
-                float tempoConvertido = (float)tempoRestante.TotalSeconds;
+
+                //gera drops para batalhas que já aconteceram
+                int dropsGanhos = 0;
+                for (int i = 0; i < batalhasQueJaAconteceram; i++)
+                {
+                    dropsGanhos++;
+                }
+
+                _dropsRestantes -= dropsGanhos;
+                _dropsGanhos = dropsGanhos;
+
                 VerificarBotao();
-                IniciarBatalhaContinua(tempoConvertido);
+                IniciarBatalhaContinua(_tempoAtualBatalhaContinua);
             }
+            SimulaçãoDeRecompensas();
+        }
+        else
+        {
+            _simular = true;
         }
     }
 
@@ -143,6 +190,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
             {
                 _tempoAtualBatalhaContinua = 0f;
                 _acontecendoBatalhaContinua = false;
+                _simular = true;
                 estado = EstadoDeBatalha.MANUAL;
                 VerificarBotao();
             }
@@ -228,7 +276,10 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
             personagem.IniciarBatalha(); //chama a função "IniciarBatalha" de todos os personagens encontrados
         }
 
-        SimularBatalha();
+        if(estado == EstadoDeBatalha.CONTINUA)
+        {
+            SimularBatalha();
+        }
 
         primeiroAlvo = PrimeiroAlvo.ALVO_PROXIMO; //define a batalha como alvo próximo para os próximos alvos dos personagens
     }
@@ -281,6 +332,8 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
     {
         batalhaIniciou = false;
         fimDeBatalha = true;
+
+        RemoverSimulação(1);
 
         //reseta todas as habilidades
         HabilidadesBase[] habilidades = FindObjectsOfType<HabilidadesBase>();
@@ -350,19 +403,6 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
             personagem.ResetarEstado(); //chama a função para resetar HP, animação, status, etc.
         }
     }
-
-    public void VerificarBotao()
-    {
-        if(estado == EstadoDeBatalha.CONTINUA)
-        {
-            _botaoBatalhaContinua.image.color = Color.white;
-        }
-        else
-        {
-            _botaoBatalhaContinua.image.color = Color.gray;
-        }
-    }
-
     private void MudarEstadoDeBatalha(int indice) //função que muda o estado de batalha
     {
         string opcaoSelecionada = _dropdown.options[indice].text;
@@ -379,45 +419,122 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         }
     }
 
+    #region Simulação de Batalha
     private void SimularBatalha() //função que simula a batalha
     {
-        float numeroDeBatalhas = 0;
-        int probabilidadeDeVitoria = 5;
-        int vitorias = 0;
-        int vitoriasConfirmadas = 0;
-        int probabilidadeDeDrop = 0;
-        int dropsRecebidos = 0;
-
-        numeroDeBatalhas = _duracaoBatalhaContinua / _tempoPorBatalha;
-
-        for(int i = 0; i < numeroDeBatalhas; i++)
+        if (_simular)
         {
-            vitorias = UnityEngine.Random.Range(0, probabilidadeDeVitoria);
-            
-            if(vitorias > 0)
-            {
-                vitoriasConfirmadas++;
-            }
-        }
-        Debug.Log("o número de vitórias é: " + vitoriasConfirmadas);
+            _simular = false;
 
-        for(int i = 0; i < vitoriasConfirmadas; i++)
-        {
-            probabilidadeDeDrop = UnityEngine.Random.Range(0, 3);
+            int vitoriasConfirmadas = 0;
+            int dropsRecebidos = 0;
+            float numeroDeBatalhas = _duracaoBatalhaContinua / _tempoPorBatalha;
+            _batalhasRestantesSimuladas = ((int)numeroDeBatalhas);
 
-            if(probabilidadeDeDrop > 0)
+            List<IAPersonagemBase> todosInimigosDisponiveis = new List<IAPersonagemBase>(_personagensInimigos);
+
+            for (int i = 0; i < numeroDeBatalhas; i++)
             {
-                dropsRecebidos++;
+                List<IAPersonagemBase> inimigosNaBatalha = new List<IAPersonagemBase>();
+
+                if (i == 0)
+                {
+                    //primeira batalha: 1 de cada tipo
+                    inimigosNaBatalha.Add(todosInimigosDisponiveis[0]);
+                    inimigosNaBatalha.Add(todosInimigosDisponiveis[1]);
+                    inimigosNaBatalha.Add(todosInimigosDisponiveis[2]);
+                }
+                else
+                {
+                    //outras batalhas: sorteio
+                    int quantidadeInimigos = 3; // supondo sempre 3 inimigos
+
+                    for (int j = 0; j < quantidadeInimigos; j++)
+                    {
+                        int indiceSorteado = UnityEngine.Random.Range(0, todosInimigosDisponiveis.Count);
+                        inimigosNaBatalha.Add(todosInimigosDisponiveis[indiceSorteado]);
+                    }
+                }
+
+                //cálculo do DPS do jogador
+                float dpsJogadorTotal = 0f;
+                foreach (IAPersonagemBase personagem in _personagensJogador)
+                {
+                    dpsJogadorTotal += personagem._danoAtaqueBasico / personagem._cooldown;
+                }
+
+                //cálculo do DPS dos inimigos sorteados
+                float dpsInimigoTotal = 0f;
+                foreach (IAPersonagemBase inimigo in inimigosNaBatalha)
+                {
+                    dpsInimigoTotal += inimigo._danoAtaqueBasico / inimigo._cooldown;
+                }
+
+                //calcula chance de vitória
+                float chanceDeVitoria = (dpsJogadorTotal + 2f) / (dpsJogadorTotal + dpsInimigoTotal);
+                Debug.Log(chanceDeVitoria);
+
+                float rolagem = UnityEngine.Random.value - (0.2f); // valor entre 0 e 1
+
+                if (rolagem <= chanceDeVitoria)
+                {
+                    vitoriasConfirmadas++;
+                }
             }
+
+            for (int i = 0; i < (vitoriasConfirmadas * 3); i++)
+            {
+                int probabilidadeDeDrop = UnityEngine.Random.Range(0, 4);
+
+                if (probabilidadeDeDrop > 0)
+                {
+                    dropsRecebidos++;
+                }
+            }
+
+            _dropsRestantes = dropsRecebidos;
         }
-        Debug.Log("o número de drops é: " + dropsRecebidos);
     }
 
-    public void SairDoJogo() //função para sair do jogo
+    public void RemoverSimulação(int remocao) //função que remove cada simulação de batalha
     {
-        Application.Quit();
+        if(remocao == 1)
+        {
+            if (_batalhasRestantesSimuladas > 0)
+            {
+                _batalhasRestantesSimuladas--;
+            }
+        }
+        else if(remocao == 2)
+        {
+            if (_dropsRestantes > 0)
+            {
+                _dropsRestantes--;
+            }
+        } 
     }
 
+    private void SimulaçãoDeRecompensas() //função que mostra a tela de recompensas do jogador ao voltar ao game enquanto o jogo estava em afk
+    {
+        _telaRecompensasDrop.SetActive(true);
+        _textoRecompensasDrop.text = (_dropsGanhos * 5).ToString();
+        _sisemaDeDrop.Receberdrops((_dropsGanhos * 5));
+    }
+    #endregion
+
+    #region feedbacks Visuais
+
+    public void VerificarBotao()
+    {
+        if (estado == EstadoDeBatalha.CONTINUA)
+        {
+            _botaoBatalhaContinua.image.color = Color.white;
+        }
+        else
+        {
+            _botaoBatalhaContinua.image.color = Color.gray;
+        }
+    }
     public void ChecarSFX(string sfx) //função para checar quais sfx utilizar
     {
         if (usarSfxs)
@@ -449,5 +566,11 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         {
             usarSliders = !usarSliders;
         }
+    }
+    #endregion
+
+    public void SairDoJogo() //função para sair do jogo
+    {
+        Application.Quit();
     }
 }
