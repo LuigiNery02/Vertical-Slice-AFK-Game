@@ -8780,6 +8780,50 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &789741772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 789741774}
+  - component: {fileID: 789741773}
+  m_Layer: 0
+  m_Name: GerenciadorDoJogo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &789741773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 789741772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2175fc0a0af9ebf48b6940a6c1aaa8ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &789741774
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 789741772}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &790992410
 GameObject:
   m_ObjectHideFlags: 0
@@ -9048,7 +9092,6 @@ MonoBehaviour:
   - {fileID: 631051452}
   - {fileID: 1793653274}
   _sfx: {fileID: 814615884}
-  _dropsAtivos: 0
 --- !u!4 &814615883
 Transform:
   m_ObjectHideFlags: 0
@@ -13333,8 +13376,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1436877195}
-        m_TargetAssemblyTypeName: SistemaDeBatalha, Assembly-CSharp
+      - m_Target: {fileID: 789741773}
+        m_TargetAssemblyTypeName: GerenciadorDoJogo, Assembly-CSharp
         m_MethodName: SairDoJogo
         m_Mode: 1
         m_Arguments:
@@ -17730,10 +17773,6 @@ MonoBehaviour:
   _audio: {fileID: 1436877196}
   _botaoClip: {fileID: 8300000, guid: 94312712002cb7841a5f140d39b19917, type: 3}
   _vitoriaClip: {fileID: 8300000, guid: 7db2fe46c447a3449b7a88357dcfe6e8, type: 3}
-  _tempoAtualBatalhaContinua: 0
-  _acontecendoBatalhaContinua: 0
-  _batalhasRestantesSimuladas: 0
-  _dropsRestantes: 0
   batalhaIniciou: 0
   fimDeBatalha: 0
 --- !u!82 &1436877196
@@ -26405,6 +26444,7 @@ SceneRoots:
   - {fileID: 354908722}
   - {fileID: 1073556409}
   - {fileID: 984919528}
+  - {fileID: 789741774}
   - {fileID: 1436877194}
   - {fileID: 477886657}
   - {fileID: 1458346103}

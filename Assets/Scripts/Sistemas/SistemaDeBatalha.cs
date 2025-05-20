@@ -564,9 +564,4 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         }
     }
     #endregion
-
-    public void SairDoJogo() //função para sair do jogo
-    {
-        Application.Quit();
-    }
 }
