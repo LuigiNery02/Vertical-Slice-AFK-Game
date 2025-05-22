@@ -9,10 +9,17 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     public List<PersonagemData> personagensCriados = new List<PersonagemData>(); //lista de todos os personagens criados
     public PersonagemData personagemEmCriacao; //representa o personagem atual que está sendo criado
 
+    [Header("Armas")]
+    public List<ArmaBase> armasGuerreiro = new List<ArmaBase>();
+    public List<ArmaBase> armasArqueiro = new List<ArmaBase>();
+    public List<ArmaBase> armasMago = new List<ArmaBase>();
+
     #region Visual
     [Header("Tela Personagem")]
     [SerializeField]
     private GameObject _telaPersonagens; //tela do personagem criado
+    [SerializeField]
+    private GameObject _telaSelecaoClasse; //tela de seleção de classes
     [SerializeField]
     private GameObject _telaPreferenciaHatributo; //tela de preferencias de atributo do personagem
     [SerializeField]
@@ -21,6 +28,10 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     private Text _codigoIDTexto; //texto do códigoID do personagem
     [SerializeField]
     private Image _personagemImagem; //imagem do personagem criado
+    [SerializeField]
+    private Text _classeTexto; //texto da classe do personagem
+    [SerializeField]
+    private Text _armaTexto; //texto do nome da arma do personagem
     [SerializeField]
     private Text _nivelTexto; //texto do nível do personagem
     [SerializeField]
@@ -35,6 +46,8 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     private Text _inteligenciaTexto; //texto da inteligencia do personagem
     [SerializeField]
     private Text _sabedoriaTexto; //texto da sabedoria do personagem
+    [SerializeField]
+    private GerenciadorDeSlots _gerenciadorDeSlots; //gerenciador de slots
 
     [Header("Sprites")]
     [SerializeField]
@@ -45,12 +58,14 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     private GameObject[] _telasArmas; //telas de seleção de armas baseadas na classe selecionada
     #endregion
 
-    private int _imagemClasseAtual; //variável que determina a imagem do jogador a depender de sua classe
+    [HideInInspector]
+    public int _imagemClasseAtual; //variável que determina a imagem do jogador a depender de sua classe
     private HashSet<string> _codigosGerados = new HashSet<string>(); //lista de códigos gerados
 
     public void CriarPersonagem() //função que inicia a criação do personagem
     {
         personagemEmCriacao = new PersonagemData();
+        _telaSelecaoClasse.SetActive(true);
         ResetarTelaPersonagem();
     }
     public void DefinirClasse(int valorClasse) //função para definir a classe do personagem
@@ -74,21 +89,22 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
                 _telasArmas[valorClasse].SetActive(true);
                 break;
         }
+        _telaSelecaoClasse.SetActive(false);
     }
 
-    public void DefinirArma(int valorArma) //função para definir a arma do personagem
+    public void DefinirArma(int valorArma) //função para definir a arma inicial do personagem
     {
-        switch(valorArma)
+        if(personagemEmCriacao.classe == Classe.Guerreiro)
         {
-            case 0:
-                Debug.Log("arma1");
-                break;
-            case 1:
-                Debug.Log("arma2");
-                break;
-            case 2:
-                Debug.Log("arma3");
-                break;
+            personagemEmCriacao.arma = armasGuerreiro[valorArma];
+        }
+        else if(personagemEmCriacao.classe == Classe.Arqueiro)
+        {
+            personagemEmCriacao.arma = armasArqueiro[valorArma];
+        }
+        else if(personagemEmCriacao.classe == Classe.Mago)
+        {
+            personagemEmCriacao.arma = armasMago[valorArma];
         }
 
         for(int i = 0; i < _telasArmas.Length; i++)
@@ -105,28 +121,46 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         switch (valorAtributoPreferencia)
         {
             case 0:
-                personagemEmCriacao.atributosDePreferencia.Add(PreferenciaAtributo.Forca);
-                atributos = personagemEmCriacao.atributosDePreferencia.Count;
+                if(!personagemEmCriacao.atributosDePreferencia.Contains(PreferenciaAtributo.Forca))
+                {
+                    personagemEmCriacao.atributosDePreferencia.Add(PreferenciaAtributo.Forca);
+                    atributos = personagemEmCriacao.atributosDePreferencia.Count;
+                }
                 break;
             case 1:
-                personagemEmCriacao.atributosDePreferencia.Add(PreferenciaAtributo.Agilidade);
-                atributos = personagemEmCriacao.atributosDePreferencia.Count;
+                if(!personagemEmCriacao.atributosDePreferencia.Contains(PreferenciaAtributo.Agilidade))
+                {
+                    personagemEmCriacao.atributosDePreferencia.Add(PreferenciaAtributo.Agilidade);
+                    atributos = personagemEmCriacao.atributosDePreferencia.Count;
+                }
                 break;
             case 2:
-                personagemEmCriacao.atributosDePreferencia.Add(PreferenciaAtributo.Destreza);
-                atributos = personagemEmCriacao.atributosDePreferencia.Count;
+                if(!personagemEmCriacao.atributosDePreferencia.Contains(PreferenciaAtributo.Destreza))
+                {
+                    personagemEmCriacao.atributosDePreferencia.Add(PreferenciaAtributo.Destreza);
+                    atributos = personagemEmCriacao.atributosDePreferencia.Count;
+                }
                 break;
             case 3:
-                personagemEmCriacao.atributosDePreferencia.Add(PreferenciaAtributo.Constituicao);
-                atributos = personagemEmCriacao.atributosDePreferencia.Count;
+                if(!personagemEmCriacao.atributosDePreferencia.Contains(PreferenciaAtributo.Constituicao))
+                {
+                    personagemEmCriacao.atributosDePreferencia.Add(PreferenciaAtributo.Constituicao);
+                    atributos = personagemEmCriacao.atributosDePreferencia.Count;
+                }
                 break;
             case 4:
-                personagemEmCriacao.atributosDePreferencia.Add(PreferenciaAtributo.Inteligencia);
-                atributos = personagemEmCriacao.atributosDePreferencia.Count;
+                if(!personagemEmCriacao.atributosDePreferencia.Contains(PreferenciaAtributo.Inteligencia))
+                {
+                    personagemEmCriacao.atributosDePreferencia.Add(PreferenciaAtributo.Inteligencia);
+                    atributos = personagemEmCriacao.atributosDePreferencia.Count;
+                }
                 break;
             case 5:
-                personagemEmCriacao.atributosDePreferencia.Add(PreferenciaAtributo.Sabedoria);
-                atributos = personagemEmCriacao.atributosDePreferencia.Count;
+                if(!personagemEmCriacao.atributosDePreferencia.Contains(PreferenciaAtributo.Sabedoria))
+                {
+                    personagemEmCriacao.atributosDePreferencia.Add(PreferenciaAtributo.Sabedoria);
+                    atributos = personagemEmCriacao.atributosDePreferencia.Count;
+                }
                 break;
         }
 
@@ -142,6 +176,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     public void DefinirApelido() //função para definir o apelido do personagem
     {
         personagemEmCriacao.apelido = _apelido.text;
+        _gerenciadorDeSlots.AtualizarSlots();
     }
 
     private string GerarCodigoID() //função que gera o CódigoID do personagem
@@ -205,6 +240,23 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         personagemEmCriacao.sabedoria = 1;
         personagemEmCriacao.codigoID = GerarCodigoID(); //gera o código do personagem
         personagensCriados.Add(personagemEmCriacao); //adiciona o personagem criado à lista
+
+        _gerenciadorDeSlots.SubstituirBotaoPorSlot();
+        _gerenciadorDeSlots.AtualizarSlots();
+    }
+
+    public void EditarPersonagem() //função que possibilita a edição do personagem
+    {
+        _telaPersonagens.SetActive(true);
+    }
+
+    public void DeletarPersonagemCriado(int indice) //função de deletar um personagem criado
+    {
+        if(indice >= 0 && indice < personagensCriados.Count)
+        {
+            personagensCriados.RemoveAt(indice);
+            _gerenciadorDeSlots.AtualizarSlots();
+        }
     }
 
     #region Atualização Tela de Personagem
@@ -214,6 +266,8 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         _apelido.text = personagemEmCriacao.apelido;
         _codigoIDTexto.text = personagemEmCriacao.codigoID;
         _personagemImagem.sprite = _personagensSprites[_imagemClasseAtual];
+        _classeTexto.text += (" " + personagemEmCriacao.classe.ToString());
+        _armaTexto.text = personagemEmCriacao.arma.name;
         _nivelTexto.text += (" " + personagemEmCriacao.nivel);
         _forcaTexto.text += (" " + personagemEmCriacao.forca);
         _agilidadeTexto.text += (" " + personagemEmCriacao.agilidade);
@@ -249,12 +303,14 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         }
     }
 
-    private void ResetarTelaPersonagem() //função que reseta os dados visuais da tela de personagem
+    public void ResetarTelaPersonagem() //função que reseta os dados visuais da tela de personagem
     {
         //reseta todos os dados visuais
         _apelido.text = "";
         _codigoIDTexto.text = "";
         _personagemImagem.sprite = null;
+        _classeTexto.text = ("Classe:");
+        _armaTexto.text = ("Arma");
         _nivelTexto.text = ("Nível:");
         _forcaTexto.text = ("Força:");
         _agilidadeTexto.text = ("Agilidade:");

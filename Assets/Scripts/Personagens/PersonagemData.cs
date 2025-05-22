@@ -10,6 +10,7 @@ public enum PreferenciaAtributo{ Forca, Agilidade, Destreza, Constituicao, Intel
 public class PersonagemData
 {
     public Classe classe; //classe do personagem
+    public ArmaBase arma; //arma do personagem
     public List<PreferenciaAtributo> atributosDePreferencia = new List<PreferenciaAtributo>(); //atributos de preferência do personagem
     public string codigoID; //ID de código único de cada personagem
     public string apelido; //apelido do personagem
