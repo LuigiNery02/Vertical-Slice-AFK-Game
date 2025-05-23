@@ -7,6 +7,7 @@ public class SlotPersonagem : MonoBehaviour
 {
     public PersonagemData personagemData; //personagem 
     public Text apelidoPersonagem; //texto do apelido do personagem
+    public Text nivelPersonagem; //texto do nível do personagem
     public Image imagemPersonagem; //imagem do personagem
     public Button botaoEditarPersonagem; //botão de editar personagem
     public Button botaoDeletarPersonagem; //botão de deletar personagem
@@ -23,11 +24,11 @@ public class SlotPersonagem : MonoBehaviour
         _sistemaDeCriacaoDePersonagens = FindObjectOfType<SistemaDeCriacaoDePersonagens>(); //encontra o sistema de criação de personagens na cena
         botaoEditarPersonagem.onClick.AddListener(() =>
         {
-            EditarPersonagem();
+            EditarPersonagem(); //define as funções do botão editar
         });
         botaoDeletarPersonagem.onClick.AddListener(() =>
         {
-            DeletarPersonagem();
+            DeletarPersonagem(); //define as funções do botão excluir
         });
     }
 
@@ -35,6 +36,7 @@ public class SlotPersonagem : MonoBehaviour
     {
         personagemData = personagem;
         apelidoPersonagem.text = personagem.apelido;
+        nivelPersonagem.text = ("Nv: " + personagem.nivel.ToString());
         switch (personagem.classe)
         {
             case Classe.Guerreiro:

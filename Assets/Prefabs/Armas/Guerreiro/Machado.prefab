@@ -44,5 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a81b297fcaca2942b39f84176328713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nome: Machado
+  armaClasse: 0
   dano: 15
   velocidadeDeAtaque: 1.5

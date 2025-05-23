@@ -10,14 +10,16 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     public PersonagemData personagemEmCriacao; //representa o personagem atual que está sendo criado
 
     [Header("Armas")]
-    public List<ArmaBase> armasGuerreiro = new List<ArmaBase>();
-    public List<ArmaBase> armasArqueiro = new List<ArmaBase>();
-    public List<ArmaBase> armasMago = new List<ArmaBase>();
+    public List<ArmaBase> armasGuerreiro = new List<ArmaBase>(); //lista de armas da classe "Guerreiro"
+    public List<ArmaBase> armasArqueiro = new List<ArmaBase>(); //lista de armas da classe "Arqueiro"
+    public List<ArmaBase> armasMago = new List<ArmaBase>(); //lista de armas da classe "Mago"
 
     #region Visual
     [Header("Tela Personagem")]
     [SerializeField]
-    private GameObject _telaPersonagens; //tela do personagem criado
+    private GameObject _telaPersonagem; //tela do personagem específico criado
+    [SerializeField]
+    private GameObject _telaPersonagens; //tela dos personagens criados 
     [SerializeField]
     private GameObject _telaSelecaoClasse; //tela de seleção de classes
     [SerializeField]
@@ -65,7 +67,8 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     public void CriarPersonagem() //função que inicia a criação do personagem
     {
         personagemEmCriacao = new PersonagemData();
-        _telaSelecaoClasse.SetActive(true);
+        _telaPersonagens.SetActive(false); //desativa a tela de personagens
+        _telaSelecaoClasse.SetActive(true); //ativa a tela de seleção de classe
         ResetarTelaPersonagem();
     }
     public void DefinirClasse(int valorClasse) //função para definir a classe do personagem
@@ -74,22 +77,24 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         {
             case 0:
                 personagemEmCriacao.classe = Classe.Guerreiro;
-                _telasArmas[valorClasse].SetActive(true);
+                personagemEmCriacao.apelido = "Guerreiro";
+                _imagemClasseAtual = valorClasse;
+                _telasArmas[valorClasse].SetActive(true); //ativa a tela de seleção de arma à depender da classe do personagem
                 break;
             case 1:
                 personagemEmCriacao.classe = Classe.Arqueiro;
                 personagemEmCriacao.apelido = "Arqueiro";
                 _imagemClasseAtual = valorClasse;
-                _telasArmas[valorClasse].SetActive(true);
+                _telasArmas[valorClasse].SetActive(true); //ativa a tela de seleção de arma à depender da classe do personagem
                 break;
             case 2:
                 personagemEmCriacao.classe = Classe.Mago;
                 personagemEmCriacao.apelido = "Mago";
                 _imagemClasseAtual = valorClasse;
-                _telasArmas[valorClasse].SetActive(true);
+                _telasArmas[valorClasse].SetActive(true); //ativa a tela de seleção de arma à depender da classe do personagem
                 break;
         }
-        _telaSelecaoClasse.SetActive(false);
+        _telaSelecaoClasse.SetActive(false); //desativa a tela de seleção de classe
     }
 
     public void DefinirArma(int valorArma) //função para definir a arma inicial do personagem
@@ -109,13 +114,15 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
 
         for(int i = 0; i < _telasArmas.Length; i++)
         {
-            _telasArmas[i].SetActive(false);
+            _telasArmas[i].SetActive(false); //desativa todas as telas de seleção de armas
         }
+
+        _telaPreferenciaHatributo.SetActive(true); //ativa a tela de seleção de atributos de preferência
     }
 
     public void DefinirPreferenciaDeAtributo(int valorAtributoPreferencia) //função que define as preferências de atributo do personagem
     {
-        int atributos = personagemEmCriacao.atributosDePreferencia.Count;
+        int atributos = personagemEmCriacao.atributosDePreferencia.Count; //variável que verifica os atributos selecionados pelo jogador
 
         //define as preferências de atributo do personagem
         switch (valorAtributoPreferencia)
@@ -168,7 +175,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         {
             _telaPreferenciaHatributo.SetActive(false); //desativa a tela de preferências de atributo
             PersonagemCriado();
-            _telaPersonagens.SetActive(true); //ativa a tela do personagem
+            _telaPersonagem.SetActive(true); //ativa a tela do personagem
             AtualizarTelaPersonagem();
         }
     }
@@ -238,16 +245,17 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         personagemEmCriacao.constituicao = 1;
         personagemEmCriacao.inteligencia = 1;
         personagemEmCriacao.sabedoria = 1;
+
         personagemEmCriacao.codigoID = GerarCodigoID(); //gera o código do personagem
         personagensCriados.Add(personagemEmCriacao); //adiciona o personagem criado à lista
-
-        _gerenciadorDeSlots.SubstituirBotaoPorSlot();
+        _gerenciadorDeSlots.AdicionarSlot();
         _gerenciadorDeSlots.AtualizarSlots();
     }
 
     public void EditarPersonagem() //função que possibilita a edição do personagem
     {
-        _telaPersonagens.SetActive(true);
+        _telaPersonagem.SetActive(true); //ativa a tela de personagem
+        _telaPersonagens.SetActive(false); //desativa a tela de personagens
     }
 
     public void DeletarPersonagemCriado(int indice) //função de deletar um personagem criado
@@ -267,7 +275,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         _codigoIDTexto.text = personagemEmCriacao.codigoID;
         _personagemImagem.sprite = _personagensSprites[_imagemClasseAtual];
         _classeTexto.text += (" " + personagemEmCriacao.classe.ToString());
-        _armaTexto.text = personagemEmCriacao.arma.name;
+        _armaTexto.text = personagemEmCriacao.arma.nome;
         _nivelTexto.text += (" " + personagemEmCriacao.nivel);
         _forcaTexto.text += (" " + personagemEmCriacao.forca);
         _agilidadeTexto.text += (" " + personagemEmCriacao.agilidade);
