@@ -555,6 +555,8 @@ MonoBehaviour:
     constituicao: 0
     inteligencia: 0
     sabedoria: 0
+    expAtual: 0
+    "expProximoN\xEDvel": 0
   apelidoPersonagem: {fileID: 6557436097412003375}
   nivelPersonagem: {fileID: 6029755226842832625}
   imagemPersonagem: {fileID: 5605613669596144829}
@@ -600,8 +602,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 246, y: 375}
-  m_SizeDelta: {x: 180, y: 120}
+  m_AnchoredPosition: {x: 151, y: 375}
+  m_SizeDelta: {x: 360, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5421506818412786491
 CanvasRenderer:

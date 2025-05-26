@@ -222,6 +222,8 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
 
     public void PersonagemCriado() //função que finaliza a criação do personagem e define suas características básicas
     {
+        personagemEmCriacao.DefinirPersonagem();
+
         switch (personagemEmCriacao.classe)
         {
             case Classe.Guerreiro:
@@ -245,6 +247,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         personagemEmCriacao.constituicao = 1;
         personagemEmCriacao.inteligencia = 1;
         personagemEmCriacao.sabedoria = 1;
+        personagemEmCriacao.expProximoNível = 50;
 
         personagemEmCriacao.codigoID = GerarCodigoID(); //gera o código do personagem
         personagensCriados.Add(personagemEmCriacao); //adiciona o personagem criado à lista
@@ -335,5 +338,18 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         _inteligenciaTexto.color = Color.white;
         _sabedoriaTexto.color = Color.white;
     }
+    #endregion
+
+    #region Temporário
+
+    public void SubirNivelPersonagem() //função temporária que sobe o nível do personagem atual
+    {
+        personagemEmCriacao.EscolherAtributo();
+        personagemEmCriacao.SubirDeNivel();
+        ResetarTelaPersonagem();
+        AtualizarTelaPersonagem();
+        _gerenciadorDeSlots.AtualizarSlots();
+    }
+
     #endregion
 }

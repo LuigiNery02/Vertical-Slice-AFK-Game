@@ -31,7 +31,6 @@ public class SlotPersonagem : MonoBehaviour
             DeletarPersonagem(); //define as funções do botão excluir
         });
     }
-
     public void ReceberDadosPersonagem(PersonagemData personagem) //função que recebe os dados do personagem e atualiza o slot
     {
         personagemData = personagem;
