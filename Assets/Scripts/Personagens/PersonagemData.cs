@@ -9,6 +9,8 @@ public enum PreferenciaAtributo{ Forca, Agilidade, Destreza, Constituicao, Intel
 [System.Serializable]
 public class PersonagemData
 {
+    #region Definições Personagem
+    [Header("Definições Personagem")]
     public Classe classe; //classe do personagem
     public ArmaBase arma; //arma do personagem
     public List<PreferenciaAtributo> atributosDePreferencia = new List<PreferenciaAtributo>(); //atributos de preferência do personagem
@@ -23,10 +25,32 @@ public class PersonagemData
     public int sabedoria; //sabedoria do personagem
     public float expAtual; //expriência atual do personagem
     public float expProximoNível; //experiência necessária para passar para o próximo nível 
+    #endregion
 
+    #region Definições Batalha
+    [Header("Definições Batalha")]
+    public float hp; //valor do hp (vida) máximo do personagem
+    public float ataque; //valor do ataque do personagem
+    public float ataqueMagico; //valor do ataque mágico do personagem
+    public float ataqueDistancia; //valor do ataque à distância do personagem
+    public float defesa; //valor defesa do personagem
+    public float defesaMagica; //valor da defesa mágica do personagem
+    public float velocidadeAtaque; //velocidade de ataque do personagem
+    public float esquiva; //probabilidade de esquiva do personagem
+    public float precisao; //precisão do personagem
+    public float pontosDeHabilidade; //pontos de habilidades do personagem
+    public float suporte; //valor do suporte do personagem
+    #endregion
+
+    #region Definições Habilidades
+    [Header("Definições Habilidades")]
+    public bool runaNivel1; //variável que representa se o personagem possuí uma runa nível 1 equipada
+    public bool runaNivel2; //variável que representa se o personagem possuí uma runa nível 2 equipada
+    public bool runaNivel3; //variável que representa se o personagem possuí uma runa nível 3 equipada
+    #endregion
     private List<PreferenciaAtributo> listaSortearAtributo = new List<PreferenciaAtributo>(); //lista que define em pesos todos os pesos dos atributos do personagem
 
-    public void DefinirPersonagem() //função que define dados importantes do personagem
+    public void DefinirPersonagem() //função que define dados iniciais importantes do personagem
     {
         #region Pesos Atributos
         //adiciona na lista atributos com peso 8
@@ -51,8 +75,11 @@ public class PersonagemData
             }
         }
         #endregion
+
+        DefinicoesBatalha();
     }
 
+    #region Level Up
     public void GanharEXP(float exp) //função que faz com que o personagem ganhe experiência para subir de nível
     {
         expAtual += exp; //recebe exp e acrescenta ao exp atual
@@ -78,6 +105,8 @@ public class PersonagemData
         {
             expProximoNível += (expProximoNível / 10); //atualiza o valor necessário para passar de nível
         }
+
+        DefinicoesBatalha();
     }
 
     public void EscolherAtributo() //função que sorteia um dos atributos do personagem para melhorar
@@ -109,6 +138,75 @@ public class PersonagemData
                     sabedoria++;
                     break;
             }
+        }
+    }
+    #endregion
+
+    public void DefinicoesBatalha() //função que define os atributos de batalha do personagem
+    {
+        //restaura os padrões
+        hp = 100;
+        ataque = arma.dano;
+        ataqueMagico = arma.danoMagico;
+        ataqueDistancia = arma.danoDistancia;
+        velocidadeAtaque = arma.velocidadeDeAtaque;
+        esquiva = 1;
+        precisao = 2;
+        pontosDeHabilidade = 60;
+
+        switch (classe)
+        {
+            case Classe.Guerreiro:
+                defesa = 10;
+                defesaMagica = 5;
+                suporte = 5;
+                break;
+            case Classe.Arqueiro:
+                defesa = 10;
+                defesaMagica = 5;
+                suporte = 10;
+                break;
+            case Classe.Mago:
+                defesa = 5;
+                defesaMagica = 10;
+                suporte = 15;
+                break;
+        }
+
+        //atualiza os valores
+        if (constituicao != 1)
+        {
+            hp += constituicao;
+            defesa += constituicao;
+            defesaMagica += constituicao;
+        }
+
+        if (forca != 1)
+        {
+            ataque += (forca + arma.dano);
+        }
+
+        if (inteligencia != 1)
+        {
+            ataqueMagico += (inteligencia + arma.danoMagico);
+            pontosDeHabilidade += inteligencia;
+        }
+
+        if (destreza != 1)
+        {
+            ataqueDistancia += (destreza + arma.danoDistancia);
+            precisao += destreza;
+        }
+
+        if (agilidade != 1)
+        {
+            velocidadeAtaque = Mathf.Clamp(arma.velocidadeDeAtaque - (agilidade * 0.01f), 0.2f, arma.velocidadeDeAtaque);
+            esquiva += agilidade;
+        }
+
+        if (sabedoria != 1)
+        {
+            suporte += sabedoria;
         }
     }
 }

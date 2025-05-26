@@ -47,4 +47,6 @@ MonoBehaviour:
   nome: Espada
   armaClasse: 0
   dano: 10
-  velocidadeDeAtaque: 1
+  danoMagico: 0
+  danoDistancia: 0
+  velocidadeDeAtaque: 2

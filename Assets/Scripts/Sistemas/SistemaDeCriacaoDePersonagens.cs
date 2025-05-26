@@ -49,11 +49,14 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     [SerializeField]
     private Text _sabedoriaTexto; //texto da sabedoria do personagem
     [SerializeField]
-    private GerenciadorDeSlots _gerenciadorDeSlots; //gerenciador de slots
+    private Image[] _runasImagem; //imagem das runas
+    
 
     [Header("Sprites")]
     [SerializeField]
     private Sprite[] _personagensSprites; //sprites dos personagens
+    [SerializeField]
+    private Sprite[] _runasSprites; //sprites das runas
     
     [Header("Tela Seleção de Armas")]
     [SerializeField]
@@ -63,6 +66,8 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     [HideInInspector]
     public int _imagemClasseAtual; //variável que determina a imagem do jogador a depender de sua classe
     private HashSet<string> _codigosGerados = new HashSet<string>(); //lista de códigos gerados
+    [SerializeField]
+    private GerenciadorDeSlots _gerenciadorDeSlots; //gerenciador de slots
 
     public void CriarPersonagem() //função que inicia a criação do personagem
     {
@@ -261,6 +266,46 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         _telaPersonagens.SetActive(false); //desativa a tela de personagens
     }
 
+    public void VerificarRuna(int nivel) //função que verifica se deve equipar ou desequipar runas no personagem
+    {
+        switch(nivel)
+        {
+            case 1:
+                personagemEmCriacao.runaNivel1 = !personagemEmCriacao.runaNivel1;
+                if(!personagemEmCriacao.runaNivel1)
+                {
+                    _runasImagem[0].sprite = _runasSprites[0];
+                }
+                else
+                {
+                    _runasImagem[0].sprite = _runasSprites[1];
+                }
+                break;
+            case 2:
+                personagemEmCriacao.runaNivel2 = !personagemEmCriacao.runaNivel2;
+                if(!personagemEmCriacao.runaNivel2)
+                {
+                    _runasImagem[1].sprite = _runasSprites[0];
+                }
+                else
+                {
+                    _runasImagem[1].sprite = _runasSprites[2];
+                }
+                break;
+            case 3:
+                personagemEmCriacao.runaNivel3 = !personagemEmCriacao.runaNivel3;
+                if(!personagemEmCriacao.runaNivel3)
+                {
+                    _runasImagem[2].sprite = _runasSprites[0];
+                }
+                else
+                {
+                    _runasImagem[2].sprite = _runasSprites[3];
+                }
+                break;
+        }
+    }
+
     public void DeletarPersonagemCriado(int indice) //função de deletar um personagem criado
     {
         if(indice >= 0 && indice < personagensCriados.Count)
@@ -311,6 +356,34 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         if (personagemEmCriacao.atributosDePreferencia.Contains(PreferenciaAtributo.Sabedoria))
         {
             _sabedoriaTexto.color = Color.green;
+        }
+
+        //atualiza as imagens das runas
+        if (!personagemEmCriacao.runaNivel1)
+        {
+            _runasImagem[0].sprite = _runasSprites[0];
+        }
+        else
+        {
+            _runasImagem[0].sprite = _runasSprites[1];
+        }
+
+        if (!personagemEmCriacao.runaNivel2)
+        {
+            _runasImagem[1].sprite = _runasSprites[0];
+        }
+        else
+        {
+            _runasImagem[1].sprite = _runasSprites[2];
+        }
+
+        if (!personagemEmCriacao.runaNivel3)
+        {
+            _runasImagem[2].sprite = _runasSprites[0];
+        }
+        else
+        {
+            _runasImagem[2].sprite = _runasSprites[3];
         }
     }
 

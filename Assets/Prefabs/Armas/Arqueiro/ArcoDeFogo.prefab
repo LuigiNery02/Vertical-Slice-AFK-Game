@@ -46,5 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nome: Arco de Fogo
   armaClasse: 1
-  dano: 8
-  velocidadeDeAtaque: 1.2
+  dano: 1
+  danoMagico: 0
+  danoDistancia: 8
+  velocidadeDeAtaque: 3

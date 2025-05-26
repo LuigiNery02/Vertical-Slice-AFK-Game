@@ -46,5 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nome: Cajado Venenoso
   armaClasse: 2
-  dano: 10
-  velocidadeDeAtaque: 1.5
+  dano: 1
+  danoMagico: 10
+  danoDistancia: 1
+  velocidadeDeAtaque: 4

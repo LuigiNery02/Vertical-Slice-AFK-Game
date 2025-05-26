@@ -46,5 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nome: "Lan\xE7a"
   armaClasse: 0
-  dano: 20
-  velocidadeDeAtaque: 2
+  dano: 15
+  danoMagico: 0
+  danoDistancia: 0
+  velocidadeDeAtaque: 3
