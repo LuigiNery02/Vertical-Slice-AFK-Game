@@ -30,7 +30,6 @@ public class SistemaDeSalvamento : MonoBehaviour
         //verifica se há outra instancia deste objeto
         if(instancia != null)
         {
-            Debug.Log("Encontrou mais do que um DataPersistanceManager na cena, destruindo o novo");
             Destroy(this.gameObject);
             return;
         }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,9 +49,22 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     private Text _inteligenciaTexto; //texto da inteligencia do personagem
     [SerializeField]
     private Text _sabedoriaTexto; //texto da sabedoria do personagem
+
+    [Header("Tela Habilidades")]
     [SerializeField]
     private Image[] _runasImagem; //imagem das runas
-    
+    [SerializeField]
+    private Button _botaoHabilidadesClasse; //botão habilidades de classe
+    [SerializeField]
+    private GameObject _visualHabilidadeClasse; //visual da habilidade equipada
+    [SerializeField]
+    private Image _habilidadeClasseImagem; //imagem da habilidade de classe equipada
+    [SerializeField]
+    private Text _habilidadeClasseTituloTexto; //nome da habilidade de classe equipada
+    [SerializeField]
+    private Text _habilidadeClasseDescicaoTexto; //descrição da habilidade de classe equipada
+    [SerializeField]
+    private Text _habilidadeClasseTipoTexto; //tipo da habilidade de calsse equipada
 
     [Header("Sprites")]
     [SerializeField]
@@ -195,7 +209,30 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     {
         if(habilidade.tipoDeHabilidade == TipoDeHabilidade.Classe)
         {
+            if(habilidade.nivel == 1)
+            {
+                if (!personagemEmCriacao.runaNivel1)
+                {
+                    GerenciadorDeInventario.instancia.MostrarMensagem("Runa nível 1 não equipada, necessária para utilizar habilidade");
+                }
+            }
+            else if(habilidade.nivel == 2)
+            {
+                if (!personagemEmCriacao.runaNivel2)
+                {
+                    GerenciadorDeInventario.instancia.MostrarMensagem("Runa nível 2 não equipada, necessária para utilizar habilidade");
+                }
+            }
+            else if (habilidade.nivel == 3)
+            {
+                if (!personagemEmCriacao.runaNivel3)
+                {
+                    GerenciadorDeInventario.instancia.MostrarMensagem("Runa nível 3 não equipada, necessária para utilizar habilidade");
+                }
+            }
             personagemEmCriacao.habilidadeClasse = habilidade;
+            ResetarTelaPersonagem();
+            AtualizarTelaPersonagem();
         }
         else if(habilidade.tipoDeHabilidade == TipoDeHabilidade.Arma)
         {
@@ -396,6 +433,22 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         else
         {
             _runasImagem[2].sprite = _runasSprites[3];
+        }
+
+        //atualiza as habilidades
+        if(personagemEmCriacao.habilidadeClasse != null)
+        {
+            _botaoHabilidadesClasse.gameObject.SetActive(false);
+            _visualHabilidadeClasse.SetActive(true);
+            _habilidadeClasseImagem.sprite = personagemEmCriacao.habilidadeClasse.spriteHabilidade;
+            _habilidadeClasseTituloTexto.text = personagemEmCriacao.habilidadeClasse.nome;
+            _habilidadeClasseDescicaoTexto.text = personagemEmCriacao.habilidadeClasse.descricao;
+            _habilidadeClasseTipoTexto.text = ("Habilidade de " + personagemEmCriacao.habilidadeClasse.tipoDeHabilidade.ToString());
+        }
+        else
+        {
+            _visualHabilidadeClasse.SetActive(false);
+            _botaoHabilidadesClasse.gameObject.SetActive(true);
         }
     }
 

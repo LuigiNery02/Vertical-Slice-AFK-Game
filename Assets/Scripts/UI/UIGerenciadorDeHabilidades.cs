@@ -4,28 +4,16 @@ using UnityEngine;
 
 public class UIGerenciadorDeHabilidades : MonoBehaviour
 {
-    public GerenciadorDeInventario inventario;
     public SistemaDeCriacaoDePersonagens sistemaDeCriacaoDePersonagens;
 
     public GameObject painelHabilidades;
     public List<SlotHabilidadeUI> slotsHabilidade;
 
-    public void MostrarHabilidades()
+    public void MostrarHabilidades() //função para mostrar as habilidades do personagem
     {
-        List<HabilidadeBase> lista = new List<HabilidadeBase>();
+        List<HabilidadeBase> lista = new List<HabilidadeBase>(); //reseta a lista
 
-        if(sistemaDeCriacaoDePersonagens.personagemEmCriacao.classe == Classe.Guerreiro)
-        {
-            lista = inventario.habilidadesClasseGuerreiro;
-        }
-        else if(sistemaDeCriacaoDePersonagens.personagemEmCriacao.classe == Classe.Arqueiro)
-        {
-            lista = inventario.habilidadesClasseArqueiro;
-        }
-        else if(sistemaDeCriacaoDePersonagens.personagemEmCriacao.classe == Classe.Mago)
-        {
-            lista = inventario.habilidadesClasseMago;
-        }
+        lista = sistemaDeCriacaoDePersonagens.personagemEmCriacao.listaDeHabilidadesDeClasse; //recebe a lista de habilidades do personagem
 
         painelHabilidades.SetActive(true);
 

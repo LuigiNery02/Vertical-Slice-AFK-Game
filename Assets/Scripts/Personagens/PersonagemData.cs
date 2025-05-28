@@ -47,6 +47,7 @@ public class PersonagemData
     public bool runaNivel1; //variável que representa se o personagem possuí uma runa nível 1 equipada
     public bool runaNivel2; //variável que representa se o personagem possuí uma runa nível 2 equipada
     public bool runaNivel3; //variável que representa se o personagem possuí uma runa nível 3 equipada
+    public List<HabilidadeBase> listaDeHabilidadesDeClasse = new List<HabilidadeBase>(); //lista de habilidades de classe que o personagem possuí
     public HabilidadeBase habilidadeClasse; //habilidade de classe do personagem
     //public HabilidadeBase habilidadeArma;
     #endregion
@@ -105,6 +106,18 @@ public class PersonagemData
         }
         else
         {
+            switch(nivel)
+            {
+                case 8:
+                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Classe, this.classe, 1, this);
+                    break;
+                case 28:
+                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Classe, this.classe, 2, this);
+                    break;
+                case 60:
+                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Classe, this.classe, 3, this);
+                    break;
+            }
             expProximoNível += (expProximoNível / 10); //atualiza o valor necessário para passar de nível
         }
 

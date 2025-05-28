@@ -12,7 +12,7 @@ public class SlotHabilidadeUI : MonoBehaviour
 
     private HabilidadeBase _habilidade;
 
-    public void AtualizarSlot(HabilidadeBase habilidade)
+    public void AtualizarSlot(HabilidadeBase habilidade) //função que atualiza o slot de habilidades
     {
         _habilidade = habilidade;
 
@@ -20,7 +20,7 @@ public class SlotHabilidadeUI : MonoBehaviour
         nivelTexto.text = "";
 
         nomeTexto.text = habilidade.nome;
-        nivelTexto.text += (" " + habilidade.nivel);
+        nivelTexto.text += ("Nv: " + habilidade.nivel);
         imagem.sprite = habilidade.spriteHabilidade;
     }
 
