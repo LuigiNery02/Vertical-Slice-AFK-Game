@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &459731064565848591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8847462144823395113}
+  - component: {fileID: 7877036616492321814}
+  m_Layer: 0
+  m_Name: Habilidade11Guerreiro
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8847462144823395113
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459731064565848591}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7877036616492321814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459731064565848591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c6280b05450954ab577a235c6c2265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nome: Aliados Fortes
+  descricao: "N\xEDvel 1:\n-Efeito: Aumenta em 10% ataques corpo a corpo, m\xE1gicos
+    e a dist\xE2ncia dos aliados.\n-Efeito: Cada ponto de suporte aumentam em 1%
+    o efeito anterior.\n-Dura\xE7\xE3o: 3 segundos.\n-Recarga: 12 segundos.\n\nN\xEDvel
+    2:\n-Efeito: Aumenta em 10% ataques corpo a corpo, m\xE1gicos e a dist\xE2ncia
+    dos aliados.\n-Efeito: Cada ponto de suporte aumentam em 1% o efeito anterior.\n-Dura\xE7\xE3o:
+    5 segundos.\n-Recarga: 12 segundos.\n\nN\xEDvel 3:\n-Efeito: Aumenta em 10% ataques
+    corpo a corpo, m\xE1gicos e a dist\xE2ncia dos aliados.\n-Efeito: Cada ponto
+    de suporte aumentam em 1% o efeito anterior.\n-Dura\xE7\xE3o: 10 segundos.\n-Recarga:
+    12 segundos.\n\nPontos de Habilidade: 25"
+  tipoDeHabilidade: 0
+  nivel: 0
+  idHabilidade: Habilidade11Guerreiro
+  pontosDeHabilidade: 25
+  temTempoDeEfeito: 1
+  tempoDeEfeito: 3
+  tempoDeRecarga: 12
+  spriteHabilidade: {fileID: 21300000, guid: d31e0f15092fcfb47bd6e1a8defa5cbc, type: 3}
+  podeAtivarEfeito: 1
+  personagem: {fileID: 0}

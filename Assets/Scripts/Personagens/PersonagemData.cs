@@ -47,6 +47,8 @@ public class PersonagemData
     public bool runaNivel1; //variável que representa se o personagem possuí uma runa nível 1 equipada
     public bool runaNivel2; //variável que representa se o personagem possuí uma runa nível 2 equipada
     public bool runaNivel3; //variável que representa se o personagem possuí uma runa nível 3 equipada
+    public HabilidadeBase habilidadeClasse; //habilidade de classe do personagem
+    //public HabilidadeBase habilidadeArma;
     #endregion
     private List<PreferenciaAtributo> listaSortearAtributo = new List<PreferenciaAtributo>(); //lista que define em pesos todos os pesos dos atributos do personagem
 

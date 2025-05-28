@@ -191,6 +191,18 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         _gerenciadorDeSlots.AtualizarSlots();
     }
 
+    public void DefinirHabilidade(HabilidadeBase habilidade) //função para definir as habilidades do personagem
+    {
+        if(habilidade.tipoDeHabilidade == TipoDeHabilidade.Classe)
+        {
+            personagemEmCriacao.habilidadeClasse = habilidade;
+        }
+        else if(habilidade.tipoDeHabilidade == TipoDeHabilidade.Arma)
+        {
+            //
+        }
+    }
+
     private string GerarCodigoID() //função que gera o CódigoID do personagem
     {
         //define os princípios para gerar o código
