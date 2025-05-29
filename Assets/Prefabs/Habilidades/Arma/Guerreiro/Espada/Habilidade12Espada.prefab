@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5880444874076932255
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8502130763752825780}
+  - component: {fileID: 3041502107280926820}
+  m_Layer: 0
+  m_Name: Habilidade12Espada
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8502130763752825780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5880444874076932255}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3041502107280926820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5880444874076932255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765872d2d9d5f4345aa13b06e664a58e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nome: Espada Mortal
+  descricao: "N\xEDvel 1:\n-Efeito: Causa sangramento permanente ao inimigo atingido
+    (1 de dano por segundo).\n\nN\xEDvel 2:\n-Efeito: Causa sangramento permanente
+    ao inimigo atingido (2 de dano por segundo).\n\nN\xEDvel 3:\n-Efeito: Causa sangramento
+    permanente ao inimigo atingido (3 de dano por segundo).\n\nPontos de Habilidade:
+    30"
+  tipoDeHabilidade: 1
+  nivel: 0
+  idHabilidade: Habilidade12Espada
+  pontosDeHabilidade: 30
+  temTempoDeEfeito: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 0
+  spriteHabilidade: {fileID: 21300000, guid: 6fa365c0ceed64a49836c8da6dc0fcf8, type: 3}
+  podeAtivarEfeito: 1
+  personagem: {fileID: 0}

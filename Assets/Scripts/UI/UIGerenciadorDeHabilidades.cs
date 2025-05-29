@@ -9,12 +9,18 @@ public class UIGerenciadorDeHabilidades : MonoBehaviour
     public GameObject painelHabilidades;
     public List<SlotHabilidadeUI> slotsHabilidade;
 
-    public void MostrarHabilidades() //função para mostrar as habilidades do personagem
+    public void MostrarHabilidades(string tipo) //função para mostrar as habilidades do personagem
     {
         List<HabilidadeBase> lista = new List<HabilidadeBase>(); //reseta a lista
 
-        lista = sistemaDeCriacaoDePersonagens.personagemEmCriacao.listaDeHabilidadesDeClasse; //recebe a lista de habilidades do personagem
-
+        if (tipo == "Classe")
+        {
+            lista = sistemaDeCriacaoDePersonagens.personagemEmCriacao.listaDeHabilidadesDeClasse; //recebe a lista de habilidades de classe do personagem
+        }
+        else if(tipo == "Arma")
+        {
+            lista = sistemaDeCriacaoDePersonagens.personagemEmCriacao.listaDeHabilidadesDeArma; //recebe a lista de habilidades de arma do personagem
+        }
         painelHabilidades.SetActive(true);
 
         foreach(var slot in slotsHabilidade)

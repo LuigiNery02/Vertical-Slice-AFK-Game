@@ -46,16 +46,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nome: Aliados Fortes
   descricao: "N\xEDvel 1:\n-Efeito: Aumenta em 10% ataques corpo a corpo, m\xE1gicos
-    e a dist\xE2ncia dos aliados.\n-Efeito: Cada ponto de suporte aumentam em 1%
-    o efeito anterior.\n-Dura\xE7\xE3o: 3 segundos.\n-Recarga: 12 segundos.\n\nN\xEDvel
+    e a dist\xE2ncia dos aliados.\n-Efeito: Cada ponto de suporte aumenta em 1% o
+    efeito anterior.\n-Dura\xE7\xE3o: 3 segundos.\n-Recarga: 12 segundos.\n\nN\xEDvel
     2:\n-Efeito: Aumenta em 10% ataques corpo a corpo, m\xE1gicos e a dist\xE2ncia
-    dos aliados.\n-Efeito: Cada ponto de suporte aumentam em 1% o efeito anterior.\n-Dura\xE7\xE3o:
+    dos aliados.\n-Efeito: Cada ponto de suporte aumenta em 1% o efeito anterior.\n-Dura\xE7\xE3o:
     5 segundos.\n-Recarga: 12 segundos.\n\nN\xEDvel 3:\n-Efeito: Aumenta em 10% ataques
     corpo a corpo, m\xE1gicos e a dist\xE2ncia dos aliados.\n-Efeito: Cada ponto
-    de suporte aumentam em 1% o efeito anterior.\n-Dura\xE7\xE3o: 10 segundos.\n-Recarga:
+    de suporte aumenta em 1% o efeito anterior.\n-Dura\xE7\xE3o: 10 segundos.\n-Recarga:
     12 segundos.\n\nPontos de Habilidade: 25"
   tipoDeHabilidade: 0
-  nivel: 0
+  nivel: 1
   idHabilidade: Habilidade11Guerreiro
   pontosDeHabilidade: 25
   temTempoDeEfeito: 1

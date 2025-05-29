@@ -17,6 +17,7 @@ public class GerenciadorDeInventario : MonoBehaviour
     public List<HabilidadeBase> habilidadesClasseGuerreiro = new List<HabilidadeBase>(); //lista de habilidades da classe guerreiro
     public List<HabilidadeBase> habilidadesClasseArqueiro = new List<HabilidadeBase>(); //lista de habilidades da classe arqueiro
     public List<HabilidadeBase> habilidadesClasseMago = new List<HabilidadeBase>(); //lista de habilidades da classe mago
+    public List<HabilidadeBase> habilidadesEspada = new List<HabilidadeBase>(); //lista de habilidades da espada
 
     private Transform canvasAtual; //canvas atual da cena
 
@@ -78,6 +79,38 @@ public class GerenciadorDeInventario : MonoBehaviour
                 //adiciona a habilidade sorteada ao inventário do personagem
                 habilidadeSorteada.nivel = nivel;
                 personagem.listaDeHabilidadesDeClasse.Add(habilidadeSorteada);
+                MostrarMensagem("Habilidade Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido);
+            }
+        }
+        else if(tipo == TipoDeHabilidade.Arma)
+        {
+            //define o sorteio da habilidade 
+            List<HabilidadeBase> listaArmaOriginal = null;
+
+            switch (personagem.arma.nome)
+            {
+                case "Espada":
+                    listaArmaOriginal = habilidadesEspada;
+                    break;
+            }
+
+            HabilidadeBase habilidadeSorteada = listaArmaOriginal[Random.Range(0, listaArmaOriginal.Count)]; //sorteia uma habilidade
+            HabilidadeBase habilidadeExistente = personagem.listaDeHabilidadesDeArma.Find(id => id.idHabilidade == habilidadeSorteada.idHabilidade); //verifica so o personagem já possui a habilidade
+
+            if (habilidadeExistente != null) //caso o personagem já a possua a habilidade sorteada
+            {
+                //atualiza o nível da habilidade existente do personagem
+                if (nivel > habilidadeExistente.nivel)
+                {
+                    habilidadeExistente.nivel = nivel;
+                    MostrarMensagem("Habilidade Evoluída: " + habilidadeExistente.nome + "\nNível: " + habilidadeExistente.nivel + "\nHerói: " + personagem.apelido);
+                }
+            }
+            else //do contrário
+            {
+                //adiciona a habilidade sorteada ao inventário do personagem
+                habilidadeSorteada.nivel = nivel;
+                personagem.listaDeHabilidadesDeArma.Add(habilidadeSorteada);
                 MostrarMensagem("Habilidade Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido);
             }
         }

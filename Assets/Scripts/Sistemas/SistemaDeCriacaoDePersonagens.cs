@@ -56,15 +56,28 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     [SerializeField]
     private Button _botaoHabilidadesClasse; //botão habilidades de classe
     [SerializeField]
-    private GameObject _visualHabilidadeClasse; //visual da habilidade equipada
+    private GameObject _visualHabilidadeClasse; //visual da habilidade de classe equipada
     [SerializeField]
     private Image _habilidadeClasseImagem; //imagem da habilidade de classe equipada
     [SerializeField]
     private Text _habilidadeClasseTituloTexto; //nome da habilidade de classe equipada
     [SerializeField]
-    private Text _habilidadeClasseDescicaoTexto; //descrição da habilidade de classe equipada
+    private Text _habilidadeClasseDescricaoTexto; //descrição da habilidade de classe equipada
     [SerializeField]
     private Text _habilidadeClasseTipoTexto; //tipo da habilidade de calsse equipada
+    [SerializeField]
+    private Button _botaoHabilidadesArma; //botão habilidades de arma
+    [SerializeField]
+    private GameObject _visualHabilidadeArma; //visual da habilidade de arma equipada
+    [SerializeField]
+    private Image _habilidadeArmaImagem; //imagem da habilidade de arma equipada
+    [SerializeField]
+    private Text _habilidadeArmaTituloTexto; //nome da habilidade de arma equipada
+    [SerializeField]
+    private Text _habilidadeArmaDescricaoTexto; //descrição da habilidade de arma equipada
+    [SerializeField]
+    private Text _habilidadeArmaTipoTexto; //tipo da habilidade de arma equipada
+
 
     [Header("Sprites")]
     [SerializeField]
@@ -236,7 +249,30 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         }
         else if(habilidade.tipoDeHabilidade == TipoDeHabilidade.Arma)
         {
-            //
+            if (habilidade.nivel == 1)
+            {
+                if (!personagemEmCriacao.runaNivel1)
+                {
+                    GerenciadorDeInventario.instancia.MostrarMensagem("Runa nível 1 não equipada, necessária para utilizar habilidade");
+                }
+            }
+            else if (habilidade.nivel == 2)
+            {
+                if (!personagemEmCriacao.runaNivel2)
+                {
+                    GerenciadorDeInventario.instancia.MostrarMensagem("Runa nível 2 não equipada, necessária para utilizar habilidade");
+                }
+            }
+            else if (habilidade.nivel == 3)
+            {
+                if (!personagemEmCriacao.runaNivel3)
+                {
+                    GerenciadorDeInventario.instancia.MostrarMensagem("Runa nível 3 não equipada, necessária para utilizar habilidade");
+                }
+            }
+            personagemEmCriacao.habilidadeArma = habilidade;
+            ResetarTelaPersonagem();
+            AtualizarTelaPersonagem();
         }
     }
 
@@ -442,13 +478,28 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
             _visualHabilidadeClasse.SetActive(true);
             _habilidadeClasseImagem.sprite = personagemEmCriacao.habilidadeClasse.spriteHabilidade;
             _habilidadeClasseTituloTexto.text = personagemEmCriacao.habilidadeClasse.nome;
-            _habilidadeClasseDescicaoTexto.text = personagemEmCriacao.habilidadeClasse.descricao;
+            _habilidadeClasseDescricaoTexto.text = personagemEmCriacao.habilidadeClasse.descricao;
             _habilidadeClasseTipoTexto.text = ("Habilidade de " + personagemEmCriacao.habilidadeClasse.tipoDeHabilidade.ToString());
         }
         else
         {
             _visualHabilidadeClasse.SetActive(false);
             _botaoHabilidadesClasse.gameObject.SetActive(true);
+        }
+
+        if (personagemEmCriacao.habilidadeArma != null)
+        {
+            _botaoHabilidadesArma.gameObject.SetActive(false);
+            _visualHabilidadeArma.SetActive(true);
+            _habilidadeArmaImagem.sprite = personagemEmCriacao.habilidadeArma.spriteHabilidade;
+            _habilidadeArmaTituloTexto.text = personagemEmCriacao.habilidadeArma.nome;
+            _habilidadeArmaDescricaoTexto.text = personagemEmCriacao.habilidadeArma.descricao;
+            _habilidadeArmaTipoTexto.text = ("Habilidade de " + personagemEmCriacao.habilidadeArma.tipoDeHabilidade.ToString());
+        }
+        else
+        {
+            _visualHabilidadeArma.SetActive(false);
+            _botaoHabilidadesArma.gameObject.SetActive(true);
         }
     }
 
