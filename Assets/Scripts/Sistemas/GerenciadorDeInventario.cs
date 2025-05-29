@@ -17,7 +17,11 @@ public class GerenciadorDeInventario : MonoBehaviour
     public List<HabilidadeBase> habilidadesClasseGuerreiro = new List<HabilidadeBase>(); //lista de habilidades da classe guerreiro
     public List<HabilidadeBase> habilidadesClasseArqueiro = new List<HabilidadeBase>(); //lista de habilidades da classe arqueiro
     public List<HabilidadeBase> habilidadesClasseMago = new List<HabilidadeBase>(); //lista de habilidades da classe mago
+
+    [Header("Lista de Habilidades de Arma: Guerreiro")]
     public List<HabilidadeBase> habilidadesEspada = new List<HabilidadeBase>(); //lista de habilidades da espada
+    public List<HabilidadeBase> habilidadesLanca = new List<HabilidadeBase>(); //lista de habilidades da lança
+    public List<HabilidadeBase> habilidadesMachado = new List<HabilidadeBase>(); //lista de habilidades da machado
 
     private Transform canvasAtual; //canvas atual da cena
 
@@ -91,6 +95,12 @@ public class GerenciadorDeInventario : MonoBehaviour
             {
                 case "Espada":
                     listaArmaOriginal = habilidadesEspada;
+                    break;
+                case "Lança":
+                    listaArmaOriginal = habilidadesLanca;
+                    break;
+                case "Machado":
+                    listaArmaOriginal = habilidadesMachado;
                     break;
             }
 
