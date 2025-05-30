@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nome: Arco de Gelo
   armaClasse: 1
-  dano: 0
-  danoMagico: 0
-  danoDistancia: 8
-  velocidadeDeAtaque: 3
+  dano: -1
+  danoMagico: -1
+  danoDistancia: 7
+  velocidadeDeAtaque: 3.01

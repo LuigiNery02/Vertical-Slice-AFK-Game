@@ -50,6 +50,18 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     [SerializeField]
     private Text _sabedoriaTexto; //texto da sabedoria do personagem
 
+    [Header("Tela Arma")]
+    [SerializeField]
+    private Text _nomeArmaTexto; //texto do nome da arma
+    [SerializeField]
+    private Text _danoMeleeArmaTexto; //texto do dano melee da arma do personagem
+    [SerializeField]
+    private Text _danoDistanciaArmaTexto; //texto do dano à distância da arma do personagem
+    [SerializeField]
+    private Text _danoMagicoArmaTexto; //texto do dano mágico da arma do personagem
+    [SerializeField]
+    private Text _velocidadeAtaqueArmaTexto; //texto da velocidade de ataque da arma do personagem
+
     [Header("Tela Habilidades")]
     [SerializeField]
     private Image[] _runasImagem; //imagem das runas
@@ -78,6 +90,29 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     [SerializeField]
     private Text _habilidadeArmaTipoTexto; //tipo da habilidade de arma equipada
 
+    [Header("Tela Modificadores")]
+    [SerializeField]
+    private Text _hpTexto; //texto do hp do personagem
+    [SerializeField]
+    private Text _danoMeleeTexto; //texto do dano melee do personagem
+    [SerializeField]
+    private Text _danoDistanciaTexto; //texto do dano à distância do personagem
+    [SerializeField]
+    private Text _danoMagicoTexto; //texto do dano mágico do personagem
+    [SerializeField]
+    private Text _defesaTexto; //texto da defesa mágica do personagem
+    [SerializeField]
+    private Text _defesaMagicaTexto; //texto da defesa mágica do personagem
+    [SerializeField]
+    private Text _velocidadeAtaqueTexto; //texto da velocidade de ataque do personagem
+    [SerializeField]
+    private Text _esquivaTexto; //texto da esquiva do personagem
+    [SerializeField]
+    private Text _precisaoTexto; //texto da precisãp do personagem
+    [SerializeField]
+    private Text _suporteTexto; //texto do suporte do personagem
+    [SerializeField]
+    private Text _pontosHabilidadeTexto; //texto de pontos de habilidade do personagem
 
     [Header("Sprites")]
     [SerializeField]
@@ -312,8 +347,6 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
 
     public void PersonagemCriado() //função que finaliza a criação do personagem e define suas características básicas
     {
-        personagemEmCriacao.DefinirPersonagem();
-
         switch (personagemEmCriacao.classe)
         {
             case Classe.Guerreiro:
@@ -338,6 +371,8 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         personagemEmCriacao.inteligencia = 1;
         personagemEmCriacao.sabedoria = 1;
         personagemEmCriacao.expProximoNível = 50;
+
+        personagemEmCriacao.DefinirPersonagem();
 
         personagemEmCriacao.codigoID = GerarCodigoID(); //gera o código do personagem
         personagensCriados.Add(personagemEmCriacao); //adiciona o personagem criado à lista
@@ -417,8 +452,26 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         _inteligenciaTexto.text += (" " + personagemEmCriacao.inteligencia);
         _sabedoriaTexto.text += (" " + personagemEmCriacao.sabedoria);
 
+        _hpTexto.text = ("HP: " + personagemEmCriacao.hp.ToString());
+        _danoMeleeTexto.text = ("Dano Melee: " + personagemEmCriacao.ataque);
+        _danoDistanciaTexto.text = ("Dano à Distância: " + personagemEmCriacao.ataqueDistancia);
+        _danoMagicoTexto.text = ("Dano Mágico: " + personagemEmCriacao.ataqueMagico);
+        _defesaTexto.text = ("Defesa: " + personagemEmCriacao.defesa);
+        _defesaMagicaTexto.text = ("Defesa Mágica: " + personagemEmCriacao.defesaMagica);
+        _velocidadeAtaqueTexto.text = ("Velocidade de Ataque: " + personagemEmCriacao.velocidadeAtaque);
+        _esquivaTexto.text = ("Esquiva: " + personagemEmCriacao.esquiva);
+        _precisaoTexto.text = ("Precisão: " + personagemEmCriacao.precisao);
+        _suporteTexto.text = ("Suporte: " + personagemEmCriacao.suporte);
+        _pontosHabilidadeTexto.text = ("Pontos de Habilidade: " + personagemEmCriacao.pontosDeHabilidade);
+
+        _nomeArmaTexto.text = ("Nome: " + personagemEmCriacao.arma.nome);
+        _danoMeleeArmaTexto.text = ("Dano Melee: " + (personagemEmCriacao.arma.dano + 1));
+        _danoDistanciaArmaTexto.text = ("Dano à Distância: " + (personagemEmCriacao.arma.danoDistancia + 1));
+        _danoMagicoArmaTexto.text = ("Dano Mágico: " + (personagemEmCriacao.arma.danoMagico + 1));
+        _velocidadeAtaqueArmaTexto.text = ("Velocidade de Ataque: " + (personagemEmCriacao.arma.velocidadeDeAtaque - 0.01f));
+
         //muda a cor do texto para identificar o atributo de preferência do personagem
-        if(personagemEmCriacao.atributosDePreferencia.Contains(PreferenciaAtributo.Forca))
+        if (personagemEmCriacao.atributosDePreferencia.Contains(PreferenciaAtributo.Forca))
         {
             _forcaTexto.color = Color.green;
         }
@@ -518,6 +571,24 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         _constituicaoTexto.text = ("Constituição:");
         _inteligenciaTexto.text = ("Inteligência:");
         _sabedoriaTexto.text = ("Sabedoria:");
+
+        _hpTexto.text = "";
+        _danoMeleeTexto.text = "";
+        _danoDistanciaTexto.text = "";
+        _danoMagicoTexto.text = "";
+        _defesaTexto.text = "";
+        _defesaMagicaTexto.text = "";
+        _velocidadeAtaqueTexto.text = "";
+        _esquivaTexto.text = "";
+        _precisaoTexto.text = "";
+        _suporteTexto.text = "";
+        _pontosHabilidadeTexto.text = "";
+
+        _nomeArmaTexto.text = "";
+        _danoMeleeArmaTexto.text = "";
+        _danoDistanciaArmaTexto.text = "";
+        _danoMagicoArmaTexto.text = "";
+        _velocidadeAtaqueArmaTexto.text = "";
 
         //reseta as cores dos textos
         _forcaTexto.color = Color.white;

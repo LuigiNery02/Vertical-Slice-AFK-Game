@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nome: Machado
   armaClasse: 0
-  dano: 12.5
-  danoMagico: 0
-  danoDistancia: 0
-  velocidadeDeAtaque: 2.5
+  dano: 11.5
+  danoMagico: -1
+  danoDistancia: -1
+  velocidadeDeAtaque: 2.51

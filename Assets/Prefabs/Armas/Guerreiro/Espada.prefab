@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nome: Espada
   armaClasse: 0
-  dano: 10
-  danoMagico: 0
-  danoDistancia: 0
-  velocidadeDeAtaque: 2
+  dano: 9
+  danoMagico: -1
+  danoDistancia: -1
+  velocidadeDeAtaque: 2.01

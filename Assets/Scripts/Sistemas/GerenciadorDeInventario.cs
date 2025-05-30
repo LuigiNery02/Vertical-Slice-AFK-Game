@@ -182,6 +182,7 @@ public class GerenciadorDeInventario : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(DesativarMensagem());
         }
+        mensagemObjeto.transform.localScale = Vector3.one;
     }
 
     private IEnumerator DesativarMensagem() //coroutine que desativa a mensagem

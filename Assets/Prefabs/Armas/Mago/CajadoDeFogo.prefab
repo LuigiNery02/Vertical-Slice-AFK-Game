@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nome: Cajado de Fogo
   armaClasse: 2
-  dano: 0
-  danoMagico: 10
-  danoDistancia: 0
-  velocidadeDeAtaque: 4
+  dano: -1
+  danoMagico: 9
+  danoDistancia: -1
+  velocidadeDeAtaque: 4.01

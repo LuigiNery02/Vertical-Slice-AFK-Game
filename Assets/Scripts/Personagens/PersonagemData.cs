@@ -171,68 +171,50 @@ public class PersonagemData
     public void DefinicoesBatalha() //função que define os atributos de batalha do personagem
     {
         //restaura os padrões
-        hp = 100;
+        hp = 99;
         ataque = arma.dano;
         ataqueMagico = arma.danoMagico;
         ataqueDistancia = arma.danoDistancia;
         velocidadeAtaque = arma.velocidadeDeAtaque;
-        esquiva = 1;
-        precisao = 2;
-        pontosDeHabilidade = 60;
+        esquiva = 0;
+        precisao = 1;
+        pontosDeHabilidade = 59;
 
         switch (classe)
         {
             case Classe.Guerreiro:
-                defesa = 10;
-                defesaMagica = 5;
-                suporte = 5;
+                defesa = 19;
+                defesaMagica = 4;
+                suporte = 4;
                 break;
             case Classe.Arqueiro:
-                defesa = 10;
-                defesaMagica = 5;
-                suporte = 10;
+                defesa = 9;
+                defesaMagica = 9;
+                suporte = 9;
                 break;
             case Classe.Mago:
-                defesa = 5;
-                defesaMagica = 10;
-                suporte = 15;
+                defesa = 4;
+                defesaMagica = 19;
+                suporte = 14;
                 break;
         }
 
         //atualiza os valores
-        if (constituicao != 1)
-        {
-            hp += constituicao;
-            defesa += constituicao;
-            defesaMagica += constituicao;
-        }
+        hp += constituicao;
+        defesa += constituicao;
+        defesaMagica += constituicao;
 
-        if (forca != 1)
-        {
-            ataque += (forca + arma.dano);
-        }
+        ataque += (forca);
 
-        if (inteligencia != 1)
-        {
-            ataqueMagico += (inteligencia + arma.danoMagico);
-            pontosDeHabilidade += inteligencia;
-        }
+        ataqueMagico += (inteligencia);
+        pontosDeHabilidade += inteligencia;
 
-        if (destreza != 1)
-        {
-            ataqueDistancia += (destreza + arma.danoDistancia);
-            precisao += destreza;
-        }
+        ataqueDistancia += (destreza);
+        precisao += destreza;
 
-        if (agilidade != 1)
-        {
-            velocidadeAtaque = Mathf.Clamp(arma.velocidadeDeAtaque - (agilidade * 0.01f), 0.2f, arma.velocidadeDeAtaque);
-            esquiva += agilidade;
-        }
+        velocidadeAtaque = Mathf.Clamp(arma.velocidadeDeAtaque - (agilidade * 0.01f), 0.2f, arma.velocidadeDeAtaque);
+        esquiva += agilidade;
 
-        if (sabedoria != 1)
-        {
-            suporte += sabedoria;
-        }
+        suporte += sabedoria;
     }
 }
