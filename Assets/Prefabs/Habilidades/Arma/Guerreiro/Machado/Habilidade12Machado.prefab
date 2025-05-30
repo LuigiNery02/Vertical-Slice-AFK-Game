@@ -45,11 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: Machado Mortal
-  descricao: "N\xEDvel 1:\n-Efeito: Causa sangramento permanente ao inimigo atingido
-    (1.5 de dano por segundo).\n\nN\xEDvel 2:\n-Efeito: Causa sangramento permanente
-    ao inimigo atingido (2.5 de dano por segundo).\n\nN\xEDvel 3:\n-Efeito: Causa
-    sangramento permanente ao inimigo atingido (3.5 de dano por segundo).\n\nPontos
-    de Habilidade: 30"
+  descricao: "N\xEDvel 1:\n-Efeito: Causa sangramento permanente ao inimigo atingido.\n\nN\xEDvel
+    2:\n-Efeito: Causa sangramento ao inimigo atingido (Efeito mais forte que o n\xEDvel
+    anterior).\n\nN\xEDvel 3:\n-Efeito: Causa sangramento ao inimigo atingido (Efeito
+    mais forte que o n\xEDvel anterior).\n\nPontos de Habilidade: 30"
   tipoDeHabilidade: 1
   nivel: 0
   idHabilidade: Habilidade12Machado

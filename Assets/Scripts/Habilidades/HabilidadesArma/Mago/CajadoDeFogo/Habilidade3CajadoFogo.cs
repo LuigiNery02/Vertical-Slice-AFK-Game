@@ -1,0 +1,43 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Habilidade3CajadoFogo : HabilidadeBase
+{
+    private float _velocidadeDeAtaqueOriginal; //velocidade de ataque original da arma
+    private bool _queimadura; //variável que verifica se há efeito de queimadura
+    private void Start()
+    {
+        efeitoHabilidade = EfeitoHabilidade;
+        removerEfeitoHabilidade = RemoverEfeitoHabilidade;
+
+        //guarda os atributos originais da arma do personagem
+        //_velocidadeDeAtaqueOriginal = personagem.arma.velocidadeDeAtaque;
+    }
+    private void EfeitoHabilidade() //função de efeito da habilidade 
+    {
+        switch (nivel)
+        {
+            case 1:
+                //personagem.arma.velocidadeDeAtaque -= 0.1f; //reduz a velocidade de ataque em 0.1
+                _queimadura = true;
+                break;
+            case 2:
+                //personagem.arma.velocidadeDeAtaque -= 0.2f; //reduz a velocidade de ataque em 0.2
+                _queimadura = true;
+                break;
+            case 3:
+                //personagem.arma.velocidadeDeAtaque -= 0.4f; //reduz a velocidade de ataque em 0.4
+                _queimadura = true;
+                break;
+        }
+
+    }
+
+    private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
+    {
+        //reseta os atributos originais do personagem
+        //personagem.arma.velocidadeDeAtaque = _velocidadeDeAtaqueOriginal;
+        _queimadura = false;
+    }
+}

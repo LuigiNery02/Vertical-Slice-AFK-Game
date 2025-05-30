@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: Machado Acelerado
-  descricao: "N\xEDvel 1:\n-Efeito: Reduz a velocidade de ataque da arma em 0.075.\n-Efeito:
+  descricao: "N\xEDvel 1:\n-Efeito: Aumenta a velocidade de ataque da arma em 0.075.\n-Efeito:
     Diminui o dano da arma em 7.5%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga: 10 segundos.\n\nN\xEDvel
-    2:\n-Efeito: Reduz a velocidade de ataque da arma em 0.15.\n-Efeito: Diminui
+    2:\n-Efeito: Aumenta a velocidade de ataque da arma em 0.15.\n-Efeito: Diminui
     o dano da arma em 15%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga: 10 segundos\n\nN\xEDvel
-    3:\n-Efeito: Reduz a velocidade de ataque da arma em 0.25.\n-Efeito: Diminui
+    3:\n-Efeito: Aumenta a velocidade de ataque da arma em 0.25.\n-Efeito: Diminui
     o dano da arma em 22.5%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga: 10 segundos\n\nPontos
     de Habilidade: 20"
   tipoDeHabilidade: 1

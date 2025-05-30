@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nome: Cajado de Gelo
   armaClasse: 2
-  dano: 1
+  dano: 0
   danoMagico: 10
-  danoDistancia: 1
+  danoDistancia: 0
   velocidadeDeAtaque: 4

@@ -45,13 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: "Perfura\xE7\xE3o Veloz"
-  descricao: "N\xEDvel 1:\n-Efeito: Reduz a velocidade de ataque da arma em 0.2.\n-Dura\xE7\xE3o:
-    4 segundos.\n-Recarga: 12 segundos.\n\nN\xEDvel 2:\n-Efeito: Reduz a velocidade
+  descricao: "N\xEDvel 1:\n-Efeito: Aumenta a velocidade de ataque da arma em 0.2.\n-Dura\xE7\xE3o:
+    4 segundos.\n-Recarga: 12 segundos.\n\nN\xEDvel 2:\n-Efeito: Aumenta a velocidade
     de ataque da arma em 0.2.\n-Dura\xE7\xE3o: 8 segundos.\n-Recarga: 12 segundos.\n\nN\xEDvel
-    3:\n-Efeito: Reduz a velocidade de ataque da arma em 0.2.\n-Dura\xE7\xE3o: 12
-    segundos.\n-Recarga: 12 segundos.\n\nPontos de Habilidade: 20"
+    3:\n-Efeito: Aumenta a velocidade de ataque da arma em 0.2.\n-Dura\xE7\xE3o:
+    12 segundos.\n-Recarga: 12 segundos.\n\nPontos de Habilidade: 20"
   tipoDeHabilidade: 1
-  nivel: 0
+  nivel: 1
   idHabilidade: Habilidade6Lanca
   pontosDeHabilidade: 20
   temTempoDeEfeito: 1

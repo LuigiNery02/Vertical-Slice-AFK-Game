@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: "Espada Rel\xE2mpago"
-  descricao: "N\xEDvel 1:\n-Efeito: Reduz a velocidade de ataque da arma em 0.05.\n\nN\xEDvel
-    2:\n-Efeito: Reduz a velocidade de ataque da arma em 0.1.\n\nN\xEDvel 3:\n-Efeito:
-    Reduz a velocidade de ataque da arma em 0.15.\n\nPontos de Habilidade: 30"
+  descricao: "N\xEDvel 1:\n-Efeito: Aumenta a velocidade de ataque da arma em 0.05.\n\nN\xEDvel
+    2:\n-Efeito: Aumenta a velocidade de ataque da arma em 0.1.\n\nN\xEDvel 3:\n-Efeito:
+    Aumenta a velocidade de ataque da arma em 0.15.\n\nPontos de Habilidade: 30"
   tipoDeHabilidade: 1
   nivel: 0
   idHabilidade: Habilidade4Espada

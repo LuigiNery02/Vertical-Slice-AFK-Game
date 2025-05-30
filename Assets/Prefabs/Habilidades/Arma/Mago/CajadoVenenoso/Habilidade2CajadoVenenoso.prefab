@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6822292291678987439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8882398648772681755}
+  - component: {fileID: 2750226252670074946}
+  m_Layer: 0
+  m_Name: Habilidade2CajadoVenenoso
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8882398648772681755
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6822292291678987439}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2750226252670074946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6822292291678987439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faeed3ff99bbbce42ac8a51b135826b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nome: Cajado Perverso
+  descricao: "N\xEDvel 1:\n-Efeito: Aumenta o dano da arma em 2%.\n\nN\xEDvel 2:\n-Efeito:
+    Aumenta o dano da arma em 6%.\n\nN\xEDvel 3:\n-Efeito: Aumenta o dano da arma
+    em 12%.\n\nPontos de Habilidade: 30"
+  tipoDeHabilidade: 1
+  nivel: 0
+  idHabilidade: Habilidade2CajadoVenenoso
+  pontosDeHabilidade: 30
+  temTempoDeEfeito: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 0
+  spriteHabilidade: {fileID: 21300000, guid: 68f988b1d46657d4fa7c0e623e6518b5, type: 3}
+  podeAtivarEfeito: 1
+  personagem: {fileID: 0}

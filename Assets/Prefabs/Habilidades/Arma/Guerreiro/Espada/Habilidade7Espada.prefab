@@ -45,12 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: Espada Acelerada
-  descricao: "N\xEDvel 1:\n-Efeito: Reduz a velocidade de ataque da arma em 0.1.\n-Efeito:
+  descricao: "N\xEDvel 1:\n-Efeito: Aumenta a velocidade de ataque da arma em 0.1.\n-Efeito:
     Diminui o dano da arma em 5%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga: 10 segundos.\n\nN\xEDvel
-    2:\n-Efeito: Reduz a velocidade de ataque da arma em 0.2.\n-Efeito: Diminui o
-    dano da arma em 10%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga: 10 segundos\n\nN\xEDvel
-    3:\n-Efeito: Reduz a velocidade de ataque da arma em 0.3.\n-Efeito: Diminui o
-    dano da arma em 20%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga: 10 segundos\n\nPontos
+    2:\n-Efeito: Aumenta a velocidade de ataque da arma em 0.2.\n-Efeito: Diminui
+    o dano da arma em 10%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga: 10 segundos\n\nN\xEDvel
+    3:\n-Efeito: Aumenta a velocidade de ataque da arma em 0.3.\n-Efeito: Diminui
+    o dano da arma em 20%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga: 10 segundos\n\nPontos
     de Habilidade: 20"
   tipoDeHabilidade: 1
   nivel: 0

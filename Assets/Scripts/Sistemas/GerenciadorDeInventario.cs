@@ -23,6 +23,16 @@ public class GerenciadorDeInventario : MonoBehaviour
     public List<HabilidadeBase> habilidadesLanca = new List<HabilidadeBase>(); //lista de habilidades da lança
     public List<HabilidadeBase> habilidadesMachado = new List<HabilidadeBase>(); //lista de habilidades da machado
 
+    [Header("Lista de Habilidades de Arma: Arqueiro")]
+    public List<HabilidadeBase> habilidadesArcoFogo = new List<HabilidadeBase>(); //lista de habilidades do arco de fogo
+    public List<HabilidadeBase> habilidadesArcoGelo = new List<HabilidadeBase>(); //lista de habilidades do arco de gelo
+    public List<HabilidadeBase> habilidadesArcoVenenoso = new List<HabilidadeBase>(); //lista de habilidades do arco venenoso
+
+    [Header("Lista de Habilidades de Arma: Mago")]
+    public List<HabilidadeBase> habilidadesCajadoFogo = new List<HabilidadeBase>(); //lista de habilidades do cajado de fogo
+    public List<HabilidadeBase> habilidadesCajadoGelo = new List<HabilidadeBase>(); //lista de habilidades do cajado de gelo
+    public List<HabilidadeBase> habilidadesCajadoVenenoso = new List<HabilidadeBase>(); //lista de habilidades do cajado venenoso
+
     private Transform canvasAtual; //canvas atual da cena
 
     private void Awake()
@@ -101,6 +111,24 @@ public class GerenciadorDeInventario : MonoBehaviour
                     break;
                 case "Machado":
                     listaArmaOriginal = habilidadesMachado;
+                    break;
+                case "Arco de Fogo":
+                    listaArmaOriginal = habilidadesArcoFogo;
+                    break;
+                case "Arco de Gelo":
+                    listaArmaOriginal = habilidadesArcoGelo;
+                    break;
+                case "Arco Venenoso":
+                    listaArmaOriginal = habilidadesArcoVenenoso;
+                    break;
+                case "Cajado de Fogo":
+                    listaArmaOriginal = habilidadesCajadoFogo; 
+                    break;
+                case "Cajado de Gelo":
+                    listaArmaOriginal = habilidadesCajadoGelo;
+                    break;
+                case "Cajado Venenoso":
+                    listaArmaOriginal = habilidadesCajadoVenenoso;
                     break;
             }
 

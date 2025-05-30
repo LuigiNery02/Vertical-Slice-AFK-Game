@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6198659915901338327
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5040130799949947761}
+  - component: {fileID: 2803473157065217994}
+  m_Layer: 0
+  m_Name: Habilidade6CajadoFogo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5040130799949947761
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6198659915901338327}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2803473157065217994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6198659915901338327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c39d5dc9a9e273b4dbe7d4c57d007df8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nome: "M\xE1gica de Fogo"
+  descricao: "N\xEDvel 1:\n-Efeito: Aumenta a velocidade de ataque da arma em 0.3.\n-Efeito:
+    Inimigo Alvo sofre queimadura. \n-Dura\xE7\xE3o: 4 segundos.\n-Recarga: 12 segundos.\n\nN\xEDvel
+    2:\n-Efeito: Aumenta a velocidade de ataque da arma em 0.3.\n-Efeito: Inimigo
+    Alvo sofre queimadura. \n-Dura\xE7\xE3o: 8 segundos.\n-Recarga: 12 segundos.\n\nN\xEDvel
+    3:\n-Efeito: Aumenta a velocidade de ataque da arma em 0.3.\n-Efeito: Inimigo
+    Alvo sofre queimadura. \n-Dura\xE7\xE3o: 12 segundos.\n-Recarga: 12 segundos.\n\nPontos
+    de Habilidade: 20"
+  tipoDeHabilidade: 1
+  nivel: 0
+  idHabilidade: Habilidade6CajadoFogo
+  pontosDeHabilidade: 20
+  temTempoDeEfeito: 1
+  tempoDeEfeito: 4
+  tempoDeRecarga: 12
+  spriteHabilidade: {fileID: 21300000, guid: a4d6c044f84dbc94bb8b075cf70e1722, type: 3}
+  podeAtivarEfeito: 1
+  personagem: {fileID: 0}

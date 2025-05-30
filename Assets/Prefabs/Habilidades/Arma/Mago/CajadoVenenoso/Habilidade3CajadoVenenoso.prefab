@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &969102560847181463
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2739145857138185268}
+  - component: {fileID: 6940448477972135053}
+  m_Layer: 0
+  m_Name: Habilidade3CajadoVenenoso
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2739145857138185268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969102560847181463}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6940448477972135053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969102560847181463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff80c51d5074e434196cc434c1265d59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nome: "Cajado \xC1cido"
+  descricao: "N\xEDvel 1:\n-Efeito: Aumenta a velocidade de ataque da arma em 0.08.\n-Efeito:
+    Inimigo Alvo sofre envenenamento. \n-Dura\xE7\xE3o: 7 segundos.\n-Recarga: 10
+    segundos.\n\nN\xEDvel 2:\n-Efeito: Aumenta a velocidade de ataque da arma em
+    0.16.\n-Efeito: Inimigo Alvo sofre envenenamento. \n-Dura\xE7\xE3o: 7 segundos.\n-Recarga:
+    10 segundos.\n\nN\xEDvel 3:\n-Efeito: Aumenta a velocidade de ataque da arma
+    em 0.24.\n-Efeito: Inimigo Alvo sofre envenenamento. \n-Dura\xE7\xE3o: 7 segundos.\n-Recarga:
+    10 segundos.\n\nPontos de Habilidade: 20"
+  tipoDeHabilidade: 1
+  nivel: 0
+  idHabilidade: Habilidade3CajadoVenenoso
+  pontosDeHabilidade: 20
+  temTempoDeEfeito: 1
+  tempoDeEfeito: 7
+  tempoDeRecarga: 10
+  spriteHabilidade: {fileID: 21300000, guid: 68f988b1d46657d4fa7c0e623e6518b5, type: 3}
+  podeAtivarEfeito: 1
+  personagem: {fileID: 0}

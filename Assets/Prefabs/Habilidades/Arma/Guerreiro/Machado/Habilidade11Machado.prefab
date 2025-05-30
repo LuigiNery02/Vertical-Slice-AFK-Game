@@ -45,11 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: Machado Sangrento
-  descricao: "N\xEDvel 1:\n-Efeito: Causa sangramento ao inimigo atingido (6.5 de
-    dano por segundo).\n-Dura\xE7\xE3o: 3 segundos.\n-Recarga: 10 segundos.\n\nN\xEDvel
-    2:\n-Efeito: Causa sangramento ao inimigo atingido (6.5 de dano por segundo).\n-Dura\xE7\xE3o:
-    5 segundos.\n-Recarga: 10 segundos.\n\nN\xEDvel 3:\n-Efeito: Causa sangramento
-    ao inimigo atingido (6.5 de dano por segundo).\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga:
+  descricao: "N\xEDvel 1:\n-Efeito: Causa sangramento ao inimigo atingido.\n-Dura\xE7\xE3o:
+    3 segundos.\n-Recarga: 10 segundos.\n\nN\xEDvel 2:\n-Efeito: Causa sangramento
+    ao inimigo atingido.\n-Dura\xE7\xE3o: 5 segundos.\n-Recarga: 10 segundos.\n\nN\xEDvel
+    3:\n-Efeito: Causa sangramento ao inimigo atingido.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga:
     10 segundos.\n\nPontos de Habilidade: 25"
   tipoDeHabilidade: 1
   nivel: 0

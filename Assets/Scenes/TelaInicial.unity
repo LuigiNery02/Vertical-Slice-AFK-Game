@@ -3999,7 +3999,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 2.8}
-  m_SizeDelta: {x: 125, y: 175}
+  m_SizeDelta: {x: 175, y: 175}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &639922940
 MonoBehaviour:
@@ -4021,7 +4021,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300002, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0e760844fd68df941aaa15e720527071, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5305,7 +5305,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -400}
+  m_AnchoredPosition: {x: -109, y: -459}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &750733432
@@ -6449,6 +6449,84 @@ MonoBehaviour:
   - {fileID: 4486808262999024512, guid: 7e5b1764d39e24f4eb658ecf0a375008, type: 3}
   - {fileID: 6332826919264762358, guid: 2438bb306ccd49741bae1e7de8e9f137, type: 3}
   - {fileID: 703643106355333601, guid: db431045a7f36244e8b6a7a530455fe4, type: 3}
+  habilidadesArcoFogo:
+  - {fileID: 4001232617770961697, guid: c6e95c5fe8227a74da39d16af845f301, type: 3}
+  - {fileID: 3129349040533386270, guid: 5a4a3ec5a32d40b4d997b847181c4cf6, type: 3}
+  - {fileID: 3069026715582449703, guid: b19a7fcb0e07898439a0dd89b3f8b4e6, type: 3}
+  - {fileID: 8535060475860958482, guid: db7d08641ae1da240a4aa9a019c19326, type: 3}
+  - {fileID: 7824427979097700314, guid: 747ce64277ea0cb488a75b927d8bb85f, type: 3}
+  - {fileID: 540311976086321085, guid: b772a067ac688a74d975cc4a823a4fbf, type: 3}
+  - {fileID: 3459567557534718310, guid: b99871a6b2d0ed54f8487dd3c595145a, type: 3}
+  - {fileID: 5668748213674223427, guid: 375c63753b8f5964c83f3dcf4e6f341b, type: 3}
+  - {fileID: 4970526720960720760, guid: a1fc717404b21964ab1554cecbe466a6, type: 3}
+  - {fileID: 4757473685072240012, guid: 718b958b83cd14d429df4ec3ee99d1dd, type: 3}
+  - {fileID: 4188537386317050789, guid: a67363f25e94cec4f8f8d05306e11ba6, type: 3}
+  - {fileID: 7063935474322990919, guid: 053132f1ee5dd54429a68beac28ad3a2, type: 3}
+  habilidadesArcoGelo:
+  - {fileID: 733118952213463471, guid: 7405597862bb02f4ea6a97859dbef496, type: 3}
+  - {fileID: 7858459899573063842, guid: a88156baeb764bf4693adb68366e5e2c, type: 3}
+  - {fileID: 5973820521510287311, guid: 540bbdca8f47a654790922d207751122, type: 3}
+  - {fileID: 1519584188289762361, guid: 45e0c777db457df4ea4cb884d98d24e4, type: 3}
+  - {fileID: 3727805721797788610, guid: 53b13a0fc83a7a74883eb385239f67be, type: 3}
+  - {fileID: 4617185103450757624, guid: e720732bfda8cd24cbfa171195977e28, type: 3}
+  - {fileID: 1576862546923219678, guid: 724488a3a06546c4c8604b650810991e, type: 3}
+  - {fileID: 5461049084140596986, guid: 44b0a418759e8174dbf6994b8840a785, type: 3}
+  - {fileID: 2066303726492097899, guid: 332fd858146ed9744937ac4835c65f4f, type: 3}
+  - {fileID: 2440740519046882012, guid: d1dd0614d21e30c4e8020dec49425ea5, type: 3}
+  - {fileID: 880622654511980721, guid: dee643d037fbaad4bb3399b63e48189e, type: 3}
+  - {fileID: 7967765038982698828, guid: 0aa32f1f0aed2b64db81b7c0aa3990a5, type: 3}
+  habilidadesArcoVenenoso:
+  - {fileID: 4361359660006674080, guid: 7bc233c6aab57f94cb1dbb041343a8fd, type: 3}
+  - {fileID: 1504613490520683033, guid: 525cc43b2da62b74ba784ce59e79b5bb, type: 3}
+  - {fileID: 80686809210601113, guid: bd067d7bea0e1c64a9af84f61d0542ae, type: 3}
+  - {fileID: 7885166018520809371, guid: 7f33cb344cc037f4682fbee5521c608e, type: 3}
+  - {fileID: 3644867164761125310, guid: 77b984c148a188249a6dcd726c5b9267, type: 3}
+  - {fileID: 2708009132992975171, guid: 52d254d8ceafd0c47a6fe06ee0087101, type: 3}
+  - {fileID: 1599904144982904283, guid: 42754e375d6c8f044a95572ef3bb74b9, type: 3}
+  - {fileID: 1103162657484313776, guid: 74d44cd787045a64c82c0a5a71594981, type: 3}
+  - {fileID: 8938817608938103473, guid: d0718e525bbf533469d098d858800b28, type: 3}
+  - {fileID: 4475268948460106514, guid: 682ca873a6b7dcb48a82d2ddf6b01e56, type: 3}
+  - {fileID: 1544882007823915106, guid: 1759f25608fbea74783825af187e0e19, type: 3}
+  - {fileID: 2743701031417701017, guid: 16d4b796f1d71fe4bb23a3c094b599d5, type: 3}
+  habilidadesCajadoFogo:
+  - {fileID: 2173497970065500350, guid: a635e17974158c9469aecb01587d2531, type: 3}
+  - {fileID: 4849068196039644372, guid: f209d38b9ae5432498f9531343963546, type: 3}
+  - {fileID: 4823757912630912643, guid: 5c86854a51a22d646b65067977aaddfc, type: 3}
+  - {fileID: 5534461350120347253, guid: 5bb688779fbe57441a8a7cca041ada1e, type: 3}
+  - {fileID: 4601708795329720300, guid: 8a74bc09079d34241a6d62f8ab33ff5a, type: 3}
+  - {fileID: 2803473157065217994, guid: 731e9c8247035d94e8e7108865387aa2, type: 3}
+  - {fileID: 2680993821769387602, guid: 3f860fb296af9314687979331c933429, type: 3}
+  - {fileID: 1674623045260506344, guid: 79f6f7a5e8ae23d439838c39fcd1698b, type: 3}
+  - {fileID: 3186460965208418347, guid: 142f15ac775083746804f99ae47c13d7, type: 3}
+  - {fileID: 989105720808681240, guid: 01c6fd1d7ea997b49a7cee996a53d6e6, type: 3}
+  - {fileID: 8573542190611315350, guid: 39f10cac86c112242a7f407200c9cde7, type: 3}
+  - {fileID: 9040793440203642978, guid: f48e06d509685514581820e39e434e5d, type: 3}
+  habilidadesCajadoGelo:
+  - {fileID: 9079762761251445859, guid: e8dd1f67f82611b4ab737b563c1c648b, type: 3}
+  - {fileID: 4986213067327408076, guid: 3801f584f80a2674e852c9399e65c159, type: 3}
+  - {fileID: 9173674952946114855, guid: 53b9cad7e10225640aab7516d820b491, type: 3}
+  - {fileID: 4043546343439699234, guid: 9ff91dc45ace04944a64e75d9939f9e5, type: 3}
+  - {fileID: 5682958777291951296, guid: d60689a2f1a72fe4ea69db942220d176, type: 3}
+  - {fileID: 5672169882560073083, guid: 7827810a80e42f4449f6101fbecd3bcd, type: 3}
+  - {fileID: 2110265652310977485, guid: 164c1fc11f0f046438411497386d4538, type: 3}
+  - {fileID: 2992529548568871688, guid: 98c31ace86e634d4ea53a09ccf57f1a1, type: 3}
+  - {fileID: 4105396459786265081, guid: 7dd3347332292f54fb8ba8f3dc3c70f4, type: 3}
+  - {fileID: 2408594983701538122, guid: 6ea4906be2e30354b84db37197b3aaa0, type: 3}
+  - {fileID: 6700826635688430329, guid: fa40cf9779649ba4f9b2fcfe2868ef05, type: 3}
+  - {fileID: 7422075276247573943, guid: 30716728932b8ad4cbc36b3b1a4e6154, type: 3}
+  habilidadesCajadoVenenoso:
+  - {fileID: 4166992296073726270, guid: acc0b7735b808f94a9fe395b2189f1a2, type: 3}
+  - {fileID: 2750226252670074946, guid: 855b5580b2e92474a9f892fbf59a4b75, type: 3}
+  - {fileID: 6940448477972135053, guid: a970ff85d7f640e49a35e0cf82f544ed, type: 3}
+  - {fileID: 9029554847694317652, guid: 87cf54204f1d38449a97b09c3ee5184d, type: 3}
+  - {fileID: 6950803454578884844, guid: 2322f9bf270790b48a327dcb6d6dbc48, type: 3}
+  - {fileID: 2724567521965293007, guid: 3706b86f2fa2b374ea66ffac246a9b2f, type: 3}
+  - {fileID: 2127192045950208668, guid: 9bcae124793deb44f9d45d1a32090098, type: 3}
+  - {fileID: 6260883237067758688, guid: 3ca78e23bc884464ba8cc3fc8d4796d9, type: 3}
+  - {fileID: 3090416302533299056, guid: 20bdc865f81f3454d87861f4294b2584, type: 3}
+  - {fileID: 3486423156742367078, guid: c15de24d3d7d0c94ca9ba7617911b00f, type: 3}
+  - {fileID: 6960872470183471550, guid: b97cee6347d874c4e86a4778b8fca0bb, type: 3}
+  - {fileID: 7548014584077882119, guid: 21effd836897d5f449a8d1f7287c45d1, type: 3}
 --- !u!1 &828482740
 GameObject:
   m_ObjectHideFlags: 0
@@ -9526,7 +9604,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -293, y: 1292}
+  m_AnchoredPosition: {x: -293, y: 937}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1054314151
@@ -10078,7 +10156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 680}
+  m_AnchoredPosition: {x: -109, y: 621}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1103163348
@@ -11061,7 +11139,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 32
+    m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -11868,7 +11946,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -109, y: -59}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1286163379
@@ -14223,7 +14301,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 32
+    m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
