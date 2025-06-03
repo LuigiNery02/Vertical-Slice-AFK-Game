@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4095571998974033588
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7216818054930609988}
+  - component: {fileID: -7173795648802513392}
+  m_Layer: 0
+  m_Name: LuvaEsquerda
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7216818054930609988
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095571998974033588}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-7173795648802513392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095571998974033588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46bdcd266245bdf4e9d58d203102cdeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nome: "Luva de A\xE7o"
+  tipoEquipamento: 4
+  icone: {fileID: 21300000, guid: 9b7afa97fe210a147a93161c718e2b89, type: 3}
+  descricao: "Aumenta o Ataque Melee em 1.\nAumenta o Ataque M\xE1gico em 1.\nAumenta
+    o Ataque \xE0 Dist\xE2ncia em 1."
+  descricaoCurta: ATKs + 1
+  indice: 7
+  ataqueMelee: 1
+  ataqueDistancia: 1
+  ataqueMagico: 1
+  defesa: 0
+  defesaMagica: 0
+  velocidadeDeMovimento: 0
+  precisao: 0
+  hp: 0
+  buffConsumivel: 0
+  personagem:
+    classe: 0
+    arma: {fileID: 0}
+    atributosDePreferencia: 
+    codigoID: 
+    apelido: 
+    nivel: 0
+    forca: 0
+    agilidade: 0
+    destreza: 0
+    constituicao: 0
+    inteligencia: 0
+    sabedoria: 0
+    expAtual: 0
+    "expProximoN\xEDvel": 0
+    hp: 0
+    ataque: 0
+    ataqueMagico: 0
+    ataqueDistancia: 0
+    defesa: 0
+    defesaMagica: 0
+    velocidadeAtaque: 0
+    esquiva: 0
+    precisao: 0
+    pontosDeHabilidade: 0
+    suporte: 0
+    runaNivel1: 0
+    runaNivel2: 0
+    runaNivel3: 0
+    listaDeHabilidadesDeClasse: []
+    listaDeHabilidadesDeArma: []
+    habilidadeClasse: {fileID: 0}
+    habilidadeArma: {fileID: 0}
+    equipamentoCabecaAcessorio: {fileID: 0}
+    equipamentoCabecaTopo: {fileID: 0}
+    equipamentoCabecaMedio: {fileID: 0}
+    equipamentoCabecaBaixo: {fileID: 0}
+    equipamentoArmadura: {fileID: 0}
+    equipamentoBracadeira: {fileID: 0}
+    equipamentoMaoEsquerda: {fileID: 0}
+    equipamentoMaoDireita: {fileID: 0}
+    equipamentoBota: {fileID: 0}
+    equipamentoAcessorio1: {fileID: 0}
+    equipamentoAcessorio2: {fileID: 0}
+    equipamentoBuffConsumivel: {fileID: 0}

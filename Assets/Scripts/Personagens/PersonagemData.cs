@@ -51,8 +51,24 @@ public class PersonagemData
     public List<HabilidadeBase> listaDeHabilidadesDeArma = new List<HabilidadeBase>(); //lista de habilidades de arma que o personagem possuí
     public HabilidadeBase habilidadeClasse; //habilidade de classe do personagem
     public HabilidadeBase habilidadeArma; //habilidade de arma do personagem
-    //public HabilidadeBase habilidadeArma;
+                                          //public HabilidadeBase habilidadeArma;
     #endregion
+
+    #region Equipamento
+    public EquipamentoBase equipamentoCabecaAcessorio; //equipamento da cabeça acessório do personagem
+    public EquipamentoBase equipamentoCabecaTopo; //equipamento da cabeça topo do personagem
+    public EquipamentoBase equipamentoCabecaMedio; //equipamento da cabeça médio do personagem
+    public EquipamentoBase equipamentoCabecaBaixo; //equipamento da cabeça baixo do personagem
+    public EquipamentoBase equipamentoArmadura; //equipamento da armadura do personagem
+    public EquipamentoBase equipamentoBracadeira; //equipamento da braçadeira do personagem
+    public EquipamentoBase equipamentoMaoEsquerda; //equipamento da mão esquerda do personagem
+    public EquipamentoBase equipamentoMaoDireita; //equipamento da mão direita do personagem
+    public EquipamentoBase equipamentoBota; //equipamento da bota do personagem
+    public EquipamentoBase equipamentoAcessorio1; //equipamento do acessório1 do personagem
+    public EquipamentoBase equipamentoAcessorio2; //equipamento do acessório2 do personagem
+    public EquipamentoBase equipamentoBuffConsumivel; //equipamento do buff de consumível do personagem
+    #endregion
+
     private List<PreferenciaAtributo> listaSortearAtributo = new List<PreferenciaAtributo>(); //lista que define em pesos todos os pesos dos atributos do personagem
 
     public void DefinirPersonagem() //função que define dados iniciais importantes do personagem
@@ -216,5 +232,89 @@ public class PersonagemData
         esquiva += agilidade;
 
         suporte += sabedoria;
+
+        for(int i = 1; i < 13; i++)
+        {
+            AplicarEfeitoEquipamento(i);
+        }
+    }
+
+    public void AplicarEfeitoEquipamento(int indice) //função que aplica os efeitos do equipamento ao personagem
+    {
+        switch (indice)
+        {
+            case 1:
+                if(equipamentoCabecaAcessorio != null)
+                {
+                    equipamentoCabecaAcessorio.AplicarEfeito();
+                }
+                break;
+            case 2:
+                if(equipamentoCabecaTopo != null)
+                {
+                    equipamentoCabecaTopo.AplicarEfeito();
+                }  
+                break;
+            case 3:
+                if(equipamentoCabecaMedio != null)
+                {
+                    equipamentoCabecaMedio.AplicarEfeito();
+                }
+                break;
+            case 4:
+                if(equipamentoCabecaBaixo != null)
+                {
+                    equipamentoCabecaBaixo.AplicarEfeito();
+                } 
+                break;
+            case 5:
+                if(equipamentoArmadura != null)
+                {
+                    equipamentoArmadura.AplicarEfeito();
+                }
+                break;
+            case 6:
+                if(equipamentoBracadeira != null)
+                {
+                    equipamentoBracadeira.AplicarEfeito();
+                } 
+                break;
+            case 7:
+                if(equipamentoMaoEsquerda != null)
+                {
+                    equipamentoMaoEsquerda.AplicarEfeito();
+                }
+                break;
+            case 8:
+                if(equipamentoMaoDireita != null)
+                {
+                    equipamentoMaoDireita.AplicarEfeito();
+                }
+                break;
+            case 9:
+                if(equipamentoBota != null)
+                {
+                    equipamentoBota.AplicarEfeito();
+                }
+                break;
+            case 10:
+                if(equipamentoAcessorio1 != null)
+                {
+                    equipamentoAcessorio1.AplicarEfeito();
+                } 
+                break;
+            case 11:
+                if(equipamentoAcessorio2 != null)
+                {
+                    equipamentoAcessorio2.AplicarEfeito();
+                } 
+                break;
+            case 12:
+                if(equipamentoBuffConsumivel != null)
+                {
+                    equipamentoBuffConsumivel.AplicarEfeito();
+                }
+                break;
+        }
     }
 }

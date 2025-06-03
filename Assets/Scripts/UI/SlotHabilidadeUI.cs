@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class SlotHabilidadeUI : MonoBehaviour
 {
-    public Text nomeTexto;
-    public Text nivelTexto;
-    public Image imagem;
-    public SistemaDeCriacaoDePersonagens sistemaDeCriacaoDePersonagens;
+    public Text nomeTexto; //texto do nome da habilidade
+    public Text nivelTexto; //texto do nível da habilidade
+    public Image imagem; //imagem da habilidade
+
+    public SistemaDeCriacaoDePersonagens sistemaDeCriacaoDePersonagens; //sistema de criação de personagens
 
     private HabilidadeBase _habilidade;
 
