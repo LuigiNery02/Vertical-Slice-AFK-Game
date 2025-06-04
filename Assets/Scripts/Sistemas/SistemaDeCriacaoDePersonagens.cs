@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SistemaDeCriacaoDePersonagens : MonoBehaviour
+public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
 {
     [Header("Personagens")]
     public List<PersonagemData> personagensCriados = new List<PersonagemData>(); //lista de todos os personagens criados
@@ -90,6 +89,14 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     [SerializeField]
     private Text _habilidadeArmaTipoTexto; //tipo da habilidade de arma equipada
 
+    [Header("Tela Equipamento")]
+    [SerializeField]
+    private Image _personagemEquipamentoImagem; //imagem do personagem da tela de equipamentos
+    [SerializeField]
+    private Image[] _equipamentoImagem; //imagem do ícone do equipamento
+    [SerializeField]
+    private Text[] _equipamentoNomeTexto; //texto do nome do equipamento
+
     [Header("Tela Modificadores")]
     [SerializeField]
     private Text _hpTexto; //texto do hp do personagem
@@ -119,6 +126,8 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     private Sprite[] _personagensSprites; //sprites dos personagens
     [SerializeField]
     private Sprite[] _runasSprites; //sprites das runas
+    [SerializeField]
+    private Sprite[] _equipamentoSprites;
     
     [Header("Tela Seleção de Armas")]
     [SerializeField]
@@ -130,6 +139,101 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     private HashSet<string> _codigosGerados = new HashSet<string>(); //lista de códigos gerados
     [SerializeField]
     private GerenciadorDeSlots _gerenciadorDeSlots; //gerenciador de slots
+
+    public void CarregarSave(GameData data) //função de carregar os dados salvos do sistema de criação de personagens
+    {
+        personagensCriados = data.personagens;
+
+        for (int i = 0; i < personagensCriados.Count; i++)
+        {
+            personagensCriados[i].listaDeHabilidadesDeClasse = new List<HabilidadeBase>();
+            personagensCriados[i].listaDeHabilidadesDeArma = new List<HabilidadeBase>();
+
+            if (personagensCriados[i].classe == Classe.Guerreiro)
+            {
+                personagensCriados[i].arma = armasGuerreiro[personagensCriados[i].armaID];
+
+                foreach (string iDSalvo in personagensCriados[i].idsHabilidadesDeClasse)
+                {
+                    HabilidadeBase habilidade = GerenciadorDeInventario.instancia.habilidadesClasseGuerreiro.Find(h => h.idHabilidade == iDSalvo);
+                    if (habilidade != null)
+                    {
+                        personagensCriados[i].listaDeHabilidadesDeClasse.Add(habilidade);
+                    }
+                }
+
+                foreach (string iDSalvo in personagensCriados[i].idsHabilidadesDeArma)
+                {
+                    switch (personagensCriados[i].arma.nome)
+                    {
+                        case "Espada":
+                            HabilidadeBase habilidadeEspada = GerenciadorDeInventario.instancia.habilidadesEspada.Find(h => h.idHabilidade == iDSalvo);
+                            if (habilidadeEspada != null)
+                            {
+                                personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeEspada);
+                                personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesEspada.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
+                            }
+                            break;
+                        case "Lança":
+                            HabilidadeBase habilidadeLanca = GerenciadorDeInventario.instancia.habilidadesLanca.Find(h => h.idHabilidade == iDSalvo);
+                            if (habilidadeLanca != null)
+                            {
+                                personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeLanca);
+                                personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesLanca.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
+                            }
+                            break;
+                        case "Machado":
+                            HabilidadeBase habilidadeMachado = GerenciadorDeInventario.instancia.habilidadesMachado.Find(h => h.idHabilidade == iDSalvo);
+                            if (habilidadeMachado != null)
+                            {
+                                personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeMachado);
+                                personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesMachado.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
+                            }
+                            break;
+                    }
+                }
+
+                personagensCriados[i].habilidadeClasse = GerenciadorDeInventario.instancia.habilidadesClasseGuerreiro.Find(h => h.idHabilidade == personagensCriados[i].habilidadeClasseID);
+            }
+            else if (personagensCriados[i].classe == Classe.Arqueiro)
+            {
+                personagensCriados[i].arma = armasArqueiro[personagensCriados[i].armaID];
+
+                foreach (string iDSalvo in personagensCriados[i].idsHabilidadesDeClasse)
+                {
+                    HabilidadeBase habilidade = GerenciadorDeInventario.instancia.habilidadesClasseArqueiro.Find(h => h.idHabilidade == iDSalvo);
+                    if (habilidade != null)
+                    {
+                        personagensCriados[i].listaDeHabilidadesDeClasse.Add(habilidade);
+                    }
+                }
+
+                personagensCriados[i].habilidadeClasse = GerenciadorDeInventario.instancia.habilidadesClasseArqueiro.Find(h => h.idHabilidade == personagensCriados[i].habilidadeClasseID);
+            }
+            else if (personagensCriados[i].classe == Classe.Mago)
+            {
+                personagensCriados[i].arma = armasMago[personagensCriados[i].armaID];
+
+                foreach (string iDSalvo in personagensCriados[i].idsHabilidadesDeClasse)
+                {
+                    HabilidadeBase habilidade = GerenciadorDeInventario.instancia.habilidadesClasseMago.Find(h => h.idHabilidade == iDSalvo);
+                    if (habilidade != null)
+                    {
+                        personagensCriados[i].listaDeHabilidadesDeClasse.Add(habilidade);
+                    }
+                }
+
+                personagensCriados[i].habilidadeClasse = GerenciadorDeInventario.instancia.habilidadesClasseMago.Find(h => h.idHabilidade == personagensCriados[i].habilidadeClasseID);
+            }
+        }
+
+        _gerenciadorDeSlots.AtualizarSlots();
+    }
+
+    public void SalvarSave(GameData data) //função de salvar os dados do sistema de criação de personagens
+    {
+        data.personagens = personagensCriados;
+    }
 
     public void CriarPersonagem() //função que inicia a criação do personagem
     {
@@ -166,7 +270,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
 
     public void DefinirArma(int valorArma) //função para definir a arma inicial do personagem
     {
-        if(personagemEmCriacao.classe == Classe.Guerreiro)
+        if (personagemEmCriacao.classe == Classe.Guerreiro)
         {
             personagemEmCriacao.arma = armasGuerreiro[valorArma];
         }
@@ -279,6 +383,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
                 }
             }
             personagemEmCriacao.habilidadeClasse = habilidade;
+            personagemEmCriacao.habilidadeClasseID = habilidade.idHabilidade;
             ResetarTelaPersonagem();
             AtualizarTelaPersonagem();
         }
@@ -306,9 +411,223 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
                 }
             }
             personagemEmCriacao.habilidadeArma = habilidade;
+            personagemEmCriacao.habilidadeArmaID = habilidade.idHabilidade;
             ResetarTelaPersonagem();
             AtualizarTelaPersonagem();
         }
+    }
+
+    public void DefinirEquipamento(EquipamentoBase equipamento)
+    {
+        switch (equipamento.tipoEquipamento)
+        {
+            case TipoEquipamento.CabecaAcessorio:
+                if(personagemEmCriacao.equipamentoCabecaAcessorio == null)
+                {
+                    personagemEmCriacao.equipamentoCabecaAcessorio = equipamento;
+                    equipamento.personagem = personagemEmCriacao;
+                    personagemEmCriacao.AplicarEfeitoEquipamento(1);
+                    GerenciadorDeInventario.instancia.equipamentosCabecaAcessorio.Remove(equipamento);
+                    GerenciadorDeInventario.instancia.equipouEquipamento = true;
+                }
+                else
+                {
+                    personagemEmCriacao.equipamentoCabecaAcessorio = null;
+                    equipamento.RemoverEfeito();
+                    equipamento.personagem = null;
+                    GerenciadorDeInventario.instancia.equipamentosCabecaAcessorio.Add(equipamento);
+                }
+                break;
+            case TipoEquipamento.CabecaTopo:
+                if (personagemEmCriacao.equipamentoCabecaTopo == null)
+                {
+                    personagemEmCriacao.equipamentoCabecaTopo = equipamento;
+                    equipamento.personagem = personagemEmCriacao;
+                    personagemEmCriacao.AplicarEfeitoEquipamento(2);
+                    GerenciadorDeInventario.instancia.equipamentosCabecaTopo.Remove(equipamento);
+                    GerenciadorDeInventario.instancia.equipouEquipamento = true;
+                }
+                else
+                {
+                    personagemEmCriacao.equipamentoCabecaTopo = null;
+                    equipamento.RemoverEfeito();
+                    equipamento.personagem = null;
+                    GerenciadorDeInventario.instancia.equipamentosCabecaTopo.Add(equipamento);
+                }
+                break;
+            case TipoEquipamento.CabecaMedio:
+                if (personagemEmCriacao.equipamentoCabecaMedio == null)
+                {
+                    personagemEmCriacao.equipamentoCabecaMedio = equipamento;
+                    equipamento.personagem = personagemEmCriacao;
+                    equipamento.AplicarEfeito();
+                    GerenciadorDeInventario.instancia.equipamentosCabecaMedio.Remove(equipamento);
+                    GerenciadorDeInventario.instancia.equipouEquipamento = true;
+                }
+                else
+                {
+                    personagemEmCriacao.equipamentoCabecaMedio = null;
+                    equipamento.RemoverEfeito();
+                    equipamento.personagem = null;
+                    GerenciadorDeInventario.instancia.equipamentosCabecaMedio.Add(equipamento);
+                }
+                break;
+            case TipoEquipamento.CabecaBaixo:
+                if (personagemEmCriacao.equipamentoCabecaBaixo == null)
+                {
+                    personagemEmCriacao.equipamentoCabecaBaixo = equipamento;
+                    equipamento.personagem = personagemEmCriacao;
+                    equipamento.AplicarEfeito();
+                    GerenciadorDeInventario.instancia.equipamentosCabecaBaixo.Remove(equipamento);
+                    GerenciadorDeInventario.instancia.equipouEquipamento = true;
+                }
+                else
+                {
+                    personagemEmCriacao.equipamentoCabecaBaixo = null;
+                    equipamento.RemoverEfeito();
+                    equipamento.personagem = null;
+                    GerenciadorDeInventario.instancia.equipamentosCabecaBaixo.Add(equipamento);
+                }
+                break;
+            case TipoEquipamento.Armadura:
+                if (personagemEmCriacao.equipamentoArmadura == null)
+                {
+                    personagemEmCriacao.equipamentoArmadura = equipamento;
+                    equipamento.personagem = personagemEmCriacao;
+                    equipamento.AplicarEfeito();
+                    GerenciadorDeInventario.instancia.equipamentosArmadura.Remove(equipamento);
+                    GerenciadorDeInventario.instancia.equipouEquipamento = true;
+                }
+                else
+                {
+                    personagemEmCriacao.equipamentoArmadura = null;
+                    equipamento.RemoverEfeito();
+                    equipamento.personagem = null;
+                    GerenciadorDeInventario.instancia.equipamentosArmadura.Add(equipamento);
+                }
+                break;
+            case TipoEquipamento.Bracadeira:
+                if (personagemEmCriacao.equipamentoBracadeira == null)
+                {
+                    personagemEmCriacao.equipamentoBracadeira = equipamento;
+                    equipamento.personagem = personagemEmCriacao;
+                    equipamento.AplicarEfeito();
+                    GerenciadorDeInventario.instancia.equipamentosBracadeira.Remove(equipamento);
+                    GerenciadorDeInventario.instancia.equipouEquipamento = true;
+                }
+                else
+                {
+                    personagemEmCriacao.equipamentoBracadeira = null;
+                    equipamento.RemoverEfeito();
+                    equipamento.personagem = null;
+                    GerenciadorDeInventario.instancia.equipamentosBracadeira.Add(equipamento);
+                }
+                break;
+            case TipoEquipamento.MaoEsquerda:
+                if (personagemEmCriacao.equipamentoMaoEsquerda == null)
+                {
+                    personagemEmCriacao.equipamentoMaoEsquerda = equipamento;
+                    equipamento.personagem = personagemEmCriacao;
+                    equipamento.AplicarEfeito();
+                    GerenciadorDeInventario.instancia.equipamentosMaoEsquerda.Remove(equipamento);
+                    GerenciadorDeInventario.instancia.equipouEquipamento = true;
+                }
+                else
+                {
+                    personagemEmCriacao.equipamentoMaoEsquerda = null;
+                    equipamento.RemoverEfeito();
+                    equipamento.personagem = null;
+                    GerenciadorDeInventario.instancia.equipamentosMaoEsquerda.Add(equipamento);
+                }
+                break;
+            case TipoEquipamento.MaoDireita:
+                if (personagemEmCriacao.equipamentoMaoDireita == null)
+                {
+                    personagemEmCriacao.equipamentoMaoDireita = equipamento;
+                    equipamento.personagem = personagemEmCriacao;
+                    equipamento.AplicarEfeito();
+                    GerenciadorDeInventario.instancia.equipamentosMaoDireita.Remove(equipamento);
+                    GerenciadorDeInventario.instancia.equipouEquipamento = true;
+                }
+                else
+                {
+                    personagemEmCriacao.equipamentoMaoDireita = null;
+                    equipamento.RemoverEfeito();
+                    equipamento.personagem = null;
+                    GerenciadorDeInventario.instancia.equipamentosMaoDireita.Add(equipamento);
+                }
+                break;
+            case TipoEquipamento.Botas:
+                if (personagemEmCriacao.equipamentoBota == null)
+                {
+                    personagemEmCriacao.equipamentoBota = equipamento;
+                    equipamento.personagem = personagemEmCriacao;
+                    equipamento.AplicarEfeito();
+                    GerenciadorDeInventario.instancia.equipamentosBota.Remove(equipamento);
+                    GerenciadorDeInventario.instancia.equipouEquipamento = true;
+                }
+                else
+                {
+                    personagemEmCriacao.equipamentoBota = null;
+                    equipamento.RemoverEfeito();
+                    equipamento.personagem = null;
+                    GerenciadorDeInventario.instancia.equipamentosBota.Add(equipamento);
+                }
+                break;
+            case TipoEquipamento.Acessorio1:
+                if (personagemEmCriacao.equipamentoAcessorio1 == null)
+                {
+                    personagemEmCriacao.equipamentoAcessorio1 = equipamento;
+                    equipamento.personagem = personagemEmCriacao;
+                    equipamento.AplicarEfeito();
+                    GerenciadorDeInventario.instancia.equipamentosAcessorio1.Remove(equipamento);
+                    GerenciadorDeInventario.instancia.equipouEquipamento = true;
+                }
+                else
+                {
+                    personagemEmCriacao.equipamentoAcessorio1 = null;
+                    equipamento.RemoverEfeito();
+                    equipamento.personagem = null;
+                    GerenciadorDeInventario.instancia.equipamentosAcessorio1.Add(equipamento);
+                }
+                break;
+            case TipoEquipamento.Acessorio2:
+                if (personagemEmCriacao.equipamentoAcessorio2 == null)
+                {
+                    personagemEmCriacao.equipamentoAcessorio2 = equipamento;
+                    equipamento.personagem = personagemEmCriacao;
+                    equipamento.AplicarEfeito();
+                    GerenciadorDeInventario.instancia.equipamentosAcessorio2.Remove(equipamento);
+                    GerenciadorDeInventario.instancia.equipouEquipamento = true;
+                }
+                else
+                {
+                    personagemEmCriacao.equipamentoAcessorio2 = null;
+                    equipamento.RemoverEfeito();
+                    equipamento.personagem = null;
+                    GerenciadorDeInventario.instancia.equipamentosAcessorio2.Add(equipamento);
+                }
+                break;
+            case TipoEquipamento.BuffTemporario:
+                if (personagemEmCriacao.equipamentoBuffConsumivel == null)
+                {
+                    personagemEmCriacao.equipamentoBuffConsumivel = equipamento;
+                    equipamento.personagem = personagemEmCriacao;
+                    equipamento.AplicarEfeito();
+                    GerenciadorDeInventario.instancia.equipamentosBuffConsumivel.Remove(equipamento);
+                    GerenciadorDeInventario.instancia.equipouEquipamento = true;
+                }
+                else
+                {
+                    personagemEmCriacao.equipamentoBuffConsumivel = null;
+                    equipamento.RemoverEfeito();
+                    equipamento.personagem = null;
+                    GerenciadorDeInventario.instancia.equipamentosBuffConsumivel.Add(equipamento);
+                }
+                break;
+        }
+        ResetarTelaPersonagem();
+        AtualizarTelaPersonagem();
     }
 
     private string GerarCodigoID() //função que gera o CódigoID do personagem
@@ -430,8 +749,69 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
     {
         if(indice >= 0 && indice < personagensCriados.Count)
         {
+            personagemEmCriacao = personagensCriados[indice];
+
+            #region Desequipar Equipamentos
+            if(personagensCriados[indice].equipamentoCabecaAcessorio != null)
+            {
+                DefinirEquipamento(personagensCriados[indice].equipamentoCabecaAcessorio);
+            }
+            if(personagensCriados[indice].equipamentoCabecaTopo != null)
+            {
+                DefinirEquipamento(personagensCriados[indice].equipamentoCabecaTopo);
+            }
+            if(personagensCriados[indice].equipamentoCabecaMedio != null)
+            {
+                DefinirEquipamento(personagensCriados[indice].equipamentoCabecaMedio);
+            }
+            if(personagensCriados[indice].equipamentoCabecaBaixo != null)
+            {
+                DefinirEquipamento(personagensCriados[indice].equipamentoCabecaBaixo);
+            }
+            if (personagensCriados[indice].equipamentoArmadura != null)
+            {
+                DefinirEquipamento(personagensCriados[indice].equipamentoArmadura);
+            }
+            if (personagensCriados[indice].equipamentoBracadeira != null)
+            {
+                DefinirEquipamento(personagensCriados[indice].equipamentoBracadeira);
+            }
+            if(personagensCriados[indice].equipamentoMaoEsquerda != null)
+            {
+                DefinirEquipamento(personagensCriados[indice].equipamentoMaoEsquerda);
+            }
+            if(personagensCriados[indice].equipamentoMaoDireita != null)
+            {
+                DefinirEquipamento(personagensCriados[indice].equipamentoMaoDireita);
+            }
+            if(personagensCriados[indice].equipamentoBota != null)
+            {
+                DefinirEquipamento(personagensCriados[indice].equipamentoBota);
+            }
+            if(personagensCriados[indice].equipamentoAcessorio1 != null)
+            {
+                DefinirEquipamento(personagensCriados[indice].equipamentoAcessorio1);
+            }
+            if(personagensCriados[indice].equipamentoAcessorio2 != null)
+            {
+                DefinirEquipamento(personagensCriados[indice].equipamentoAcessorio2);
+            }
+            if(personagensCriados[indice].equipamentoBuffConsumivel != null)
+            {
+                DefinirEquipamento(personagensCriados[indice].equipamentoBuffConsumivel);
+            }
+            #endregion
+
             personagensCriados.RemoveAt(indice);
             _gerenciadorDeSlots.AtualizarSlots();
+        }
+    }
+
+    public void DeletarTodosOsPersonagens() //função para deletar todos os personagens criados
+    {
+        for (int i = personagensCriados.Count - 1; i >= 0; i--)
+        {
+            DeletarPersonagemCriado(i);
         }
     }
 
@@ -469,6 +849,79 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         _danoDistanciaArmaTexto.text = ("Dano à Distância: " + (personagemEmCriacao.arma.danoDistancia + 1));
         _danoMagicoArmaTexto.text = ("Dano Mágico: " + (personagemEmCriacao.arma.danoMagico + 1));
         _velocidadeAtaqueArmaTexto.text = ("Velocidade de Ataque: " + (personagemEmCriacao.arma.velocidadeDeAtaque - 0.01f));
+
+        _personagemEquipamentoImagem.sprite = _personagensSprites[_imagemClasseAtual];
+        if(personagemEmCriacao.equipamentoCabecaAcessorio != null)
+        {
+            _equipamentoImagem[0].sprite = personagemEmCriacao.equipamentoCabecaAcessorio.icone;
+            _equipamentoNomeTexto[0].text = personagemEmCriacao.equipamentoCabecaAcessorio.nome;
+        }
+
+        if (personagemEmCriacao.equipamentoCabecaTopo != null)
+        {
+            _equipamentoImagem[1].sprite = personagemEmCriacao.equipamentoCabecaTopo.icone;
+            _equipamentoNomeTexto[1].text = personagemEmCriacao.equipamentoCabecaTopo.nome;
+        }
+
+        if (personagemEmCriacao.equipamentoCabecaMedio != null)
+        {
+            _equipamentoImagem[2].sprite = personagemEmCriacao.equipamentoCabecaMedio.icone;
+            _equipamentoNomeTexto[2].text = personagemEmCriacao.equipamentoCabecaMedio.nome;
+        }
+
+        if (personagemEmCriacao.equipamentoCabecaBaixo != null)
+        {
+            _equipamentoImagem[3].sprite = personagemEmCriacao.equipamentoCabecaBaixo.icone;
+            _equipamentoNomeTexto[3].text = personagemEmCriacao.equipamentoCabecaBaixo.nome;
+        }
+
+        if (personagemEmCriacao.equipamentoArmadura != null)
+        {
+            _equipamentoImagem[4].sprite = personagemEmCriacao.equipamentoArmadura.icone;
+            _equipamentoNomeTexto[4].text = personagemEmCriacao.equipamentoArmadura.nome;
+        }
+
+        if (personagemEmCriacao.equipamentoBracadeira != null)
+        {
+            _equipamentoImagem[5].sprite = personagemEmCriacao.equipamentoBracadeira.icone;
+            _equipamentoNomeTexto[5].text = personagemEmCriacao.equipamentoBracadeira.nome;
+        }
+
+        if (personagemEmCriacao.equipamentoMaoEsquerda != null)
+        {
+            _equipamentoImagem[6].sprite = personagemEmCriacao.equipamentoMaoEsquerda.icone;
+            _equipamentoNomeTexto[6].text = personagemEmCriacao.equipamentoMaoEsquerda.nome;
+        }
+
+        if (personagemEmCriacao.equipamentoMaoDireita != null)
+        {
+            _equipamentoImagem[7].sprite = personagemEmCriacao.equipamentoMaoDireita.icone;
+            _equipamentoNomeTexto[7].text = personagemEmCriacao.equipamentoMaoDireita.nome;
+        }
+
+        if (personagemEmCriacao.equipamentoBota != null)
+        {
+            _equipamentoImagem[8].sprite = personagemEmCriacao.equipamentoBota.icone;
+            _equipamentoNomeTexto[8].text = personagemEmCriacao.equipamentoBota.nome;
+        }
+
+        if (personagemEmCriacao.equipamentoAcessorio1 != null)
+        {
+            _equipamentoImagem[9].sprite = personagemEmCriacao.equipamentoAcessorio1.icone;
+            _equipamentoNomeTexto[9].text = personagemEmCriacao.equipamentoAcessorio1.nome;
+        }
+
+        if (personagemEmCriacao.equipamentoAcessorio2 != null)
+        {
+            _equipamentoImagem[10].sprite = personagemEmCriacao.equipamentoAcessorio2.icone;
+            _equipamentoNomeTexto[10].text = personagemEmCriacao.equipamentoAcessorio2.nome;
+        }
+
+        if (personagemEmCriacao.equipamentoBuffConsumivel != null)
+        {
+            _equipamentoImagem[11].sprite = personagemEmCriacao.equipamentoBuffConsumivel.icone;
+            _equipamentoNomeTexto[11].text = personagemEmCriacao.equipamentoBuffConsumivel.nome;
+        }
 
         //muda a cor do texto para identificar o atributo de preferência do personagem
         if (personagemEmCriacao.atributosDePreferencia.Contains(PreferenciaAtributo.Forca))
@@ -554,6 +1007,8 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
             _visualHabilidadeArma.SetActive(false);
             _botaoHabilidadesArma.gameObject.SetActive(true);
         }
+
+        SistemaDeSalvamento.instancia.SalvarJogo();
     }
 
     public void ResetarTelaPersonagem() //função que reseta os dados visuais da tela de personagem
@@ -590,6 +1045,13 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         _danoMagicoArmaTexto.text = "";
         _velocidadeAtaqueArmaTexto.text = "";
 
+        for(int i = 0; i < _equipamentoNomeTexto.Length; i++)
+        {
+            _equipamentoNomeTexto[i].text = "";
+            _equipamentoImagem[i].sprite = _equipamentoSprites[0];
+        }
+        
+
         //reseta as cores dos textos
         _forcaTexto.color = Color.white;
         _agilidadeTexto.color = Color.white;
@@ -610,6 +1072,5 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour
         AtualizarTelaPersonagem();
         _gerenciadorDeSlots.AtualizarSlots();
     }
-
     #endregion
 }

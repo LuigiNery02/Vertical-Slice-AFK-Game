@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GerenciadorDeInventario : MonoBehaviour
+public class GerenciadorDeInventario : MonoBehaviour, Salvamento
 {
     public static GerenciadorDeInventario instancia { get; private set; }
 
@@ -33,7 +33,63 @@ public class GerenciadorDeInventario : MonoBehaviour
     public List<HabilidadeBase> habilidadesCajadoGelo = new List<HabilidadeBase>(); //lista de habilidades do cajado de gelo
     public List<HabilidadeBase> habilidadesCajadoVenenoso = new List<HabilidadeBase>(); //lista de habilidades do cajado venenoso
 
+    [Header("Lista Equipamentos")]
+    public List<EquipamentoBase> equipamentosCabecaAcessorio = new List<EquipamentoBase>(); //lista de equipamentos da cabeça acessório
+    public List<EquipamentoBase> equipamentosCabecaTopo = new List<EquipamentoBase>(); //lista de equipamentos da cabeça topo
+    public List<EquipamentoBase> equipamentosCabecaMedio = new List<EquipamentoBase>(); //lista de equipamentos da cabeça médio
+    public List<EquipamentoBase> equipamentosCabecaBaixo = new List<EquipamentoBase>(); //lista de equipamentos da cabeça baixo
+    public List<EquipamentoBase> equipamentosArmadura = new List<EquipamentoBase>(); //lista de equipamentos da armadura
+    public List<EquipamentoBase> equipamentosBracadeira = new List<EquipamentoBase>(); //lista de equipamentos da braçadeira
+    public List<EquipamentoBase> equipamentosMaoEsquerda = new List<EquipamentoBase>(); //lista de equipamentos da mão esquerda
+    public List<EquipamentoBase> equipamentosMaoDireita = new List<EquipamentoBase>(); //lista de equipamentos da mão direita
+    public List<EquipamentoBase> equipamentosBota = new List<EquipamentoBase>(); //lista de equipamentos da bota
+    public List<EquipamentoBase> equipamentosAcessorio1 = new List<EquipamentoBase>(); //lista de equipamentos do acessório 1
+    public List<EquipamentoBase> equipamentosAcessorio2 = new List<EquipamentoBase>(); //lista de equipamentos do acessório 2
+    public List<EquipamentoBase> equipamentosBuffConsumivel = new List<EquipamentoBase>(); //lista de equipamentos do buff de consumível 
+
+    [HideInInspector]
+    public bool equipouEquipamento; //variável que checa se qualquer equipamento já foi equipado a qualquer personagem
+
     private Transform canvasAtual; //canvas atual da cena
+
+    public void CarregarSave(GameData data)
+    {
+        equipouEquipamento = data.gerenciadorInventarioEquipado;
+
+        if (equipouEquipamento)
+        {
+            equipamentosCabecaAcessorio = data.gerenciadorInventarioCabecaAcessorio;
+            equipamentosCabecaTopo = data.gerenciadorInventarioCabecaTopo;
+            equipamentosCabecaMedio = data.gerenciadorInventarioCabecaMedio;
+            equipamentosCabecaBaixo = data.gerenciadorInventarioCabecaBaixo;
+            equipamentosArmadura = data.gerenciadorInventarioArmadura;
+            equipamentosBracadeira = data.gerenciadorInventarioBracadeira;
+            equipamentosMaoEsquerda = data.gerenciadorInventarioMaoEsquerda;
+            equipamentosMaoDireita = data.gerenciadorInventarioMaoDireita;
+            equipamentosBota = data.gerenciadorInventarioBota;
+            equipamentosAcessorio1 = data.gerenciadorInventarioAcessorio1;
+            equipamentosAcessorio2 = data.gerenciadorInventarioAcessorio2;
+            equipamentosBuffConsumivel = data.gerenciadorInventarioBuffConsumivel;
+        }
+    }
+
+    public void SalvarSave(GameData data)
+    {
+        data.gerenciadorInventarioCabecaAcessorio = equipamentosCabecaAcessorio;
+        data.gerenciadorInventarioCabecaTopo = equipamentosCabecaTopo;
+        data.gerenciadorInventarioCabecaMedio = equipamentosCabecaMedio;
+        data.gerenciadorInventarioCabecaBaixo = equipamentosCabecaBaixo;
+        data.gerenciadorInventarioArmadura = equipamentosArmadura;
+        data.gerenciadorInventarioBracadeira = equipamentosBracadeira;
+        data.gerenciadorInventarioMaoEsquerda = equipamentosMaoEsquerda;
+        data.gerenciadorInventarioMaoDireita = equipamentosMaoDireita;
+        data.gerenciadorInventarioBota = equipamentosBota;
+        data.gerenciadorInventarioAcessorio1 = equipamentosAcessorio1;
+        data.gerenciadorInventarioAcessorio2 = equipamentosAcessorio2;
+        data.gerenciadorInventarioBuffConsumivel = equipamentosBuffConsumivel;
+
+        data.gerenciadorInventarioEquipado = equipouEquipamento;
+    }
 
     private void Awake()
     {
@@ -93,6 +149,7 @@ public class GerenciadorDeInventario : MonoBehaviour
                 //adiciona a habilidade sorteada ao inventário do personagem
                 habilidadeSorteada.nivel = nivel;
                 personagem.listaDeHabilidadesDeClasse.Add(habilidadeSorteada);
+                personagem.idsHabilidadesDeClasse.Add(habilidadeSorteada.idHabilidade);
                 MostrarMensagem("Habilidade Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido);
             }
         }
@@ -149,6 +206,7 @@ public class GerenciadorDeInventario : MonoBehaviour
                 //adiciona a habilidade sorteada ao inventário do personagem
                 habilidadeSorteada.nivel = nivel;
                 personagem.listaDeHabilidadesDeArma.Add(habilidadeSorteada);
+                personagem.idsHabilidadesDeArma.Add(habilidadeSorteada.idHabilidade);
                 MostrarMensagem("Habilidade Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido);
             }
         }
