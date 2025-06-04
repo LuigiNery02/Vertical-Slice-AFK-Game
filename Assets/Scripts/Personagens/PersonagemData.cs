@@ -69,7 +69,8 @@ public class PersonagemData
     public EquipamentoBase equipamentoBuffConsumivel; //equipamento do buff de consumível do personagem
     #endregion
 
-    private List<PreferenciaAtributo> listaSortearAtributo = new List<PreferenciaAtributo>(); //lista que define em pesos todos os pesos dos atributos do personagem
+    [HideInInspector]
+    public List<PreferenciaAtributo> listaSortearAtributo = new List<PreferenciaAtributo>(); //lista que define em pesos todos os pesos dos atributos do personagem
 
     public void DefinirPersonagem() //função que define dados iniciais importantes do personagem
     {
