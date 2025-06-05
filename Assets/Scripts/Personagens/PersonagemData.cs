@@ -13,7 +13,11 @@ public class PersonagemData
     [Header("Definições Personagem")]
     public Classe classe; //classe do personagem
     public ArmaBase arma; //arma do personagem
+    [HideInInspector]
+    public int armaID; //id da arma
     public List<PreferenciaAtributo> atributosDePreferencia = new List<PreferenciaAtributo>(); //atributos de preferência do personagem
+    [HideInInspector]
+    public List<PreferenciaAtributo> listaSortearAtributo = new List<PreferenciaAtributo>(); //lista que define em pesos todos os pesos dos atributos do personagem
     public string codigoID; //ID de código único de cada personagem
     public string apelido; //apelido do personagem
     public int nivel; //nível do personagem
@@ -51,7 +55,14 @@ public class PersonagemData
     public List<HabilidadeBase> listaDeHabilidadesDeArma = new List<HabilidadeBase>(); //lista de habilidades de arma que o personagem possuí
     public HabilidadeBase habilidadeClasse; //habilidade de classe do personagem
     public HabilidadeBase habilidadeArma; //habilidade de arma do personagem
-                                          //public HabilidadeBase habilidadeArma;
+    [HideInInspector]
+    public List<DadosHabilidade> habilidadesDeClasseSalvas = new List<DadosHabilidade>(); //dados das habilidades de classe salvas
+    [HideInInspector]
+    public List<DadosHabilidade> habilidadesDeArmaSalvas = new List<DadosHabilidade>(); //dados das habilidades de arma salvas
+    [HideInInspector]
+    public string habilidadeClasseID; //id da habilidade de classe equipada
+    [HideInInspector]
+    public string habilidadeArmaID; //id da habilidade de arma equipada
     #endregion
 
     #region Equipamento
@@ -67,11 +78,10 @@ public class PersonagemData
     public EquipamentoBase equipamentoAcessorio1; //equipamento do acessório1 do personagem
     public EquipamentoBase equipamentoAcessorio2; //equipamento do acessório2 do personagem
     public EquipamentoBase equipamentoBuffConsumivel; //equipamento do buff de consumível do personagem
-    #endregion
 
     [HideInInspector]
-    public List<PreferenciaAtributo> listaSortearAtributo = new List<PreferenciaAtributo>(); //lista que define em pesos todos os pesos dos atributos do personagem
-
+    public List<string> idsEquipamentosEquipados = new List<string>(); //lista com os IDs dos equipamentos equipados ao personagem
+    #endregion
     public void DefinirPersonagem() //função que define dados iniciais importantes do personagem
     {
         #region Pesos Atributos

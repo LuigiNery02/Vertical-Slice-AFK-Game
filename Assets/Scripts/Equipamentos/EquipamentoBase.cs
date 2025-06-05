@@ -15,6 +15,7 @@ public class EquipamentoBase : MonoBehaviour
     public string descricao; //descrição do equipamento
     public string descricaoCurta; //curta descrição do equipamento
     public int indice; //indice do item nos equipamentos do personagem
+    public string id; //ID do equipamento
 
     [Header("Modificadores")] //Área referente aos modificadores do equipamento
     public float ataqueMelee; //valor do dano de ataque melee

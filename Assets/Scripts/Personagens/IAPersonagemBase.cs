@@ -9,6 +9,7 @@ public enum EstadoDoPersonagem { IDLE, PERSEGUINDO, ATACANDO, MORTO, MOVIMENTO_E
 
 public class IAPersonagemBase : MonoBehaviour
 {
+    public PersonagemData personagem;
     //área referente às definições do personagem
     [Header("Definições")]
     public ControladorDoPersonagem controlador;

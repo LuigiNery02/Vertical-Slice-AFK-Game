@@ -50,46 +50,134 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
     [HideInInspector]
     public bool equipouEquipamento; //variável que checa se qualquer equipamento já foi equipado a qualquer personagem
 
+    private SistemaDeCriacaoDePersonagens _sistemaDeCriacaoDePersonagens;
+    private Dictionary<string, EquipamentoBase> _equipamentosPorID = new Dictionary<string, EquipamentoBase>();
     private Transform canvasAtual; //canvas atual da cena
 
+    #region Salvamento
     public void CarregarSave(GameData data)
     {
         equipouEquipamento = data.gerenciadorInventarioEquipado;
 
         if (equipouEquipamento)
         {
-            equipamentosCabecaAcessorio = data.gerenciadorInventarioCabecaAcessorio;
-            equipamentosCabecaTopo = data.gerenciadorInventarioCabecaTopo;
-            equipamentosCabecaMedio = data.gerenciadorInventarioCabecaMedio;
-            equipamentosCabecaBaixo = data.gerenciadorInventarioCabecaBaixo;
-            equipamentosArmadura = data.gerenciadorInventarioArmadura;
-            equipamentosBracadeira = data.gerenciadorInventarioBracadeira;
-            equipamentosMaoEsquerda = data.gerenciadorInventarioMaoEsquerda;
-            equipamentosMaoDireita = data.gerenciadorInventarioMaoDireita;
-            equipamentosBota = data.gerenciadorInventarioBota;
-            equipamentosAcessorio1 = data.gerenciadorInventarioAcessorio1;
-            equipamentosAcessorio2 = data.gerenciadorInventarioAcessorio2;
-            equipamentosBuffConsumivel = data.gerenciadorInventarioBuffConsumivel;
+            if(data.gerenciadorInventarioCabecaAcessorioID.Count == 0)
+            {
+                AdicionarListaAoDicionario(equipamentosCabecaAcessorio);
+                equipamentosCabecaAcessorio = ConverterIDs(data.gerenciadorInventarioCabecaAcessorioID);
+            }
+
+            if (data.gerenciadorInventarioCabecaTopoID.Count == 0)
+            {
+                AdicionarListaAoDicionario(equipamentosCabecaTopo);
+                equipamentosCabecaTopo = ConverterIDs(data.gerenciadorInventarioCabecaTopoID);
+            }
+
+            if (data.gerenciadorInventarioCabecaMedioID.Count == 0)
+            {
+                AdicionarListaAoDicionario(equipamentosCabecaMedio);
+                equipamentosCabecaMedio = ConverterIDs(data.gerenciadorInventarioCabecaMedioID);
+            }
+
+            if (data.gerenciadorInventarioCabecaBaixoID.Count == 0)
+            {
+                AdicionarListaAoDicionario(equipamentosCabecaBaixo);
+                equipamentosCabecaBaixo = ConverterIDs(data.gerenciadorInventarioCabecaBaixoID);
+            }
+
+            if (data.gerenciadorInventarioArmaduraID.Count == 0)
+            {
+                AdicionarListaAoDicionario(equipamentosArmadura);
+                equipamentosArmadura = ConverterIDs(data.gerenciadorInventarioArmaduraID);
+            }
+
+            if (data.gerenciadorInventarioBracadeiraID.Count == 0)
+            {
+                AdicionarListaAoDicionario(equipamentosBracadeira);
+                equipamentosBracadeira = ConverterIDs(data.gerenciadorInventarioBracadeiraID);
+            }
+
+            if (data.gerenciadorInventarioMaoEsquerdaID.Count == 0)
+            {
+                AdicionarListaAoDicionario(equipamentosMaoEsquerda);
+                equipamentosMaoEsquerda = ConverterIDs(data.gerenciadorInventarioMaoEsquerdaID);
+            }
+
+            if (data.gerenciadorInventarioMaoDireitaID.Count == 0)
+            {
+                AdicionarListaAoDicionario(equipamentosMaoDireita);
+                equipamentosMaoDireita = ConverterIDs(data.gerenciadorInventarioMaoDireitaID);
+            }
+
+            if (data.gerenciadorInventarioBotaID.Count == 0)
+            {
+                AdicionarListaAoDicionario(equipamentosBota);
+                equipamentosBota = ConverterIDs(data.gerenciadorInventarioBotaID);
+            }
+
+            if (data.gerenciadorInventarioAcessorio1ID.Count == 0)
+            {
+                AdicionarListaAoDicionario(equipamentosAcessorio1);
+                equipamentosAcessorio1 = ConverterIDs(data.gerenciadorInventarioAcessorio1ID);
+            }
+
+            if (data.gerenciadorInventarioAcessorio2ID.Count == 0)
+            {
+                AdicionarListaAoDicionario(equipamentosAcessorio2);
+                equipamentosAcessorio2 = ConverterIDs(data.gerenciadorInventarioAcessorio2ID);
+            }
+
+            if (data.gerenciadorInventarioBuffConsumivelID.Count == 0)
+            {
+                AdicionarListaAoDicionario(equipamentosBuffConsumivel);
+                equipamentosBuffConsumivel = ConverterIDs(data.gerenciadorInventarioBuffConsumivelID);
+            }
         }
     }
 
     public void SalvarSave(GameData data)
     {
-        data.gerenciadorInventarioCabecaAcessorio = equipamentosCabecaAcessorio;
-        data.gerenciadorInventarioCabecaTopo = equipamentosCabecaTopo;
-        data.gerenciadorInventarioCabecaMedio = equipamentosCabecaMedio;
-        data.gerenciadorInventarioCabecaBaixo = equipamentosCabecaBaixo;
-        data.gerenciadorInventarioArmadura = equipamentosArmadura;
-        data.gerenciadorInventarioBracadeira = equipamentosBracadeira;
-        data.gerenciadorInventarioMaoEsquerda = equipamentosMaoEsquerda;
-        data.gerenciadorInventarioMaoDireita = equipamentosMaoDireita;
-        data.gerenciadorInventarioBota = equipamentosBota;
-        data.gerenciadorInventarioAcessorio1 = equipamentosAcessorio1;
-        data.gerenciadorInventarioAcessorio2 = equipamentosAcessorio2;
-        data.gerenciadorInventarioBuffConsumivel = equipamentosBuffConsumivel;
+        data.gerenciadorInventarioCabecaAcessorioID = ExtrairIDs(equipamentosCabecaAcessorio);
+        data.gerenciadorInventarioCabecaTopoID = ExtrairIDs(equipamentosCabecaTopo);
+        data.gerenciadorInventarioCabecaMedioID = ExtrairIDs(equipamentosCabecaMedio);
+        data.gerenciadorInventarioCabecaBaixoID = ExtrairIDs(equipamentosCabecaBaixo);
+        data.gerenciadorInventarioArmaduraID = ExtrairIDs(equipamentosArmadura);
+        data.gerenciadorInventarioBracadeiraID = ExtrairIDs(equipamentosBracadeira);
+        data.gerenciadorInventarioMaoEsquerdaID = ExtrairIDs(equipamentosMaoEsquerda);
+        data.gerenciadorInventarioMaoDireitaID = ExtrairIDs(equipamentosMaoDireita);
+        data.gerenciadorInventarioBotaID = ExtrairIDs(equipamentosBota);
+        data.gerenciadorInventarioAcessorio1ID = ExtrairIDs(equipamentosAcessorio1);
+        data.gerenciadorInventarioAcessorio2ID = ExtrairIDs(equipamentosAcessorio2);
+        data.gerenciadorInventarioBuffConsumivelID = ExtrairIDs(equipamentosBuffConsumivel);
 
         data.gerenciadorInventarioEquipado = equipouEquipamento;
     }
+
+    private List<string> ExtrairIDs(List<EquipamentoBase> lista) //extrai os IDs
+    {
+        List<string> ids = new List<string>();
+
+        if(lista == null)
+        {
+            return ids;
+        }
+        foreach (var equipamento in lista)
+        {
+            ids.Add(equipamento.id);
+        }
+        return ids;
+    }
+
+    private List<EquipamentoBase> ConverterIDs(List<string> lista) //converte os IDs
+    {
+        List<EquipamentoBase> equipamentos = new List<EquipamentoBase>();
+        foreach (var id in lista)
+        {
+            equipamentos.Add(equipamentos.Find(idEquipamento => idEquipamento.id == id));
+        }
+        return equipamentos;
+    }
+    #endregion
 
     private void Awake()
     {
@@ -102,6 +190,24 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
         DontDestroyOnLoad(this.gameObject);
 
         SceneManager.sceneLoaded += CarregandoCena;
+    }
+
+    private void Start()
+    {
+        _sistemaDeCriacaoDePersonagens = FindObjectOfType<SistemaDeCriacaoDePersonagens>();
+        if(_sistemaDeCriacaoDePersonagens != null)
+        {
+            foreach (var personagem in _sistemaDeCriacaoDePersonagens.personagensCriados)
+            {
+                foreach (string id in personagem.idsEquipamentosEquipados)
+                {
+                    if (_equipamentosPorID.TryGetValue(id, out EquipamentoBase equipamento))
+                    {
+                        _sistemaDeCriacaoDePersonagens.DefinirEquipamento(equipamento);
+                    }
+                }
+            }
+        }
     }
 
     public void CarregandoCena(Scene cena, LoadSceneMode modo) //função chamada quando carregar outra cena
@@ -141,6 +247,11 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
                 if(nivel > habilidadeExistente.nivel)
                 {
                     habilidadeExistente.nivel = nivel;
+                    DadosHabilidade dadosExistente = personagem.habilidadesDeClasseSalvas.Find(id => id.idHabilidade == habilidadeExistente.idHabilidade);
+                    if(dadosExistente != null)
+                    {
+                        dadosExistente.nivel = habilidadeExistente.nivel;
+                    }
                     MostrarMensagem("Habilidade Evoluída: " + habilidadeExistente.nome + "\nNível: " + habilidadeExistente.nivel + "\nHerói: " + personagem.apelido);
                 }
             }
@@ -149,7 +260,7 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
                 //adiciona a habilidade sorteada ao inventário do personagem
                 habilidadeSorteada.nivel = nivel;
                 personagem.listaDeHabilidadesDeClasse.Add(habilidadeSorteada);
-                personagem.idsHabilidadesDeClasse.Add(habilidadeSorteada.idHabilidade);
+                personagem.habilidadesDeClasseSalvas.Add(new DadosHabilidade(habilidadeSorteada.idHabilidade, habilidadeSorteada.nivel));
                 MostrarMensagem("Habilidade Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido);
             }
         }
@@ -198,6 +309,11 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
                 if (nivel > habilidadeExistente.nivel)
                 {
                     habilidadeExistente.nivel = nivel;
+                    DadosHabilidade dadosExistente = personagem.habilidadesDeArmaSalvas.Find(id => id.idHabilidade == habilidadeExistente.idHabilidade);
+                    if (dadosExistente != null)
+                    {
+                        dadosExistente.nivel = habilidadeExistente.nivel;
+                    }
                     MostrarMensagem("Habilidade Evoluída: " + habilidadeExistente.nome + "\nNível: " + habilidadeExistente.nivel + "\nHerói: " + personagem.apelido);
                 }
             }
@@ -206,7 +322,7 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
                 //adiciona a habilidade sorteada ao inventário do personagem
                 habilidadeSorteada.nivel = nivel;
                 personagem.listaDeHabilidadesDeArma.Add(habilidadeSorteada);
-                personagem.idsHabilidadesDeArma.Add(habilidadeSorteada.idHabilidade);
+                personagem.habilidadesDeArmaSalvas.Add(new DadosHabilidade(habilidadeSorteada.idHabilidade, habilidadeSorteada.nivel));
                 MostrarMensagem("Habilidade Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido);
             }
         }
@@ -249,5 +365,20 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
 
         mensagemObjeto.SetActive(false);
         mensagemObjeto.transform.SetParent(this.transform);
+    }
+    private void AdicionarListaAoDicionario(List<EquipamentoBase> lista) //função que adiciona os equipamentos ao dicionário
+    {
+        if (lista == null)
+        {
+            return;
+        }
+
+        foreach (var equipamento in lista)
+        {
+            if (equipamento != null && !_equipamentosPorID.ContainsKey(equipamento.id))
+            {
+                _equipamentosPorID.Add(equipamento.id, equipamento);
+            }
+        }
     }
 }

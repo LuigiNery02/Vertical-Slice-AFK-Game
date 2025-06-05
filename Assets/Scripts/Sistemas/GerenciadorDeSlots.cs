@@ -53,7 +53,7 @@ public class GerenciadorDeSlots : MonoBehaviour
             slots.Add(slotDisponivel);
         }
 
-        //reutiliza ou slot
+        //reutiliza o slot
         slotDisponivel.gameObject.SetActive(true);
         slotDisponivel.ReceberDadosPersonagem(sistemaDeCriacaoDePersonagens.personagemEmCriacao);
         slotDisponivel.transform.SetSiblingIndex(painelSlotsPersonagens.childCount - 1); //antes do botão de criar personagens
@@ -108,6 +108,4 @@ public class GerenciadorDeSlots : MonoBehaviour
         //coloca o botão criar personagem ao final da lista
         botaoCriar.transform.SetAsLastSibling();
     }
-
-
 }

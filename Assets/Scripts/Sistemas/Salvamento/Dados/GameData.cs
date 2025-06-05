@@ -10,18 +10,18 @@ public class GameData
     public List<PersonagemData> personagens; //personagens criados 
 
     //Gerenciador de Inventário
-    public List<EquipamentoBase> gerenciadorInventarioCabecaAcessorio; //equipamentos da cabeça acessório do inventário
-    public List<EquipamentoBase> gerenciadorInventarioCabecaTopo; //equipamentos da cabeça topo do inventário
-    public List<EquipamentoBase> gerenciadorInventarioCabecaMedio; //equipamentos da cabeça médio do inventário
-    public List<EquipamentoBase> gerenciadorInventarioCabecaBaixo; //equipamentos da cabeça baixo do inventário
-    public List<EquipamentoBase> gerenciadorInventarioArmadura; //equipamentos da armadura do inventário
-    public List<EquipamentoBase> gerenciadorInventarioBracadeira; //equipamentos da braçadeira do inventário
-    public List<EquipamentoBase> gerenciadorInventarioMaoEsquerda; //equipamentos da mão esquerda do inventário
-    public List<EquipamentoBase> gerenciadorInventarioMaoDireita; //equipamentos da mão direita do inventário
-    public List<EquipamentoBase> gerenciadorInventarioBota; //equipamentos da bota do inventário
-    public List<EquipamentoBase> gerenciadorInventarioAcessorio1; //equipamentos do acessório 1 do inventário
-    public List<EquipamentoBase> gerenciadorInventarioAcessorio2; //equipamentos do acessório 2 do inventário
-    public List<EquipamentoBase> gerenciadorInventarioBuffConsumivel; //equipamentos de buff de consumível do inventário
+    public List<string> gerenciadorInventarioCabecaAcessorioID; //ID dos equipamentos da cabeça acessório do inventário
+    public List<string> gerenciadorInventarioCabecaTopoID; //equipamentos da cabeça topo do inventário
+    public List<string> gerenciadorInventarioCabecaMedioID; //equipamentos da cabeça médio do inventário
+    public List<string> gerenciadorInventarioCabecaBaixoID; //equipamentos da cabeça baixo do inventário
+    public List<string> gerenciadorInventarioArmaduraID; //equipamentos da armadura do inventário
+    public List<string> gerenciadorInventarioBracadeiraID; //equipamentos da braçadeira do inventário
+    public List<string> gerenciadorInventarioMaoEsquerdaID; //equipamentos da mão esquerda do inventário
+    public List<string> gerenciadorInventarioMaoDireitaID; //equipamentos da mão direita do inventário
+    public List<string> gerenciadorInventarioBotaID; //equipamentos da bota do inventário
+    public List<string> gerenciadorInventarioAcessorio1ID; //equipamentos do acessório 1 do inventário
+    public List<string> gerenciadorInventarioAcessorio2ID; //equipamentos do acessório 2 do inventário
+    public List<string> gerenciadorInventarioBuffConsumivelID; //equipamentos de buff de consumível do inventário
     public bool gerenciadorInventarioEquipado; //referebte à variável equipou do gerenciador de inventário
 
     //Sistema de Batalha
@@ -38,18 +38,18 @@ public class GameData
     {
         //valores originais das variáveis ao iniciar um novo jogo
         personagens = new List<PersonagemData>();
-        gerenciadorInventarioCabecaAcessorio = new List<EquipamentoBase>();
-        gerenciadorInventarioCabecaTopo = new List<EquipamentoBase>();
-        gerenciadorInventarioCabecaMedio = new List<EquipamentoBase>();
-        gerenciadorInventarioCabecaBaixo = new List<EquipamentoBase>();
-        gerenciadorInventarioArmadura = new List<EquipamentoBase>();
-        gerenciadorInventarioBracadeira = new List<EquipamentoBase>();
-        gerenciadorInventarioMaoEsquerda = new List<EquipamentoBase>();
-        gerenciadorInventarioMaoDireita = new List<EquipamentoBase>();
-        gerenciadorInventarioBota = new List<EquipamentoBase>();
-        gerenciadorInventarioAcessorio1 = new List<EquipamentoBase>();
-        gerenciadorInventarioAcessorio2 = new List<EquipamentoBase>();
-        gerenciadorInventarioBuffConsumivel = new List<EquipamentoBase>();
+        gerenciadorInventarioCabecaAcessorioID = new List<string>();
+        gerenciadorInventarioCabecaTopoID = new List<string>();
+        gerenciadorInventarioCabecaMedioID = new List<string>();
+        gerenciadorInventarioCabecaBaixoID = new List<string>();
+        gerenciadorInventarioArmaduraID = new List<string>();
+        gerenciadorInventarioBracadeiraID = new List<string>();
+        gerenciadorInventarioMaoEsquerdaID = new List<string>();
+        gerenciadorInventarioMaoDireitaID = new List<string>();
+        gerenciadorInventarioBotaID = new List<string>();
+        gerenciadorInventarioAcessorio1ID = new List<string>();
+        gerenciadorInventarioAcessorio2ID = new List<string>();
+        gerenciadorInventarioBuffConsumivelID = new List<string>();
         tempo = DateTime.Now.ToString();
         tempoAtualBatalhaContinua = 0;
         duracaoBatalhaContinua = 0;

@@ -50,6 +50,7 @@ MonoBehaviour:
   descricao: "Aumenta o HP m\xE1ximo em 50%."
   descricaoCurta: Max HP + 50%
   indice: 12
+  id: EquipamentoBuffTemporario1
   ataqueMelee: 0
   ataqueDistancia: 0
   ataqueMagico: 0
@@ -62,7 +63,9 @@ MonoBehaviour:
   personagem:
     classe: 0
     arma: {fileID: 0}
+    armaID: 0
     atributosDePreferencia: 
+    listaSortearAtributo: 
     codigoID: 
     apelido: 
     nivel: 0
@@ -92,6 +95,10 @@ MonoBehaviour:
     listaDeHabilidadesDeArma: []
     habilidadeClasse: {fileID: 0}
     habilidadeArma: {fileID: 0}
+    habilidadesDeClasseSalvas: []
+    habilidadesDeArmaSalvas: []
+    habilidadeClasseID: 
+    habilidadeArmaID: 
     equipamentoCabecaAcessorio: {fileID: 0}
     equipamentoCabecaTopo: {fileID: 0}
     equipamentoCabecaMedio: {fileID: 0}
@@ -104,3 +111,4 @@ MonoBehaviour:
     equipamentoAcessorio1: {fileID: 0}
     equipamentoAcessorio2: {fileID: 0}
     equipamentoBuffConsumivel: {fileID: 0}
+    idsEquipamentosEquipados: []
