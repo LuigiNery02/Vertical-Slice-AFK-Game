@@ -50,6 +50,9 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
     [HideInInspector]
     public bool equipouEquipamento; //variável que checa se qualquer equipamento já foi equipado a qualquer personagem
 
+    [HideInInspector]
+    public List<PersonagemData> personagensCriados = new List<PersonagemData>();
+
     private SistemaDeCriacaoDePersonagens _sistemaDeCriacaoDePersonagens;
     private Dictionary<string, EquipamentoBase> _equipamentosPorID = new Dictionary<string, EquipamentoBase>();
     private Transform canvasAtual; //canvas atual da cena
@@ -207,6 +210,8 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
                     }
                 }
             }
+
+            personagensCriados = _sistemaDeCriacaoDePersonagens.personagensCriados;
         }
     }
 

@@ -9,7 +9,11 @@ public enum EstadoDoPersonagem { IDLE, PERSEGUINDO, ATACANDO, MORTO, MOVIMENTO_E
 
 public class IAPersonagemBase : MonoBehaviour
 {
-    public PersonagemData personagem;
+    [Header("Personagem Selecionado")]
+    public PersonagemData personagem; //dados do personagem criado
+    public GameObject[] personagemVisual; //visual do personagem
+    public GameObject canvas; //canvas do personagem
+
     //área referente às definições do personagem
     [Header("Definições")]
     public ControladorDoPersonagem controlador;
@@ -124,6 +128,36 @@ public class IAPersonagemBase : MonoBehaviour
         {
             _malha = GetComponentInChildren<SkinnedMeshRenderer>();
         }
+    }
+
+    public void ResetarDadosPersonagem() //função que reseta os dados do personagem selecionado
+    {
+        //reseta os dados do personagem
+        for (int i = 0; i < personagemVisual.Length; i++)
+        {
+            personagemVisual[i].gameObject.SetActive(false);
+        }
+
+        canvas.SetActive(false);
+    }
+
+    public void ReceberDadosPersonagem() //função que atualiza os dados do personagem selecionado
+    {
+        //atualiza os dados do personagem
+        switch (personagem.classe)
+        {
+            case Classe.Guerreiro:
+                id = 0;
+                break;
+            case Classe.Arqueiro:
+                id = 1;
+                break;
+            case Classe.Mago:
+                id = 2;
+                break;
+        }
+        personagemVisual[id].SetActive(true);
+        canvas.SetActive(true);
     }
 
     public void IniciarBatalha() //função chamada ao inicar a batalha e define os valores e comportamentos iniciais do personagem

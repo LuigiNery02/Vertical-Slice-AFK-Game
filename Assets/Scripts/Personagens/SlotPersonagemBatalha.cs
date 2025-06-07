@@ -15,6 +15,8 @@ public class SlotPersonagemBatalha : MonoBehaviour
     [HideInInspector]
     public int imagemClasse; //variável que verifica a imagem do personagem a depender de sua classe
     public Button botao; //botão do slot
+    //[HideInInspector]
+    public bool slotSelecionado; //variável que verifica se o slot foi selecionado
 
     private GerenciadorDePersonagens _gerenciadorDePersonagens; //gerenciador de personagens
 
@@ -29,7 +31,7 @@ public class SlotPersonagemBatalha : MonoBehaviour
 
         botao.onClick.AddListener(() =>
         {
-            _gerenciadorDePersonagens.SelecionarPersonagem(personagemData); //define as funções do botão do slot
+            _gerenciadorDePersonagens.SelecionarPersonagem(personagemData, this); //define as funções do botão do slot
         });
     }
 

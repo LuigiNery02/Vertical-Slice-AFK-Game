@@ -19,27 +19,24 @@ public class GerenciadorDeSlotsBatalha : MonoBehaviour
 
     public void AtualizarSlots()
     {
-        // Desativa todos os slots existentes
+        //desativa todos os slots existentes
         foreach (var slot in slots)
         {
             slot.gameObject.SetActive(false);
         }
 
-        // Verifica se o gerenciador de personagens foi definido
-        if (gerenciadirDePersonagens == null)
+        //verifica se o gerenciador de personagens foi definido
+        if (gerenciadirDePersonagens != null)
         {
-            Debug.LogWarning("Gerenciador de personagens não atribuído.");
-            return;
-        }
+            //ativa um slot para cada personagem
+            for (int i = 0; i < gerenciadirDePersonagens.personagens.Count; i++)
+            {
+                slots[i].gameObject.SetActive(true);
+                slots[i].ReceberDadosPersonagem(gerenciadirDePersonagens.personagens[i]);
 
-        // Para cada personagem, ativa um slot correspondente
-        for (int i = 0; i < gerenciadirDePersonagens.personagens.Count; i++)
-        {
-            slots[i].gameObject.SetActive(true);
-            slots[i].ReceberDadosPersonagem(gerenciadirDePersonagens.personagens[i]);
-
-            // Se quiser, aqui você pode associar os dados ao slot:
-            //slots[i].ConfigurarSlot(gerenciadirDePersonagens.personagens[i]); // precisa de um método no slot
+                // Se quiser, aqui você pode associar os dados ao slot:
+                //slots[i].ConfigurarSlot(gerenciadirDePersonagens.personagens[i]); // precisa de um método no slot
+            }
         }
     }
 }
