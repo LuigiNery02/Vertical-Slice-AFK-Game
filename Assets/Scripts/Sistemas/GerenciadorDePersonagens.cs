@@ -38,11 +38,14 @@ public class GerenciadorDePersonagens : MonoBehaviour
         }
         else
         {
-            slot.slotSelecionado = false;
-            personagem[slot.personagemIndice].ResetarDadosPersonagem();
-            personagem[slot.personagemIndice].personagem = null;
-            slot.personagemIndice = -1;
-            _personagensSelecionados--;
+            if (slot.slotSelecionado)
+            {
+                slot.slotSelecionado = false;
+                personagem[slot.personagemIndice].ResetarDadosPersonagem();
+                personagem[slot.personagemIndice].personagem = null;
+                slot.personagemIndice = -1;
+                _personagensSelecionados--;
+            }
         }
     }
     private int EncontrarIndiceLivre() //encontra o índice livre dentre os personagens

@@ -33,9 +33,6 @@ public class GerenciadorDeSlotsBatalha : MonoBehaviour
             {
                 slots[i].gameObject.SetActive(true);
                 slots[i].ReceberDadosPersonagem(gerenciadirDePersonagens.personagens[i]);
-
-                // Se quiser, aqui você pode associar os dados ao slot:
-                //slots[i].ConfigurarSlot(gerenciadirDePersonagens.personagens[i]); // precisa de um método no slot
             }
         }
     }

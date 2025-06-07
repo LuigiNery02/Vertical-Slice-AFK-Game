@@ -302,6 +302,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2066896392038628118, guid: 45288819fde2143449a96207b14db0bb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4657972}
+    - targetCorrespondingSourceObject: {fileID: 2066896392038628118, guid: 45288819fde2143449a96207b14db0bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4657974}
   m_SourcePrefab: {fileID: 100100000, guid: 45288819fde2143449a96207b14db0bb, type: 3}
 --- !u!4 &4657970 stripped
 Transform:
@@ -320,7 +323,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4657971}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c45b7ea460630664dba9e11c463bbf03, type: 3}
   m_Name: 
@@ -334,7 +337,7 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 251797578}
   _escudosPai: {fileID: 452579542}
   _escudos:
   - {fileID: 570565944}
@@ -348,7 +351,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4657971}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2c6d8b764508b041b98d05c97bf0e99, type: 3}
   m_Name: 
@@ -362,8 +365,20 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 251797578}
   _area: {fileID: 1152983491}
+--- !u!114 &4657974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4657971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8f3b1b1eeefb442aabf8eade750a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &10070137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -781,6 +796,34 @@ PrefabInstance:
     - target: {fileID: 232303093451937264, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1254382331}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelecionarPersonagem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SlotPersonagemBatalha, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5552854942466449855, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: botaoEditarPersonagem
@@ -1732,6 +1775,7 @@ MonoBehaviour:
     precisao: 0
     pontosDeHabilidade: 0
     suporte: 0
+    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -1770,6 +1814,8 @@ MonoBehaviour:
   hpAtual: 0
   _velocidade: 2
   _danoAtaqueBasico: 10
+  danoAtaqueDistancia: 0
+  danoAtaqueMagico: 0
   _cooldown: 3
   habilidade1: {fileID: 0}
   habilidade2: {fileID: 0}
@@ -2084,6 +2130,7 @@ MonoBehaviour:
     precisao: 0
     pontosDeHabilidade: 0
     suporte: 0
+    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -2116,8 +2163,8 @@ MonoBehaviour:
   controlador: 0
   _tipo: 0
   _comportamento: 0
-  distanciaMinimaParaAtacar: 0
-  velocidadeDoProjetil: 0
+  distanciaMinimaParaAtacar: 5
+  velocidadeDoProjetil: 10
   id: 0
   numeroDeEquipamentos: 2
   spriteEquipamentos:
@@ -2127,6 +2174,8 @@ MonoBehaviour:
   hpAtual: 0
   _velocidade: 2
   _danoAtaqueBasico: 15
+  danoAtaqueDistancia: 0
+  danoAtaqueMagico: 0
   _cooldown: 1
   habilidade1: {fileID: 579357258}
   habilidade2: {fileID: 579357257}
@@ -2850,6 +2899,7 @@ MonoBehaviour:
     precisao: 0
     pontosDeHabilidade: 0
     suporte: 0
+    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -2888,6 +2938,8 @@ MonoBehaviour:
   hpAtual: 0
   _velocidade: 1.5
   _danoAtaqueBasico: 20
+  danoAtaqueDistancia: 0
+  danoAtaqueMagico: 0
   _cooldown: 2.5
   habilidade1: {fileID: 0}
   habilidade2: {fileID: 0}
@@ -3202,6 +3254,7 @@ MonoBehaviour:
     precisao: 0
     pontosDeHabilidade: 0
     suporte: 0
+    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -3234,8 +3287,8 @@ MonoBehaviour:
   controlador: 0
   _tipo: 0
   _comportamento: 0
-  distanciaMinimaParaAtacar: 0
-  velocidadeDoProjetil: 0
+  distanciaMinimaParaAtacar: 5
+  velocidadeDoProjetil: 10
   id: 0
   numeroDeEquipamentos: 2
   spriteEquipamentos:
@@ -3245,6 +3298,8 @@ MonoBehaviour:
   hpAtual: 0
   _velocidade: 2
   _danoAtaqueBasico: 15
+  danoAtaqueDistancia: 0
+  danoAtaqueMagico: 0
   _cooldown: 1
   habilidade1: {fileID: 1410111993}
   habilidade2: {fileID: 1410111992}
@@ -3522,6 +3577,34 @@ PrefabInstance:
     - target: {fileID: 232303093451937264, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2080588475}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelecionarPersonagem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SlotPersonagemBatalha, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5552854942466449855, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: botaoEditarPersonagem
@@ -4678,6 +4761,7 @@ MonoBehaviour:
     precisao: 0
     pontosDeHabilidade: 0
     suporte: 0
+    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -4716,6 +4800,8 @@ MonoBehaviour:
   hpAtual: 0
   _velocidade: 2
   _danoAtaqueBasico: 10
+  danoAtaqueDistancia: 0
+  danoAtaqueMagico: 0
   _cooldown: 3
   habilidade1: {fileID: 0}
   habilidade2: {fileID: 0}
@@ -6410,6 +6496,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1248815240492774, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 397276713}
+    - targetCorrespondingSourceObject: {fileID: 1248815240492774, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 397276715}
   m_SourcePrefab: {fileID: 100100000, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
 --- !u!4 &397276711 stripped
 Transform:
@@ -6428,7 +6517,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 397276712}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0f44049ab1996d488c05b8f61baedee, type: 3}
   m_Name: 
@@ -6441,7 +6530,7 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 251797578}
 --- !u!114 &397276714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6449,7 +6538,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 397276712}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce629e1760e029b4091b29a19ca5e0f3, type: 3}
   m_Name: 
@@ -6464,8 +6553,20 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 251797578}
   _cura: 25
+--- !u!114 &397276715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397276712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8f3b1b1eeefb442aabf8eade750a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &403266417
 GameObject:
   m_ObjectHideFlags: 0
@@ -7042,6 +7143,34 @@ PrefabInstance:
     - target: {fileID: 232303093451937264, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1738410638}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelecionarPersonagem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SlotPersonagemBatalha, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5552854942466449855, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: botaoEditarPersonagem
@@ -8869,6 +8998,7 @@ MonoBehaviour:
     precisao: 0
     pontosDeHabilidade: 0
     suporte: 0
+    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -8907,6 +9037,8 @@ MonoBehaviour:
   hpAtual: 0
   _velocidade: 2
   _danoAtaqueBasico: 10
+  danoAtaqueDistancia: 0
+  danoAtaqueMagico: 0
   _cooldown: 2
   habilidade1: {fileID: 0}
   habilidade2: {fileID: 0}
@@ -9392,6 +9524,34 @@ PrefabInstance:
     - target: {fileID: 232303093451937264, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1826425482}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelecionarPersonagem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SlotPersonagemBatalha, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5552854942466449855, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: botaoEditarPersonagem
@@ -9918,6 +10078,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1835885862194036, guid: c647a6e9ba715004ebbf4dc6d7bd1e7a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 579357257}
+    - targetCorrespondingSourceObject: {fileID: 1835885862194036, guid: c647a6e9ba715004ebbf4dc6d7bd1e7a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 579357259}
   m_SourcePrefab: {fileID: 100100000, guid: c647a6e9ba715004ebbf4dc6d7bd1e7a, type: 3}
 --- !u!4 &579357255 stripped
 Transform:
@@ -9936,7 +10099,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579357256}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46d856c512b72104b95b52c174dbce7e, type: 3}
   m_Name: 
@@ -9949,7 +10112,7 @@ MonoBehaviour:
   tempoDeRecarga: 5
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 110611108}
 --- !u!114 &579357258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9957,7 +10120,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579357256}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e47782d8c49097346b5651a71a0ce12c, type: 3}
   m_Name: 
@@ -9970,10 +10133,22 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 110611108}
   _dano: 30
   _cooldown: 0.5
   _velocidade: 4
+--- !u!114 &579357259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579357256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8f3b1b1eeefb442aabf8eade750a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &594283172
 GameObject:
   m_ObjectHideFlags: 0
@@ -10361,6 +10536,34 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1926963750}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelecionarPersonagem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SlotPersonagemBatalha, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5552854942466449855, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: botaoEditarPersonagem
       value: 
@@ -10638,6 +10841,34 @@ PrefabInstance:
     - target: {fileID: 232303093451937264, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1459308987}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelecionarPersonagem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SlotPersonagemBatalha, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5552854942466449855, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: botaoEditarPersonagem
@@ -15008,6 +15239,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1248815240492774, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 875967307}
+    - targetCorrespondingSourceObject: {fileID: 1248815240492774, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 875967309}
   m_SourcePrefab: {fileID: 100100000, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
 --- !u!4 &875967305 stripped
 Transform:
@@ -15026,7 +15260,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 875967306}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0f44049ab1996d488c05b8f61baedee, type: 3}
   m_Name: 
@@ -15039,7 +15273,7 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 1194664540}
 --- !u!114 &875967308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15047,7 +15281,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 875967306}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce629e1760e029b4091b29a19ca5e0f3, type: 3}
   m_Name: 
@@ -15062,8 +15296,20 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 1194664540}
   _cura: 25
+--- !u!114 &875967309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875967306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8f3b1b1eeefb442aabf8eade750a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &884261834
 GameObject:
   m_ObjectHideFlags: 0
@@ -19086,6 +19332,7 @@ MonoBehaviour:
     precisao: 0
     pontosDeHabilidade: 0
     suporte: 0
+    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -19118,8 +19365,8 @@ MonoBehaviour:
   controlador: 0
   _tipo: 0
   _comportamento: 0
-  distanciaMinimaParaAtacar: 0
-  velocidadeDoProjetil: 0
+  distanciaMinimaParaAtacar: 5
+  velocidadeDoProjetil: 10
   id: 0
   numeroDeEquipamentos: 2
   spriteEquipamentos:
@@ -19129,6 +19376,8 @@ MonoBehaviour:
   hpAtual: 0
   _velocidade: 2
   _danoAtaqueBasico: 15
+  danoAtaqueDistancia: 0
+  danoAtaqueMagico: 0
   _cooldown: 1
   habilidade1: {fileID: 1589998371}
   habilidade2: {fileID: 1589998370}
@@ -19838,6 +20087,34 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1038869352}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelecionarPersonagem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SlotPersonagemBatalha, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5552854942466449855, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: botaoEditarPersonagem
       value: 
@@ -20079,6 +20356,34 @@ PrefabInstance:
     - target: {fileID: 232303093451937264, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1796633550}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelecionarPersonagem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SlotPersonagemBatalha, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5552854942466449855, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: botaoEditarPersonagem
@@ -20389,6 +20694,34 @@ PrefabInstance:
     - target: {fileID: 232303093451937264, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1879681781}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelecionarPersonagem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SlotPersonagemBatalha, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5552854942466449855, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: botaoEditarPersonagem
@@ -20788,6 +21121,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2066896392038628118, guid: 45288819fde2143449a96207b14db0bb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1288896305}
+    - targetCorrespondingSourceObject: {fileID: 2066896392038628118, guid: 45288819fde2143449a96207b14db0bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1288896307}
   m_SourcePrefab: {fileID: 100100000, guid: 45288819fde2143449a96207b14db0bb, type: 3}
 --- !u!4 &1288896303 stripped
 Transform:
@@ -20806,7 +21142,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1288896304}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c45b7ea460630664dba9e11c463bbf03, type: 3}
   m_Name: 
@@ -20820,7 +21156,7 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 1194664540}
   _escudosPai: {fileID: 761842007}
   _escudos:
   - {fileID: 863426421}
@@ -20834,7 +21170,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1288896304}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2c6d8b764508b041b98d05c97bf0e99, type: 3}
   m_Name: 
@@ -20848,8 +21184,20 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 1194664540}
   _area: {fileID: 1974103013}
+--- !u!114 &1288896307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288896304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8f3b1b1eeefb442aabf8eade750a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1300009358
 GameObject:
   m_ObjectHideFlags: 0
@@ -21048,6 +21396,34 @@ PrefabInstance:
     - target: {fileID: 232303093451937264, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 439305173}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelecionarPersonagem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SlotPersonagemBatalha, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5552854942466449855, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: botaoEditarPersonagem
@@ -21376,6 +21752,34 @@ PrefabInstance:
     - target: {fileID: 232303093451937264, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1363378127}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelecionarPersonagem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SlotPersonagemBatalha, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5552854942466449855, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: botaoEditarPersonagem
@@ -22613,6 +23017,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1835885862194036, guid: c647a6e9ba715004ebbf4dc6d7bd1e7a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1410111992}
+    - targetCorrespondingSourceObject: {fileID: 1835885862194036, guid: c647a6e9ba715004ebbf4dc6d7bd1e7a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1410111994}
   m_SourcePrefab: {fileID: 100100000, guid: c647a6e9ba715004ebbf4dc6d7bd1e7a, type: 3}
 --- !u!4 &1410111990 stripped
 Transform:
@@ -22631,7 +23038,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410111991}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46d856c512b72104b95b52c174dbce7e, type: 3}
   m_Name: 
@@ -22644,7 +23051,7 @@ MonoBehaviour:
   tempoDeRecarga: 5
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 251797578}
 --- !u!114 &1410111993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22652,7 +23059,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410111991}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e47782d8c49097346b5651a71a0ce12c, type: 3}
   m_Name: 
@@ -22665,10 +23072,22 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 251797578}
   _dano: 30
   _cooldown: 0.5
   _velocidade: 4
+--- !u!114 &1410111994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410111991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8f3b1b1eeefb442aabf8eade750a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1410979605
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23978,6 +24397,7 @@ MonoBehaviour:
     precisao: 0
     pontosDeHabilidade: 0
     suporte: 0
+    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -24016,6 +24436,8 @@ MonoBehaviour:
   hpAtual: 0
   _velocidade: 1.5
   _danoAtaqueBasico: 20
+  danoAtaqueDistancia: 0
+  danoAtaqueMagico: 0
   _cooldown: 2.5
   habilidade1: {fileID: 0}
   habilidade2: {fileID: 0}
@@ -25363,7 +25785,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1589998360}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46d856c512b72104b95b52c174dbce7e, type: 3}
   m_Name: 
@@ -25376,7 +25798,7 @@ MonoBehaviour:
   tempoDeRecarga: 5
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 1194664540}
 --- !u!114 &1589998371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25384,7 +25806,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1589998360}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e47782d8c49097346b5651a71a0ce12c, type: 3}
   m_Name: 
@@ -25397,10 +25819,22 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 1194664540}
   _dano: 30
   _cooldown: 0.5
   _velocidade: 4
+--- !u!114 &1589998372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589998360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8f3b1b1eeefb442aabf8eade750a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1608353674
 GameObject:
   m_ObjectHideFlags: 0
@@ -25606,6 +26040,7 @@ MonoBehaviour:
     precisao: 0
     pontosDeHabilidade: 0
     suporte: 0
+    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -25644,6 +26079,8 @@ MonoBehaviour:
   hpAtual: 0
   _velocidade: 1.5
   _danoAtaqueBasico: 20
+  danoAtaqueDistancia: 0
+  danoAtaqueMagico: 0
   _cooldown: 2.5
   habilidade1: {fileID: 0}
   habilidade2: {fileID: 0}
@@ -25853,6 +26290,7 @@ MonoBehaviour:
     precisao: 0
     pontosDeHabilidade: 0
     suporte: 0
+    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -25891,6 +26329,8 @@ MonoBehaviour:
   hpAtual: 0
   _velocidade: 2
   _danoAtaqueBasico: 10
+  danoAtaqueDistancia: 0
+  danoAtaqueMagico: 0
   _cooldown: 2
   habilidade1: {fileID: 0}
   habilidade2: {fileID: 0}
@@ -27590,6 +28030,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1248815240492774, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1630456427}
+    - targetCorrespondingSourceObject: {fileID: 1248815240492774, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1630456429}
   m_SourcePrefab: {fileID: 100100000, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
 --- !u!4 &1630456425 stripped
 Transform:
@@ -27608,7 +28051,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1630456426}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0f44049ab1996d488c05b8f61baedee, type: 3}
   m_Name: 
@@ -27621,7 +28064,7 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 110611108}
 --- !u!114 &1630456428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27629,7 +28072,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1630456426}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce629e1760e029b4091b29a19ca5e0f3, type: 3}
   m_Name: 
@@ -27644,8 +28087,20 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 110611108}
   _cura: 25
+--- !u!114 &1630456429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630456426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8f3b1b1eeefb442aabf8eade750a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1634384451
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28789,6 +29244,7 @@ MonoBehaviour:
     precisao: 0
     pontosDeHabilidade: 0
     suporte: 0
+    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -28827,6 +29283,8 @@ MonoBehaviour:
   hpAtual: 0
   _velocidade: 2
   _danoAtaqueBasico: 10
+  danoAtaqueDistancia: 0
+  danoAtaqueMagico: 0
   _cooldown: 2
   habilidade1: {fileID: 0}
   habilidade2: {fileID: 0}
@@ -30760,6 +31218,7 @@ MonoBehaviour:
     precisao: 0
     pontosDeHabilidade: 0
     suporte: 0
+    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -30798,6 +31257,8 @@ MonoBehaviour:
   hpAtual: 0
   _velocidade: 2
   _danoAtaqueBasico: 10
+  danoAtaqueDistancia: 0
+  danoAtaqueMagico: 0
   _cooldown: 3
   habilidade1: {fileID: 0}
   habilidade2: {fileID: 0}
@@ -31672,6 +32133,34 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 622530124}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelecionarPersonagem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SlotPersonagemBatalha, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5552854942466449855, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: botaoEditarPersonagem
       value: 
@@ -32382,6 +32871,34 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1961392620}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelecionarPersonagem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SlotPersonagemBatalha, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5552854942466449855, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: botaoEditarPersonagem
       value: 
@@ -32684,6 +33201,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1835885862194036, guid: c647a6e9ba715004ebbf4dc6d7bd1e7a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1589998370}
+    - targetCorrespondingSourceObject: {fileID: 1835885862194036, guid: c647a6e9ba715004ebbf4dc6d7bd1e7a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1589998372}
   m_SourcePrefab: {fileID: 100100000, guid: c647a6e9ba715004ebbf4dc6d7bd1e7a, type: 3}
 --- !u!1 &2019820715
 GameObject:
@@ -33712,6 +34232,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2066896392038628118, guid: 45288819fde2143449a96207b14db0bb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2130009436}
+    - targetCorrespondingSourceObject: {fileID: 2066896392038628118, guid: 45288819fde2143449a96207b14db0bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2130009438}
   m_SourcePrefab: {fileID: 100100000, guid: 45288819fde2143449a96207b14db0bb, type: 3}
 --- !u!4 &2130009434 stripped
 Transform:
@@ -33730,7 +34253,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130009435}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c45b7ea460630664dba9e11c463bbf03, type: 3}
   m_Name: 
@@ -33744,7 +34267,7 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 110611108}
   _escudosPai: {fileID: 446575732}
   _escudos:
   - {fileID: 1097767167}
@@ -33758,7 +34281,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130009435}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2c6d8b764508b041b98d05c97bf0e99, type: 3}
   m_Name: 
@@ -33772,8 +34295,20 @@ MonoBehaviour:
   tempoDeRecarga: 10
   selecaoDePersonagem: {fileID: 477886656}
   podeAtivarEfeito: 1
-  personagem: {fileID: 0}
+  personagem: {fileID: 110611108}
   _area: {fileID: 1273219197}
+--- !u!114 &2130009438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130009435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8f3b1b1eeefb442aabf8eade750a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2140159965
 GameObject:
   m_ObjectHideFlags: 0
@@ -34024,6 +34559,34 @@ PrefabInstance:
     - target: {fileID: 232303093451937264, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4794511251719145558}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelecionarPersonagem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SlotPersonagemBatalha, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426175719073841163, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5552854942466449855, guid: 92e19ab3f4db95746bacfdc36aec57bf, type: 3}
       propertyPath: botaoEditarPersonagem

@@ -44,6 +44,7 @@ public class PersonagemData
     public float precisao; //precisão do personagem
     public float pontosDeHabilidade; //pontos de habilidades do personagem
     public float suporte; //valor do suporte do personagem
+    public float velocidadeDeMovimento; //velocidade de movimento do personagem
     #endregion
 
     #region Definições Habilidades
@@ -228,6 +229,7 @@ public class PersonagemData
 
         //atualiza os valores
         hp += constituicao;
+        velocidadeDeMovimento = 2;
         defesa += constituicao;
         defesaMagica += constituicao;
 

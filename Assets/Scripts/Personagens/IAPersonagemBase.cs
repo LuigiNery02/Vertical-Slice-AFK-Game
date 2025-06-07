@@ -25,8 +25,7 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("Definições Longa Distancia")]
     [SerializeField]
     private float distanciaMinimaParaAtacar = 5f; //distancia minima que um personagem de longa distancia deve ter para atacar
-    [SerializeField]
-    private float velocidadeDoProjetil; //velocidade do projetil do ataque do personagem de longa distancia
+    public float velocidadeDoProjetil; //velocidade do projetil do ataque do personagem de longa distancia
 
     //área referente ao id do personagem
     [Header("ID")]
@@ -36,21 +35,22 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("Equipamentos")]
     public int numeroDeEquipamentos; //número de equipamentos do personagem (apenas visualmente demonstrativo)
     public Sprite[] spriteEquipamentos; //sprites dos equipamentos do personagem 
-    
 
     //área referente ao hp (vida) do personagem
     [Header("HP")]
-    public float _hpMaximoEInicial = 100f; //valor inicial que o hp atual do player terá ao iniciar a batalha, e valor máximo que ele pode ter
+    public float _hpMaximoEInicial; //valor inicial que o hp atual do player terá ao iniciar a batalha, e valor máximo que ele pode ter
     //[HideInInspector]
-    public float hpAtual = 100f; //valor atual do hp (vida) do personagem
+    public float hpAtual; //valor atual do hp (vida) do personagem
 
     //área referente ao movimento do personagem
     [Header("Movimento")]
-    public float _velocidade = 2f; //valor do ataque básico do personagem
+    public float _velocidade; //valor do ataque básico do personagem
 
     //área referente ao ataque do personagem
     [Header("Ataque")]
-    public float _danoAtaqueBasico = 10f; //valor do dano do ataque básico do personagem
+    public float _danoAtaqueBasico; //valor do dano do ataque básico do personagem
+    public float danoAtaqueDistancia; //valor do dano do ataque à distância do personagem
+    public float danoAtaqueMagico; //valor do dano do ataque mágico do personagem
     public float _cooldown = 1f; //valor do tempo de espera para cada ataque básico do personagem
     private float _cooldownAtual = 0f; //tempo atual para o personagem poder atacar novamente
     private bool _podeAtacar; //variável que verifica se o personagem pode atacar
@@ -100,16 +100,20 @@ public class IAPersonagemBase : MonoBehaviour
     {
         _sistemaDeBatalha = GameObject.FindGameObjectWithTag("SistemaDeBatalha").GetComponent<SistemaDeBatalha>(); //encontra o sistema de batalha na cena
 
-        //encontra o slider do personagem caso tenha
-        if (gameObject.GetComponentInChildren<Slider>() != null)
+        if (SistemaDeBatalha.usarSliders)
         {
-            _slider = GetComponentInChildren<Slider>();
+            if (controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
+            {
+                _slider = GetComponentInChildren<Slider>();
+            }
         }
 
-        //encontra a malha do personagem caso tenha
-        if (gameObject.GetComponentInChildren<SkinnedMeshRenderer>() != null)
+        if (SistemaDeBatalha.usarAnimações)
         {
-            _malha = GetComponentInChildren<SkinnedMeshRenderer>();
+            if (controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
+            {
+                _malha = GetComponentInChildren<SkinnedMeshRenderer>();
+            }
         }
     }
 
@@ -117,16 +121,20 @@ public class IAPersonagemBase : MonoBehaviour
     {
         _sistemaDeBatalha = GameObject.FindGameObjectWithTag("SistemaDeBatalha").GetComponent<SistemaDeBatalha>(); //encontra o sistema de batalha na cena
 
-        //encontra o slider do personagem caso tenha
-        if (gameObject.GetComponentInChildren<Slider>() != null)
+        if (SistemaDeBatalha.usarSliders)
         {
-            _slider = GetComponentInChildren<Slider>();
+            if(controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
+            {
+                _slider = GetComponentInChildren<Slider>();
+            }
         }
 
-        //encontra a malha do personagem caso tenha
-        if (gameObject.GetComponentInChildren<SkinnedMeshRenderer>() != null)
+        if (SistemaDeBatalha.usarAnimações)
         {
-            _malha = GetComponentInChildren<SkinnedMeshRenderer>();
+            if (controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
+            {
+                _malha = GetComponentInChildren<SkinnedMeshRenderer>();
+            }
         }
     }
 
@@ -148,16 +156,38 @@ public class IAPersonagemBase : MonoBehaviour
         {
             case Classe.Guerreiro:
                 id = 0;
+                _tipo = TipoDePersonagem.CURTA_DISTANCIA;
                 break;
             case Classe.Arqueiro:
                 id = 1;
+                _tipo = TipoDePersonagem.LONGA_DISTANCIA;
                 break;
             case Classe.Mago:
                 id = 2;
+                _tipo = TipoDePersonagem.LONGA_DISTANCIA;
                 break;
         }
         personagemVisual[id].SetActive(true);
         canvas.SetActive(true);
+
+        _hpMaximoEInicial = personagem.hp;
+        _velocidade = personagem.velocidadeDeMovimento;
+        _danoAtaqueBasico = personagem.ataque;
+        danoAtaqueDistancia = personagem.ataqueDistancia;
+        danoAtaqueMagico = personagem.ataqueMagico;
+        _cooldown = personagem.velocidadeAtaque;
+
+        //encontra o slider do personagem caso tenha
+        if (transform.GetComponentInChildren<Slider>() != null)
+        {
+            _slider = transform.GetComponentInChildren<Slider>();
+        }
+
+        //encontra a malha do personagem caso tenha
+        if (personagemVisual[id].GetComponentInChildren<SkinnedMeshRenderer>() != null)
+        {
+            _malha = personagemVisual[id].GetComponentInChildren<SkinnedMeshRenderer>();
+        }
     }
 
     public void IniciarBatalha() //função chamada ao inicar a batalha e define os valores e comportamentos iniciais do personagem
@@ -579,7 +609,7 @@ public class IAPersonagemBase : MonoBehaviour
         {
             hpAtual -= Mathf.RoundToInt(dano * (1f - (reducaoDeDano / 100f))); //sofre o dano
 
-            if (_usarSliders)
+            if (_usarSliders && _slider != null)
             {
                 //atualiza o slider
                 _slider.value = hpAtual;
@@ -652,16 +682,29 @@ public class IAPersonagemBase : MonoBehaviour
         if (_usarAnimações)
         {
             //encontra o animator no objeto
-            _animator = GetComponent<Animator>();
-            if (_animator == null)
+            if (controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
             {
-                Debug.Log("Não há animator");
+                if (personagemVisual.Length != 0)
+                {
+                    if (personagemVisual[id].GetComponent<Animator>() != null)
+                    {
+                        _animator = personagemVisual[id].GetComponent<Animator>();
+                    }
+                    else
+                    {
+                        Debug.Log("Não há animator");
+                    }
+                }
             }
+            else if(controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
+            {
+                _animator = GetComponent<Animator>();
+            }
+            
         }
 
         if (_usarSliders)
         {
-            _slider.gameObject.SetActive(true);
             if (_slider == null)
             {
                 Debug.Log("Não há slider");
@@ -669,6 +712,7 @@ public class IAPersonagemBase : MonoBehaviour
             else
             {
                 //referencia o hp ao slider
+                _slider.gameObject.SetActive(true);
                 _slider.maxValue = _hpMaximoEInicial;
                 _slider.value = hpAtual;
             }
