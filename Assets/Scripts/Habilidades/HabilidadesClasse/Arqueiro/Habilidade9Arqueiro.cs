@@ -6,7 +6,7 @@ public class Habilidade9Arqueiro : HabilidadeBase
 {
     private float _precisaoOriginal; //precisão original do personagem
     private float esquivaOriginal; //esquiva original do personagem
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

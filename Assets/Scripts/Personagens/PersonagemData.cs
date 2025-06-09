@@ -40,8 +40,8 @@ public class PersonagemData
     public float defesa; //valor defesa do personagem
     public float defesaMagica; //valor da defesa mágica do personagem
     public float velocidadeAtaque; //velocidade de ataque do personagem
-    public float esquiva; //probabilidade de esquiva do personagem
-    public float precisao; //precisão do personagem
+    public int esquiva; //probabilidade de esquiva do personagem
+    public int precisao; //precisão do personagem
     public float pontosDeHabilidade; //pontos de habilidades do personagem
     public float suporte; //valor do suporte do personagem
     public float velocidadeDeMovimento; //velocidade de movimento do personagem
@@ -83,6 +83,9 @@ public class PersonagemData
     [HideInInspector]
     public List<string> idsEquipamentosEquipados = new List<string>(); //lista com os IDs dos equipamentos equipados ao personagem
     #endregion
+
+    public delegate void delegateSubirNivel();
+    public delegateSubirNivel funcaoSubirNivel; //função de subir nível do personagem
     public void DefinirPersonagem() //função que define dados iniciais importantes do personagem
     {
         #region Pesos Atributos
@@ -121,6 +124,7 @@ public class PersonagemData
         if(expAtual >= expProximoNível)
         {
             expAtual = 0;
+            EscolherAtributo();
             SubirDeNivel();
         }
     }
@@ -156,8 +160,15 @@ public class PersonagemData
                 case 80:
                     GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Arma, this.classe, 3, this);
                     break;
+                default:
+                    GerenciadorDeInventario.instancia.MostrarMensagem("Herói " + apelido + " subiu para o nível " + nivel);
+                    break;
             }
             expProximoNível += (expProximoNível / 10); //atualiza o valor necessário para passar de nível
+            if(funcaoSubirNivel != null)
+            {
+                funcaoSubirNivel();
+            }
         }
 
         DefinicoesBatalha();
@@ -211,19 +222,19 @@ public class PersonagemData
         switch (classe)
         {
             case Classe.Guerreiro:
-                defesa = 19;
+                defesa = 9;
                 defesaMagica = 4;
                 suporte = 4;
                 break;
             case Classe.Arqueiro:
-                defesa = 9;
-                defesaMagica = 9;
+                defesa = 8;
+                defesaMagica = 8;
                 suporte = 9;
                 break;
             case Classe.Mago:
                 defesa = 4;
-                defesaMagica = 19;
-                suporte = 14;
+                defesaMagica = 9;
+                suporte = 9;
                 break;
         }
 

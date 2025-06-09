@@ -6,7 +6,7 @@ public class Habilidade8Guerreiro : HabilidadeBase
 {
     private float _precisaoOriginal; //precisao original do personagem
     private float _esquivaOriginal; //esquiva original do personagem
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

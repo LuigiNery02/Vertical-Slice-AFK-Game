@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade12Machado : HabilidadeBase
 {
     private bool _sangramento; //variável que verifica se há efeito de sangramento
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

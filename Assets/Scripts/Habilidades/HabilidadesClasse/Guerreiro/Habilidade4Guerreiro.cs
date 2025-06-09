@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade4Guerreiro : HabilidadeBase
 {
     private float _hpOriginal; //dano original do personagem
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

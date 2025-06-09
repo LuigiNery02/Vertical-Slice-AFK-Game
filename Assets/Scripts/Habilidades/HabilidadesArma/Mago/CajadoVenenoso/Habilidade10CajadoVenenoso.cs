@@ -8,7 +8,7 @@ public class Habilidade10CajadoVenenoso : HabilidadeBase
     private float _hpOriginal; //hp original do personagem
     private float _ataqueMagicoOriginal; //ataque mágico original do personagem
     private bool _envenenamento; //variável que verifica se há efeito de envenenamento
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

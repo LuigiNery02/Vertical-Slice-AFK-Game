@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade7Mago : HabilidadeBase
 {
     private float _hpOriginal; //hp original do personagem
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

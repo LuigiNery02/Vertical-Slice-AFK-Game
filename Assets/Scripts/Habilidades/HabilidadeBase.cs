@@ -33,31 +33,38 @@ public class HabilidadeBase : MonoBehaviour
     [HideInInspector]
     public IAPersonagemBase personagem; //personagem que utilizará a habilidade
 
+    public virtual void Inicializar() //função que inicializa a habilidade quando o personagem é definido na batalha
+    {
+        
+    }
+
     public void AtivarEfeito() //função que ativa o efeito da habilidade
     {
         if (podeAtivarEfeito && personagem._comportamento != EstadoDoPersonagem.MORTO)
         {
+            Debug.Log("Efeito Ativado");
             podeAtivarEfeito = false;
             efeitoHabilidade();
             if(temTempoDeEfeito)
             {
-                StartCoroutine(TempoDeEfeito());
+                personagem.EsperarEfeitoHabilidade(this, tempoDeEfeito);
             }
             //selecaoDePersonagem.AtualizarSeleção();
         }
     }
 
-    IEnumerator TempoDeEfeito() //função que conta em segundos o tempo que a habilidade está ativa
-    {
-        yield return new WaitForSeconds(tempoDeEfeito);
-        removerEfeitoHabilidade();
-        StartCoroutine(TempoDeRecargaDoEfeito());
-    }
+    //IEnumerator TempoDeEfeito() //função que conta em segundos o tempo que a habilidade está ativa
+    //{
+    //    yield return new WaitForSeconds(tempoDeEfeito);
+    //    removerEfeitoHabilidade();
+    //    StartCoroutine(TempoDeRecargaDoEfeito());
+    //}
 
     public void RemoverEfeito() //função que desativa o efeito da habilidade que não possui tempo de efeito
     {
+        Debug.Log("Fim de Efeito");
         removerEfeitoHabilidade();
-        StartCoroutine(TempoDeRecargaDoEfeito());
+        personagem.EsperarRecargaHabilidade(this, tempoDeRecarga);
     }
 
     public void RemoverEfeitoExternamente() //função que remove o efeito da habilidade de forma externa
@@ -67,10 +74,10 @@ public class HabilidadeBase : MonoBehaviour
         //selecaoDePersonagem.AtualizarSeleção();
     }
 
-    IEnumerator TempoDeRecargaDoEfeito() //função que conta em segundos o tempo para recaregar a habilidade
-    {
-        yield return new WaitForSeconds(tempoDeRecarga);
-        podeAtivarEfeito = true;
-        //selecaoDePersonagem.AtualizarSeleção();
-    }
+    //IEnumerator TempoDeRecargaDoEfeito() //função que conta em segundos o tempo para recaregar a habilidade
+    //{
+    //    yield return new WaitForSeconds(tempoDeRecarga);
+    //    podeAtivarEfeito = true;
+    //    //selecaoDePersonagem.AtualizarSeleção();
+    //}
 }

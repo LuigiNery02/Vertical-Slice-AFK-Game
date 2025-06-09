@@ -220,7 +220,7 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
         StopAllCoroutines();
         mensagemObjeto.SetActive(false);
         mensagemObjeto.transform.SetParent(this.transform);
-        canvasAtual = GameObject.FindObjectOfType<Canvas>()?.transform; //encontra o canvas na cena
+        canvasAtual = GameObject.Find("Canvas").transform; //encontra o canvas na cena
     }
 
     public void SortearHabilidade(TipoDeHabilidade tipo, Classe classe, int nivel ,PersonagemData personagem) //função que sorteia uma habilidade para o personagem
@@ -257,7 +257,7 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
                     {
                         dadosExistente.nivel = habilidadeExistente.nivel;
                     }
-                    MostrarMensagem("Habilidade Evoluída: " + habilidadeExistente.nome + "\nNível: " + habilidadeExistente.nivel + "\nHerói: " + personagem.apelido);
+                    MostrarMensagem("Habilidade Evoluída: " + habilidadeExistente.nome + "\nNível: " + habilidadeExistente.nivel + "\nHerói: " + personagem.apelido + " - Nível: " + personagem.nivel);
                 }
             }
             else //do contrário
@@ -266,7 +266,7 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
                 habilidadeSorteada.nivel = nivel;
                 personagem.listaDeHabilidadesDeClasse.Add(habilidadeSorteada);
                 personagem.habilidadesDeClasseSalvas.Add(new DadosHabilidade(habilidadeSorteada.idHabilidade, habilidadeSorteada.nivel));
-                MostrarMensagem("Habilidade Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido);
+                MostrarMensagem("Habilidade Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido + " - Nível: " + personagem.nivel);
             }
         }
         else if(tipo == TipoDeHabilidade.Arma)
@@ -319,7 +319,7 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
                     {
                         dadosExistente.nivel = habilidadeExistente.nivel;
                     }
-                    MostrarMensagem("Habilidade Evoluída: " + habilidadeExistente.nome + "\nNível: " + habilidadeExistente.nivel + "\nHerói: " + personagem.apelido);
+                    MostrarMensagem("Habilidade Evoluída: " + habilidadeExistente.nome + "\nNível: " + habilidadeExistente.nivel + "\nHerói: " + personagem.apelido + " - Nível: " + personagem.nivel);
                 }
             }
             else //do contrário
@@ -328,7 +328,7 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
                 habilidadeSorteada.nivel = nivel;
                 personagem.listaDeHabilidadesDeArma.Add(habilidadeSorteada);
                 personagem.habilidadesDeArmaSalvas.Add(new DadosHabilidade(habilidadeSorteada.idHabilidade, habilidadeSorteada.nivel));
-                MostrarMensagem("Habilidade Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido);
+                MostrarMensagem("Habilidade Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido + " - Nível: " + personagem.nivel);
             }
         }
     }

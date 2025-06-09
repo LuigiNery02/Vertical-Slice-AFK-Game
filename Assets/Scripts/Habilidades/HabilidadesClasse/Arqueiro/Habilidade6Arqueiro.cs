@@ -6,7 +6,7 @@ public class Habilidade6Arqueiro : HabilidadeBase
 {
     private float _defesaOriginal; //defesa original do personagem
     private float _defesaMagicaOriginal; //defesa mágica original do personagem
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

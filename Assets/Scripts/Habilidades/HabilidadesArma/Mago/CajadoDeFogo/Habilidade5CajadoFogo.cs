@@ -6,7 +6,7 @@ public class Habilidade5CajadoFogo : HabilidadeBase
 {
     private float _danoOriginal; //dano original da arma
     private bool _queimadura; //variável que verifica se há efeito de queimadura
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

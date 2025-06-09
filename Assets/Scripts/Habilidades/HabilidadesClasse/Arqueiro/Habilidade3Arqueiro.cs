@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade3Arqueiro : HabilidadeBase
 {
     private float _danoOriginal; //dano original da arma do personagem
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

@@ -89,10 +89,10 @@ public class SelecaoDePersonagem : MonoBehaviour
                 _spriteEquipamento[i] = _personagemSelecionado.spriteEquipamentos[i];
             }
         }
-        _tituloHabilidade1 = _personagemSelecionado.habilidade1.tituloHabilidade;
-        _tituloHabilidade2 = _personagemSelecionado.habilidade2.tituloHabilidade;
-        _detalheHabilidade1 = _personagemSelecionado.habilidade1.descrição;
-        _detalheHabilidade2 = _personagemSelecionado.habilidade2.descrição;
+        _tituloHabilidade1 = _personagemSelecionado.habilidade1.nome;
+        _tituloHabilidade2 = _personagemSelecionado.habilidade2.nome;
+        _detalheHabilidade1 = _personagemSelecionado.habilidade1.descricao;
+        _detalheHabilidade2 = _personagemSelecionado.habilidade2.descricao;
         AtualizarSeleção();
     }
 

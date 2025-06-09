@@ -7,7 +7,7 @@ public class Habilidade9Espada : HabilidadeBase
     private float _danoOriginal; //dano original da arma
     private float _velocidadeDeAtaqueOriginal; //velocidade de ataque original da arma
     private float _precisaoOriginal; //precisão original da arma
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

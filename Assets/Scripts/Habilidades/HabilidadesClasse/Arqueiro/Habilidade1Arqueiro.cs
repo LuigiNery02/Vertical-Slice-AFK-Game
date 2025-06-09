@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade1Arqueiro : HabilidadeBase
 {
     private float _velocidadeProjetilOriginal; //velocidade original do projétil do personagem
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

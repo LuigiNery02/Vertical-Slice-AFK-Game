@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade2Mago : HabilidadeBase
 {
     private float _area; //valor da área que causará dano em área
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

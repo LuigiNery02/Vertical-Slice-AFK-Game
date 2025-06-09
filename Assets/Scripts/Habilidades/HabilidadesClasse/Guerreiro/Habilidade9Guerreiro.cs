@@ -7,7 +7,7 @@ public class Habilidade9Guerreiro : HabilidadeBase
     private List<IAPersonagemBase> listaDeInimigos = new List<IAPersonagemBase>(); //lista de inimigos na cena
     private int _numeroDeAtaques; //numero de ataques do personagem
     private int _ataquesAcertados; //número de ataques acertados pelo personagem
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade11ArcoGelo : HabilidadeBase
 {
     private bool _congelamento; //variável que verifica se há efeito de congelamento
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

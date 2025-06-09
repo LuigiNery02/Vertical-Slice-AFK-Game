@@ -8,7 +8,7 @@ public class Habilidade10ArcoGelo : HabilidadeBase
     private float _hpOriginal; //hp original do personagem
     private float _precisaoOriginal; //precisão original da arma
     private bool _congelamento; //variável que verifica se há efeito de congelamento
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

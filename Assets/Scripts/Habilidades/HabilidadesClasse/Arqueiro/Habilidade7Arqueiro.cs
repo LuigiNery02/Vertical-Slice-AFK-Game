@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade7Arqueiro : HabilidadeBase
 {
     private float _precisaoOriginal; //precisão original do personagem
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

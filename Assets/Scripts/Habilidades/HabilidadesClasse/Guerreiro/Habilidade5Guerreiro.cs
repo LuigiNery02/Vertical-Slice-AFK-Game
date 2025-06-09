@@ -6,7 +6,7 @@ public class Habilidade5Guerreiro : HabilidadeBase
 {
     private float _danoOriginal; //dano original do personagem
     private List<IAPersonagemBase> listaDeInimigos = new List<IAPersonagemBase>(); //lista de inimigos na cena
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

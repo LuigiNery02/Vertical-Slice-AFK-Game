@@ -8,7 +8,7 @@ public class Habilidade10CajadoGelo : HabilidadeBase
     private float _hpOriginal; //hp original do personagem
     private float _sabedoriaOriginal; //sabedoria original do personagem
     private bool _congelamento; //variável que verifica se há efeito de congelamento
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

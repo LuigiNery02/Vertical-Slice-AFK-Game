@@ -13,7 +13,7 @@ public class Habilidade11Mago : HabilidadeBase
     private int[] _pontosHabilidadeSabedoriaOriginal;
 
     private int _pontosHabilidades;
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

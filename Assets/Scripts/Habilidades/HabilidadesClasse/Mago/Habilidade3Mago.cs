@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade3Mago : HabilidadeBase
 {
     private float _dano; //dano que o personagem causou ao inimigo
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

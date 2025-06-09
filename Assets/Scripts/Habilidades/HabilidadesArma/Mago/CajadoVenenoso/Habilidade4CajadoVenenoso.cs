@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade4CajadoVenenoso : HabilidadeBase
 {
     private float _velocidadeDeAtaqueOriginal; //velocidade de ataque original da arma
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

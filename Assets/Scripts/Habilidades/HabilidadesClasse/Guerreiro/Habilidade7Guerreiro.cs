@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade7Guerreiro : HabilidadeBase
 {
     private float _velocidadeDeAtaqueOriginal; //velocidade de ataque original do personagem
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

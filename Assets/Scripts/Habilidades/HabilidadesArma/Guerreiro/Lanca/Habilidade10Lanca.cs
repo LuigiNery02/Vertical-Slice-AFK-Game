@@ -7,7 +7,7 @@ public class Habilidade10Lanca : HabilidadeBase
     private float _danoOriginal; //dano original da arma
     private float _hpOriginal; //hp original do personagem
     private float _precisaoOriginal; //precisão original da arma
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

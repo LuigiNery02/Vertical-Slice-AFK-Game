@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade6Mago : HabilidadeBase
 {
     private float _defesaMagicaOriginal; //defesa mágica original do personagem
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade12ArcoVenenoso : HabilidadeBase
 {
     private bool _envenenamento; //variável que verifica se há efeito de envenenamento
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Habilidade12CajadoGelo : HabilidadeBase
 {
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

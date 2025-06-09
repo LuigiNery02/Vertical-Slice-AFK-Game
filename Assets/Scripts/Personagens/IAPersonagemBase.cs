@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,8 +58,8 @@ public class IAPersonagemBase : MonoBehaviour
 
     //área referente à habilidades
     [Header("Habilidades")]
-    public HabilidadesBase habilidade1;
-    public HabilidadesBase habilidade2;
+    public HabilidadeBase habilidade1;
+    public HabilidadeBase habilidade2;
 
     //Área referente aos sfx
     [Header("SFX")]
@@ -92,6 +93,7 @@ public class IAPersonagemBase : MonoBehaviour
     //Área de feedback visuais
     private Animator _animator; //animator do personagem
     private Slider _slider; //slider do hp do personagem
+    public Text textoHP; //texto mostrando a atualização do hp do personagem
     private bool _usarAnimações; //variável para verificar se deve usar as animações
     private bool _usarSliders; //variável para verificar se deve usar os sliders
     private bool _usarSFX; //variável para verificar se deve usar os sfxs
@@ -123,7 +125,7 @@ public class IAPersonagemBase : MonoBehaviour
 
         if (SistemaDeBatalha.usarSliders)
         {
-            if(controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
+            if (controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
             {
                 _slider = GetComponentInChildren<Slider>();
             }
@@ -151,6 +153,8 @@ public class IAPersonagemBase : MonoBehaviour
 
     public void ReceberDadosPersonagem() //função que atualiza os dados do personagem selecionado
     {
+        personagem.funcaoSubirNivel += AtualizarNivel;
+
         //atualiza os dados do personagem
         switch (personagem.classe)
         {
@@ -161,10 +165,14 @@ public class IAPersonagemBase : MonoBehaviour
             case Classe.Arqueiro:
                 id = 1;
                 _tipo = TipoDePersonagem.LONGA_DISTANCIA;
+                distanciaMinimaParaAtacar = 15;
+                velocidadeDoProjetil = 20;
                 break;
             case Classe.Mago:
                 id = 2;
                 _tipo = TipoDePersonagem.LONGA_DISTANCIA;
+                distanciaMinimaParaAtacar = 10;
+                velocidadeDoProjetil = 10;
                 break;
         }
         personagemVisual[id].SetActive(true);
@@ -176,6 +184,20 @@ public class IAPersonagemBase : MonoBehaviour
         danoAtaqueDistancia = personagem.ataqueDistancia;
         danoAtaqueMagico = personagem.ataqueMagico;
         _cooldown = personagem.velocidadeAtaque;
+        habilidade1 = personagem.habilidadeClasse;
+        habilidade2 = personagem.habilidadeArma;
+
+        if(habilidade1 != null)
+        {
+            habilidade1.personagem = this;
+            habilidade1.Inicializar();
+        }
+        
+        if(habilidade2 != null)
+        {
+            habilidade2.personagem = this;
+            habilidade2.Inicializar();
+        }
 
         //encontra o slider do personagem caso tenha
         if (transform.GetComponentInChildren<Slider>() != null)
@@ -192,6 +214,35 @@ public class IAPersonagemBase : MonoBehaviour
 
     public void IniciarBatalha() //função chamada ao inicar a batalha e define os valores e comportamentos iniciais do personagem
     {
+        if(controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
+        {
+            switch (personagem.classe)
+            {
+                case Classe.Guerreiro:
+                    personagem.defesa = 3;
+                    personagem.defesaMagica = 2;
+                    break;
+                case Classe.Arqueiro:
+                    personagem.defesa = 3;
+                    personagem.defesaMagica = 3;
+                    break;
+                case Classe.Mago:
+                    personagem.defesa = 2;
+                    personagem.defesaMagica = 3;
+                    break;
+            }
+        }
+
+        if(habilidade1 != null)
+        {
+            habilidade1.podeAtivarEfeito = true;
+        }
+
+        if(habilidade2 != null)
+        {
+            habilidade2.podeAtivarEfeito = true;
+        }
+
         _hitAtaquePersonagem = transform.GetComponentInChildren<HitAtaquePersonagem>(true); //encontra o hit do personagem dentro de si
         hpAtual = _hpMaximoEInicial; //define o hp atual do personagem igual ao valor máximo e inicial
 
@@ -587,12 +638,50 @@ public class IAPersonagemBase : MonoBehaviour
     #endregion
 
     #region HP
-    public void CausarDano(IAPersonagemBase personagem) //função de causar dano a um personagem
+    public void CausarDano(IAPersonagemBase personagem, int tipoDano) //função de causar dano a um personagem
     {
+        float dano = 0;
+
+        switch (tipoDano)
+        {
+            case 0:
+                dano = (_danoAtaqueBasico - personagem.personagem.defesa);
+                if(dano <= 0)
+                {
+                    dano = 1;
+                }
+                break;
+            case 1:
+                dano = (danoAtaqueDistancia - personagem.personagem.defesa);
+                if (dano <= 0)
+                {
+                    dano = 1;
+                }
+                break;
+            case 2:
+                dano = (danoAtaqueMagico - personagem.personagem.defesaMagica);
+                if (dano <= 0)
+                {
+                    dano = 1;
+                }
+                break;
+        }
         //causa dano ao personagem se ele for um personagem inimigo e é o alvo atual deste personagem
         if (personagem.controlador != this.controlador && personagem == _personagemAlvo)
         {
-            personagem.SofrerDano(_danoAtaqueBasico);
+            personagem.SofrerDano(dano);
+
+            if(controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
+            {
+                this.personagem.GanharEXP(dano); //caso seja personagem do jogador ganha pontos de exp igual ao dano causado do inimigo
+            }
+
+            if (_usarSliders)
+            {
+                personagem.textoHP.gameObject.SetActive(true);
+                personagem.textoHP.text = ("-" + dano);
+                StartCoroutine(DesativarTextoHP(personagem));
+            }
 
             //toca o sfx de contato se deve usar os sfxs
             if (_usarSFX)
@@ -601,6 +690,27 @@ public class IAPersonagemBase : MonoBehaviour
                 _audio.Play();
             }
         }
+    }
+
+    public void Esquivar() //função de esquiva do personagem
+    {
+        textoHP.gameObject.SetActive(true);
+        textoHP.text = ("Esquivou");
+        StartCoroutine(DesativarTextoHP(this));
+        StartCoroutine(TempoDeEsquiva());
+    }
+
+    IEnumerator TempoDeEsquiva()
+    {
+        _malha.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        _malha.gameObject.SetActive(true);
+    }
+
+    private IEnumerator DesativarTextoHP(IAPersonagemBase personagem) //coroutine que desativa o texto do ho do personagem
+    {
+        yield return new WaitForSeconds(1);
+        personagem.textoHP.gameObject.SetActive(false);
     }
 
     public void SofrerDano(float dano) //função para sofrer dano
@@ -669,6 +779,47 @@ public class IAPersonagemBase : MonoBehaviour
             }
         }
         _hitAtaquePersonagem.gameObject.SetActive(false); //desativa o hit
+    }
+    #endregion
+
+    #region Nível
+    public void AtualizarNivel() //função que atualiza os atributos de batalha do personagem quando sobe de nível
+    {
+        _hpMaximoEInicial = personagem.hp;
+        hpAtual = _hpMaximoEInicial;
+        _velocidade = personagem.velocidadeDeMovimento;
+        _danoAtaqueBasico = personagem.ataque;
+        danoAtaqueDistancia = personagem.ataqueDistancia;
+        danoAtaqueMagico = personagem.ataqueMagico;
+        _cooldown = personagem.velocidadeAtaque;
+
+        if (_usarSliders && _slider != null)
+        {
+            //atualiza o slider
+            _slider.value = hpAtual;
+        }
+    }
+    #endregion
+
+    #region Habilidades
+
+    public void EsperarEfeitoHabilidade(HabilidadeBase habilidade, float tempo)
+    {
+        StartCoroutine(TempoEfeitoHabilidade(habilidade, tempo));
+    }
+    IEnumerator TempoEfeitoHabilidade(HabilidadeBase habilidade, float tempo) //coroutine que espera um tempo para remover o efeito da habilidade
+    {
+        yield return new WaitForSeconds(tempo);
+        habilidade.RemoverEfeito();
+    }
+    public void EsperarRecargaHabilidade(HabilidadeBase habilidade, float tempo)
+    {
+        StartCoroutine(TempoRecargaHabilidade(habilidade, tempo));
+    }
+    IEnumerator TempoRecargaHabilidade(HabilidadeBase habilidade, float tempo) //coroutine que espera um tempo para recarregar o efeito da habilidade
+    {
+        yield return new WaitForSeconds(tempo);
+        habilidade.podeAtivarEfeito = true;
     }
     #endregion
 

@@ -6,7 +6,7 @@ public class Habilidade2Arqueiro : HabilidadeBase
 {
     private int _numeroDeProjeteis; //número de projéteis
     private float _danoOriginalProjetil; //valor do dano original do projétil
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

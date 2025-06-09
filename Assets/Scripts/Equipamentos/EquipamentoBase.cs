@@ -24,7 +24,7 @@ public class EquipamentoBase : MonoBehaviour
     public float defesa; //valor da defesa
     public float defesaMagica; //valor da defesa mágica
     public float velocidadeDeMovimento; //valor da velocidade de movimento
-    public float precisao; //valor da precisão
+    public int precisao; //valor da precisão
     public float hp; //valor do hp
     public bool buffConsumivel; //verifica se o equipamento é um consumivel
 

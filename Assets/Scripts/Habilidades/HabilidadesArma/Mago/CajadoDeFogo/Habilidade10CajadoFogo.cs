@@ -8,7 +8,7 @@ public class Habilidade10CajadoFogo : HabilidadeBase
     private float _hpOriginal; //hp original do personagem
     private float _defesaMagicaOriginal; //precisão original da arma
     private bool _queimadura; //variável que verifica se há efeito de queimadura
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

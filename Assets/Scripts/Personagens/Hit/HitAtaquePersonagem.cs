@@ -9,6 +9,7 @@ sealed class HitAtaquePersonagem : MonoBehaviour
     private float _velocidade; //velocidade do ataque
     [SerializeField]
     private Vector3 _posicaoInicial; //posição inicial do objeto
+    private TrailRenderer _trailRenderer; //trilha da movimentação do hit
 
     [HideInInspector]
     public bool longaDistancia; //variável para verificar se este ataque é de longa distancia
@@ -18,6 +19,18 @@ sealed class HitAtaquePersonagem : MonoBehaviour
     private void OnEnable() //quando for ativado
     {
         _personagemPai = transform.GetComponentInParent<IAPersonagemBase>(); //encontra o personagem que criou este ataque
+    }
+
+    private void OnDisable() //quando for desativado
+    {
+        //desativa a trilha caso for um projétil
+        if (longaDistancia)
+        {
+            if (_trailRenderer != null)
+            {
+                _trailRenderer.enabled = false;
+            }
+        }
     }
 
     private void Update()
@@ -54,7 +67,26 @@ sealed class HitAtaquePersonagem : MonoBehaviour
             if(other != _personagemPai && _personagemPai._comportamento == EstadoDoPersonagem.MOVIMENTO_ESPECIAL)
             {
                 IAPersonagemBase alvoDoDAno = other.GetComponent<IAPersonagemBase>();
-                _personagemPai.CausarDano(alvoDoDAno);
+                if(CalcularPrecisao(_personagemPai.personagem.precisao, alvoDoDAno.personagem.esquiva))
+                {
+                    switch (_personagemPai.personagem.classe)
+                    {
+                        case Classe.Guerreiro:
+                            _personagemPai.CausarDano(alvoDoDAno, 0);
+                            break;
+                        case Classe.Arqueiro:
+                            _personagemPai.CausarDano(alvoDoDAno, 1);
+                            break;
+                        case Classe.Mago:
+                            _personagemPai.CausarDano(alvoDoDAno, 2);
+                            break;
+                    }
+                }
+                else
+                {
+                    alvoDoDAno.Esquivar();
+                }
+           
                 gameObject.SetActive(false);
             }
             //checa se o alvo não é o personagem que criou este ataque, se o alvo não está morto e se o alvo é o atual alvo do personagem que criou este ataque
@@ -62,13 +94,34 @@ sealed class HitAtaquePersonagem : MonoBehaviour
             {
                 //define para o personagem que este ataque colidiu com um personagem
                 IAPersonagemBase alvoDoDAno = other.GetComponent<IAPersonagemBase>();
-                _personagemPai.CausarDano(alvoDoDAno);
+                if (CalcularPrecisao(_personagemPai.personagem.precisao, alvoDoDAno.personagem.esquiva))
+                {
+                    switch (_personagemPai.personagem.classe)
+                    {
+                        case Classe.Guerreiro:
+                            _personagemPai.CausarDano(alvoDoDAno, 0);
+                            break;
+                        case Classe.Arqueiro:
+                            _personagemPai.CausarDano(alvoDoDAno, 1);
+                            break;
+                        case Classe.Mago:
+                            _personagemPai.CausarDano(alvoDoDAno, 2);
+                            break;
+                    }
+                }
+                else
+                {
+                    alvoDoDAno.Esquivar();
+                }
                 gameObject.SetActive(false);
             }
         }
         else
         {
-            gameObject.SetActive(false);
+            if(other.GetComponent<HitAtaquePersonagem>() == null)
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 
@@ -82,10 +135,29 @@ sealed class HitAtaquePersonagem : MonoBehaviour
         _alvo = alvo;
         _velocidade = velocidade;
         longaDistancia = true;
+
+        //ativa a trilha caso for um projétil
+        if (longaDistancia)
+        {
+            _trailRenderer = GetComponent<TrailRenderer>();
+            if(_trailRenderer != null)
+            {
+                _trailRenderer.enabled = true;
+            }
+        }
     }
 
     public void ResetarPosição() //reseta a posição do hit
     {
         transform.localPosition = _posicaoInicial;
+    }
+
+    private bool CalcularPrecisao(int precisao, int esquiva) //função que calcula a precisão do ataque
+    {
+        int chance = 75 + (precisao - esquiva);
+        chance = Mathf.Clamp(chance, 5, 95);
+        int rng = Random.Range(0, 100);
+
+        return rng < chance;
     }
 }

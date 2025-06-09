@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade1Espada : HabilidadeBase
 {
     private float _danoOriginal; //dano original da arma
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

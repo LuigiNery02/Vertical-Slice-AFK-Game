@@ -7,7 +7,7 @@ public class Habilidade8CajadoGelo : HabilidadeBase
     private float _danoOriginal; //dano original da arma
     private float _velocidadeDeAtaqueOriginal; //velocidade de ataque original da arma
     private bool _congelamento; //variável que verifica se há efeito de congelamento
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

@@ -7,7 +7,7 @@ public class Habilidade7ArcoFogo : HabilidadeBase
     private float _danoOriginal; //dano original da arma
     private float _velocidadeDeAtaqueOriginal; //velocidade de ataque original da arma
     private bool _queimadura; //variável que verifica se há efeito de queimadura
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;

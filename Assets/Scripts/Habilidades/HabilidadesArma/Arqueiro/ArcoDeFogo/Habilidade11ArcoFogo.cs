@@ -5,7 +5,7 @@ using UnityEngine;
 public class Habilidade11ArcoFogo : HabilidadeBase
 {
     private bool _queimadura; //variável que verifica se há efeito de queimadura
-    private void Start()
+    public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
