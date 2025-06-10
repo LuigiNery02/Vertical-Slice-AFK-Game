@@ -16,22 +16,48 @@ public class Habilidade5Guerreiro : HabilidadeBase
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
     {
+        listaDeInimigos.Clear();
+
+        IAPersonagemBase[] inimigos = FindObjectsOfType<IAPersonagemBase>();
+
+        foreach (IAPersonagemBase inimigo in inimigos)
+        {
+            if (inimigo.controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO) //verifica se é personagem do jogador
+            {
+                listaDeInimigos.Add(inimigo);
+            }
+        }
+
         switch (nivel)
         {
             case 1:
-                //coloca como alvo dos inimigos o personagem
+                //coloca o personagem como alvo de todos os inimigos
+                for(int i = 0; i < listaDeInimigos.Count; i++)
+                {
+                    listaDeInimigos[i]._personagemAlvo = personagem;
+                    listaDeInimigos[i].VerificarComportamento("selecionarAlvo");
+                }
                 personagem._danoAtaqueBasico += (_danoOriginal / 20); //aumenta o dano em 5%
                 break;
             case 2:
-                //coloca como alvo dos inimigos o personagem
+                //coloca o personagem como alvo de todos os inimigos
+                for (int i = 0; i < listaDeInimigos.Count; i++)
+                {
+                    listaDeInimigos[i]._personagemAlvo = personagem;
+                    listaDeInimigos[i].VerificarComportamento("selecionarAlvo");
+                }
                 personagem._danoAtaqueBasico += (_danoOriginal / 10); //aumenta o dano em 10%
                 break;
             case 3:
-                //coloca como alvo dos inimigos o personagem
+                //coloca o personagem como alvo de todos os inimigos
+                for (int i = 0; i < listaDeInimigos.Count; i++)
+                {
+                    listaDeInimigos[i]._personagemAlvo = personagem;
+                    listaDeInimigos[i].VerificarComportamento("selecionarAlvo");
+                }
                 personagem._danoAtaqueBasico += (_danoOriginal / 5); //aumenta o dano em 20%
                 break;
         }
-
     }
 
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 

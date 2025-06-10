@@ -64,7 +64,10 @@ public class HabilidadeBase : MonoBehaviour
     {
         Debug.Log("Fim de Efeito");
         removerEfeitoHabilidade();
-        personagem.EsperarRecargaHabilidade(this, tempoDeRecarga);
+        if(tempoDeRecarga != 0)
+        {
+            personagem.EsperarRecargaHabilidade(this, tempoDeRecarga);
+        }
     }
 
     public void RemoverEfeitoExternamente() //função que remove o efeito da habilidade de forma externa

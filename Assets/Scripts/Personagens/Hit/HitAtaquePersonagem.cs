@@ -81,10 +81,20 @@ sealed class HitAtaquePersonagem : MonoBehaviour
                             _personagemPai.CausarDano(alvoDoDAno, 2);
                             break;
                     }
+
+                    if (_personagemPai.efeitoPorAtaqueAtivado)
+                    {
+                        _personagemPai.efeitoPorAtaque();
+                    }
                 }
                 else
                 {
                     alvoDoDAno.Esquivar();
+
+                    if (alvoDoDAno.efeitoPorEsquivaAtivado)
+                    {
+                        alvoDoDAno.efeitoPorEsquiva();
+                    }
                 }
            
                 gameObject.SetActive(false);
@@ -108,10 +118,20 @@ sealed class HitAtaquePersonagem : MonoBehaviour
                             _personagemPai.CausarDano(alvoDoDAno, 2);
                             break;
                     }
+
+                    if (_personagemPai.efeitoPorAtaqueAtivado)
+                    {
+                        _personagemPai.efeitoPorAtaque();
+                    }
                 }
                 else
                 {
                     alvoDoDAno.Esquivar();
+
+                    if (alvoDoDAno.efeitoPorEsquivaAtivado)
+                    {
+                        alvoDoDAno.efeitoPorEsquiva();
+                    }
                 }
                 gameObject.SetActive(false);
             }

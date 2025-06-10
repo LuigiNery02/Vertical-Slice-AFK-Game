@@ -14,4 +14,9 @@ public class AtivarHitPersonagem : MonoBehaviour
     {
         _personagem.AtivarHit();
     }
+
+    public void FinalizarMovimentoEspecial()
+    {
+        _personagem.FinalizarMovimentoEspecial();
+    }
 }

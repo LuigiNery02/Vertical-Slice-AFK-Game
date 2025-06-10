@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Habilidade10Guerreiro : HabilidadeBase
 {
-    private float _esquivaOriginal; //esquiva original do personagem
     private float _defesaOriginal; //defesa original do personagem
     public override void Inicializar()
     {
@@ -12,30 +11,34 @@ public class Habilidade10Guerreiro : HabilidadeBase
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais do personagem
-        //_esquivaOriginal = personagem.esquiva
-        //_defesaOriginal = personagem.defesa;
+        _defesaOriginal = personagem.personagem.defesa;
+        personagem.efeitoPorEsquiva = AumentarDefesa;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
+    {
+        personagem.efeitoPorEsquivaAtivado = true;
+    }
+
+    private void AumentarDefesa() //função que aumenta a defesa do personagem por esquiva
     {
         switch (nivel)
         {
             case 1:
-                //checa se o personagem esquivou: se sim aumenta a defesa do personagem 10%
+                personagem.personagem.defesa += (_defesaOriginal / 10);
                 break;
             case 2:
-                //checa se o personagem esquivou: se sim aumenta a defesa do personagem 20%
+                personagem.personagem.defesa += (_defesaOriginal / 5);
                 break;
             case 3:
-                //checa se o personagem esquivou: se sim aumenta a defesa do personagem 30%
+                personagem.personagem.defesa += (_defesaOriginal / 10) * 3;
                 break;
         }
-
     }
 
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
         //reseta os atributos originais do personagem
-        //personagem.esquiva = _esquivaOriginal;
-        //personagem.defesa = _defesaOriginal;
+        personagem.efeitoPorEsquivaAtivado = false;
+        personagem.personagem.defesa = _defesaOriginal;
     }
 }

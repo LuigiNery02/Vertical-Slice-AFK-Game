@@ -47,9 +47,9 @@ MonoBehaviour:
   nome: Combo
   descricao: "N\xEDvel 1:\n-Efeito: Aumenta o dano de ataques corpo a corpo em 25%.\n-Efeito:
     Realiza 2 Ataques R\xE1pidos\n-Recarga: 10 segundos.\n\nN\xEDvel 2:\n-Efeito:
-    Aumenta o dano de ataques corpo a corpo em 50%.\n-Efeito: Realiza 3 Ataques R\xE1pidos\n-Recarga:
+    Aumenta o dano de ataques corpo a corpo em 50%.\n-Efeito: Realiza 2 Ataques R\xE1pidos\n-Recarga:
     10 segundos.\n\nN\xEDvel 3:\n-Efeito: Aumenta o dano de ataques corpo a corpo
-    em 100%.\n-Efeito: Realiza 4 Ataques R\xE1pidos\n-Recarga: 10 segundos.\n\nPontos
+    em 100%.\n-Efeito: Realiza 2 Ataques R\xE1pidos\n-Recarga: 10 segundos.\n\nPontos
     de Habilidade: 20"
   tipoDeHabilidade: 0
   nivel: 0

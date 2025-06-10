@@ -19,15 +19,27 @@ public class Habilidade2Guerreiro : HabilidadeBase
         {
             case 1:
                 personagem._danoAtaqueBasico += (_danoOriginal / 4); //aumenta em 25% o dano do personagem
-                //realiza 2 ataques rápidos
+                if (personagem._personagemAlvo != null)
+                {
+                    personagem.movimentoEspecialAtual = 1;
+                    personagem.VerificarComportamento("movimentoEspecial");
+                }
                 break;
             case 2:
                 personagem._danoAtaqueBasico += (_danoOriginal / 2); //aumenta em 50% o dano do personagem
-                //realiza 3 ataques rápidos
+                if (personagem._personagemAlvo != null)
+                {
+                    personagem.movimentoEspecialAtual = 1;
+                    personagem.VerificarComportamento("movimentoEspecial");
+                }
                 break;
             case 3:
                 personagem._danoAtaqueBasico += (_danoOriginal); //aumenta em 100% o dano do personagem
-                //realiza 4 ataques rápidos
+                if (personagem._personagemAlvo != null)
+                {
+                    personagem.movimentoEspecialAtual = 1;
+                    personagem.VerificarComportamento("movimentoEspecial");
+                }
                 break;
         }
 

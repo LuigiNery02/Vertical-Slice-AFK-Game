@@ -88,6 +88,16 @@ public class IAPersonagemBase : MonoBehaviour
     public bool imuneADanos; //variável que verifica se o personagem é imune a danos
     [HideInInspector]
     public int reducaoDeDano = 0; //valor da redução de dano do personagem
+    //função que é ativada quando há um efeito por ataque
+    public delegate void EfeitoPorAtaque();
+    public EfeitoPorAtaque efeitoPorAtaque;
+    [HideInInspector]
+    public bool efeitoPorAtaqueAtivado; //verifica se efeitos por ataque de habilidades estão ativados
+    //função que é ativada quando há um efeito por esquiva
+    public delegate void EfeitoPorEsquiva();
+    public EfeitoPorAtaque efeitoPorEsquiva;
+    [HideInInspector]
+    public bool efeitoPorEsquivaAtivado; //verifica se efeitos por esquiva de habilidades estão ativados
 
 
     //Área de feedback visuais
@@ -595,10 +605,14 @@ public class IAPersonagemBase : MonoBehaviour
 
     public void FinalizarMovimentoEspecial() //função que finaliza o movimento especial externamente
     {
+        executandoMovimentoEspecial = false;
+
         if(movimentoEspecialAtual == 1)
         {
-            Habilidade2 habilidade2 = GetComponent<Habilidade2>();
-            habilidade2.RemoverEfeito();
+            if(habilidade1 != null)
+            {
+                habilidade1.RemoverEfeito();
+            }
         }
 
         if (_personagemAlvo != null && _personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
@@ -707,6 +721,11 @@ public class IAPersonagemBase : MonoBehaviour
         _malha.gameObject.SetActive(true);
     }
 
+    public void DesativarTextoHPPersonagem(IAPersonagemBase personagem)
+    {
+        StartCoroutine(DesativarTextoHP(personagem));
+    }
+
     private IEnumerator DesativarTextoHP(IAPersonagemBase personagem) //coroutine que desativa o texto do ho do personagem
     {
         yield return new WaitForSeconds(1);
@@ -793,6 +812,18 @@ public class IAPersonagemBase : MonoBehaviour
         danoAtaqueMagico = personagem.ataqueMagico;
         _cooldown = personagem.velocidadeAtaque;
 
+        if (habilidade1 != null)
+        {
+            habilidade1.personagem = this;
+            habilidade1.Inicializar();
+        }
+
+        if (habilidade2 != null)
+        {
+            habilidade2.personagem = this;
+            habilidade2.Inicializar();
+        }
+
         if (_usarSliders && _slider != null)
         {
             //atualiza o slider
@@ -820,6 +851,7 @@ public class IAPersonagemBase : MonoBehaviour
     {
         yield return new WaitForSeconds(tempo);
         habilidade.podeAtivarEfeito = true;
+        Debug.Log("Pode Ativar Efeito");
     }
     #endregion
 
