@@ -11,29 +11,34 @@ public class Habilidade10Mago : HabilidadeBase
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais do personagem
-        //_esquivaOriginal = personagem.esquiva
-        //_defesaOriginal = personagem.defesa;
+        _defesaOriginal = personagem.personagem.defesa;
+        personagem.efeitoPorDano = AumentarDefesa;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
+    {
+        personagem.efeitoPorDanoAtivado = true;
+    }
+
+    private void AumentarDefesa() //função que aumenta a defesa do personagem
     {
         switch (nivel)
         {
             case 1:
-                //checa se o personagem tomou dano: se sim aumenta a defesa do personagem em 10%
+                personagem.personagem.defesa += (_defesaOriginal / 10);
                 break;
             case 2:
-                //checa se o personagem tomou dano: se sim aumenta a defesa do personagem em 20%
+                personagem.personagem.defesa += (_defesaOriginal / 5);
                 break;
             case 3:
-                //checa se o personagem tomou dano: se sim aumenta a defesa do personagem em 30%
+                personagem.personagem.defesa += (_defesaOriginal / 10) * 3;
                 break;
         }
-
     }
 
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
         //reseta os atributos originais do personagem
-        //personagem.defesa = _defesaOriginal;
+        personagem.personagem.defesa = _defesaOriginal;
+        personagem.efeitoPorDanoAtivado = false;
     }
 }

@@ -11,20 +11,20 @@ public class Habilidade1Arqueiro : HabilidadeBase
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais do personagem
-        //_velocidadeProjetilOriginal = ...
+        _velocidadeProjetilOriginal = personagem.velocidadeDoProjetil;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
     {
         switch (nivel)
         {
             case 1:
-                //aumenta a velocidade do projétil do personagem em 10%
+                personagem.velocidadeDoProjetil += (_velocidadeProjetilOriginal / 10);
                 break;
             case 2:
-                //aumenta a velocidade do projétil do personagem em 20%
+                personagem.velocidadeDoProjetil += (_velocidadeProjetilOriginal / 5);
                 break;
             case 3:
-                //aumenta a velocidade do projétil do personagem em 30%
+                personagem.velocidadeDoProjetil += (_velocidadeProjetilOriginal / 10) * 3;
                 break;
         }
 
@@ -33,5 +33,6 @@ public class Habilidade1Arqueiro : HabilidadeBase
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
         //reseta os atributos originais do personagem
+        personagem.velocidadeDoProjetil = _velocidadeProjetilOriginal;
     }
 }

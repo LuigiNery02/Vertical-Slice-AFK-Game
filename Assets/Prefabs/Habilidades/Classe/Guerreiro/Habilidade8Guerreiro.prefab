@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: "Imbat\xEDvel"
-  descricao: "N\xEDvel 1:\n-Efeito: Aumenta a precis\xE3o em 25%.\n-Efeito: Aumenta
-    a esquiva em 25%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga: 10 segundos.\n\nN\xEDvel
-    2:\n-Efeito: Aumenta a precis\xE3o em 50%.\n-Efeito: Aumenta a esquiva em 50%.\n-Dura\xE7\xE3o:
+  descricao: "N\xEDvel 1:\n-Efeito: Aumenta a precis\xE3o em 100%.\n-Efeito: Aumenta
+    a esquiva em 100%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga: 10 segundos.\n\nN\xEDvel
+    2:\n-Efeito: Aumenta a precis\xE3o em 200%.\n-Efeito: Aumenta a esquiva em 200%.\n-Dura\xE7\xE3o:
     7 segundos.\n-Recarga: 10 segundos.\n\nN\xEDvel 3:\n-Efeito: Aumenta a precis\xE3o
-    em 100%.\n-Efeito: Aumenta a esquiva em 100%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga:
+    em 300%.\n-Efeito: Aumenta a esquiva em 300%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga:
     10 segundos.\n\nPontos de Habilidade: 20"
   tipoDeHabilidade: 0
   nivel: 0

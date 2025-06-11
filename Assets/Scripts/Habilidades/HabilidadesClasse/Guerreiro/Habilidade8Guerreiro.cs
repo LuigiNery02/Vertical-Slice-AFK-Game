@@ -20,16 +20,16 @@ public class Habilidade8Guerreiro : HabilidadeBase
         switch (nivel)
         {
             case 1:
-                personagem.personagem.precisao += (_precisaoOriginal / 4); //aumenta a precisão em 25%
-                personagem.personagem.esquiva += (_esquivaOriginal / 4); //aumenta a esquiva em 25%;
-                break;
-            case 2:
-                personagem.personagem.precisao += (_precisaoOriginal / 2); //aumenta a precisão em 50%
-                personagem.personagem.esquiva += (_esquivaOriginal / 2); //aumenta a esquiva em 50%;
-                break;
-            case 3:
                 personagem.personagem.precisao += _precisaoOriginal; //aumenta a precisão em 100%
                 personagem.personagem.esquiva += _esquivaOriginal; //aumenta a esquiva em 100%;
+                break;
+            case 2:
+                personagem.personagem.precisao += (_precisaoOriginal * 2); //aumenta a precisão em 200%
+                personagem.personagem.esquiva += (_esquivaOriginal * 2); //aumenta a esquiva em 200%;
+                break;
+            case 3:
+                personagem.personagem.precisao += (_precisaoOriginal * 3); //aumenta a precisão em 300%
+                personagem.personagem.esquiva += (_esquivaOriginal * 3); //aumenta a esquiva em 300%;
                 break;
         }
 

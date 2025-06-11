@@ -11,20 +11,20 @@ public class Habilidade6Mago : HabilidadeBase
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais do personagem
-        //_defesaMagicaOriginal = personagem.defesaMagica;
+        _defesaMagicaOriginal = personagem.personagem.defesaMagica;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
     {
         switch (nivel)
         {
             case 1:
-                //personagem.defesaMagica += (_defesaMagicaOriginal / 2); //aumenta em 50% a defesa mágica do personagem
+                personagem.personagem.defesaMagica += (_defesaMagicaOriginal / 2); //aumenta em 50% a defesa mágica do personagem
                 break;
             case 2:
-                //personagem.defesaMagica += _defesaMagicaOrigina; //aumenta em 100% a defesa mágica do personagem
+                personagem.personagem.defesaMagica += _defesaMagicaOriginal; //aumenta em 100% a defesa mágica do personagem
                 break;
             case 3:
-                //personagem.defesaMagica += (_defesaMagicaOriginal * 2); //aumenta em 200% a defesa mágica do personagem
+                personagem.personagem.defesaMagica += (_defesaMagicaOriginal * 2); //aumenta em 200% a defesa mágica do personagem
                 break;
         }
 
@@ -33,6 +33,6 @@ public class Habilidade6Mago : HabilidadeBase
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
         //reseta os atributos originais do personagem
-        //personagem.defesaMagica = _defesaMagicaOriginal;
+        personagem.personagem.defesaMagica = _defesaMagicaOriginal;
     }
 }

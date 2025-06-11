@@ -15,15 +15,15 @@ public class Habilidade5Mago : HabilidadeBase
         {
             case 1:
                 tempoDeEfeito = 1;
-                //paralisa o inimigo alvo por 1 segundo
+                personagem._personagemAlvo.VerificarComportamento("paralisia");
                 break;
             case 2:
                 tempoDeEfeito = 2;
-                //paralisa o inimigo alvo por 2 segundos
+                personagem._personagemAlvo.VerificarComportamento("paralisia");
                 break;
             case 3:
                 tempoDeEfeito = 3;
-                //paralisa o inimigo alvo por 3 segundos
+                personagem._personagemAlvo.VerificarComportamento("paralisia");
                 break;
         }
 
@@ -32,5 +32,6 @@ public class Habilidade5Mago : HabilidadeBase
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
         //desparaliza o inimigo alvo
+        personagem._personagemAlvo.VerificarComportamento("selecionarAlvo");
     }
 }

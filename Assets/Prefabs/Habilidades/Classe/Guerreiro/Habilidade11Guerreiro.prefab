@@ -55,7 +55,7 @@ MonoBehaviour:
     de suporte aumenta em 1% o efeito anterior.\n-Dura\xE7\xE3o: 10 segundos.\n-Recarga:
     12 segundos.\n\nPontos de Habilidade: 25"
   tipoDeHabilidade: 0
-  nivel: 1
+  nivel: 0
   idHabilidade: Habilidade11Guerreiro
   pontosDeHabilidade: 25
   temTempoDeEfeito: 1

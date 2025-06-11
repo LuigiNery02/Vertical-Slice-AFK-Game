@@ -12,24 +12,24 @@ public class Habilidade10Arqueiro : HabilidadeBase
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais do personagem
-        personagem._danoAtaqueBasico = _danoOriginal;
-        //_defesaOriginal = personagem.defesa;
+        _danoOriginal = personagem.danoAtaqueDistancia;
+        _defesaOriginal = personagem.personagem.defesa;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
     {
         switch (nivel)
         {
             case 1:
-                personagem._danoAtaqueBasico -= (_danoOriginal / 20); //diminui o ataque em 5%
-                //aumenta a defesa em 100%
+                personagem.danoAtaqueDistancia -= (_danoOriginal / 20); //diminui o ataque em 5%
+                personagem.personagem.defesa += (_defesaOriginal); //aumenta a defesa em 100%
                 break;
             case 2:
-                personagem._danoAtaqueBasico -= (_danoOriginal / 10); //diminui o ataque em 10%
-                //aumenta a defesa em 200%
+                personagem.danoAtaqueDistancia -= (_danoOriginal / 10); //diminui o ataque em 10%
+                personagem.personagem.defesa += (_defesaOriginal * 2); //aumenta a defesa em 200%
                 break;
             case 3:
-                personagem._danoAtaqueBasico -= (_danoOriginal / 5); //diminui o ataque em 20%
-                //aumenta a defesa em 400%
+                personagem.danoAtaqueDistancia -= (_danoOriginal / 5); //diminui o ataque em 20%
+                personagem.personagem.defesa += (_defesaOriginal * 4); //aumenta a defesa em 400%
                 break;
         }
 
@@ -38,7 +38,7 @@ public class Habilidade10Arqueiro : HabilidadeBase
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
         //reseta os atributos originais do personagem
-        personagem._danoAtaqueBasico = _danoOriginal;
-        //personagem.defesa = _defesaOriginal;
+        personagem.danoAtaqueDistancia = _danoOriginal;
+        personagem.personagem.defesa = _defesaOriginal;
     }
 }

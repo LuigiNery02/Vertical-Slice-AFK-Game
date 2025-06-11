@@ -22,7 +22,7 @@ public class Habilidade5Guerreiro : HabilidadeBase
 
         foreach (IAPersonagemBase inimigo in inimigos)
         {
-            if (inimigo.controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO) //verifica se é personagem do jogador
+            if (inimigo.controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO) //verifica se é personagem inimigo
             {
                 listaDeInimigos.Add(inimigo);
             }

@@ -44,15 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fbf022dc07b46f4a9d57060fb2323cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nome: Multiplas Flechas
-  descricao: "N\xEDvel 1:\n-Efeito: Personagem lan\xE7a dois proj\xE9teis por ataque.\n-Dura\xE7\xE3o:
-    8 segundos.\n-Recarga: 10 segundos.\n\nN\xEDvel 2:\n-Efeito: Personagem lan\xE7a
-    tr\xEAs proj\xE9teis por ataque.\n-Dura\xE7\xE3o: 8 segundos.\n-Recarga: 10 segundos.\n\nN\xEDvel
-    3:\n-Efeito: Personagem lan\xE7a tr\xEAs proj\xE9teis por ataque.\n-Efeito: Aumenta
-    o dano de ataques \xE0 dist\xE2ncia em 20%.\n-Dura\xE7\xE3o: 8 segundos.\n-Recarga:
+  nome: Arqueiro Habilidoso
+  descricao: "N\xEDvel 1:\n-Efeito: Aumenta a precis\xE3o em 100%.\n-Efeito: Aumenta
+    o dano de ataques \xE0 dist\xE2ncia em 5%.\n-Dura\xE7\xE3o: 8 segundos.\n-Recarga:
+    10 segundos.\n\nN\xEDvel 2:\n-Efeito: Aumenta a precis\xE3o em 200%.\n-Efeito:
+    Aumenta o dano de ataques \xE0 dist\xE2ncia em 10%.\n-Dura\xE7\xE3o: 8 segundos.\n-Recarga:
+    10 segundos.\n\nN\xEDvel 3:\n-Efeito: Aumenta a precis\xE3o em 300%.\n-Efeito:
+    Aumenta o dano de ataques \xE0 dist\xE2ncia em 20%.\n-Dura\xE7\xE3o: 8 segundos.\n-Recarga:
     10 segundos.\n\nPontos de Habilidade: 25"
   tipoDeHabilidade: 0
-  nivel: 0
+  nivel: 3
   idHabilidade: Habilidade2Arqueiro
   pontosDeHabilidade: 25
   temTempoDeEfeito: 1

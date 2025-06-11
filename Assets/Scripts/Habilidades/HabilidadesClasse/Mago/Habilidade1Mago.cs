@@ -11,20 +11,20 @@ public class Habilidade1Mago : HabilidadeBase
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais do personagem
-        _danoMagicoOriginal = personagem._danoAtaqueBasico;
+        _danoMagicoOriginal = personagem.danoAtaqueMagico;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
     {
         switch (nivel)
         {
             case 1:
-                personagem._danoAtaqueBasico += (_danoMagicoOriginal / 2); //aumenta o dano mágico em 50%
+                personagem.danoAtaqueMagico += (_danoMagicoOriginal / 2); //aumenta o dano mágico em 50%
                 break;
             case 2:
-                personagem._danoAtaqueBasico += (_danoMagicoOriginal); //aumenta o dano mágico em 100%
+                personagem.danoAtaqueMagico += _danoMagicoOriginal; //aumenta o dano mágico em 100%
                 break;
             case 3:
-                personagem._danoAtaqueBasico += (_danoMagicoOriginal * 2); //aumenta o dano mágico em 200%
+                personagem.danoAtaqueMagico += (_danoMagicoOriginal * 2); //aumenta o dano mágico em 200%
                 break;
         }
 
@@ -33,6 +33,6 @@ public class Habilidade1Mago : HabilidadeBase
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
         //reseta os atributos originais do personagem
-        personagem._danoAtaqueBasico = _danoMagicoOriginal;
+        personagem.danoAtaqueMagico = _danoMagicoOriginal;
     }
 }

@@ -51,7 +51,7 @@ MonoBehaviour:
     3:\n-Efeito: Aumenta o dano de ataques corpo a corpo em 200%.\n-Dura\xE7\xE3o:
     7 segundos.\n-Recarga: 10 segundos.\n\nPontos de Habilidade: 20"
   tipoDeHabilidade: 0
-  nivel: 1
+  nivel: 0
   idHabilidade: Habilidade1Guerreiro
   pontosDeHabilidade: 20
   temTempoDeEfeito: 1

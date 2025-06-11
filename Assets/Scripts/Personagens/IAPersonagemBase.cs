@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public enum ControladorDoPersonagem { PERSONAGEM_DO_JOGADOR, PERSONAGEM_INIMIGO } //quem controla o personagem, se é controlado pelo jogador ou pela IA inimiga
 public enum TipoDePersonagem { CURTA_DISTANCIA, LONGA_DISTANCIA } //características referente ao comportamento de ataque personagem, se é um ataque de curta ou longa distância
-public enum EstadoDoPersonagem { IDLE, PERSEGUINDO, ATACANDO, MORTO, MOVIMENTO_ESPECIAL } //estados de comportamento do personagem
+public enum EstadoDoPersonagem { IDLE, PERSEGUINDO, ATACANDO, MORTO, MOVIMENTO_ESPECIAL} //estados de comportamento do personagem
 
 public class IAPersonagemBase : MonoBehaviour
 {
@@ -19,7 +19,7 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("Definições")]
     public ControladorDoPersonagem controlador;
     public TipoDePersonagem _tipo;
-    [HideInInspector]
+    //[HideInInspector]
     public EstadoDoPersonagem _comportamento;
 
     //área referente às definições do personagem de longa distancia
@@ -98,6 +98,12 @@ public class IAPersonagemBase : MonoBehaviour
     public EfeitoPorAtaque efeitoPorEsquiva;
     [HideInInspector]
     public bool efeitoPorEsquivaAtivado; //verifica se efeitos por esquiva de habilidades estão ativados
+    //função que é ativada quando há um efeito por dano
+    public delegate void EfeitoPorDano();
+    public EfeitoPorDano efeitoPorDano;
+    [HideInInspector]
+    public bool efeitoPorDanoAtivado; //verifica se efeitos por dano de habilidades estão ativados
+
 
 
     //Área de feedback visuais
@@ -295,6 +301,11 @@ public class IAPersonagemBase : MonoBehaviour
         {
             _comportamento = EstadoDoPersonagem.MOVIMENTO_ESPECIAL;
             MovimentoEspecial(movimentoEspecialAtual);
+        }
+        else if(comportamento == "paralisia")
+        {
+            _comportamento = EstadoDoPersonagem.IDLE;
+            Paralisia();
         }
     }
 
@@ -649,6 +660,17 @@ public class IAPersonagemBase : MonoBehaviour
             VerificarComportamento("selecionarAlvo");
         }
     }
+
+    public void Paralisia() //função de paralisia do personagem
+    {
+        _alvoAtual = null;
+        _personagemAlvo = null;
+        if (_usarAnimações)
+        {
+            _animator.Rebind();
+            _animator.SetTrigger("Idle");
+        }
+    }
     #endregion
 
     #region HP
@@ -690,13 +712,6 @@ public class IAPersonagemBase : MonoBehaviour
                 this.personagem.GanharEXP(dano); //caso seja personagem do jogador ganha pontos de exp igual ao dano causado do inimigo
             }
 
-            if (_usarSliders)
-            {
-                personagem.textoHP.gameObject.SetActive(true);
-                personagem.textoHP.text = ("-" + dano);
-                StartCoroutine(DesativarTextoHP(personagem));
-            }
-
             //toca o sfx de contato se deve usar os sfxs
             if (_usarSFX)
             {
@@ -709,6 +724,7 @@ public class IAPersonagemBase : MonoBehaviour
     public void Esquivar() //função de esquiva do personagem
     {
         textoHP.gameObject.SetActive(true);
+        textoHP.color = new Color(200, 200, 200);
         textoHP.text = ("Esquivou");
         StartCoroutine(DesativarTextoHP(this));
         StartCoroutine(TempoDeEsquiva());
@@ -742,6 +758,15 @@ public class IAPersonagemBase : MonoBehaviour
             {
                 //atualiza o slider
                 _slider.value = hpAtual;
+                textoHP.gameObject.SetActive(true);
+                textoHP.color = new Color(255, 59, 59);
+                textoHP.text = ("-" + dano);
+                StartCoroutine(DesativarTextoHP(this));
+            }
+
+            if (efeitoPorDanoAtivado)
+            {
+                efeitoPorDano();
             }
 
             if (hpAtual <= 0)
@@ -765,6 +790,10 @@ public class IAPersonagemBase : MonoBehaviour
         {
             //atualiza o slider
             _slider.value = hpAtual;
+            textoHP.gameObject.SetActive(true);
+            textoHP.color = new Color(59, 253, 255);
+            textoHP.text = ("+" + cura);
+            StartCoroutine(DesativarTextoHP(this));
         }
     }
     #endregion

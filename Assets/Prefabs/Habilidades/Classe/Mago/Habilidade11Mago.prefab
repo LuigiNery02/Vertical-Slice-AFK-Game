@@ -47,9 +47,9 @@ MonoBehaviour:
   nome: Magia de Suporte
   descricao: "N\xEDvel 1:\n-Efeito: Aumenta em 2 os pontos de habilidade dos aliados.\n-Efeito:
     Cada ponto de suporte aumenta em 1% o efeito anterior.\n-Dura\xE7\xE3o: 3 segundos.\n-Recarga:
-    12 segundos.\n\nN\xEDvel 2:\n-Efeito: Aumenta em 2 os pontos de habilidade dos
+    12 segundos.\n\nN\xEDvel 2:\n-Efeito: Aumenta em 4 os pontos de habilidade dos
     aliados.\n-Efeito: Cada ponto de suporte aumenta em 1% o efeito anterior.\n-Dura\xE7\xE3o:
-    5 segundos.\n-Recarga: 12 segundos.\n\nN\xEDvel 3:\n-Efeito: Aumenta em 2 os
+    5 segundos.\n-Recarga: 12 segundos.\n\nN\xEDvel 3:\n-Efeito: Aumenta em 6 os
     pontos de habilidade dos aliados.\n-Efeito: Cada ponto de suporte aumenta em
     1% o efeito anterior.\n-Dura\xE7\xE3o: 10 segundos.\n-Recarga: 12 segundos.\n\nPontos
     de Habilidade: 25"

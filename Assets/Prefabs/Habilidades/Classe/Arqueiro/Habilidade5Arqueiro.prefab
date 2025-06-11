@@ -45,13 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: Anti Esquiva
-  descricao: "N\xEDvel 1:\n-Efeito: Diminui a esquiva dos inimigos em 20%.\n-Dura\xE7\xE3o:
+  descricao: "N\xEDvel 1:\n-Efeito: Diminui a esquiva dos inimigos em 50%.\n-Dura\xE7\xE3o:
     7 segundos.\n-Recarga: 15 segundos.\n\nN\xEDvel 2:\n-Efeito: Diminui a esquiva
-    dos inimigos em 30%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga: 15 segundos.\n\nN\xEDvel
-    3:\n-Efeito: Diminui a esquiva dos inimigos em 50%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga:
+    dos inimigos em 100%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga: 15 segundos.\n\nN\xEDvel
+    3:\n-Efeito: Diminui a esquiva dos inimigos em 200%.\n-Dura\xE7\xE3o: 7 segundos.\n-Recarga:
     15 segundos.\n\nPontos de Habilidade: 20"
   tipoDeHabilidade: 0
-  nivel: 0
+  nivel: 3
   idHabilidade: Habilidade5Arqueiro
   pontosDeHabilidade: 20
   temTempoDeEfeito: 1

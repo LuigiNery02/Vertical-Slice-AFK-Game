@@ -1882,6 +1882,9 @@ MonoBehaviour:
   executandoMovimentoEspecial: 0
   imuneADanos: 0
   reducaoDeDano: 0
+  efeitoPorAtaqueAtivado: 0
+  efeitoPorEsquivaAtivado: 0
+  efeitoPorDanoAtivado: 0
   textoHP: {fileID: 353493162}
 --- !u!1 &109075338
 GameObject:
@@ -2243,6 +2246,9 @@ MonoBehaviour:
   executandoMovimentoEspecial: 0
   imuneADanos: 0
   reducaoDeDano: 0
+  efeitoPorAtaqueAtivado: 0
+  efeitoPorEsquivaAtivado: 0
+  efeitoPorDanoAtivado: 0
   textoHP: {fileID: 1128123472}
 --- !u!1 &112003328
 GameObject:
@@ -3101,6 +3107,9 @@ MonoBehaviour:
   executandoMovimentoEspecial: 0
   imuneADanos: 0
   reducaoDeDano: 0
+  efeitoPorAtaqueAtivado: 0
+  efeitoPorEsquivaAtivado: 0
+  efeitoPorDanoAtivado: 0
   textoHP: {fileID: 984320534}
 --- !u!1 &247131629
 GameObject:
@@ -3462,6 +3471,9 @@ MonoBehaviour:
   executandoMovimentoEspecial: 0
   imuneADanos: 0
   reducaoDeDano: 0
+  efeitoPorAtaqueAtivado: 0
+  efeitoPorEsquivaAtivado: 0
+  efeitoPorDanoAtivado: 0
   textoHP: {fileID: 885923237}
 --- !u!1 &252405878
 GameObject:
@@ -5072,6 +5084,9 @@ MonoBehaviour:
   executandoMovimentoEspecial: 0
   imuneADanos: 0
   reducaoDeDano: 0
+  efeitoPorAtaqueAtivado: 0
+  efeitoPorEsquivaAtivado: 0
+  efeitoPorDanoAtivado: 0
   textoHP: {fileID: 198468713}
 --- !u!136 &386247875
 CapsuleCollider:
@@ -9390,6 +9405,9 @@ MonoBehaviour:
   executandoMovimentoEspecial: 0
   imuneADanos: 0
   reducaoDeDano: 0
+  efeitoPorAtaqueAtivado: 0
+  efeitoPorEsquivaAtivado: 0
+  efeitoPorDanoAtivado: 0
   textoHP: {fileID: 1371799957}
 --- !u!1 &529263770
 GameObject:
@@ -20345,6 +20363,9 @@ MonoBehaviour:
   executandoMovimentoEspecial: 0
   imuneADanos: 0
   reducaoDeDano: 0
+  efeitoPorAtaqueAtivado: 0
+  efeitoPorEsquivaAtivado: 0
+  efeitoPorDanoAtivado: 0
   textoHP: {fileID: 1504661866}
 --- !u!1 &1199955252
 GameObject:
@@ -25605,6 +25626,9 @@ MonoBehaviour:
   executandoMovimentoEspecial: 0
   imuneADanos: 0
   reducaoDeDano: 0
+  efeitoPorAtaqueAtivado: 0
+  efeitoPorEsquivaAtivado: 0
+  efeitoPorDanoAtivado: 0
   textoHP: {fileID: 1259524734}
 --- !u!1 &1472215430
 GameObject:
@@ -27302,6 +27326,9 @@ MonoBehaviour:
   executandoMovimentoEspecial: 0
   imuneADanos: 0
   reducaoDeDano: 0
+  efeitoPorAtaqueAtivado: 0
+  efeitoPorEsquivaAtivado: 0
+  efeitoPorDanoAtivado: 0
   textoHP: {fileID: 966281561}
 --- !u!136 &1618859767
 CapsuleCollider:
@@ -27553,6 +27580,9 @@ MonoBehaviour:
   executandoMovimentoEspecial: 0
   imuneADanos: 0
   reducaoDeDano: 0
+  efeitoPorAtaqueAtivado: 0
+  efeitoPorEsquivaAtivado: 0
+  efeitoPorDanoAtivado: 0
   textoHP: {fileID: 1369209929}
 --- !u!136 &1620992051
 CapsuleCollider:
@@ -30508,6 +30538,9 @@ MonoBehaviour:
   executandoMovimentoEspecial: 0
   imuneADanos: 0
   reducaoDeDano: 0
+  efeitoPorAtaqueAtivado: 0
+  efeitoPorEsquivaAtivado: 0
+  efeitoPorDanoAtivado: 0
   textoHP: {fileID: 412312676}
 --- !u!1 &1735821285
 GameObject:
@@ -32470,6 +32503,9 @@ MonoBehaviour:
   executandoMovimentoEspecial: 0
   imuneADanos: 0
   reducaoDeDano: 0
+  efeitoPorAtaqueAtivado: 0
+  efeitoPorEsquivaAtivado: 0
+  efeitoPorDanoAtivado: 0
   textoHP: {fileID: 94997996}
 --- !u!1 &1858120550
 GameObject:
