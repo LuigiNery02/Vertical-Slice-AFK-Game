@@ -116,6 +116,7 @@ public class SistemaDeSalvamento : MonoBehaviour
         }
 
         _gerenciador.Salvar(gameData, _IDSelecionado);
+        Debug.Log("Jogo Salvo");
     }
 
     private List<Salvamento> EncontrarObjetosDeSalvamento()

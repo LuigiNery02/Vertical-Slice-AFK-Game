@@ -11,12 +11,6 @@ public class GerenciadorDeSlotsBatalha : MonoBehaviour
     public List<SlotPersonagemBatalha> slots; //lista de slots de personagens
 
     public GerenciadorDePersonagens gerenciadirDePersonagens; //gerenciador de personagens
-
-    private void Start()
-    {
-        AtualizarSlots();
-    }
-
     public void AtualizarSlots()
     {
         //desativa todos os slots existentes

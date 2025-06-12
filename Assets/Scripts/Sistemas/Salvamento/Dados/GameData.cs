@@ -8,6 +8,7 @@ public class GameData
 {
     //Personagens Criados
     public List<PersonagemData> personagens; //personagens criados 
+    public List<string> codigoPersonagensBatalhaContinua; //códigos dos personagens utilizados na última batalha continua
 
     //Gerenciador de Inventário
     public List<string> gerenciadorInventarioCabecaAcessorioID; //ID dos equipamentos da cabeça acessório do inventário
@@ -38,6 +39,7 @@ public class GameData
     {
         //valores originais das variáveis ao iniciar um novo jogo
         personagens = new List<PersonagemData>();
+        codigoPersonagensBatalhaContinua = new List<string>();
         gerenciadorInventarioCabecaAcessorioID = new List<string>();
         gerenciadorInventarioCabecaTopoID = new List<string>();
         gerenciadorInventarioCabecaMedioID = new List<string>();

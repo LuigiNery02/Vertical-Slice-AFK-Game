@@ -1115,8 +1115,6 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
                 _botaoHabilidadesArma.gameObject.SetActive(true);
             }
         }
-
-        SistemaDeSalvamento.instancia.SalvarJogo();
     }
 
     public void ResetarTelaPersonagem() //função que reseta os dados visuais da tela de personagem

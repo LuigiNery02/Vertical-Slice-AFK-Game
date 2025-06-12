@@ -10,6 +10,11 @@ sealed class GerenciadorDoJogo : MonoBehaviour
         SceneManager.LoadScene(cena);
     }
 
+    public void SalvarJogo() //função que salva o jogo
+    {
+        SistemaDeSalvamento.instancia.SalvarJogo();
+    }
+
     public void DeletarSave() //função que deleta o save
     {
         SistemaDeSalvamento.instancia.DeletarDados("save");

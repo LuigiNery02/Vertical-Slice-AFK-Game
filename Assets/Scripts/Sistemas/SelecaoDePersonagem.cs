@@ -159,7 +159,10 @@ public class SelecaoDePersonagem : MonoBehaviour
     {
         if(_sistemaDeBatalha.batalhaIniciou)
         {
-            _personagemSelecionado.habilidade1.AtivarEfeito();
+            if(_personagemSelecionado.habilidade1 != null)
+            {
+                _personagemSelecionado.habilidade1.AtivarEfeito();
+            }
         }
     }
 
@@ -167,7 +170,10 @@ public class SelecaoDePersonagem : MonoBehaviour
     {
         if (_sistemaDeBatalha.batalhaIniciou)
         {
-            _personagemSelecionado.habilidade2.AtivarEfeito();
+            if(_personagemSelecionado.habilidade2 != null)
+            {
+                _personagemSelecionado.habilidade2.AtivarEfeito();
+            }
         }  
     }
 

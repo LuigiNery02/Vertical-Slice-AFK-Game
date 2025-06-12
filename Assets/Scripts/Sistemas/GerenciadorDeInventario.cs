@@ -50,7 +50,7 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
     [HideInInspector]
     public bool equipouEquipamento; //variável que checa se qualquer equipamento já foi equipado a qualquer personagem
 
-    [HideInInspector]
+    //[HideInInspector]
     public List<PersonagemData> personagensCriados = new List<PersonagemData>();
 
     private SistemaDeCriacaoDePersonagens _sistemaDeCriacaoDePersonagens;
@@ -154,6 +154,8 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
         data.gerenciadorInventarioBuffConsumivelID = ExtrairIDs(equipamentosBuffConsumivel);
 
         data.gerenciadorInventarioEquipado = equipouEquipamento;
+
+        data.personagens = personagensCriados;
     }
 
     private List<string> ExtrairIDs(List<EquipamentoBase> lista) //extrai os IDs

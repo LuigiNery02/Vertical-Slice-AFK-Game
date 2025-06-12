@@ -59,10 +59,12 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
     public static bool usarSliders = true; //variável para verificar se os personagens devem ter sliders para representar suas vidas
 
     //Área referente aos times
+    [SerializeField]
     private List<IAPersonagemBase> _personagensJogador = new List<IAPersonagemBase>(); //time do jogador
     private List<IAPersonagemBase> _personagensInimigos = new List<IAPersonagemBase>(); //time do inimigo
     private int _integrantesTimeJogador; //número de integrantes do time do jogador
     private int _integrantesTimeInimigo; //número de integrantes do time inimigo
+    private List<string> _codigosIDPersonagensBatalhaContinua = new List<string>(); //códigos ID dos personagens da última batalha continua
 
     //Área referente ao save
     private DateTime _tempo; //tempo do sistema de batalha
@@ -85,6 +87,12 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
     [HideInInspector]
     public bool fimDeBatalha; //variável para verificar o fim da batalha
     private SistemaDeDrop _sisemaDeDrop; //sistema de drop
+    private GerenciadorDePersonagens _gerenciadorDePersonagens; //gerenciador de personagens
+
+    private void Awake()
+    {
+        _gerenciadorDePersonagens = FindObjectOfType<GerenciadorDePersonagens>();
+    }
 
     public void CarregarSave(GameData data) //função que carrega os dados do save
     {
@@ -103,6 +111,41 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
             {
                 _tempoAtualBatalhaContinua = 0f;
             }
+
+            _codigosIDPersonagensBatalhaContinua.Clear();
+            for (int i = 0; i < data.codigoPersonagensBatalhaContinua.Count; i++)
+            {
+                _codigosIDPersonagensBatalhaContinua.Add(data.codigoPersonagensBatalhaContinua[i]);
+            }
+
+            IAPersonagemBase[] personagensIA = FindObjectsOfType<IAPersonagemBase>();
+            List<IAPersonagemBase> personagensJogador = new List<IAPersonagemBase>();
+            foreach (var personagem in personagensIA)
+            {
+                if (personagem.controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
+                {
+                    personagensJogador.Add(personagem);
+                }
+            }
+
+            int max = Mathf.Min(_codigosIDPersonagensBatalhaContinua.Count, personagensJogador.Count);
+            for (int i = 0; i < max; i++)
+            {
+                string codigo = _codigosIDPersonagensBatalhaContinua[i];
+                PersonagemData personagem = GerenciadorDeInventario.instancia.personagensCriados.Find(p => p.codigoID == codigo);
+
+                if (personagem != null)
+                {
+                    personagensJogador[i].personagem = personagem;
+
+                    if (!_personagensJogador.Contains(personagensJogador[i]))
+                    {
+                        AtualizarTime("adicionar", "jogador", personagensJogador[i]);
+                    }
+                }
+            }
+
+            _gerenciadorDePersonagens.RestaurarSlotsSelecionados();
         }
         else
         {
@@ -127,6 +170,19 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         data.acontecendoBatalhaContinua = _acontecendoBatalhaContinua;
         data.batalhasRestantes = _batalhasRestantesSimuladas;
         data.dropsRestantes = _dropsRestantes;
+
+        if (_acontecendoBatalhaContinua)
+        {
+            _codigosIDPersonagensBatalhaContinua.Clear();
+
+            for (int i = 0; i < _personagensJogador.Count; i++)
+            {
+                _codigosIDPersonagensBatalhaContinua.Add(_personagensJogador[i].personagem.codigoID);
+            }
+
+            data.codigoPersonagensBatalhaContinua = new List<string>(_codigosIDPersonagensBatalhaContinua);
+        }
+
     }
 
     private void Start()
@@ -245,8 +301,11 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
     private void EncontrarPersonagens() //função que encontra todos os personagens na cena
     {
         //Reseta os times
-        _personagensJogador.Clear();
-        _personagensInimigos.Clear();
+        if (!_acontecendoBatalhaContinua)
+        {
+            _personagensJogador.Clear();
+            _personagensInimigos.Clear();
+        }
 
         //procura todos os personagens (objetos que possuem o script IAPersonagemBase) na cena
         IAPersonagemBase[] personagens = FindObjectsOfType<IAPersonagemBase>();
@@ -259,12 +318,24 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                 personagem.posicaoInicial = personagem.transform.position;
                 personagem.rotacaoInicial = personagem.transform.rotation;
             }
+
             //define os times
-            if (personagem.controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
+            if (!_acontecendoBatalhaContinua)
             {
-                AtualizarTime(("adicionar"), ("jogador"), personagem);
+                if (personagem.controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
+                {
+                    AtualizarTime(("adicionar"), ("jogador"), personagem);
+                }
             }
-            else if (personagem.controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
+            else
+            {
+                if (personagem.controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
+                {
+                    personagem.ReceberDadosPersonagem();
+                }
+            }
+            
+            if (personagem.controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
             {
                 AtualizarTime(("adicionar"), ("inimigo"), personagem);
             }
@@ -278,6 +349,11 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         }
 
         primeiroAlvo = PrimeiroAlvo.ALVO_PROXIMO; //define a batalha como alvo próximo para os próximos alvos dos personagens
+
+        if(SistemaDeSalvamento.instancia != null)
+        {
+            SistemaDeSalvamento.instancia.SalvarJogo();
+        }
     }
 
     public void AtualizarTime(string atualizacao, string time, IAPersonagemBase personagem) //função que atualiza os times
@@ -299,7 +375,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         {
             if (time == "jogador")
             {
-                _personagensJogador.Remove(personagem);
+                //_personagensJogador.Remove(personagem);
                 _integrantesTimeJogador--;
 
                 //chama o fim da batalha caso o número de integrantes de um time chegar a 0
@@ -361,6 +437,12 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         {
             estado = EstadoDeBatalha.MANUAL;
             _quandoPerder.Invoke(); //chama o evento de derrota
+        }
+
+        //salva o jogo
+        if(SistemaDeSalvamento.instancia != null)
+        {
+            SistemaDeSalvamento.instancia.SalvarJogo();
         }
 
         //recomeça a batalha se o estado de batalha for continua
@@ -471,6 +553,8 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                 foreach (IAPersonagemBase personagem in _personagensJogador)
                 {
                     dpsJogadorTotal += personagem._danoAtaqueBasico / personagem._cooldown;
+                    dpsJogadorTotal += personagem.danoAtaqueDistancia / personagem._cooldown;
+                    dpsJogadorTotal += personagem.danoAtaqueMagico / personagem._cooldown;
                 }
 
                 //cálculo do DPS dos inimigos sorteados
@@ -478,6 +562,8 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                 foreach (IAPersonagemBase inimigo in inimigosNaBatalha)
                 {
                     dpsInimigoTotal += inimigo._danoAtaqueBasico / inimigo._cooldown;
+                    dpsInimigoTotal += inimigo.danoAtaqueDistancia / inimigo._cooldown;
+                    dpsInimigoTotal += inimigo.danoAtaqueMagico / inimigo._cooldown;
                 }
 
                 //calcula chance de vitória

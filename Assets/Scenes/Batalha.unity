@@ -1885,6 +1885,13 @@ MonoBehaviour:
   efeitoPorAtaqueAtivado: 0
   efeitoPorEsquivaAtivado: 0
   efeitoPorDanoAtivado: 0
+  sangramento: 0
+  danoSangramento: 0
+  queimadura: 0
+  danoQueimadura: 0
+  congelamento: 0
+  envenenamento: 0
+  pontosDeHabilidadeAtual: 0
   textoHP: {fileID: 353493162}
 --- !u!1 &109075338
 GameObject:
@@ -2249,6 +2256,13 @@ MonoBehaviour:
   efeitoPorAtaqueAtivado: 0
   efeitoPorEsquivaAtivado: 0
   efeitoPorDanoAtivado: 0
+  sangramento: 0
+  danoSangramento: 0
+  queimadura: 0
+  danoQueimadura: 0
+  congelamento: 0
+  envenenamento: 0
+  pontosDeHabilidadeAtual: 0
   textoHP: {fileID: 1128123472}
 --- !u!1 &112003328
 GameObject:
@@ -3110,6 +3124,13 @@ MonoBehaviour:
   efeitoPorAtaqueAtivado: 0
   efeitoPorEsquivaAtivado: 0
   efeitoPorDanoAtivado: 0
+  sangramento: 0
+  danoSangramento: 0
+  queimadura: 0
+  danoQueimadura: 0
+  congelamento: 0
+  envenenamento: 0
+  pontosDeHabilidadeAtual: 0
   textoHP: {fileID: 984320534}
 --- !u!1 &247131629
 GameObject:
@@ -3474,6 +3495,13 @@ MonoBehaviour:
   efeitoPorAtaqueAtivado: 0
   efeitoPorEsquivaAtivado: 0
   efeitoPorDanoAtivado: 0
+  sangramento: 0
+  danoSangramento: 0
+  queimadura: 0
+  danoQueimadura: 0
+  congelamento: 0
+  envenenamento: 0
+  pontosDeHabilidadeAtual: 0
   textoHP: {fileID: 885923237}
 --- !u!1 &252405878
 GameObject:
@@ -5087,6 +5115,13 @@ MonoBehaviour:
   efeitoPorAtaqueAtivado: 0
   efeitoPorEsquivaAtivado: 0
   efeitoPorDanoAtivado: 0
+  sangramento: 0
+  danoSangramento: 0
+  queimadura: 0
+  danoQueimadura: 0
+  congelamento: 0
+  envenenamento: 0
+  pontosDeHabilidadeAtual: 0
   textoHP: {fileID: 198468713}
 --- !u!136 &386247875
 CapsuleCollider:
@@ -9408,6 +9443,13 @@ MonoBehaviour:
   efeitoPorAtaqueAtivado: 0
   efeitoPorEsquivaAtivado: 0
   efeitoPorDanoAtivado: 0
+  sangramento: 0
+  danoSangramento: 0
+  queimadura: 0
+  danoQueimadura: 0
+  congelamento: 0
+  envenenamento: 0
+  pontosDeHabilidadeAtual: 0
   textoHP: {fileID: 1371799957}
 --- !u!1 &529263770
 GameObject:
@@ -12251,6 +12293,7 @@ MonoBehaviour:
   - {fileID: 1194664540}
   - {fileID: 251797578}
   - {fileID: 110611108}
+  gerenciadorDeSlots: {fileID: 441298978}
   _personagensSelecionados: 0
 --- !u!4 &683532491
 Transform:
@@ -20366,6 +20409,13 @@ MonoBehaviour:
   efeitoPorAtaqueAtivado: 0
   efeitoPorEsquivaAtivado: 0
   efeitoPorDanoAtivado: 0
+  sangramento: 0
+  danoSangramento: 0
+  queimadura: 0
+  danoQueimadura: 0
+  congelamento: 0
+  envenenamento: 0
+  pontosDeHabilidadeAtual: 0
   textoHP: {fileID: 1504661866}
 --- !u!1 &1199955252
 GameObject:
@@ -24903,6 +24953,7 @@ MonoBehaviour:
   _audio: {fileID: 1436877196}
   _botaoClip: {fileID: 8300000, guid: 94312712002cb7841a5f140d39b19917, type: 3}
   _vitoriaClip: {fileID: 8300000, guid: 7db2fe46c447a3449b7a88357dcfe6e8, type: 3}
+  _personagensJogador: []
   batalhaIniciou: 0
   fimDeBatalha: 0
 --- !u!82 &1436877196
@@ -25629,6 +25680,13 @@ MonoBehaviour:
   efeitoPorAtaqueAtivado: 0
   efeitoPorEsquivaAtivado: 0
   efeitoPorDanoAtivado: 0
+  sangramento: 0
+  danoSangramento: 0
+  queimadura: 0
+  danoQueimadura: 0
+  congelamento: 0
+  envenenamento: 0
+  pontosDeHabilidadeAtual: 0
   textoHP: {fileID: 1259524734}
 --- !u!1 &1472215430
 GameObject:
@@ -27329,6 +27387,13 @@ MonoBehaviour:
   efeitoPorAtaqueAtivado: 0
   efeitoPorEsquivaAtivado: 0
   efeitoPorDanoAtivado: 0
+  sangramento: 0
+  danoSangramento: 0
+  queimadura: 0
+  danoQueimadura: 0
+  congelamento: 0
+  envenenamento: 0
+  pontosDeHabilidadeAtual: 0
   textoHP: {fileID: 966281561}
 --- !u!136 &1618859767
 CapsuleCollider:
@@ -27583,6 +27648,13 @@ MonoBehaviour:
   efeitoPorAtaqueAtivado: 0
   efeitoPorEsquivaAtivado: 0
   efeitoPorDanoAtivado: 0
+  sangramento: 0
+  danoSangramento: 0
+  queimadura: 0
+  danoQueimadura: 0
+  congelamento: 0
+  envenenamento: 0
+  pontosDeHabilidadeAtual: 0
   textoHP: {fileID: 1369209929}
 --- !u!136 &1620992051
 CapsuleCollider:
@@ -30541,6 +30613,13 @@ MonoBehaviour:
   efeitoPorAtaqueAtivado: 0
   efeitoPorEsquivaAtivado: 0
   efeitoPorDanoAtivado: 0
+  sangramento: 0
+  danoSangramento: 0
+  queimadura: 0
+  danoQueimadura: 0
+  congelamento: 0
+  envenenamento: 0
+  pontosDeHabilidadeAtual: 0
   textoHP: {fileID: 412312676}
 --- !u!1 &1735821285
 GameObject:
@@ -32506,6 +32585,13 @@ MonoBehaviour:
   efeitoPorAtaqueAtivado: 0
   efeitoPorEsquivaAtivado: 0
   efeitoPorDanoAtivado: 0
+  sangramento: 0
+  danoSangramento: 0
+  queimadura: 0
+  danoQueimadura: 0
+  congelamento: 0
+  envenenamento: 0
+  pontosDeHabilidadeAtual: 0
   textoHP: {fileID: 94997996}
 --- !u!1 &1858120550
 GameObject:

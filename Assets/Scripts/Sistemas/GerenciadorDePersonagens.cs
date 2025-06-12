@@ -9,6 +9,8 @@ public class GerenciadorDePersonagens : MonoBehaviour
 
     public IAPersonagemBase[] personagem; //personagens do jogador
 
+    public GerenciadorDeSlotsBatalha gerenciadorDeSlots;
+
     [SerializeField]
     private int _personagensSelecionados; //número de personagens selecionados à batalha
 
@@ -17,6 +19,7 @@ public class GerenciadorDePersonagens : MonoBehaviour
         if (GerenciadorDeInventario.instancia != null)
         {
             personagens = GerenciadorDeInventario.instancia.personagensCriados;
+            gerenciadorDeSlots.AtualizarSlots();
         }
     }
 
@@ -53,6 +56,40 @@ public class GerenciadorDePersonagens : MonoBehaviour
         for (int i = 0; i < personagem.Length; i++)
         {
             if (personagem[i].personagem == null || personagem[i].personagem.codigoID == "" || personagem[i].personagem.codigoID == null)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void RestaurarSlotsSelecionados()
+    {
+        SlotPersonagemBatalha[] slots = FindObjectsOfType<SlotPersonagemBatalha>(true);
+
+        foreach (var personagemIA in personagem)
+        {
+            if (personagemIA != null && personagemIA.personagem != null)
+            {
+                foreach (var slot in slots)
+                {
+                    if (slot.personagemData.codigoID == personagemIA.personagem.codigoID)
+                    {
+                        slot.slotSelecionado = true;
+                        slot.personagemIndice = EncontrarIndiceDoPersonagem(personagemIA);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+
+    private int EncontrarIndiceDoPersonagem(IAPersonagemBase p)
+    {
+        for (int i = 0; i < personagem.Length; i++)
+        {
+            if (personagem[i] == p)
             {
                 return i;
             }

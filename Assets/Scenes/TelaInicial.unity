@@ -4060,6 +4060,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 433810508}
+        m_TargetAssemblyTypeName: GerenciadorDoJogo, Assembly-CSharp
+        m_MethodName: SalvarJogo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &297926573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12505,6 +12517,7 @@ MonoBehaviour:
   equipamentosBuffConsumivel:
   - {fileID: -8873880277440321253, guid: e1c6ed7d41694b141af6b76391a2b0f0, type: 3}
   equipouEquipamento: 0
+  personagensCriados: []
 --- !u!1 &824851053
 GameObject:
   m_ObjectHideFlags: 0
@@ -16640,7 +16653,9 @@ MonoBehaviour:
   personagemEmCriacao:
     classe: 0
     arma: {fileID: 0}
+    armaID: 0
     atributosDePreferencia: 
+    listaSortearAtributo: 
     codigoID: 
     apelido: 
     nivel: 0
@@ -16663,6 +16678,7 @@ MonoBehaviour:
     precisao: 0
     pontosDeHabilidade: 0
     suporte: 0
+    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -16670,6 +16686,10 @@ MonoBehaviour:
     listaDeHabilidadesDeArma: []
     habilidadeClasse: {fileID: 0}
     habilidadeArma: {fileID: 0}
+    habilidadesDeClasseSalvas: []
+    habilidadesDeArmaSalvas: []
+    habilidadeClasseID: 
+    habilidadeArmaID: 
     equipamentoCabecaAcessorio: {fileID: 0}
     equipamentoCabecaTopo: {fileID: 0}
     equipamentoCabecaMedio: {fileID: 0}
@@ -16682,7 +16702,7 @@ MonoBehaviour:
     equipamentoAcessorio1: {fileID: 0}
     equipamentoAcessorio2: {fileID: 0}
     equipamentoBuffConsumivel: {fileID: 0}
-    listaSortearAtributo: 
+    idsEquipamentosEquipados: []
   armasGuerreiro:
   - {fileID: 8386489533042855519, guid: 1ae0eeb083c9bed4296d34f606bd7749, type: 3}
   - {fileID: 9101771954875367140, guid: d9c069ea6cabdc841802221e9519d57c, type: 3}
