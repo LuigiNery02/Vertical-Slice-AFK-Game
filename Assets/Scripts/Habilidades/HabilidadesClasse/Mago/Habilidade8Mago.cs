@@ -20,10 +20,10 @@ public class Habilidade8Mago : HabilidadeBase
                 personagem.personagem.pontosDeHabilidade += 10;
                 break;
             case 2:
-                personagem.personagem.pontosDeHabilidade += 10;
+                personagem.personagem.pontosDeHabilidade += 20;
                 break;
             case 3:
-                personagem.personagem.pontosDeHabilidade += 10;
+                personagem.personagem.pontosDeHabilidade += 30;
                 break;
         }
 

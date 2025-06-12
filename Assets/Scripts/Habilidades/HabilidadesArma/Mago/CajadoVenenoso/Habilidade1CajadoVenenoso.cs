@@ -5,39 +5,61 @@ using UnityEngine;
 public class Habilidade1CajadoVenenoso : HabilidadeBase
 {
     private float _danoOriginal; //dano original da arma
-    private bool _envenenamento; //variável que verifica se há efeito de envenenamento
+    private float _velocidadeDeMovimentoOriginal; //velocidade de movimento do inimigo
     public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais da arma do personagem
-        //_danoOriginal = personagem.arma.dano;
+        _danoOriginal = personagem.personagem.arma.dano;
+        personagem.efeitoPorAtaque = CausarEnvenenamento;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
     {
+        personagem.efeitoPorAtaqueAtivado = true;
+        _velocidadeDeMovimentoOriginal = personagem._personagemAlvo._velocidade;
+
         switch (nivel)
         {
             case 1:
-                //personagem.arma.dano += (_danoOriginal / 10); //aumenta o dano em 10%
-                _envenenamento = true;
+                personagem.personagem.arma.dano += (_danoOriginal / 10); //aumenta o dano em 10%
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
                 break;
             case 2:
-                //personagem.arma.dano += (_danoOriginal / 5); //aumenta o dano em 20%
-                _envenenamento = true;
+                personagem.personagem.arma.dano += (_danoOriginal / 5); //aumenta o dano em 20%
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
                 break;
             case 3:
-                //personagem.arma.dano += (_danoOriginal / 10) * 3; //aumenta o dano em 30%
-                _envenenamento = true;
+                personagem.personagem.arma.dano += (_danoOriginal / 10) * 3; //aumenta o dano em 30%
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
                 break;
         }
+    }
 
+    private void CausarEnvenenamento() //função que ativa o efeito de queimadura
+    {
+        if (!personagem._personagemAlvo.envenenamento)
+        {
+            personagem._personagemAlvo._velocidade = (_velocidadeDeMovimentoOriginal / 2);
+            personagem._personagemAlvo.envenenamento = true;
+        }
     }
 
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
         //reseta os atributos originais do personagem
-        //personagem.arma.dano = _danoOriginal;
-        _envenenamento = false;
+        personagem.personagem.arma.dano = _danoOriginal;
+        personagem.personagem.DefinicoesBatalha();
+        personagem.AtualizarDadosBatalha();
+        personagem.efeitoPorAtaqueAtivado = false;
+        if (personagem._personagemAlvo != null && personagem._personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
+        {
+            personagem._personagemAlvo._velocidade = _velocidadeDeMovimentoOriginal;
+            personagem._personagemAlvo.envenenamento = false;
+        }
     }
 }

@@ -19,7 +19,7 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("Definições")]
     public ControladorDoPersonagem controlador;
     public TipoDePersonagem _tipo;
-    //[HideInInspector]
+    [HideInInspector]
     public EstadoDoPersonagem _comportamento;
 
     //área referente às definições do personagem de longa distancia
@@ -103,8 +103,20 @@ public class IAPersonagemBase : MonoBehaviour
     public EfeitoPorDano efeitoPorDano;
     [HideInInspector]
     public bool efeitoPorDanoAtivado; //verifica se efeitos por dano de habilidades estão ativados
-
-
+    [HideInInspector]
+    public bool sangramento; //efeito de sangramento
+    [HideInInspector]
+    public float danoSangramento; //dano do efeito de sangramento
+    [HideInInspector]
+    public bool queimadura; //efeito de queimadura
+    [HideInInspector]
+    public float danoQueimadura; //dano do efeito de sangramento
+    [HideInInspector]
+    public bool congelamento; //efeito de congelamento
+    [HideInInspector]
+    public bool envenenamento; //efeito de envenenamento
+    [HideInInspector]
+    public float pontosDeHabilidadeAtual; //pontos de habilidade atuais do personagem
 
     //Área de feedback visuais
     private Animator _animator; //animator do personagem
@@ -202,6 +214,7 @@ public class IAPersonagemBase : MonoBehaviour
         _cooldown = personagem.velocidadeAtaque;
         habilidade1 = personagem.habilidadeClasse;
         habilidade2 = personagem.habilidadeArma;
+        pontosDeHabilidadeAtual = personagem.pontosDeHabilidade;
 
         if(habilidade1 != null)
         {
@@ -226,6 +239,17 @@ public class IAPersonagemBase : MonoBehaviour
         {
             _malha = personagemVisual[id].GetComponentInChildren<SkinnedMeshRenderer>();
         }
+    }
+
+    public void AtualizarDadosBatalha() //função que atualiza os dados dos personagens na batalha
+    {
+        _hpMaximoEInicial = personagem.hp;
+        _velocidade = personagem.velocidadeDeMovimento;
+        _danoAtaqueBasico = personagem.ataque;
+        danoAtaqueDistancia = personagem.ataqueDistancia;
+        danoAtaqueMagico = personagem.ataqueMagico;
+        _cooldown = personagem.velocidadeAtaque;
+        pontosDeHabilidadeAtual = personagem.pontosDeHabilidade;
     }
 
     public void IniciarBatalha() //função chamada ao inicar a batalha e define os valores e comportamentos iniciais do personagem
@@ -261,6 +285,10 @@ public class IAPersonagemBase : MonoBehaviour
 
         _hitAtaquePersonagem = transform.GetComponentInChildren<HitAtaquePersonagem>(true); //encontra o hit do personagem dentro de si
         hpAtual = _hpMaximoEInicial; //define o hp atual do personagem igual ao valor máximo e inicial
+
+        sangramento = false;
+        queimadura = false;
+        congelamento = false;
 
         FeedbacksVisuais(); //chama a função para verificar quais feedbacks visuais irá usar
         SelecionarAlvo(); //chama a função para o personagem encontrar seu alvo
@@ -660,17 +688,6 @@ public class IAPersonagemBase : MonoBehaviour
             VerificarComportamento("selecionarAlvo");
         }
     }
-
-    public void Paralisia() //função de paralisia do personagem
-    {
-        _alvoAtual = null;
-        _personagemAlvo = null;
-        if (_usarAnimações)
-        {
-            _animator.Rebind();
-            _animator.SetTrigger("Idle");
-        }
-    }
     #endregion
 
     #region HP
@@ -724,7 +741,6 @@ public class IAPersonagemBase : MonoBehaviour
     public void Esquivar() //função de esquiva do personagem
     {
         textoHP.gameObject.SetActive(true);
-        textoHP.color = new Color(200, 200, 200);
         textoHP.text = ("Esquivou");
         StartCoroutine(DesativarTextoHP(this));
         StartCoroutine(TempoDeEsquiva());
@@ -759,7 +775,6 @@ public class IAPersonagemBase : MonoBehaviour
                 //atualiza o slider
                 _slider.value = hpAtual;
                 textoHP.gameObject.SetActive(true);
-                textoHP.color = new Color(255, 59, 59);
                 textoHP.text = ("-" + dano);
                 StartCoroutine(DesativarTextoHP(this));
             }
@@ -791,7 +806,6 @@ public class IAPersonagemBase : MonoBehaviour
             //atualiza o slider
             _slider.value = hpAtual;
             textoHP.gameObject.SetActive(true);
-            textoHP.color = new Color(59, 253, 255);
             textoHP.text = ("+" + cura);
             StartCoroutine(DesativarTextoHP(this));
         }
@@ -865,7 +879,10 @@ public class IAPersonagemBase : MonoBehaviour
 
     public void EsperarEfeitoHabilidade(HabilidadeBase habilidade, float tempo)
     {
-        StartCoroutine(TempoEfeitoHabilidade(habilidade, tempo));
+        if(habilidade.tempoDeEfeito != 0)
+        {
+            StartCoroutine(TempoEfeitoHabilidade(habilidade, tempo));
+        }
     }
     IEnumerator TempoEfeitoHabilidade(HabilidadeBase habilidade, float tempo) //coroutine que espera um tempo para remover o efeito da habilidade
     {
@@ -881,6 +898,60 @@ public class IAPersonagemBase : MonoBehaviour
         yield return new WaitForSeconds(tempo);
         habilidade.podeAtivarEfeito = true;
         Debug.Log("Pode Ativar Efeito");
+    }
+    #endregion
+
+    #region Efeitos
+    public void Paralisia() //função de paralisia do personagem
+    {
+        _alvoAtual = null;
+        _personagemAlvo = null;
+        if (_usarAnimações)
+        {
+            _animator.Rebind();
+        }
+    }
+
+    public void Sangramento() //função de sangramento do personagem
+    {
+        if (sangramento)
+        {
+            StartCoroutine(DanoSangramento());
+        }
+    }
+
+    IEnumerator DanoSangramento()
+    {
+        if(_comportamento != EstadoDoPersonagem.MORTO)
+        {
+            SofrerDano(danoSangramento);
+        }
+        yield return new WaitForSeconds(1);
+        if (sangramento)
+        {
+            Sangramento();
+        }
+    }
+
+    public void Queimadura() //função de queimadura do personagem
+    {
+        if (queimadura)
+        {
+            StartCoroutine(DanoQueimadura());
+        }
+    }
+
+    IEnumerator DanoQueimadura()
+    {
+        if (_comportamento != EstadoDoPersonagem.MORTO)
+        {
+            SofrerDano(danoQueimadura);
+        }
+        yield return new WaitForSeconds(1);
+        if (queimadura)
+        {
+            Queimadura();
+        }
     }
     #endregion
 

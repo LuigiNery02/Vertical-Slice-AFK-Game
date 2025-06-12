@@ -4,37 +4,47 @@ using UnityEngine;
 
 public class Habilidade11Machado : HabilidadeBase
 {
-    private bool _sangramento; //variável que verifica se há efeito de sangramento
     public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
+
+        personagem.efeitoPorAtaque = CausarSangramento;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
+    {
+        personagem.efeitoPorAtaqueAtivado = true;
+    }
+
+    private void CausarSangramento() //função que ativa o efeito de sangramento
     {
         switch (nivel)
         {
             case 1:
-                _sangramento = true;
-                //ataques causam sangramento (6.5 de dano por segundo)
-                //dura 3 segundos
+                tempoDeEfeito = 3; //dura 3 segundos
                 break;
             case 2:
-                _sangramento = true;
-                //ataques causam sangramento (6.5 de dano por segundo)
-                //dura 5 segundos
+                tempoDeEfeito = 5; //dura 5 segundos
                 break;
             case 3:
-                _sangramento = true;
-                //ataques causam sangramento (6.5 de dano por segundo)
-                //dura 7 segundos
+                tempoDeEfeito = 7; //dura 7 segundos
                 break;
         }
 
+        if (!personagem._personagemAlvo.sangramento)
+        {
+            personagem._personagemAlvo.danoSangramento = 6.5f;
+            personagem._personagemAlvo.sangramento = true;
+            personagem._personagemAlvo.Sangramento();
+        }
     }
 
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
-        _sangramento = false;
+        personagem.efeitoPorAtaqueAtivado = false;
+        if (personagem._personagemAlvo != null && personagem._personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
+        {
+            personagem._personagemAlvo.sangramento = false;
+        }
     }
 }

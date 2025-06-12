@@ -47,14 +47,14 @@ MonoBehaviour:
   nome: Energia Infinita
   descricao: "N\xEDvel 1:\n-Efeito: Recupera 10 pontos de habilidade. \n\nN\xEDvel
     2:\n-Efeito: Recupera 20 pontos de habilidade. \n\nN\xEDvel 3:\n-Efeito: Recupera
-    30 pontos de habilidade. \n\nPontos de Habilidade: 30"
+    30 pontos de habilidade. \n\nPontos de Habilidade: 5"
   tipoDeHabilidade: 0
-  nivel: 0
+  nivel: 3
   idHabilidade: Habilidade8Mago
-  pontosDeHabilidade: 30
+  pontosDeHabilidade: 5
   temTempoDeEfeito: 0
   tempoDeEfeito: 0
   tempoDeRecarga: 0
   spriteHabilidade: {fileID: 21300000, guid: b6dff2a3895b38441ae4e419a1f153b0, type: 3}
-  podeAtivarEfeito: 1
+  podeAtivarEfeito: 0
   personagem: {fileID: 0}

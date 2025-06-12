@@ -11,23 +11,29 @@ public class Habilidade6Espada : HabilidadeBase
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais da arma do personagem
-        //_velocidadeDeAtaqueOriginal = personagem.arma.velocidadeDeAtaque;
+        _velocidadeDeAtaqueOriginal = personagem.personagem.arma.velocidadeDeAtaque;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
     {
         switch (nivel)
         {
             case 1:
-                //personagem.arma.velocidadeDeAtaque -= 0.15f; //reduz a velocidade de ataque em 0.15
-                //dura 4 segundos
+                personagem.personagem.arma.velocidadeDeAtaque -= 0.15f; //reduz a velocidade de ataque em 0.15
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
+                tempoDeEfeito = 4; //dura 4 segundos
                 break;
             case 2:
-                //personagem.arma.velocidadeDeAtaque -= 0.15f; //reduz a velocidade de ataque em 0.15
-                //dura 8 segundos
+                personagem.personagem.arma.velocidadeDeAtaque -= 0.15f; //reduz a velocidade de ataque em 0.15
+                tempoDeEfeito = 8; //dura 8 segundos
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
                 break;
             case 3:
-                //personagem.arma.velocidadeDeAtaque -= 0.15f; //reduz a velocidade de ataque em 0.15
-                //dura 12 segundos
+                personagem.personagem.arma.velocidadeDeAtaque -= 0.15f; //reduz a velocidade de ataque em 0.15
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
+                tempoDeEfeito = 12; //dura 12 segundos
                 break;
         }
 
@@ -36,6 +42,8 @@ public class Habilidade6Espada : HabilidadeBase
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
         //reseta os atributos originais do personagem
-        //personagem.arma.velocidadeDeAtaque = _velocidadeDeAtaqueOriginal;
+        personagem.personagem.arma.velocidadeDeAtaque = _velocidadeDeAtaqueOriginal;
+        personagem.personagem.DefinicoesBatalha();
+        personagem.AtualizarDadosBatalha();
     }
 }

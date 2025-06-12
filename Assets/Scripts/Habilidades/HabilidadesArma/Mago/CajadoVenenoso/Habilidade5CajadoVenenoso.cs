@@ -5,42 +5,64 @@ using UnityEngine;
 public class Habilidade5CajadoVenenoso : HabilidadeBase
 {
     private float _danoOriginal; //dano original da arma
-    private bool _envenenamento; //variável que verifica se há efeito de envenenamento
+    private float _velocidadeDeMovimentoOriginal; //velocidade de movimento do inimigo
     public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais da arma do personagem
-        //_danoOriginal = personagem.arma.dano;
+        _danoOriginal = personagem.personagem.arma.dano;
+        personagem.efeitoPorAtaque = CausarEnvenenamento;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
     {
+        personagem.efeitoPorAtaqueAtivado = true;
+        _velocidadeDeMovimentoOriginal = personagem._personagemAlvo._velocidade;
+
         switch (nivel)
         {
             case 1:
-                //personagem.arma.dano += (_danoOriginal); //dobra o ataque
-                _envenenamento = true;
-                //dura 1,5 segundos
+                personagem.personagem.arma.dano += _danoOriginal; //dobra o ataque
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
+                tempoDeEfeito = 1.5f; //dura 1,5 segundos
                 break;
             case 2:
-                //personagem.arma.dano += (_danoOriginal); //dobra o ataque
-                _envenenamento = true;
-                //dura 2,5 segundos
+                personagem.personagem.arma.dano += _danoOriginal; //dobra o ataque
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
+                tempoDeEfeito = 2.5f; //dura 2,5 segundos
                 break;
             case 3:
-                //personagem.arma.dano += (_danoOriginal); //dobra o ataque
-                _envenenamento = true;
-                //dura 4,5 segundos
+                personagem.personagem.arma.dano += _danoOriginal; //dobra o ataque
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
+                tempoDeEfeito = 4.5f; //dura 4,5 segundos
                 break;
         }
+    }
 
+    private void CausarEnvenenamento() //função que ativa o efeito de queimadura
+    {
+        if (!personagem._personagemAlvo.envenenamento)
+        {
+            personagem._personagemAlvo._velocidade = (_velocidadeDeMovimentoOriginal / 2);
+            personagem._personagemAlvo.envenenamento = true;
+        }
     }
 
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
         //reseta os atributos originais do personagem
-        //personagem.arma.dano = _danoOriginal;
-        _envenenamento = false;
+        personagem.personagem.arma.dano = _danoOriginal;
+        personagem.personagem.DefinicoesBatalha();
+        personagem.AtualizarDadosBatalha();
+        personagem.efeitoPorAtaqueAtivado = false;
+        if (personagem._personagemAlvo != null && personagem._personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
+        {
+            personagem._personagemAlvo._velocidade = _velocidadeDeMovimentoOriginal;
+            personagem._personagemAlvo.envenenamento = false;
+        }
     }
 }

@@ -332,13 +332,23 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         RemoverSimulação(1);
 
         //reseta todas as habilidades
-        HabilidadesBase[] habilidades = FindObjectsOfType<HabilidadesBase>();
+        IAPersonagemBase[] personagens = FindObjectsOfType<IAPersonagemBase>();
 
-        foreach (HabilidadesBase habilidade in habilidades)
+        foreach (IAPersonagemBase personagem in personagens)
         {
-            habilidade.StopAllCoroutines();
-            habilidade.RemoverEfeitoExternamente();
-            habilidade.podeAtivarEfeito = true;
+            if(personagem.habilidade1 != null)
+            {
+                personagem.habilidade1.StopAllCoroutines();
+                personagem.habilidade1.RemoverEfeitoExternamente();
+                personagem.habilidade1.podeAtivarEfeito = true;
+            }
+
+            if (personagem.habilidade2 != null)
+            {
+                personagem.habilidade2.StopAllCoroutines();
+                personagem.habilidade2.RemoverEfeitoExternamente();
+                personagem.habilidade2.podeAtivarEfeito = true;
+            }
         }
 
         yield return new WaitForSeconds(1.5f); //aguarda 1,5 segundo
@@ -397,6 +407,10 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         foreach (IAPersonagemBase personagem in personagens)
         {
             personagem.ResetarEstado(); //chama a função para resetar HP, animação, status, etc.
+            if(personagem.controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
+            {
+                personagem.AtualizarDadosBatalha();
+            }
         }
     }
     private void MudarEstadoDeBatalha(int indice) //função que muda o estado de batalha

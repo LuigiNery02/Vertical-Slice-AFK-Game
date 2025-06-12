@@ -6,50 +6,70 @@ public class Habilidade9ArcoFogo : HabilidadeBase
 {
     private float _danoOriginal; //dano original da arma
     private float _velocidadeDeAtaqueOriginal; //velocidade de ataque original da arma
-    private float _precisaoOriginal; //precisão original da arma
-    private bool _queimadura; //variável que verifica se há efeito de queimadura
+    private int _precisaoOriginal; //precisão original da arma
     public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais da arma do personagem
-        //_velocidadeDeAtaqueOriginal = personagem.arma.velocidadeDeAtaque;
-        //_danoOriginal = personagem.arma.dano;
-        //_precisaoOriginal = personagem.precisao;
+        _velocidadeDeAtaqueOriginal = personagem.personagem.arma.velocidadeDeAtaque;
+        _danoOriginal = personagem.personagem.arma.dano;
+        _precisaoOriginal = personagem.personagem.precisao;
+        personagem.efeitoPorAtaque = CausarQueimadura;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
     {
+        personagem.efeitoPorAtaqueAtivado = true;
+
         switch (nivel)
         {
             case 1:
-                //personagem.arma.velocidadeDeAtaque += 0.2f; //aumenta a velocidade de ataque em 0.2
-                //personagem.arma.dano += (_danoOriginal / 20); //aumenta o dano em 5%
-                //personagem.precisao += _precisaoOriginal; //aumenta em 100% a precisão
-                _queimadura = true;
+                personagem.personagem.arma.velocidadeDeAtaque += 0.2f; //aumenta a velocidade de ataque em 0.2
+                personagem.personagem.arma.dano += (_danoOriginal / 20); //aumenta o dano em 5%
+                personagem.personagem.precisao += _precisaoOriginal; //aumenta em 100% a precisão
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
                 break;
             case 2:
-                //personagem.arma.velocidadeDeAtaque += 0.3f; //aumenta a velocidade de ataque em 0.3
-                //personagem.arma.dano += (_danoOriginal / 10); //aumenta o dano em 10%
-                //personagem.precisao += (_precisaoOriginal * 2); //aumenta em 200% a precisão
-                _queimadura = true;
+                personagem.personagem.arma.velocidadeDeAtaque += 0.3f; //aumenta a velocidade de ataque em 0.3
+                personagem.personagem.arma.dano += (_danoOriginal / 10); //aumenta o dano em 10%
+                personagem.personagem.precisao += (_precisaoOriginal * 2); //aumenta em 200% a precisão
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
                 break;
             case 3:
-                //personagem.arma.velocidadeDeAtaque += 0.4f; //aumenta a velocidade de ataque em 0.4
-                //personagem.arma.dano += (_danoOriginal / 5); //aumenta o dano em 20%
-                //personagem.precisao += (_precisaoOriginal * 3); //aumenta em 300% a precisão
-                _queimadura = true;
+                personagem.personagem.arma.velocidadeDeAtaque += 0.4f; //aumenta a velocidade de ataque em 0.4
+                personagem.personagem.arma.dano += (_danoOriginal / 5); //aumenta o dano em 20%
+                personagem.personagem.precisao += (_precisaoOriginal * 3); //aumenta em 300% a precisão
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
                 break;
         }
+    }
 
+    private void CausarQueimadura() //função que ativa o efeito de queimadura
+    {
+        if (!personagem._personagemAlvo.queimadura)
+        {
+            personagem._personagemAlvo.danoQueimadura = 2;
+            personagem._personagemAlvo.queimadura = true;
+            personagem._personagemAlvo.Queimadura();
+        }
     }
 
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
         //reseta os atributos originais do personagem
-        //personagem.arma.dano = _danoOriginal;
-        //personagem.arma.velocidadeDeAtaque = _velocidadeDeAtaqueOriginal;
-        //personagem.precisao = _precisaoOriginal;
-        _queimadura = false;
+        personagem.personagem.arma.dano = _danoOriginal;
+        personagem.personagem.arma.velocidadeDeAtaque = _velocidadeDeAtaqueOriginal;
+        personagem.personagem.precisao = _precisaoOriginal;
+        personagem.personagem.DefinicoesBatalha();
+        personagem.AtualizarDadosBatalha();
+        personagem.efeitoPorAtaqueAtivado = false;
+        if (personagem._personagemAlvo != null && personagem._personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
+        {
+            personagem._personagemAlvo.queimadura = false;
+        }
     }
 }

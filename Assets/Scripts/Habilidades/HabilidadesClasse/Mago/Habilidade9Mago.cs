@@ -20,16 +20,16 @@ public class Habilidade9Mago : HabilidadeBase
         switch (nivel)
         {
             case 1:
-                personagem.danoAtaqueMagico += (_ataqueMagicoOriginal / 4); //aumenta o ataque mágico em 25%
-                personagem.personagem.defesaMagica += (_defesaMagicaOriginal / 4); //aumenta a defesa mágica em 25%
-                break;
-            case 2:
                 personagem.danoAtaqueMagico += (_ataqueMagicoOriginal / 2); //aumenta o ataque mágico em 50%
                 personagem.personagem.defesaMagica += (_defesaMagicaOriginal / 2); //aumenta a defesa mágica em 50%
                 break;
-            case 3:
+            case 2:
                 personagem.danoAtaqueMagico += _ataqueMagicoOriginal; //aumenta o ataque mágico em 100%
                 personagem.personagem.defesaMagica += _defesaMagicaOriginal; //aumenta a defesa mágica em 100%
+                break;
+            case 3:
+                personagem.danoAtaqueMagico += (_ataqueMagicoOriginal * 2); //aumenta o ataque mágico em 100%
+                personagem.personagem.defesaMagica += (_defesaMagicaOriginal * 2); //aumenta a defesa mágica em 100%
                 break;
         }
 

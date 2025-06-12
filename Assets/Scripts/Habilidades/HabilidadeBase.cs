@@ -40,16 +40,74 @@ public class HabilidadeBase : MonoBehaviour
 
     public void AtivarEfeito() //função que ativa o efeito da habilidade
     {
+        bool podeUsarHabilidade = false;
         if (podeAtivarEfeito && personagem._comportamento != EstadoDoPersonagem.MORTO)
         {
-            Debug.Log("Efeito Ativado");
-            podeAtivarEfeito = false;
-            efeitoHabilidade();
-            if(temTempoDeEfeito)
+            if(personagem.pontosDeHabilidadeAtual >= pontosDeHabilidade)
             {
-                personagem.EsperarEfeitoHabilidade(this, tempoDeEfeito);
+                switch (nivel)
+                {
+                    case 1:
+                        if (personagem.personagem.runaNivel1)
+                        {
+                            podeUsarHabilidade = true;
+                        }
+                        else
+                        {
+                            if (GerenciadorDeInventario.instancia != null)
+                            {
+                                GerenciadorDeInventario.instancia.MostrarMensagem("Runa Nível 1 não equipada");
+                            }
+                        }
+                        break;
+                    case 2:
+                        if (personagem.personagem.runaNivel2)
+                        {
+                            podeUsarHabilidade = true;
+                        }
+                        else
+                        {
+                            if (GerenciadorDeInventario.instancia != null)
+                            {
+                                GerenciadorDeInventario.instancia.MostrarMensagem("Runa Nível 2 não equipada");
+                            }
+                        }
+                        break;
+                    case 3:
+                        if (personagem.personagem.runaNivel3)
+                        {
+                            podeUsarHabilidade = true;
+                        }
+                        else
+                        {
+                            if (GerenciadorDeInventario.instancia != null)
+                            {
+                                GerenciadorDeInventario.instancia.MostrarMensagem("Runa Nível 3 não equipada");
+                            }
+                        }
+                        break;
+                }
+
+                if (podeUsarHabilidade)
+                {
+                    Debug.Log("Efeito Ativado");
+                    personagem.pontosDeHabilidadeAtual -= pontosDeHabilidade;
+                    podeAtivarEfeito = false;
+                    efeitoHabilidade();
+                    if (temTempoDeEfeito)
+                    {
+                        personagem.EsperarEfeitoHabilidade(this, tempoDeEfeito);
+                    }
+                    //selecaoDePersonagem.AtualizarSeleção();
+                }
             }
-            //selecaoDePersonagem.AtualizarSeleção();
+            else
+            {
+                if(GerenciadorDeInventario.instancia != null)
+                {
+                    GerenciadorDeInventario.instancia.MostrarMensagem("Pontos de Habilidade Insuficientes");
+                }
+            }
         }
     }
 

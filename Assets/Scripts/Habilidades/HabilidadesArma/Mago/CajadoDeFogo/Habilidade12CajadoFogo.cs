@@ -4,34 +4,44 @@ using UnityEngine;
 
 public class Habilidade12CajadoFogo : HabilidadeBase
 {
-    private bool _queimadura; //variável que verifica se há efeito de queimadura
     public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
+        personagem.efeitoPorAtaque = CausarQueimadura;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
     {
-        switch (nivel)
+        personagem.efeitoPorAtaqueAtivado = true;
+    }
+    private void CausarQueimadura() //função que ativa o efeito de queimadura
+    {
+        if (!personagem._personagemAlvo.queimadura)
         {
-            case 1:
-                _queimadura = true;
-                //ataques causam queimadura (0.25 de dano por segundo)
-                break;
-            case 2:
-                _queimadura = true;
-                //ataques causam queimadura (0.5 de dano por segundo)
-                break;
-            case 3:
-                _queimadura = true;
-                //ataques causam queimadura (0.75 de dano por segundo)
-                break;
-        }
+            switch (nivel)
+            {
+                case 1:
+                    personagem._personagemAlvo.danoQueimadura = 0.5f;
+                    break;
+                case 2:
+                    personagem._personagemAlvo.danoQueimadura = 1;
+                    break;
+                case 3:
+                    personagem._personagemAlvo.danoQueimadura = 1.5f;
+                    break;
+            }
 
+            personagem._personagemAlvo.queimadura = true;
+            personagem._personagemAlvo.Queimadura();
+        }
     }
 
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
-
+        personagem.efeitoPorAtaqueAtivado = false;
+        if (personagem._personagemAlvo != null && personagem._personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
+        {
+            personagem._personagemAlvo.queimadura = false;
+        }
     }
 }

@@ -4,37 +4,46 @@ using UnityEngine;
 
 public class Habilidade11CajadoFogo : HabilidadeBase
 {
-    private bool _queimadura; //variável que verifica se há efeito de queimadura
     public override void Inicializar()
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
+        personagem.efeitoPorAtaque = CausarQueimadura;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
+    {
+        personagem.efeitoPorAtaqueAtivado = true;
+    }
+
+    private void CausarQueimadura() //função que ativa o efeito de queimadura
     {
         switch (nivel)
         {
             case 1:
-                _queimadura = true;
-                //ataques causam queimadura
-                //dura 5 segundos
+                tempoDeEfeito = 5; //dura 5 segundos
                 break;
             case 2:
-                _queimadura = true;
-                //ataques causam queimadura
-                //dura 7 segundos
+                tempoDeEfeito = 7; //dura 7 segundos
                 break;
             case 3:
-                _queimadura = true;
-                //ataques causam queimadura
-                //dura 10 segundos
+                tempoDeEfeito = 10; //dura 10 segundos
                 break;
         }
 
+        if (!personagem._personagemAlvo.queimadura)
+        {
+            personagem._personagemAlvo.danoQueimadura = 2;
+            personagem._personagemAlvo.queimadura = true;
+            personagem._personagemAlvo.Queimadura();
+        }
     }
 
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
-        _queimadura = false;
+        personagem.efeitoPorAtaqueAtivado = false;
+        if (personagem._personagemAlvo != null && personagem._personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
+        {
+            personagem._personagemAlvo.queimadura = false;
+        }
     }
 }

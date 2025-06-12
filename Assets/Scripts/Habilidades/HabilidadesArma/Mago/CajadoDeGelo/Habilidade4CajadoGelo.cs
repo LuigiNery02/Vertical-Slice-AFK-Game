@@ -11,20 +11,26 @@ public class Habilidade4CajadoGelo : HabilidadeBase
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais da arma do personagem
-        //_velocidadeDeAtaqueOriginal = personagem.arma.velocidadeDeAtaque;
+        _velocidadeDeAtaqueOriginal = personagem.personagem.arma.velocidadeDeAtaque;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
     {
         switch (nivel)
         {
             case 1:
-                //personagem.arma.velocidadeDeAtaque -= 0.04f; //reduz a velocidade de ataque em 0.04
+                personagem.personagem.arma.velocidadeDeAtaque -= 0.04f; //reduz a velocidade de ataque em 0.04
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
                 break;
             case 2:
-                //personagem.arma.velocidadeDeAtaque -= 0.08f; //reduz a velocidade de ataque em 0.08
+                personagem.personagem.arma.velocidadeDeAtaque -= 0.08f; //reduz a velocidade de ataque em 0.08
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
                 break;
             case 3:
-                //personagem.arma.velocidadeDeAtaque -= 0.16f; //reduz a velocidade de ataque em 0.16
+                personagem.personagem.arma.velocidadeDeAtaque -= 0.16f; //reduz a velocidade de ataque em 0.16
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
                 break;
         }
 
@@ -32,6 +38,8 @@ public class Habilidade4CajadoGelo : HabilidadeBase
 
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
-
+        personagem.personagem.arma.velocidadeDeAtaque = _velocidadeDeAtaqueOriginal;
+        personagem.personagem.DefinicoesBatalha();
+        personagem.AtualizarDadosBatalha();
     }
 }

@@ -9,29 +9,42 @@ public class Habilidade12Machado : HabilidadeBase
     {
         efeitoHabilidade = EfeitoHabilidade;
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
+
+        personagem.efeitoPorAtaque = CausarSangramento;
     }
+
     private void EfeitoHabilidade() //função de efeito da habilidade 
+    {
+        personagem.efeitoPorAtaqueAtivado = true;
+    }
+    private void CausarSangramento() //função que ativa o efeito de sangramento
     {
         switch (nivel)
         {
             case 1:
-                _sangramento = true;
-                //ataques causam sangramento (1.5 de dano por segundo)
+                personagem._personagemAlvo.danoSangramento = 1.5f;
                 break;
             case 2:
-                _sangramento = true;
-                //ataques causam sangramento (2.5 de dano por segundo)
+                personagem._personagemAlvo.danoSangramento = 2.5f;
                 break;
             case 3:
-                _sangramento = true;
-                //ataques causam sangramento (3.5 de dano por segundo)
+                personagem._personagemAlvo.danoSangramento = 3.5f;
                 break;
         }
 
+        if (!personagem._personagemAlvo.sangramento)
+        {
+            personagem._personagemAlvo.sangramento = true;
+            personagem._personagemAlvo.Sangramento();
+        }
     }
 
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
-
+        personagem.efeitoPorAtaqueAtivado = false;
+        if (personagem._personagemAlvo != null && personagem._personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
+        {
+            personagem._personagemAlvo.sangramento = false;
+        }
     }
 }

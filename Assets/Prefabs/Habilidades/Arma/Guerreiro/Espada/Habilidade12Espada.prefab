@@ -51,9 +51,9 @@ MonoBehaviour:
     3:\n-Efeito: Causa sangramento permanente ao inimigo atingido (Efeito mais forte
     que o n\xEDvel anterior).\n\nPontos de Habilidade: 30"
   tipoDeHabilidade: 1
-  nivel: 0
+  nivel: 3
   idHabilidade: Habilidade12Espada
-  pontosDeHabilidade: 30
+  pontosDeHabilidade: 45
   temTempoDeEfeito: 0
   tempoDeEfeito: 0
   tempoDeRecarga: 0

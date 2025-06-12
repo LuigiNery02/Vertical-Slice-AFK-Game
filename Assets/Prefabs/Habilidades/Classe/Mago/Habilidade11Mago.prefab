@@ -45,21 +45,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: Magia de Suporte
-  descricao: "N\xEDvel 1:\n-Efeito: Aumenta em 2 os pontos de habilidade dos aliados.\n-Efeito:
+  descricao: "N\xEDvel 1:\n-Efeito: Aumenta em 2 os atributos dos aliados.\n-Efeito:
     Cada ponto de suporte aumenta em 1% o efeito anterior.\n-Dura\xE7\xE3o: 3 segundos.\n-Recarga:
-    12 segundos.\n\nN\xEDvel 2:\n-Efeito: Aumenta em 4 os pontos de habilidade dos
-    aliados.\n-Efeito: Cada ponto de suporte aumenta em 1% o efeito anterior.\n-Dura\xE7\xE3o:
-    5 segundos.\n-Recarga: 12 segundos.\n\nN\xEDvel 3:\n-Efeito: Aumenta em 6 os
-    pontos de habilidade dos aliados.\n-Efeito: Cada ponto de suporte aumenta em
-    1% o efeito anterior.\n-Dura\xE7\xE3o: 10 segundos.\n-Recarga: 12 segundos.\n\nPontos
-    de Habilidade: 25"
+    12 segundos.\n\nN\xEDvel 2:\n-Efeito: Aumenta em 4 os atributos dos aliados.\n-Efeito:
+    Cada ponto de suporte aumenta em 1% o efeito anterior.\n-Dura\xE7\xE3o: 5 segundos.\n-Recarga:
+    12 segundos.\n\nN\xEDvel 3:\n-Efeito: Aumenta em 6 os atributos dos aliados.\n-Efeito:
+    Cada ponto de suporte aumenta em 1% o efeito anterior.\n-Dura\xE7\xE3o: 10 segundos.\n-Recarga:
+    12 segundos.\n\nPontos de Habilidade: 25"
   tipoDeHabilidade: 0
-  nivel: 0
+  nivel: 3
   idHabilidade: Habilidade11Mago
   pontosDeHabilidade: 25
   temTempoDeEfeito: 1
-  tempoDeEfeito: 3
+  tempoDeEfeito: 10
   tempoDeRecarga: 12
   spriteHabilidade: {fileID: 21300000, guid: b6dff2a3895b38441ae4e419a1f153b0, type: 3}
-  podeAtivarEfeito: 1
+  podeAtivarEfeito: 0
   personagem: {fileID: 0}

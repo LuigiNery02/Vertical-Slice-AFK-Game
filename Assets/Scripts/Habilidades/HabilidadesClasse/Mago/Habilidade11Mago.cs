@@ -60,6 +60,8 @@ public class Habilidade11Mago : HabilidadeBase
                         listaDeAliados[i].personagem.constituicao += (2 + ((int)personagem.personagem.suporte));
                         listaDeAliados[i].personagem.inteligencia += (2 + ((int)personagem.personagem.suporte));
                         listaDeAliados[i].personagem.sabedoria += (2 + ((int)personagem.personagem.suporte));
+                        listaDeAliados[i].personagem.DefinicoesBatalha();
+                        listaDeAliados[i].AtualizarDadosBatalha();
                     }
                 }
                 tempoDeEfeito = 3;
@@ -76,6 +78,8 @@ public class Habilidade11Mago : HabilidadeBase
                         listaDeAliados[i].personagem.constituicao += (4 + ((int)personagem.personagem.suporte));
                         listaDeAliados[i].personagem.inteligencia += (4 + ((int)personagem.personagem.suporte));
                         listaDeAliados[i].personagem.sabedoria += (4 + ((int)personagem.personagem.suporte));
+                        listaDeAliados[i].personagem.DefinicoesBatalha();
+                        listaDeAliados[i].AtualizarDadosBatalha();
                     }
                 }
 
@@ -93,6 +97,8 @@ public class Habilidade11Mago : HabilidadeBase
                         listaDeAliados[i].personagem.constituicao += (6 + ((int)personagem.personagem.suporte));
                         listaDeAliados[i].personagem.inteligencia += (6 + ((int)personagem.personagem.suporte));
                         listaDeAliados[i].personagem.sabedoria += (6 + ((int)personagem.personagem.suporte));
+                        listaDeAliados[i].personagem.DefinicoesBatalha();
+                        listaDeAliados[i].AtualizarDadosBatalha();
                     }
                 }
                 tempoDeEfeito = 10;
@@ -114,6 +120,8 @@ public class Habilidade11Mago : HabilidadeBase
                 listaDeAliados[i].personagem.constituicao = _pontosHabilidadeConstituicaoOriginal[i];
                 listaDeAliados[i].personagem.inteligencia = _pontosHabilidadeInteligenciaOriginal[i];
                 listaDeAliados[i].personagem.sabedoria = _pontosHabilidadeSabedoriaOriginal[i];
+                listaDeAliados[i].personagem.DefinicoesBatalha();
+                listaDeAliados[i].AtualizarDadosBatalha();
             }
         }
     }

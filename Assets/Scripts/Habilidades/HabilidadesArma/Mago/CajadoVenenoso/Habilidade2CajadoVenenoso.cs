@@ -11,21 +11,26 @@ public class Habilidade2CajadoVenenoso : HabilidadeBase
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais da arma do personagem
-        //_danoOriginal = personagem.arma.dano;
-        //_danoMagicoOriginal = personagem.danoMagico;
+        _danoOriginal = personagem.personagem.arma.dano;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
     {
         switch (nivel)
         {
             case 1:
-                //personagem.arma.dano += (_danoOriginal / 100) * 2; //aumenta o dano da arma em 2%
+                personagem.personagem.arma.dano += (_danoOriginal / 100) * 2; //aumenta o dano da arma em 2%
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
                 break;
             case 2:
-                //personagem.arma.dano += (_danoOriginal / 100) * 6; //aumenta o dano da arma em 6%
+                personagem.personagem.arma.dano += (_danoOriginal / 100) * 6; //aumenta o dano da arma em 6%
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
                 break;
             case 3:
-                //personagem.arma.dano += (_danoOriginal / 100) * 12; //aumenta o dano da arma em 12%
+                personagem.personagem.arma.dano += (_danoOriginal / 100) * 12; //aumenta o dano da arma em 12%
+                personagem.personagem.DefinicoesBatalha();
+                personagem.AtualizarDadosBatalha();
                 break;
         }
 
@@ -33,6 +38,8 @@ public class Habilidade2CajadoVenenoso : HabilidadeBase
 
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
-
+        personagem.personagem.arma.dano = _danoOriginal;
+        personagem.personagem.DefinicoesBatalha();
+        personagem.AtualizarDadosBatalha();
     }
 }
