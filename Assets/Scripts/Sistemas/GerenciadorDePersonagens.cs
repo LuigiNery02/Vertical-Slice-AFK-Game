@@ -11,6 +11,8 @@ public class GerenciadorDePersonagens : MonoBehaviour
 
     public GerenciadorDeSlotsBatalha gerenciadorDeSlots;
 
+    public GameObject telaBatalha; //tela de batalha
+
     [SerializeField]
     private int _personagensSelecionados; //número de personagens selecionados à batalha
 
@@ -35,6 +37,10 @@ public class GerenciadorDePersonagens : MonoBehaviour
                 slot.personagemIndice = indiceLivre;
                 personagem[indiceLivre].personagem = personagemBase;
                 _personagensSelecionados++;
+                if (_personagensSelecionados >= 3)
+                {
+                    _personagensSelecionados = 3;
+                }
                 personagem[indiceLivre].gameObject.SetActive(true);
                 personagem[indiceLivre].ReceberDadosPersonagem();
             }
@@ -48,7 +54,20 @@ public class GerenciadorDePersonagens : MonoBehaviour
                 personagem[slot.personagemIndice].personagem = null;
                 slot.personagemIndice = -1;
                 _personagensSelecionados--;
+                if(_personagensSelecionados <= 0)
+                {
+                    _personagensSelecionados = 0;
+                }
             }
+        }
+
+        if(_personagensSelecionados == 3)
+        {
+            telaBatalha.SetActive(true);
+        }
+        else
+        {
+            telaBatalha.SetActive(false);
         }
     }
     private int EncontrarIndiceLivre() //encontra o índice livre dentre os personagens
@@ -77,6 +96,11 @@ public class GerenciadorDePersonagens : MonoBehaviour
                     {
                         slot.slotSelecionado = true;
                         slot.personagemIndice = EncontrarIndiceDoPersonagem(personagemIA);
+                        _personagensSelecionados++;
+                        if (_personagensSelecionados >= 3)
+                        {
+                            _personagensSelecionados = 3;
+                        }
                         break;
                     }
                 }

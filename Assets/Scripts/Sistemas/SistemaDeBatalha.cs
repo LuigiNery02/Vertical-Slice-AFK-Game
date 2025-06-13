@@ -43,6 +43,14 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
     private GameObject _telaRecompensasDrop; //tela de recompensas do drop
     [SerializeField]
     private Text _textoRecompensasDrop; //texto de recompensas de drop;
+    [SerializeField]
+    private GameObject[] _uiSelecaoPersonagens; //ui referente à seleção de personagens
+    [SerializeField]
+    private Image[] _uiBotoesPersonagens; //imagens referentes aos botões dos personagens
+    [SerializeField]
+    private Sprite[] _spritesBotoesPersonagens; //sprites referentes às imagens dos botões dos personagens
+    [SerializeField]
+    private GameObject _uiBotaoPersonagens; //tela referente aos botões dos personagens
 
     //Área de SFX
     [Header("SFX")]
@@ -264,6 +272,47 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
             {
                 _acontecendoBatalhaContinua = true;
             }
+            _uiSelecaoPersonagens[0].SetActive(false);
+            _uiSelecaoPersonagens[1].SetActive(false);
+            _uiBotaoPersonagens.SetActive(true);
+            switch (_gerenciadorDePersonagens.personagem[0].personagem.classe)
+            {
+                case Classe.Guerreiro:
+                    _uiBotoesPersonagens[0].sprite = _spritesBotoesPersonagens[0];
+                    break;
+                case Classe.Arqueiro:
+                    _uiBotoesPersonagens[0].sprite = _spritesBotoesPersonagens[1];
+                    break;
+                case Classe.Mago:
+                    _uiBotoesPersonagens[0].sprite = _spritesBotoesPersonagens[2];
+                    break;
+            }
+
+            switch (_gerenciadorDePersonagens.personagem[1].personagem.classe)
+            {
+                case Classe.Guerreiro:
+                    _uiBotoesPersonagens[1].sprite = _spritesBotoesPersonagens[0];
+                    break;
+                case Classe.Arqueiro:
+                    _uiBotoesPersonagens[1].sprite = _spritesBotoesPersonagens[1];
+                    break;
+                case Classe.Mago:
+                    _uiBotoesPersonagens[1].sprite = _spritesBotoesPersonagens[2];
+                    break;
+            }
+
+            switch (_gerenciadorDePersonagens.personagem[2].personagem.classe)
+            {
+                case Classe.Guerreiro:
+                    _uiBotoesPersonagens[2].sprite = _spritesBotoesPersonagens[0];
+                    break;
+                case Classe.Arqueiro:
+                    _uiBotoesPersonagens[2].sprite = _spritesBotoesPersonagens[1];
+                    break;
+                case Classe.Mago:
+                    _uiBotoesPersonagens[2].sprite = _spritesBotoesPersonagens[2];
+                    break;
+            }
         }
     }
 
@@ -445,6 +494,8 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
             SistemaDeSalvamento.instancia.SalvarJogo();
         }
 
+        _uiSelecaoPersonagens[0].SetActive(true);
+        _uiBotaoPersonagens.SetActive(false);
         //recomeça a batalha se o estado de batalha for continua
         if (estado == EstadoDeBatalha.CONTINUA)
         {

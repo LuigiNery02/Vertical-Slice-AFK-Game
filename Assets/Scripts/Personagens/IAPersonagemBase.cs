@@ -63,12 +63,13 @@ public class IAPersonagemBase : MonoBehaviour
 
     //Área referente aos sfx
     [Header("SFX")]
-    [SerializeField]
-    private AudioSource _audio;
+    public AudioSource _audio;
     [SerializeField]
     private AudioClip _contatoSFX;
     [SerializeField]
     private AudioClip _projetilSFX;
+    [SerializeField]
+    public AudioClip _habilidadeSFX;
 
     [HideInInspector]
     public IAPersonagemBase _personagemAlvo; //alvo de ataques do personagem
@@ -117,6 +118,7 @@ public class IAPersonagemBase : MonoBehaviour
     public bool envenenamento; //efeito de envenenamento
     [HideInInspector]
     public float pontosDeHabilidadeAtual; //pontos de habilidade atuais do personagem
+    public Text pontosDeHabilidadeTexto; //texto referente aos pontos de habilidade do personagem
 
     //Área de feedback visuais
     private Animator _animator; //animator do personagem

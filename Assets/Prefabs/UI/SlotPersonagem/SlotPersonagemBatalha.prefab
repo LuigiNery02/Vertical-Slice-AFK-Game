@@ -34,6 +34,7 @@ RectTransform:
   - {fileID: 3006639328500090843}
   - {fileID: 5882546682804132953}
   - {fileID: 1960074275367540436}
+  - {fileID: 4157149209992503570}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -76,7 +77,9 @@ MonoBehaviour:
   personagemData:
     classe: 0
     arma: {fileID: 0}
+    armaID: 0
     atributosDePreferencia: 
+    listaSortearAtributo: 
     codigoID: 
     apelido: 
     nivel: 0
@@ -99,6 +102,7 @@ MonoBehaviour:
     precisao: 0
     pontosDeHabilidade: 0
     suporte: 0
+    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -106,6 +110,10 @@ MonoBehaviour:
     listaDeHabilidadesDeArma: []
     habilidadeClasse: {fileID: 0}
     habilidadeArma: {fileID: 0}
+    habilidadesDeClasseSalvas: []
+    habilidadesDeArmaSalvas: []
+    habilidadeClasseID: 
+    habilidadeArmaID: 
     equipamentoCabecaAcessorio: {fileID: 0}
     equipamentoCabecaTopo: {fileID: 0}
     equipamentoCabecaMedio: {fileID: 0}
@@ -118,7 +126,7 @@ MonoBehaviour:
     equipamentoAcessorio1: {fileID: 0}
     equipamentoAcessorio2: {fileID: 0}
     equipamentoBuffConsumivel: {fileID: 0}
-    listaSortearAtributo: 
+    idsEquipamentosEquipados: []
   apelidoPersonagem: {fileID: 4516078415665563004}
   nivelPersonagem: {fileID: 3686690657975189081}
   imagemPersonagem: {fileID: 6149059497575890712}
@@ -129,6 +137,8 @@ MonoBehaviour:
   personagemIndice: 0
   imagemClasse: 0
   botao: {fileID: 1426175719073841163}
+  slotSelecionado: 0
+  check: {fileID: 5561410251817225221}
 --- !u!114 &1426175719073841163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,6 +413,81 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
+--- !u!1 &5561410251817225221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4157149209992503570}
+  - component: {fileID: 7979416600771626217}
+  - component: {fileID: 1410086167308528692}
+  m_Layer: 5
+  m_Name: Check
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &4157149209992503570
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5561410251817225221}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 231160830719319108}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 88, y: -190}
+  m_SizeDelta: {x: 500, y: 500}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7979416600771626217
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5561410251817225221}
+  m_CullTransparentMesh: 1
+--- !u!114 &1410086167308528692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5561410251817225221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.6506, g: 1, b: 0.6084906, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: d34167d5c2dd8654094aa109413b6c59, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7749770839218000083
 GameObject:
   m_ObjectHideFlags: 0

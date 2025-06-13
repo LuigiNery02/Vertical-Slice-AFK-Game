@@ -35,7 +35,10 @@ public class HabilidadeBase : MonoBehaviour
 
     public virtual void Inicializar() //função que inicializa a habilidade quando o personagem é definido na batalha
     {
-        
+        if(personagem.pontosDeHabilidadeTexto != null)
+        {
+            personagem.pontosDeHabilidadeTexto.text = (personagem.pontosDeHabilidadeAtual + " / " + personagem.personagem.pontosDeHabilidade);
+        }
     }
 
     public void AtivarEfeito() //função que ativa o efeito da habilidade
@@ -92,6 +95,15 @@ public class HabilidadeBase : MonoBehaviour
                 {
                     Debug.Log("Efeito Ativado");
                     personagem.pontosDeHabilidadeAtual -= pontosDeHabilidade;
+                    if(SistemaDeBatalha.usarSfxs)
+                    {
+                        personagem._audio.clip = personagem._habilidadeSFX;
+                        personagem._audio.Play();
+                    }
+                    if (personagem.pontosDeHabilidadeTexto != null)
+                    {
+                        personagem.pontosDeHabilidadeTexto.text = (personagem.pontosDeHabilidadeAtual + " / " + personagem.personagem.pontosDeHabilidade);
+                    }
                     podeAtivarEfeito = false;
                     efeitoHabilidade();
                     if (temTempoDeEfeito)
@@ -126,12 +138,20 @@ public class HabilidadeBase : MonoBehaviour
         {
             personagem.EsperarRecargaHabilidade(this, tempoDeRecarga);
         }
+        if (personagem.pontosDeHabilidadeTexto != null)
+        {
+            personagem.pontosDeHabilidadeTexto.text = (personagem.pontosDeHabilidadeAtual + " / " + personagem.personagem.pontosDeHabilidade);
+        }
     }
 
     public void RemoverEfeitoExternamente() //função que remove o efeito da habilidade de forma externa
     {
         removerEfeitoHabilidade();
         podeAtivarEfeito = true;
+        if (personagem.pontosDeHabilidadeTexto != null)
+        {
+            personagem.pontosDeHabilidadeTexto.text = (personagem.pontosDeHabilidadeAtual + " / " + personagem.personagem.pontosDeHabilidade);
+        }
         //selecaoDePersonagem.AtualizarSeleção();
     }
 

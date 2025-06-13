@@ -17,6 +17,7 @@ public class SlotPersonagemBatalha : MonoBehaviour
     public Button botao; //botão do slot
     //[HideInInspector]
     public bool slotSelecionado; //variável que verifica se o slot foi selecionado
+    public GameObject check; //imagem de check do slot
 
     private GerenciadorDePersonagens _gerenciadorDePersonagens; //gerenciador de personagens
 
@@ -24,6 +25,7 @@ public class SlotPersonagemBatalha : MonoBehaviour
     {
         _gerenciadorDePersonagens = FindObjectOfType<GerenciadorDePersonagens>();
         _gerenciadorDePersonagens.SelecionarPersonagem(personagemData, this);
+        check.SetActive(slotSelecionado);
     }
 
     public void ReceberDadosPersonagem(PersonagemData personagem) //função que recebe os dados do personagem e atualiza o slot

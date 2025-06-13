@@ -120,6 +120,8 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
     private Text _suporteTexto; //texto do suporte do personagem
     [SerializeField]
     private Text _pontosHabilidadeTexto; //texto de pontos de habilidade do personagem
+    [SerializeField]
+    private Text _expProximoNivelTexto; //texto de exp para o próximo nível do personagem
 
     [Header("Sprites")]
     [SerializeField]
@@ -950,6 +952,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
             _precisaoTexto.text = ("Precisão: " + personagemEmCriacao.precisao);
             _suporteTexto.text = ("Suporte: " + personagemEmCriacao.suporte);
             _pontosHabilidadeTexto.text = ("Pontos de Habilidade: " + personagemEmCriacao.pontosDeHabilidade);
+            _expProximoNivelTexto.text = ("EXP para o próximo Nível: " + ((int)personagemEmCriacao.expProximoNível - personagemEmCriacao.expAtual));
 
             _nomeArmaTexto.text = ("Nome: " + personagemEmCriacao.arma.nome);
             _danoMeleeArmaTexto.text = ("Dano Melee: " + (personagemEmCriacao.arma.dano + 1));
@@ -1144,6 +1147,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
         _precisaoTexto.text = "";
         _suporteTexto.text = "";
         _pontosHabilidadeTexto.text = "";
+        _expProximoNivelTexto.text = "";
 
         _nomeArmaTexto.text = "";
         _danoMeleeArmaTexto.text = "";

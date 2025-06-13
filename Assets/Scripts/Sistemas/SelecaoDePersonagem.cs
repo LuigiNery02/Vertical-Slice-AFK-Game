@@ -35,24 +35,17 @@ public class SelecaoDePersonagem : MonoBehaviour
     //área referente à sprites
     [Header("Sprites")]
     [SerializeField]
-    private Sprite[] _spriteHabilidade1; //sprites da habilidade 1
-    [SerializeField]
-    private Sprite[] _spriteHabilidade2; //sprites da habilidade 2
-    [SerializeField]
     private Sprite[] _spritePersonagem; //sprite do personagem
     [SerializeField]
     private Sprite _spriteVazia; //sprite que representa um slot vazio
-    private Sprite[] _spriteEquipamento; //sprite do equipamento do personagem
 
     private IAPersonagemBase _personagemSelecionado; //variável que representa o personagem selecionado
     private SistemaDeBatalha _sistemaDeBatalha; //sistema de batalha
-    private float _hp; //variável que representa o hp do personagem selecionado
-    private float _velocidade; //variável que representa a velocidade do personagem selecionado
-    private float _dano; //variável que representa o dano de ataque do personagem selecionado
-    private float _cooldown; //variável que representa o cooldown de ataque do personagem selecionado
+    private string _apelido; //variável que representa o apelido do personagem selecionado
+    private int _nivel; //variável que representa o nível do personagem selecionado
+    private string _classe; //variável que representa a classe do personagem selecionado
+    private string _armaNome; //variável que representa o nome da arma do personagem selecionado
     private int _id; //variável que representa o ID do personagem selecionado
-    private int _numeroDeEquipamentos; //variável que representa o numero de equipamentos do personagem
-    private int _slotsEquipamento = 3; //variável que representa o número de slots de equipamento
     private string _tituloHabilidade1; //variável que representa o título da primeira habilidade do personagem;
     private string _tituloHabilidade2; //variável que representa o título da segunda habilidade do personagem;
     private string _detalheHabilidade1; //variável que representa os detalhes da primeira habilidade do personagem;
@@ -68,39 +61,30 @@ public class SelecaoDePersonagem : MonoBehaviour
         _personagemSelecionado = personagem; //define o personagem selecionado
 
         //atualiza os dados com base no personagem selecionado
-        _hp = _personagemSelecionado._hpMaximoEInicial;
-        _velocidade = _personagemSelecionado._velocidade;
-        _dano = _personagemSelecionado._danoAtaqueBasico;
-        _cooldown = _personagemSelecionado._cooldown;
-        _id = _personagemSelecionado.id;
-        _numeroDeEquipamentos = _personagemSelecionado.numeroDeEquipamentos;
-        if(_personagemSelecionado.spriteEquipamentos != null)
+        _apelido = _personagemSelecionado.personagem.apelido;
+        _nivel = _personagemSelecionado.personagem.nivel;
+        _classe = _personagemSelecionado.personagem.classe.ToString();
+        _armaNome = _personagemSelecionado.personagem.arma.nome;
+        if(_personagemSelecionado.personagem.classe == Classe.Guerreiro)
         {
-            //reseta as sprites
-            _spriteEquipamento = new Sprite[_slotsEquipamento];
-            for(int i =0; i < _slotsEquipamento; i++)
-            {
-                _spriteEquipamento[i] = _spriteVazia;
-            }
-
-            //adiciona as novas sprites
-            for(int i = 0; i < _numeroDeEquipamentos; i++)
-            {
-                _spriteEquipamento[i] = _personagemSelecionado.spriteEquipamentos[i];
-            }
+            _id = 0;
+        }
+        else if(_personagemSelecionado.personagem.classe == Classe.Arqueiro)
+        {
+            _id = 1;
+        }
+        else if(_personagemSelecionado.personagem.classe == Classe.Mago)
+        {
+            _id = 2;
         }
 
-        if(_personagemSelecionado.habilidade1 != null)
-        {
-            _tituloHabilidade1 = _personagemSelecionado.habilidade1.nome;
-            _detalheHabilidade1 = _personagemSelecionado.habilidade1.descricao;
-        }
+        _tituloHabilidade1 = "";
+        _detalheHabilidade1 = "";
+        _imagemHabilidade1.sprite = _spriteVazia;
 
-        if(_personagemSelecionado.habilidade2 != null)
-        {
-            _tituloHabilidade2 = _personagemSelecionado.habilidade2.nome;
-            _detalheHabilidade2 = _personagemSelecionado.habilidade2.descricao;
-        }
+        _tituloHabilidade2 = "";
+        _detalheHabilidade2 = "";
+        _imagemHabilidade2.sprite = _spriteVazia;
 
         AtualizarSeleção();
     }
@@ -110,16 +94,32 @@ public class SelecaoDePersonagem : MonoBehaviour
         if(_personagemSelecionado != null)
         {
             //atualiza visualmente os dados do personagem selecionado
-            _textos[0].text = "HP: " + _hp;
-            _textos[1].text = "Velocidade: " + _velocidade;
-            _textos[2].text = "Dano: " + _dano;
-            _textos[3].text = "Cooldown: " + _cooldown;
+            _textos[0].text = "Apelido: " + _apelido;
+            _textos[1].text = "Nível: " + _nivel;
+            _textos[2].text = "Classe: " + _classe;
+            _textos[3].text = "Arma: " + _armaNome;
 
             //atualiza visualmente as imagens das habilidades do personagem selecionado
-            _imagemHabilidade1Funções.sprite = _spriteHabilidade1[_id];
-            _imagemHabilidade2Funções.sprite = _spriteHabilidade2[_id];
-            _imagemHabilidade1.sprite = _spriteHabilidade1[_id];
-            _imagemHabilidade2.sprite = _spriteHabilidade2[_id];
+            if(_personagemSelecionado.habilidade1 != null)
+            {
+                _imagemHabilidade1.sprite = _personagemSelecionado.habilidade1.spriteHabilidade;
+                _tituloHabilidade1 = _personagemSelecionado.habilidade1.nome;
+                _detalheHabilidade1 = _personagemSelecionado.habilidade1.descricao;
+            }
+            
+            if(_personagemSelecionado.habilidade2 != null)
+            {
+                _imagemHabilidade2.sprite = _personagemSelecionado.habilidade2.spriteHabilidade;
+                _tituloHabilidade2 = _personagemSelecionado.habilidade2.nome;
+                _detalheHabilidade2 = _personagemSelecionado.habilidade2.descricao;
+            }
+
+            _textoTituloHabilidade1.text = _tituloHabilidade1;
+            _textoDescricaoHabilidade1.text = _detalheHabilidade1;
+
+            _textoTituloHabilidade2.text = _tituloHabilidade2;
+            _textoDescricaoHabilidade2.text = _detalheHabilidade2;
+
             if (_personagemSelecionado.habilidade1 != null && _personagemSelecionado.habilidade1.podeAtivarEfeito)
             {
                 _imagemHabilidade1Funções.color = Color.white;
@@ -140,16 +140,116 @@ public class SelecaoDePersonagem : MonoBehaviour
 
             //atualiza visualmente as imagens referente ao personagem
             _imagemPersonagem.sprite = _spritePersonagem[_id];
-            for (int i = 0; i < _slotsEquipamento; i++)
+
+            #region Equipamentos            
+            if (_personagemSelecionado.personagem.equipamentoCabecaAcessorio != null)
             {
-                _imagensEquipamentos[i].sprite = _spriteEquipamento[i];
+                _imagensEquipamentos[0].sprite = _personagemSelecionado.personagem.equipamentoCabecaAcessorio.icone;
+            }
+            else
+            {
+                _imagensEquipamentos[0].sprite = _spriteVazia;
             }
 
-            //atualiza os textos das habilidades
-            _textoTituloHabilidade1.text = _tituloHabilidade1;
-            _textoTituloHabilidade2.text = _tituloHabilidade2;
-            _textoDescricaoHabilidade1.text = _detalheHabilidade1;
-            _textoDescricaoHabilidade2.text = _detalheHabilidade2;
+            if (_personagemSelecionado.personagem.equipamentoCabecaTopo != null)
+            {
+                _imagensEquipamentos[1].sprite = _personagemSelecionado.personagem.equipamentoCabecaTopo.icone;
+            }
+            else
+            {
+                _imagensEquipamentos[1].sprite = _spriteVazia;
+            }
+
+            if (_personagemSelecionado.personagem.equipamentoCabecaMedio != null)
+            {
+                _imagensEquipamentos[2].sprite = _personagemSelecionado.personagem.equipamentoCabecaMedio.icone;
+            }
+            else
+            {
+                _imagensEquipamentos[2].sprite = _spriteVazia;
+            }
+
+            if (_personagemSelecionado.personagem.equipamentoCabecaBaixo != null)
+            {
+                _imagensEquipamentos[3].sprite = _personagemSelecionado.personagem.equipamentoCabecaBaixo.icone;
+            }
+            else
+            {
+                _imagensEquipamentos[3].sprite = _spriteVazia;
+            }
+
+            if (_personagemSelecionado.personagem.equipamentoArmadura != null)
+            {
+                _imagensEquipamentos[4].sprite = _personagemSelecionado.personagem.equipamentoArmadura.icone;
+            }
+            else
+            {
+                _imagensEquipamentos[4].sprite = _spriteVazia;
+            }
+
+            if (_personagemSelecionado.personagem.equipamentoBracadeira != null)
+            {
+                _imagensEquipamentos[5].sprite = _personagemSelecionado.personagem.equipamentoBracadeira.icone;
+            }
+            else
+            {
+                _imagensEquipamentos[5].sprite = _spriteVazia;
+            }
+
+            if (_personagemSelecionado.personagem.equipamentoMaoEsquerda != null)
+            {
+                _imagensEquipamentos[6].sprite = _personagemSelecionado.personagem.equipamentoMaoEsquerda.icone;
+            }
+            else
+            {
+                _imagensEquipamentos[6].sprite = _spriteVazia;
+            }
+
+            if (_personagemSelecionado.personagem.equipamentoMaoDireita != null)
+            {
+                _imagensEquipamentos[7].sprite = _personagemSelecionado.personagem.equipamentoMaoDireita.icone;
+            }
+            else
+            {
+                _imagensEquipamentos[7].sprite = _spriteVazia;
+            }
+
+            if (_personagemSelecionado.personagem.equipamentoBota != null)
+            {
+                _imagensEquipamentos[8].sprite = _personagemSelecionado.personagem.equipamentoBota.icone;
+            }
+            else
+            {
+                _imagensEquipamentos[8].sprite = _spriteVazia;
+            }
+
+            if (_personagemSelecionado.personagem.equipamentoAcessorio1 != null)
+            {
+                _imagensEquipamentos[9].sprite = _personagemSelecionado.personagem.equipamentoAcessorio1.icone;
+            }
+            else
+            {
+                _imagensEquipamentos[9].sprite = _spriteVazia;
+            }
+
+            if (_personagemSelecionado.personagem.equipamentoAcessorio2 != null)
+            {
+                _imagensEquipamentos[10].sprite = _personagemSelecionado.personagem.equipamentoAcessorio2.icone;
+            }
+            else
+            {
+                _imagensEquipamentos[10].sprite = _spriteVazia;
+            }
+
+            if (_personagemSelecionado.personagem.equipamentoBuffConsumivel != null)
+            {
+                _imagensEquipamentos[11].sprite = _personagemSelecionado.personagem.equipamentoBuffConsumivel.icone;
+            }
+            else
+            {
+                _imagensEquipamentos[11].sprite = _spriteVazia;
+            }
+            #endregion
 
             _funções.SetActive(true); //ativa as funções do personagem 
         }
