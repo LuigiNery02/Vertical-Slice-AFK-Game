@@ -15,23 +15,14 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
 
     [Header("Lista de Habilidades de Classe")]
     public List<HabilidadeBase> habilidadesClasseGuerreiro = new List<HabilidadeBase>(); //lista de habilidades da classe guerreiro
-    public List<HabilidadeBase> habilidadesClasseArqueiro = new List<HabilidadeBase>(); //lista de habilidades da classe arqueiro
-    public List<HabilidadeBase> habilidadesClasseMago = new List<HabilidadeBase>(); //lista de habilidades da classe mago
+    public List<HabilidadeBase> habilidadesClasseLadino = new List<HabilidadeBase>(); //lista de habilidades da classe ladino
+    public List<HabilidadeBase> habilidadesClasseElementalista = new List<HabilidadeBase>(); //lista de habilidades da classe elementalista
+    public List<HabilidadeBase> habilidadesClasseSacerdote = new List<HabilidadeBase>(); //lista de habilidades da classe sacerdote
 
-    [Header("Lista de Habilidades de Arma: Guerreiro")]
+    [Header("Lista de Habilidades de Arma")]
     public List<HabilidadeBase> habilidadesEspada = new List<HabilidadeBase>(); //lista de habilidades da espada
-    public List<HabilidadeBase> habilidadesLanca = new List<HabilidadeBase>(); //lista de habilidades da lança
-    public List<HabilidadeBase> habilidadesMachado = new List<HabilidadeBase>(); //lista de habilidades da machado
-
-    [Header("Lista de Habilidades de Arma: Arqueiro")]
-    public List<HabilidadeBase> habilidadesArcoFogo = new List<HabilidadeBase>(); //lista de habilidades do arco de fogo
-    public List<HabilidadeBase> habilidadesArcoGelo = new List<HabilidadeBase>(); //lista de habilidades do arco de gelo
-    public List<HabilidadeBase> habilidadesArcoVenenoso = new List<HabilidadeBase>(); //lista de habilidades do arco venenoso
-
-    [Header("Lista de Habilidades de Arma: Mago")]
-    public List<HabilidadeBase> habilidadesCajadoFogo = new List<HabilidadeBase>(); //lista de habilidades do cajado de fogo
-    public List<HabilidadeBase> habilidadesCajadoGelo = new List<HabilidadeBase>(); //lista de habilidades do cajado de gelo
-    public List<HabilidadeBase> habilidadesCajadoVenenoso = new List<HabilidadeBase>(); //lista de habilidades do cajado venenoso
+    public List<HabilidadeBase> habilidadesArco = new List<HabilidadeBase>(); //lista de habilidades do arco
+    public List<HabilidadeBase> habilidadesLivro = new List<HabilidadeBase>(); //lista de habilidades do livro
 
     [Header("Lista Equipamentos")]
     public List<EquipamentoBase> equipamentosCabecaAcessorio = new List<EquipamentoBase>(); //lista de equipamentos da cabeça acessório
@@ -199,7 +190,7 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
 
     private void Start()
     {
-        _sistemaDeCriacaoDePersonagens = FindObjectOfType<SistemaDeCriacaoDePersonagens>();
+        _sistemaDeCriacaoDePersonagens = FindFirstObjectByType<SistemaDeCriacaoDePersonagens>();
         if(_sistemaDeCriacaoDePersonagens != null)
         {
             foreach (var personagem in _sistemaDeCriacaoDePersonagens.personagensCriados)
@@ -237,11 +228,14 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
                 case Classe.Guerreiro:
                     listaClasseOriginal = habilidadesClasseGuerreiro;
                     break;
-                case Classe.Arqueiro:
-                    listaClasseOriginal = habilidadesClasseArqueiro;
+                case Classe.Ladino:
+                    listaClasseOriginal = habilidadesClasseLadino;
                     break;
-                case Classe.Mago:
-                    listaClasseOriginal = habilidadesClasseMago;
+                case Classe.Elementalista:
+                    listaClasseOriginal = habilidadesClasseElementalista;
+                    break;
+                case Classe.Sacerdote:
+                    listaClasseOriginal = habilidadesClasseSacerdote;
                     break;
             }
 
@@ -281,29 +275,11 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
                 case "Espada":
                     listaArmaOriginal = habilidadesEspada;
                     break;
-                case "Lança":
-                    listaArmaOriginal = habilidadesLanca;
+                case "Arco":
+                    listaArmaOriginal = habilidadesArco;
                     break;
-                case "Machado":
-                    listaArmaOriginal = habilidadesMachado;
-                    break;
-                case "Arco de Fogo":
-                    listaArmaOriginal = habilidadesArcoFogo;
-                    break;
-                case "Arco de Gelo":
-                    listaArmaOriginal = habilidadesArcoGelo;
-                    break;
-                case "Arco Venenoso":
-                    listaArmaOriginal = habilidadesArcoVenenoso;
-                    break;
-                case "Cajado de Fogo":
-                    listaArmaOriginal = habilidadesCajadoFogo; 
-                    break;
-                case "Cajado de Gelo":
-                    listaArmaOriginal = habilidadesCajadoGelo;
-                    break;
-                case "Cajado Venenoso":
-                    listaArmaOriginal = habilidadesCajadoVenenoso;
+                case "Livro":
+                    listaArmaOriginal = habilidadesLivro;
                     break;
             }
 

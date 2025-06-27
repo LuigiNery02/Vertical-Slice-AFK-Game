@@ -22,13 +22,13 @@ public class Habilidade3Mago : HabilidadeBase
         switch (nivel)
         {
             case 1:
-                personagem.ReceberHP(personagem.danoAtaqueMagico / 20); //recupera 5% de HP referente ao dano causado
+                //personagem.ReceberHP(personagem.danoAtaqueMagico / 20); //recupera 5% de HP referente ao dano causado
                 break;
             case 2:
-                personagem.ReceberHP(personagem.danoAtaqueMagico / 10); //recupera 10% de HP referente ao dano causado
+                //personagem.ReceberHP(personagem.danoAtaqueMagico / 10); //recupera 10% de HP referente ao dano causado
                 break;
             case 3:
-                personagem.ReceberHP(personagem.danoAtaqueMagico / 5); //recupera 20% de HP referente ao dano causado
+                //personagem.ReceberHP(personagem.danoAtaqueMagico / 5); //recupera 20% de HP referente ao dano causado
                 break;
         }
     }

@@ -32,9 +32,9 @@ public class Habilidade11Guerreiro : HabilidadeBase
 
         for (int i = 0; i < listaDeAliados.Count; i++)
         {
-            _danoMeleeOriginal.Insert(i, listaDeAliados[i]._danoAtaqueBasico);
-            _danoDistanciaOriginal.Insert(i, listaDeAliados[i].danoAtaqueDistancia);
-            _danoMagicoOriginal.Insert(i, listaDeAliados[i].danoAtaqueMagico);
+            //_danoMeleeOriginal.Insert(i, listaDeAliados[i]._danoAtaqueBasico);
+            //_danoDistanciaOriginal.Insert(i, listaDeAliados[i].danoAtaqueDistancia);
+            //_danoMagicoOriginal.Insert(i, listaDeAliados[i].danoAtaqueMagico);
         }
 
         switch (nivel)
@@ -44,9 +44,9 @@ public class Habilidade11Guerreiro : HabilidadeBase
                 {
                     if (listaDeAliados[i] != null)
                     {
-                        listaDeAliados[i]._danoAtaqueBasico += (_danoMeleeOriginal[i] / 10) + personagem.personagem.suporte;
-                        listaDeAliados[i].danoAtaqueDistancia += (_danoDistanciaOriginal[i] / 10) + personagem.personagem.suporte;
-                        listaDeAliados[i].danoAtaqueMagico += (_danoMagicoOriginal[i] / 10) + personagem.personagem.suporte;
+                        //listaDeAliados[i]._danoAtaqueBasico += (_danoMeleeOriginal[i] / 10) + personagem.personagem.suporte;
+                        //listaDeAliados[i].danoAtaqueDistancia += (_danoDistanciaOriginal[i] / 10) + personagem.personagem.suporte;
+                        //listaDeAliados[i].danoAtaqueMagico += (_danoMagicoOriginal[i] / 10) + personagem.personagem.suporte;
                     }
                 }
                 tempoDeEfeito = 3;
@@ -56,9 +56,9 @@ public class Habilidade11Guerreiro : HabilidadeBase
                 {
                     if (listaDeAliados[i] != null)
                     {
-                        listaDeAliados[i]._danoAtaqueBasico += (_danoMeleeOriginal[i] / 10) + personagem.personagem.suporte;
-                        listaDeAliados[i].danoAtaqueDistancia += (_danoDistanciaOriginal[i] / 10) + personagem.personagem.suporte;
-                        listaDeAliados[i].danoAtaqueMagico += (_danoMagicoOriginal[i] / 10) + personagem.personagem.suporte;
+                        //listaDeAliados[i]._danoAtaqueBasico += (_danoMeleeOriginal[i] / 10) + personagem.personagem.suporte;
+                        //listaDeAliados[i].danoAtaqueDistancia += (_danoDistanciaOriginal[i] / 10) + personagem.personagem.suporte;
+                        //listaDeAliados[i].danoAtaqueMagico += (_danoMagicoOriginal[i] / 10) + personagem.personagem.suporte;
                     }
                 }
                 tempoDeEfeito = 5;
@@ -68,9 +68,9 @@ public class Habilidade11Guerreiro : HabilidadeBase
                 {
                     if (listaDeAliados[i] != null)
                     {
-                        listaDeAliados[i]._danoAtaqueBasico += (_danoMeleeOriginal[i] / 10) + personagem.personagem.suporte;
-                        listaDeAliados[i].danoAtaqueDistancia += (_danoDistanciaOriginal[i] / 10) + personagem.personagem.suporte;
-                        listaDeAliados[i].danoAtaqueMagico += (_danoMagicoOriginal[i] / 10) + personagem.personagem.suporte;
+                        //listaDeAliados[i]._danoAtaqueBasico += (_danoMeleeOriginal[i] / 10) + personagem.personagem.suporte;
+                        //listaDeAliados[i].danoAtaqueDistancia += (_danoDistanciaOriginal[i] / 10) + personagem.personagem.suporte;
+                        //listaDeAliados[i].danoAtaqueMagico += (_danoMagicoOriginal[i] / 10) + personagem.personagem.suporte;
                     }
                 }
                 tempoDeEfeito = 10;
@@ -86,9 +86,9 @@ public class Habilidade11Guerreiro : HabilidadeBase
         {
             if (listaDeAliados[i] != null)
             {
-                listaDeAliados[i]._danoAtaqueBasico = _danoMeleeOriginal[i];
-                listaDeAliados[i].danoAtaqueDistancia = _danoDistanciaOriginal[i];
-                listaDeAliados[i].danoAtaqueMagico = _danoMagicoOriginal[i];
+                //listaDeAliados[i]._danoAtaqueBasico = _danoMeleeOriginal[i];
+                //listaDeAliados[i].danoAtaqueDistancia = _danoDistanciaOriginal[i];
+                //listaDeAliados[i].danoAtaqueMagico = _danoMagicoOriginal[i];
             }
         }
     }

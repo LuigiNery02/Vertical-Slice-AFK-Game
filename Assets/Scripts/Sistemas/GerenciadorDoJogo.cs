@@ -12,12 +12,18 @@ sealed class GerenciadorDoJogo : MonoBehaviour
 
     public void SalvarJogo() //função que salva o jogo
     {
-        SistemaDeSalvamento.instancia.SalvarJogo();
+        if(SistemaDeSalvamento.instancia != null)
+        {
+            SistemaDeSalvamento.instancia.SalvarJogo();
+        }
     }
 
     public void DeletarSave() //função que deleta o save
     {
-        SistemaDeSalvamento.instancia.DeletarDados("save");
+        if(SistemaDeSalvamento.instancia == null)
+        {
+            SistemaDeSalvamento.instancia.DeletarDados("save");
+        }
         CarregarCena("TelaInicial");
     }
 

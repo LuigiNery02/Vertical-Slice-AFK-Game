@@ -43,7 +43,7 @@ public class Habilidade2Mago : HabilidadeBase
 
                 if (inimigo != null && inimigo.controlador != personagem.controlador && inimigo._comportamento != EstadoDoPersonagem.MORTO)
                 {
-                    inimigo.SofrerDano(personagem.danoAtaqueMagico);
+                    //inimigo.SofrerDano(personagem.danoAtaqueMagico);
                 }
             }
         }

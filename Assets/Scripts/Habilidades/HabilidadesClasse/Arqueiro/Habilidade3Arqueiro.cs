@@ -11,7 +11,7 @@ public class Habilidade3Arqueiro : HabilidadeBase
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais do personagem
-        _danoOriginal = personagem.personagem.arma.danoDistancia;
+        //_danoOriginal = personagem.personagem.arma.danoDistancia;
         personagem.efeitoPorAtaque = RecuperarHP;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 

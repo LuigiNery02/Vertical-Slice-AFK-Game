@@ -34,8 +34,8 @@ public class EquipamentoBase : MonoBehaviour
     public void AplicarEfeito() //função que aplica o efeito do equipamento ao personagem
     {
         personagem.ataque += ataqueMelee;
-        personagem.ataqueMagico += ataqueMagico;
-        personagem.ataqueDistancia += ataqueDistancia;
+        //personagem.ataqueMagico += ataqueMagico;
+        //personagem.ataqueDistancia += ataqueDistancia;
 
         personagem.defesa += defesa;
         personagem.defesaMagica += defesaMagica;
@@ -50,8 +50,8 @@ public class EquipamentoBase : MonoBehaviour
     public void RemoverEfeito() //função que remove o efeito do equipamento do personagem
     {
         personagem.ataque -= ataqueMelee;
-        personagem.ataqueMagico -= ataqueMagico;
-        personagem.ataqueDistancia -= ataqueDistancia;
+        //personagem.ataqueMagico -= ataqueMagico;
+        //personagem.ataqueDistancia -= ataqueDistancia;
 
         personagem.defesa -= defesa;
         personagem.defesaMagica -= defesaMagica;

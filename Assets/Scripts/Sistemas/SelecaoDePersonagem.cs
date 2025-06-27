@@ -53,7 +53,7 @@ public class SelecaoDePersonagem : MonoBehaviour
 
     private void Start()
     {
-        _sistemaDeBatalha = FindObjectOfType<SistemaDeBatalha>();
+        _sistemaDeBatalha = FindFirstObjectByType<SistemaDeBatalha>();
     }
 
     public void SelecionarPersonagem(IAPersonagemBase personagem) //função para identificar o personagem selecionado
@@ -69,13 +69,17 @@ public class SelecaoDePersonagem : MonoBehaviour
         {
             _id = 0;
         }
-        else if(_personagemSelecionado.personagem.classe == Classe.Arqueiro)
+        else if(_personagemSelecionado.personagem.classe == Classe.Ladino)
         {
             _id = 1;
         }
-        else if(_personagemSelecionado.personagem.classe == Classe.Mago)
+        else if(_personagemSelecionado.personagem.classe == Classe.Elementalista)
         {
             _id = 2;
+        }
+        else if (_personagemSelecionado.personagem.classe == Classe.Sacerdote)
+        {
+            _id = 3;
         }
 
         _tituloHabilidade1 = "";

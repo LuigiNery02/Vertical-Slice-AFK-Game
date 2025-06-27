@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum ControladorDoPersonagem { PERSONAGEM_DO_JOGADOR, PERSONAGEM_INIMIGO } //quem controla o personagem, se é controlado pelo jogador ou pela IA inimiga
-public enum TipoDePersonagem { CURTA_DISTANCIA, LONGA_DISTANCIA } //características referente ao comportamento de ataque personagem, se é um ataque de curta ou longa distância
+public enum TipoDeArma { CURTA_DISTANCIA, LONGA_DISTANCIA } //características referente ao comportamento de ataque da arma do personagem, se é um ataque de curta ou longa distância
 public enum EstadoDoPersonagem { IDLE, PERSEGUINDO, ATACANDO, MORTO, MOVIMENTO_ESPECIAL} //estados de comportamento do personagem
 
 public class IAPersonagemBase : MonoBehaviour
@@ -18,7 +18,7 @@ public class IAPersonagemBase : MonoBehaviour
     //área referente às definições do personagem
     [Header("Definições")]
     public ControladorDoPersonagem controlador;
-    public TipoDePersonagem _tipo;
+    public TipoDeArma _tipo;
     [HideInInspector]
     public EstadoDoPersonagem _comportamento;
 
@@ -49,9 +49,7 @@ public class IAPersonagemBase : MonoBehaviour
 
     //área referente ao ataque do personagem
     [Header("Ataque")]
-    public float _danoAtaqueBasico; //valor do dano do ataque básico do personagem
-    public float danoAtaqueDistancia; //valor do dano do ataque à distância do personagem
-    public float danoAtaqueMagico; //valor do dano do ataque mágico do personagem
+    public float _dano; //valor do dano do ataque do personagem
     public float _cooldown = 1f; //valor do tempo de espera para cada ataque básico do personagem
     private float _cooldownAtual = 0f; //tempo atual para o personagem poder atacar novamente
     private bool _podeAtacar; //variável que verifica se o personagem pode atacar
@@ -190,17 +188,23 @@ public class IAPersonagemBase : MonoBehaviour
         {
             case Classe.Guerreiro:
                 id = 0;
-                _tipo = TipoDePersonagem.CURTA_DISTANCIA;
+                _tipo = personagem.arma.armaTipo;
                 break;
-            case Classe.Arqueiro:
+            case Classe.Ladino:
                 id = 1;
-                _tipo = TipoDePersonagem.LONGA_DISTANCIA;
+                _tipo = personagem.arma.armaTipo;
                 distanciaMinimaParaAtacar = 15;
                 velocidadeDoProjetil = 20;
                 break;
-            case Classe.Mago:
+            case Classe.Elementalista:
                 id = 2;
-                _tipo = TipoDePersonagem.LONGA_DISTANCIA;
+                _tipo = personagem.arma.armaTipo;
+                distanciaMinimaParaAtacar = 10;
+                velocidadeDoProjetil = 10;
+                break;
+            case Classe.Sacerdote:
+                id = 2;
+                _tipo = personagem.arma.armaTipo;
                 distanciaMinimaParaAtacar = 10;
                 velocidadeDoProjetil = 10;
                 break;
@@ -210,9 +214,7 @@ public class IAPersonagemBase : MonoBehaviour
 
         _hpMaximoEInicial = personagem.hp;
         _velocidade = personagem.velocidadeDeMovimento;
-        _danoAtaqueBasico = personagem.ataque;
-        danoAtaqueDistancia = personagem.ataqueDistancia;
-        danoAtaqueMagico = personagem.ataqueMagico;
+        _dano = personagem.ataque;
         _cooldown = personagem.velocidadeAtaque;
         habilidade1 = personagem.habilidadeClasse;
         habilidade2 = personagem.habilidadeArma;
@@ -247,9 +249,7 @@ public class IAPersonagemBase : MonoBehaviour
     {
         _hpMaximoEInicial = personagem.hp;
         _velocidade = personagem.velocidadeDeMovimento;
-        _danoAtaqueBasico = personagem.ataque;
-        danoAtaqueDistancia = personagem.ataqueDistancia;
-        danoAtaqueMagico = personagem.ataqueMagico;
+        _dano = personagem.ataque;
         _cooldown = personagem.velocidadeAtaque;
         pontosDeHabilidadeAtual = personagem.pontosDeHabilidade;
     }
@@ -264,11 +264,15 @@ public class IAPersonagemBase : MonoBehaviour
                     personagem.defesa = 3;
                     personagem.defesaMagica = 2;
                     break;
-                case Classe.Arqueiro:
+                case Classe.Ladino:
                     personagem.defesa = 3;
                     personagem.defesaMagica = 3;
                     break;
-                case Classe.Mago:
+                case Classe.Elementalista:
+                    personagem.defesa = 2;
+                    personagem.defesaMagica = 3;
+                    break;
+                case Classe.Sacerdote:
                     personagem.defesa = 2;
                     personagem.defesaMagica = 3;
                     break;
@@ -476,7 +480,7 @@ public class IAPersonagemBase : MonoBehaviour
     private void Perseguir() //função que faz o personagem perseguir seu alvo
     {
         //checa o tipo do personagem
-        if (_tipo == TipoDePersonagem.CURTA_DISTANCIA)
+        if (_tipo == TipoDeArma.CURTA_DISTANCIA)
         {
             float distancia = Vector3.Distance(transform.position, _alvoAtual.position); //define a distância do personagem e seu alvo
             if (distancia > 2f) //verifica se está próximo para atacar
@@ -498,7 +502,7 @@ public class IAPersonagemBase : MonoBehaviour
                 VerificarComportamento("atacar"); //ataca
             }
         }
-        else if (_tipo == TipoDePersonagem.LONGA_DISTANCIA)
+        else if (_tipo == TipoDeArma.LONGA_DISTANCIA)
         {
             float distancia = Vector3.Distance(transform.position, _alvoAtual.position); //define a distância do personagem e seu alvo
 
@@ -534,7 +538,7 @@ public class IAPersonagemBase : MonoBehaviour
         }
 
         //checa o tipo de personagem
-        if(_tipo == TipoDePersonagem.CURTA_DISTANCIA)
+        if(_tipo == TipoDeArma.CURTA_DISTANCIA)
         {
             float distancia = Vector3.Distance(transform.position, _alvoAtual.position); //define a distância do personagem e seu alvo
 
@@ -547,7 +551,7 @@ public class IAPersonagemBase : MonoBehaviour
                 VerificarComportamento("perseguir"); //persegue
             }
         }
-        else if(_tipo == TipoDePersonagem.LONGA_DISTANCIA)
+        else if(_tipo == TipoDeArma.LONGA_DISTANCIA)
         {
             float distancia = Vector3.Distance(transform.position, _alvoAtual.position); //define a distância do personagem e seu alvo
 
@@ -593,7 +597,7 @@ public class IAPersonagemBase : MonoBehaviour
             _hitAtaquePersonagem.usarSFX = _usarSFX;
 
             //se é um personagem de longa distancia, transtorma o hit em um ataque de longa distancia
-            if(_tipo == TipoDePersonagem.LONGA_DISTANCIA)
+            if(_tipo == TipoDeArma.LONGA_DISTANCIA)
             {
                 _hitAtaquePersonagem.ResetarPosição(); //reseta a posição do hit
                 _hitAtaquePersonagem.MoverAteAlvo(_alvoAtual, velocidadeDoProjetil); //faz com que ele se mova até o alvo
@@ -700,21 +704,21 @@ public class IAPersonagemBase : MonoBehaviour
         switch (tipoDano)
         {
             case 0:
-                dano = (_danoAtaqueBasico - personagem.personagem.defesa);
+                dano = (_dano - personagem.personagem.defesa);
                 if(dano <= 0)
                 {
                     dano = 1;
                 }
                 break;
             case 1:
-                dano = (danoAtaqueDistancia - personagem.personagem.defesa);
+                dano = (dano - personagem.personagem.defesa);
                 if (dano <= 0)
                 {
                     dano = 1;
                 }
                 break;
             case 2:
-                dano = (danoAtaqueMagico - personagem.personagem.defesaMagica);
+                dano = (dano - personagem.personagem.defesaMagica);
                 if (dano <= 0)
                 {
                     dano = 1;
@@ -852,9 +856,7 @@ public class IAPersonagemBase : MonoBehaviour
         _hpMaximoEInicial = personagem.hp;
         hpAtual = _hpMaximoEInicial;
         _velocidade = personagem.velocidadeDeMovimento;
-        _danoAtaqueBasico = personagem.ataque;
-        danoAtaqueDistancia = personagem.ataqueDistancia;
-        danoAtaqueMagico = personagem.ataqueMagico;
+        _dano = personagem.ataque;
         _cooldown = personagem.velocidadeAtaque;
 
         if (habilidade1 != null)

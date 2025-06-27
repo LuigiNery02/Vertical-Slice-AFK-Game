@@ -280,11 +280,14 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                 case Classe.Guerreiro:
                     _uiBotoesPersonagens[0].sprite = _spritesBotoesPersonagens[0];
                     break;
-                case Classe.Arqueiro:
+                case Classe.Ladino:
                     _uiBotoesPersonagens[0].sprite = _spritesBotoesPersonagens[1];
                     break;
-                case Classe.Mago:
+                case Classe.Elementalista:
                     _uiBotoesPersonagens[0].sprite = _spritesBotoesPersonagens[2];
+                    break;
+                case Classe.Sacerdote:
+                    _uiBotoesPersonagens[0].sprite = _spritesBotoesPersonagens[3];
                     break;
             }
 
@@ -293,11 +296,14 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                 case Classe.Guerreiro:
                     _uiBotoesPersonagens[1].sprite = _spritesBotoesPersonagens[0];
                     break;
-                case Classe.Arqueiro:
+                case Classe.Ladino:
                     _uiBotoesPersonagens[1].sprite = _spritesBotoesPersonagens[1];
                     break;
-                case Classe.Mago:
+                case Classe.Elementalista:
                     _uiBotoesPersonagens[1].sprite = _spritesBotoesPersonagens[2];
+                    break;
+                case Classe.Sacerdote:
+                    _uiBotoesPersonagens[1].sprite = _spritesBotoesPersonagens[3];
                     break;
             }
 
@@ -306,11 +312,14 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                 case Classe.Guerreiro:
                     _uiBotoesPersonagens[2].sprite = _spritesBotoesPersonagens[0];
                     break;
-                case Classe.Arqueiro:
+                case Classe.Ladino:
                     _uiBotoesPersonagens[2].sprite = _spritesBotoesPersonagens[1];
                     break;
-                case Classe.Mago:
+                case Classe.Elementalista:
                     _uiBotoesPersonagens[2].sprite = _spritesBotoesPersonagens[2];
+                    break;
+                case Classe.Sacerdote:
+                    _uiBotoesPersonagens[2].sprite = _spritesBotoesPersonagens[3];
                     break;
             }
         }
@@ -603,18 +612,14 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                 float dpsJogadorTotal = 0f;
                 foreach (IAPersonagemBase personagem in _personagensJogador)
                 {
-                    dpsJogadorTotal += personagem._danoAtaqueBasico / personagem._cooldown;
-                    dpsJogadorTotal += personagem.danoAtaqueDistancia / personagem._cooldown;
-                    dpsJogadorTotal += personagem.danoAtaqueMagico / personagem._cooldown;
+                    dpsJogadorTotal += personagem._dano / personagem._cooldown;
                 }
 
                 //cálculo do DPS dos inimigos sorteados
                 float dpsInimigoTotal = 0f;
                 foreach (IAPersonagemBase inimigo in inimigosNaBatalha)
                 {
-                    dpsInimigoTotal += inimigo._danoAtaqueBasico / inimigo._cooldown;
-                    dpsInimigoTotal += inimigo.danoAtaqueDistancia / inimigo._cooldown;
-                    dpsInimigoTotal += inimigo.danoAtaqueMagico / inimigo._cooldown;
+                    dpsInimigoTotal += inimigo._dano / inimigo._cooldown;
                 }
 
                 //calcula chance de vitória

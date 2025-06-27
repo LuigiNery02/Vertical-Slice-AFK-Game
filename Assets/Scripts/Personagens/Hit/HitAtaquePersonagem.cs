@@ -74,11 +74,14 @@ sealed class HitAtaquePersonagem : MonoBehaviour
                         case Classe.Guerreiro:
                             _personagemPai.CausarDano(alvoDoDAno, 0);
                             break;
-                        case Classe.Arqueiro:
+                        case Classe.Ladino:
                             _personagemPai.CausarDano(alvoDoDAno, 1);
                             break;
-                        case Classe.Mago:
+                        case Classe.Elementalista:
                             _personagemPai.CausarDano(alvoDoDAno, 2);
+                            break;
+                        case Classe.Sacerdote:
+                            _personagemPai.CausarDano(alvoDoDAno, 3);
                             break;
                     }
 
@@ -111,11 +114,14 @@ sealed class HitAtaquePersonagem : MonoBehaviour
                         case Classe.Guerreiro:
                             _personagemPai.CausarDano(alvoDoDAno, 0);
                             break;
-                        case Classe.Arqueiro:
+                        case Classe.Ladino:
                             _personagemPai.CausarDano(alvoDoDAno, 1);
                             break;
-                        case Classe.Mago:
+                        case Classe.Elementalista:
                             _personagemPai.CausarDano(alvoDoDAno, 2);
+                            break;
+                        case Classe.Sacerdote:
+                            _personagemPai.CausarDano(alvoDoDAno, 3);
                             break;
                     }
 

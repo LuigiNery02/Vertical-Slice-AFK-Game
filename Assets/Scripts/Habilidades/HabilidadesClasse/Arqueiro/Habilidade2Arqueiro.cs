@@ -12,7 +12,7 @@ public class Habilidade2Arqueiro : HabilidadeBase
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais do personagem
-        _danoOriginalProjetil = personagem.danoAtaqueDistancia;
+        //_danoOriginalProjetil = personagem.danoAtaqueDistancia;
         _precisaoOriginal = personagem.personagem.precisao;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
@@ -21,15 +21,15 @@ public class Habilidade2Arqueiro : HabilidadeBase
         {
             case 1:
                 personagem.personagem.precisao += _precisaoOriginal; //aumenta a precisão em 100%
-                personagem.danoAtaqueDistancia += (_danoOriginalProjetil / 20); //aumenta o dano em 5%
+                //personagem.danoAtaqueDistancia += (_danoOriginalProjetil / 20); //aumenta o dano em 5%
                 break;
             case 2:
                 personagem.personagem.precisao += (_precisaoOriginal * 2); //aumenta a precisão em 200%
-                personagem.danoAtaqueDistancia += (_danoOriginalProjetil / 10); //aumenta o dano dos projéteis em 10%
+                //personagem.danoAtaqueDistancia += (_danoOriginalProjetil / 10); //aumenta o dano dos projéteis em 10%
                 break;
             case 3:
                 personagem.personagem.precisao += (_precisaoOriginal * 3); //aumenta a precisão em 300%
-                personagem.danoAtaqueDistancia += (_danoOriginalProjetil / 5); //aumenta o dano dos projéteis em 20%
+                //personagem.danoAtaqueDistancia += (_danoOriginalProjetil / 5); //aumenta o dano dos projéteis em 20%
                 break;
         }
     }
@@ -37,7 +37,7 @@ public class Habilidade2Arqueiro : HabilidadeBase
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
         //reseta os atributos originais do personagem
-        personagem.danoAtaqueDistancia = _danoOriginalProjetil;
+        //personagem.danoAtaqueDistancia = _danoOriginalProjetil;
         personagem.personagem.precisao = _precisaoOriginal;
     }
 }

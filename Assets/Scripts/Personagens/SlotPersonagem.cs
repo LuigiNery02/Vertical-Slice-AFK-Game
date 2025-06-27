@@ -41,11 +41,14 @@ public class SlotPersonagem : MonoBehaviour
             case Classe.Guerreiro:
                 imagemClasse = 0;
                 break;
-            case Classe.Arqueiro:
+            case Classe.Ladino:
                 imagemClasse = 1;
                 break;
-            case Classe.Mago:
+            case Classe.Elementalista:
                 imagemClasse = 2;
+                break;
+            case Classe.Sacerdote:
+                imagemClasse = 3;
                 break;
         }
         imagemPersonagem.sprite = sprites[imagemClasse];

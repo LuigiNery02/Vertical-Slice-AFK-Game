@@ -47,14 +47,14 @@ public class Habilidade9Guerreiro : HabilidadeBase
 
                     for (int i = 0; i < listaDeInimigos.Count; i++)
                     {
-                        listaDeInimigos[i].SofrerDano(personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa);
+                        //listaDeInimigos[i].SofrerDano(personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa);
 
-                        personagem.personagem.GanharEXP(personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa);
+                        //personagem.personagem.GanharEXP(personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa);
 
                         if (SistemaDeBatalha.usarSliders)
                         {
                             listaDeInimigos[i].textoHP.gameObject.SetActive(true);
-                            listaDeInimigos[i].textoHP.text = ("-" + (personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa));
+                            //listaDeInimigos[i].textoHP.text = ("-" + (personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa));
                             personagem.DesativarTextoHPPersonagem(listaDeInimigos[i]);
                         }
                     }
@@ -70,14 +70,14 @@ public class Habilidade9Guerreiro : HabilidadeBase
 
                     for (int i = 0; i < listaDeInimigos.Count; i++)
                     {
-                        listaDeInimigos[i].SofrerDano(personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa);
+                        //listaDeInimigos[i].SofrerDano(personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa);
 
-                        personagem.personagem.GanharEXP(personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa);
+                        //personagem.personagem.GanharEXP(personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa);
 
                         if (SistemaDeBatalha.usarSliders)
                         {
                             listaDeInimigos[i].textoHP.gameObject.SetActive(true);
-                            listaDeInimigos[i].textoHP.text = ("-" + (personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa));
+                            //listaDeInimigos[i].textoHP.text = ("-" + (personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa));
                             personagem.DesativarTextoHPPersonagem(listaDeInimigos[i]);
                         }
                     }
@@ -93,14 +93,14 @@ public class Habilidade9Guerreiro : HabilidadeBase
 
                     for (int i = 0; i < listaDeInimigos.Count; i++)
                     {
-                        listaDeInimigos[i].SofrerDano(personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa);
+                        //listaDeInimigos[i].SofrerDano(personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa);
 
-                        personagem.personagem.GanharEXP(personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa);
+                        //personagem.personagem.GanharEXP(personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa);
 
                         if (SistemaDeBatalha.usarSliders)
                         {
                             listaDeInimigos[i].textoHP.gameObject.SetActive(true);
-                            listaDeInimigos[i].textoHP.text = ("-" + (personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa));
+                            //listaDeInimigos[i].textoHP.text = ("-" + (personagem._danoAtaqueBasico - listaDeInimigos[i].personagem.defesa));
                             personagem.DesativarTextoHPPersonagem(listaDeInimigos[i]);
                         }
                     }

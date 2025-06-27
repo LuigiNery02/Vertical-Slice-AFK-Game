@@ -10,9 +10,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
     public PersonagemData personagemEmCriacao; //representa o personagem atual que está sendo criado
 
     [Header("Armas")]
-    public List<ArmaBase> armasGuerreiro = new List<ArmaBase>(); //lista de armas da classe "Guerreiro"
-    public List<ArmaBase> armasArqueiro = new List<ArmaBase>(); //lista de armas da classe "Arqueiro"
-    public List<ArmaBase> armasMago = new List<ArmaBase>(); //lista de armas da classe "Mago"
+    public List<ArmaBase> armas = new List<ArmaBase>(); //lista de armas equipáveis
 
     #region Visual
     [Header("Tela Personagem")]
@@ -29,7 +27,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
     [SerializeField]
     private Text _codigoIDTexto; //texto do códigoID do personagem
     [SerializeField]
-    private Image _personagemImagem; //imagem do personagem criado
+    private GameObject[] _personagemImagem; //imagem do personagem criado
     [SerializeField]
     private Text _classeTexto; //texto da classe do personagem
     [SerializeField]
@@ -51,13 +49,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
 
     [Header("Tela Arma")]
     [SerializeField]
-    private Text _nomeArmaTexto; //texto do nome da arma
-    [SerializeField]
-    private Text _danoMeleeArmaTexto; //texto do dano melee da arma do personagem
-    [SerializeField]
-    private Text _danoDistanciaArmaTexto; //texto do dano à distância da arma do personagem
-    [SerializeField]
-    private Text _danoMagicoArmaTexto; //texto do dano mágico da arma do personagem
+    private Text _danoArmaTipoTexto; //texto do dano da arma do personagem
     [SerializeField]
     private Text _velocidadeAtaqueArmaTexto; //texto da velocidade de ataque da arma do personagem
 
@@ -91,8 +83,6 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
 
     [Header("Tela Equipamento")]
     [SerializeField]
-    private Image _personagemEquipamentoImagem; //imagem do personagem da tela de equipamentos
-    [SerializeField]
     private Image[] _equipamentoImagem; //imagem do ícone do equipamento
     [SerializeField]
     private Text[] _equipamentoNomeTexto; //texto do nome do equipamento
@@ -101,11 +91,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
     [SerializeField]
     private Text _hpTexto; //texto do hp do personagem
     [SerializeField]
-    private Text _danoMeleeTexto; //texto do dano melee do personagem
-    [SerializeField]
-    private Text _danoDistanciaTexto; //texto do dano à distância do personagem
-    [SerializeField]
-    private Text _danoMagicoTexto; //texto do dano mágico do personagem
+    private Text _danoArmaTexto; //texto do dano do personagem
     [SerializeField]
     private Text _defesaTexto; //texto da defesa mágica do personagem
     [SerializeField]
@@ -125,15 +111,13 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
 
     [Header("Sprites")]
     [SerializeField]
-    private Sprite[] _personagensSprites; //sprites dos personagens
-    [SerializeField]
     private Sprite[] _runasSprites; //sprites das runas
     [SerializeField]
     private Sprite[] _equipamentoSprites;
     
     [Header("Tela Seleção de Armas")]
     [SerializeField]
-    private GameObject[] _telasArmas; //telas de seleção de armas baseadas na classe selecionada
+    private GameObject _telasArmas; //tela de seleção de armas
     #endregion
 
     [HideInInspector]
@@ -152,10 +136,44 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
             personagensCriados[i].listaDeHabilidadesDeClasse = new List<HabilidadeBase>();
             personagensCriados[i].listaDeHabilidadesDeArma = new List<HabilidadeBase>();
 
+            personagensCriados[i].arma = armas[personagensCriados[i].armaID];
+
+            foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesDeArmaSalvas)
+            {
+                switch (personagensCriados[i].arma.nome)
+                {
+                    case "Espada":
+                        HabilidadeBase habilidadeEspada = GerenciadorDeInventario.instancia.habilidadesEspada.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                        if (habilidadeEspada != null)
+                        {
+                            habilidadeEspada.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                            personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeEspada);
+                            personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesEspada.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
+                        }
+                        break;
+                    case "Arco":
+                        HabilidadeBase habilidadeArco = GerenciadorDeInventario.instancia.habilidadesArco.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                        if (habilidadeArco != null)
+                        {
+                            habilidadeArco.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                            personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeArco);
+                            personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesArco.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
+                        }
+                        break;
+                    case "Livro":
+                        HabilidadeBase habilidadeLivro = GerenciadorDeInventario.instancia.habilidadesLivro.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                        if (habilidadeLivro != null)
+                        {
+                            habilidadeLivro.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                            personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeLivro);
+                            personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesLivro.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
+                        }
+                        break;
+                }
+            }
+
             if (personagensCriados[i].classe == Classe.Guerreiro)
             {
-                personagensCriados[i].arma = armasGuerreiro[personagensCriados[i].armaID];
-
                 foreach(DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesDeClasseSalvas)
                 {
                     HabilidadeBase habilidade = GerenciadorDeInventario.instancia.habilidadesClasseGuerreiro.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
@@ -167,48 +185,12 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
                 }
 
                 personagensCriados[i].habilidadeClasse = GerenciadorDeInventario.instancia.habilidadesClasseGuerreiro.Find(h => h.idHabilidade == personagensCriados[i].habilidadeClasseID);
-
-                foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesDeArmaSalvas)
-                {
-                    switch (personagensCriados[i].arma.nome)
-                    {
-                        case "Espada":
-                            HabilidadeBase habilidadeEspada = GerenciadorDeInventario.instancia.habilidadesEspada.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                            if (habilidadeEspada != null)
-                            {
-                                habilidadeEspada.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                                personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeEspada);
-                                personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesEspada.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
-                            }
-                            break;
-                        case "Lança":
-                            HabilidadeBase habilidadeLanca = GerenciadorDeInventario.instancia.habilidadesLanca.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                            if (habilidadeLanca != null)
-                            {
-                                habilidadeLanca.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                                personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeLanca);
-                                personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesLanca.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
-                            }
-                            break;
-                        case "Machado":
-                            HabilidadeBase habilidadeMachado = GerenciadorDeInventario.instancia.habilidadesMachado.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                            if (habilidadeMachado != null)
-                            {
-                                habilidadeMachado.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                                personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeMachado);
-                                personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesMachado.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
-                            }
-                            break;
-                    }
-                }
             }
-            else if (personagensCriados[i].classe == Classe.Arqueiro)
+            else if (personagensCriados[i].classe == Classe.Ladino)
             {
-                personagensCriados[i].arma = armasArqueiro[personagensCriados[i].armaID];
-
                 foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesDeClasseSalvas)
                 {
-                    HabilidadeBase habilidade = GerenciadorDeInventario.instancia.habilidadesClasseArqueiro.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                    HabilidadeBase habilidade = GerenciadorDeInventario.instancia.habilidadesClasseLadino.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
                     if (habilidade != null)
                     {
                         habilidade.nivel = personagensCriados[i].habilidadesDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
@@ -216,51 +198,13 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
                     }
                 }
 
-                personagensCriados[i].habilidadeClasse = GerenciadorDeInventario.instancia.habilidadesClasseArqueiro.Find(h => h.idHabilidade == personagensCriados[i].habilidadeClasseID);
-
-                foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesDeArmaSalvas)
-                {
-                    switch (personagensCriados[i].arma.nome)
-                    {
-                        case "Arco de Fogo":
-                            HabilidadeBase habilidadeArcoFogo = GerenciadorDeInventario.instancia.habilidadesArcoFogo.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                            if (habilidadeArcoFogo != null)
-                            {
-                                habilidadeArcoFogo.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                                personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeArcoFogo);
-                                personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesArcoFogo.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
-                            }
-                            break;
-                        case "Arco de Gelo":
-                            HabilidadeBase habilidadeArcoGelo = GerenciadorDeInventario.instancia.habilidadesArcoGelo.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                            if (habilidadeArcoGelo != null)
-                            {
-                                habilidadeArcoGelo.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                                personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeArcoGelo);
-                                personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesArcoGelo.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
-                            }
-                            break;
-                        case "Arco Venenoso":
-                            HabilidadeBase habilidadeArcoVenenoso = GerenciadorDeInventario.instancia.habilidadesArcoVenenoso.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                            if (habilidadeArcoVenenoso != null)
-                            {
-                                habilidadeArcoVenenoso.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                                personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeArcoVenenoso);
-                                personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesArcoVenenoso.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
-                            }
-                            break;
-                    }
-                }
-
-                
+                personagensCriados[i].habilidadeClasse = GerenciadorDeInventario.instancia.habilidadesClasseLadino.Find(h => h.idHabilidade == personagensCriados[i].habilidadeClasseID);
             }
-            else if (personagensCriados[i].classe == Classe.Mago)
+            else if (personagensCriados[i].classe == Classe.Elementalista)
             {
-                personagensCriados[i].arma = armasMago[personagensCriados[i].armaID];
-
                 foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesDeClasseSalvas)
                 {
-                    HabilidadeBase habilidade = GerenciadorDeInventario.instancia.habilidadesClasseMago.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                    HabilidadeBase habilidade = GerenciadorDeInventario.instancia.habilidadesClasseElementalista.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
                     if (habilidade != null)
                     {
                         habilidade.nivel = personagensCriados[i].habilidadesDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
@@ -268,41 +212,21 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
                     }
                 }
 
-                personagensCriados[i].habilidadeClasse = GerenciadorDeInventario.instancia.habilidadesClasseMago.Find(h => h.idHabilidade == personagensCriados[i].habilidadeClasseID);
-
-                foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesDeArmaSalvas)
+                personagensCriados[i].habilidadeClasse = GerenciadorDeInventario.instancia.habilidadesClasseElementalista.Find(h => h.idHabilidade == personagensCriados[i].habilidadeClasseID);
+            }
+            else if (personagensCriados[i].classe == Classe.Sacerdote)
+            {
+                foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesDeClasseSalvas)
                 {
-                    switch (personagensCriados[i].arma.nome)
+                    HabilidadeBase habilidade = GerenciadorDeInventario.instancia.habilidadesClasseSacerdote.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                    if (habilidade != null)
                     {
-                        case "Cajado de Fogo":
-                            HabilidadeBase habilidadeCajadoFogo = GerenciadorDeInventario.instancia.habilidadesCajadoFogo.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                            if (habilidadeCajadoFogo != null)
-                            {
-                                habilidadeCajadoFogo.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                                personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeCajadoFogo);
-                                personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesCajadoFogo.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
-                            }
-                            break;
-                        case "Cajado de Gelo":
-                            HabilidadeBase habilidadeCajadoGelo = GerenciadorDeInventario.instancia.habilidadesCajadoGelo.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                            if (habilidadeCajadoGelo != null)
-                            {
-                                habilidadeCajadoGelo.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                                personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeCajadoGelo);
-                                personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesCajadoGelo.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
-                            }
-                            break;
-                        case "Cajado Venenoso":
-                            HabilidadeBase habilidadeCajadoVenenoso = GerenciadorDeInventario.instancia.habilidadesCajadoVenenoso.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                            if (habilidadeCajadoVenenoso != null)
-                            {
-                                habilidadeCajadoVenenoso.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                                personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeCajadoVenenoso);
-                                personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesCajadoVenenoso.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
-                            }
-                            break;
+                        habilidade.nivel = personagensCriados[i].habilidadesDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                        personagensCriados[i].listaDeHabilidadesDeClasse.Add(habilidade);
                     }
                 }
+
+                personagensCriados[i].habilidadeClasse = GerenciadorDeInventario.instancia.habilidadesClasseSacerdote.Find(h => h.idHabilidade == personagensCriados[i].habilidadeClasseID);
             }
         }
 
@@ -331,19 +255,25 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
                 personagemEmCriacao.classe = Classe.Guerreiro;
                 personagemEmCriacao.apelido = "Guerreiro";
                 _imagemClasseAtual = valorClasse;
-                _telasArmas[valorClasse].SetActive(true); //ativa a tela de seleção de arma à depender da classe do personagem
+                _telasArmas.SetActive(true); //ativa a tela de seleção de arma
                 break;
             case 1:
-                personagemEmCriacao.classe = Classe.Arqueiro;
-                personagemEmCriacao.apelido = "Arqueiro";
+                personagemEmCriacao.classe = Classe.Ladino;
+                personagemEmCriacao.apelido = "Ladino";
                 _imagemClasseAtual = valorClasse;
-                _telasArmas[valorClasse].SetActive(true); //ativa a tela de seleção de arma à depender da classe do personagem
+                _telasArmas.SetActive(true); //ativa a tela de seleção de arma
                 break;
             case 2:
-                personagemEmCriacao.classe = Classe.Mago;
-                personagemEmCriacao.apelido = "Mago";
+                personagemEmCriacao.classe = Classe.Elementalista;
+                personagemEmCriacao.apelido = "Elementalista";
                 _imagemClasseAtual = valorClasse;
-                _telasArmas[valorClasse].SetActive(true); //ativa a tela de seleção de arma à depender da classe do personagem
+                _telasArmas.SetActive(true); //ativa a tela de seleção de arma
+                break;
+            case 3:
+                personagemEmCriacao.classe = Classe.Sacerdote;
+                personagemEmCriacao.apelido = "Sacerdote";
+                _imagemClasseAtual = valorClasse;
+                _telasArmas.SetActive(true); //ativa a tela de seleção de arma
                 break;
         }
         _telaSelecaoClasse.SetActive(false); //desativa a tela de seleção de classe
@@ -351,25 +281,11 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
 
     public void DefinirArma(int valorArma) //função para definir a arma inicial do personagem
     {
-        if (personagemEmCriacao.classe == Classe.Guerreiro)
-        {
-            personagemEmCriacao.arma = armasGuerreiro[valorArma];
-        }
-        else if(personagemEmCriacao.classe == Classe.Arqueiro)
-        {
-            personagemEmCriacao.arma = armasArqueiro[valorArma];
-        }
-        else if(personagemEmCriacao.classe == Classe.Mago)
-        {
-            personagemEmCriacao.arma = armasMago[valorArma];
-        }
+        personagemEmCriacao.arma = armas[valorArma];
 
         personagemEmCriacao.armaID = valorArma;
 
-        for (int i = 0; i < _telasArmas.Length; i++)
-        {
-            _telasArmas[i].SetActive(false); //desativa todas as telas de seleção de armas
-        }
+        _telasArmas.SetActive(false); //desativa a telas de seleção de armas
 
         _telaPreferenciaHatributo.SetActive(true); //ativa a tela de seleção de atributos de preferência
     }
@@ -779,13 +695,17 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
                 personagemEmCriacao.apelido = "Guerreiro";
                 _imagemClasseAtual = 0;
                 break;
-            case Classe.Arqueiro:
-                personagemEmCriacao.apelido = "Arqueiro";
+            case Classe.Ladino:
+                personagemEmCriacao.apelido = "Ladino";
                 _imagemClasseAtual = 1;
                 break;
-            case Classe.Mago:
-                personagemEmCriacao.apelido = "Mago";
+            case Classe.Elementalista:
+                personagemEmCriacao.apelido = "Elementalista";
                 _imagemClasseAtual = 2;
+                break;
+            case Classe.Sacerdote:
+                personagemEmCriacao.apelido = "Sacerdote";
+                _imagemClasseAtual = 3;
                 break;
         }
         //define o nível e atributos iniciais do personagem
@@ -930,7 +850,18 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
             //atualiza os visuais da tela de acordo com os dados do personagem
             _apelido.text = personagemEmCriacao.apelido;
             _codigoIDTexto.text = personagemEmCriacao.codigoID;
-            _personagemImagem.sprite = _personagensSprites[_imagemClasseAtual];
+            for(int i = 0; i < _personagemImagem.Length; i++)
+            {
+                if(i == _imagemClasseAtual)
+                {
+                    _personagemImagem[i].SetActive(true);
+                }
+                else
+                {
+                    _personagemImagem[i].SetActive(false);
+                }
+            }
+            
             _classeTexto.text += (" " + personagemEmCriacao.classe.ToString());
             _armaTexto.text = personagemEmCriacao.arma.nome;
             _nivelTexto.text += (" " + personagemEmCriacao.nivel);
@@ -942,9 +873,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
             _sabedoriaTexto.text += (" " + personagemEmCriacao.sabedoria);
 
             _hpTexto.text = ("HP: " + personagemEmCriacao.hp.ToString());
-            _danoMeleeTexto.text = ("Dano Melee: " + personagemEmCriacao.ataque);
-            _danoDistanciaTexto.text = ("Dano à Distância: " + personagemEmCriacao.ataqueDistancia);
-            _danoMagicoTexto.text = ("Dano Mágico: " + personagemEmCriacao.ataqueMagico);
+            _danoArmaTexto.text = ("Dano Melee: " + personagemEmCriacao.ataque);
             _defesaTexto.text = ("Defesa: " + personagemEmCriacao.defesa);
             _defesaMagicaTexto.text = ("Defesa Mágica: " + personagemEmCriacao.defesaMagica);
             _velocidadeAtaqueTexto.text = ("Velocidade de Ataque: " + personagemEmCriacao.velocidadeAtaque);
@@ -954,13 +883,21 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
             _pontosHabilidadeTexto.text = ("Pontos de Habilidade: " + personagemEmCriacao.pontosDeHabilidade);
             _expProximoNivelTexto.text = ("EXP para o próximo Nível: " + ((int)personagemEmCriacao.expProximoNível - personagemEmCriacao.expAtual));
 
-            _nomeArmaTexto.text = ("Nome: " + personagemEmCriacao.arma.nome);
-            _danoMeleeArmaTexto.text = ("Dano Melee: " + (personagemEmCriacao.arma.dano + 1));
-            _danoDistanciaArmaTexto.text = ("Dano à Distância: " + (personagemEmCriacao.arma.danoDistancia + 1));
-            _danoMagicoArmaTexto.text = ("Dano Mágico: " + (personagemEmCriacao.arma.danoMagico + 1));
+            _danoArmaTexto.text = ("Dano: " + (personagemEmCriacao.arma.dano + 1));
+            switch (personagemEmCriacao.arma.armaDano)
+            {
+                case TipoDeDano.DANO_MELEE:
+                    _danoArmaTipoTexto.text = ("Dano Melee: " + (personagemEmCriacao.arma.dano + 1));
+                    break;
+                case TipoDeDano.DANO_RANGED:
+                    _danoArmaTipoTexto.text = ("Dano Ranged: " + (personagemEmCriacao.arma.dano + 1));
+                    break;
+                case TipoDeDano.DANO_MAGICO:
+                    _danoArmaTipoTexto.text = ("Dano Mágico: " + (personagemEmCriacao.arma.dano + 1));
+                    break;
+            }
             _velocidadeAtaqueArmaTexto.text = ("Velocidade de Ataque: " + (personagemEmCriacao.arma.velocidadeDeAtaque - 0.01f));
 
-            _personagemEquipamentoImagem.sprite = _personagensSprites[_imagemClasseAtual];
             if (personagemEmCriacao.equipamentoCabecaAcessorio != null)
             {
                 _equipamentoImagem[0].sprite = personagemEmCriacao.equipamentoCabecaAcessorio.icone;
@@ -1125,7 +1062,10 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
         //reseta todos os dados visuais
         _apelido.text = "";
         _codigoIDTexto.text = "";
-        _personagemImagem.sprite = null;
+        for(int i = 0; i < _personagemImagem.Length; i++)
+        {
+            _personagemImagem[i].SetActive(false);
+        }
         _classeTexto.text = ("Classe:");
         _armaTexto.text = ("Arma");
         _nivelTexto.text = ("Nível:");
@@ -1137,9 +1077,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
         _sabedoriaTexto.text = ("Sabedoria:");
 
         _hpTexto.text = "";
-        _danoMeleeTexto.text = "";
-        _danoDistanciaTexto.text = "";
-        _danoMagicoTexto.text = "";
+        _danoArmaTexto.text = "";
         _defesaTexto.text = "";
         _defesaMagicaTexto.text = "";
         _velocidadeAtaqueTexto.text = "";
@@ -1149,10 +1087,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
         _pontosHabilidadeTexto.text = "";
         _expProximoNivelTexto.text = "";
 
-        _nomeArmaTexto.text = "";
-        _danoMeleeArmaTexto.text = "";
-        _danoDistanciaArmaTexto.text = "";
-        _danoMagicoArmaTexto.text = "";
+        _danoArmaTipoTexto.text = "";
         _velocidadeAtaqueArmaTexto.text = "";
 
         for(int i = 0; i < _equipamentoNomeTexto.Length; i++)

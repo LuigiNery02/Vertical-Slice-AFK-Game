@@ -12,7 +12,7 @@ public class Habilidade5Guerreiro : HabilidadeBase
         removerEfeitoHabilidade = RemoverEfeitoHabilidade;
 
         //guarda os atributos originais do personagem
-        _danoOriginal = personagem._danoAtaqueBasico;
+        //_danoOriginal = personagem._danoAtaqueBasico;
     }
     private void EfeitoHabilidade() //função de efeito da habilidade 
     {
@@ -37,7 +37,7 @@ public class Habilidade5Guerreiro : HabilidadeBase
                     listaDeInimigos[i]._personagemAlvo = personagem;
                     listaDeInimigos[i].VerificarComportamento("selecionarAlvo");
                 }
-                personagem._danoAtaqueBasico += (_danoOriginal / 20); //aumenta o dano em 5%
+                //personagem._danoAtaqueBasico += (_danoOriginal / 20); //aumenta o dano em 5%
                 break;
             case 2:
                 //coloca o personagem como alvo de todos os inimigos
@@ -46,7 +46,7 @@ public class Habilidade5Guerreiro : HabilidadeBase
                     listaDeInimigos[i]._personagemAlvo = personagem;
                     listaDeInimigos[i].VerificarComportamento("selecionarAlvo");
                 }
-                personagem._danoAtaqueBasico += (_danoOriginal / 10); //aumenta o dano em 10%
+                //personagem._danoAtaqueBasico += (_danoOriginal / 10); //aumenta o dano em 10%
                 break;
             case 3:
                 //coloca o personagem como alvo de todos os inimigos
@@ -55,7 +55,7 @@ public class Habilidade5Guerreiro : HabilidadeBase
                     listaDeInimigos[i]._personagemAlvo = personagem;
                     listaDeInimigos[i].VerificarComportamento("selecionarAlvo");
                 }
-                personagem._danoAtaqueBasico += (_danoOriginal / 5); //aumenta o dano em 20%
+                //personagem._danoAtaqueBasico += (_danoOriginal / 5); //aumenta o dano em 20%
                 break;
         }
     }
@@ -63,6 +63,6 @@ public class Habilidade5Guerreiro : HabilidadeBase
     private void RemoverEfeitoHabilidade() //função de remover efeito da habilidade 
     {
         //reseta os atributos originais do personagem
-        personagem._danoAtaqueBasico = _danoOriginal;
+        //personagem._danoAtaqueBasico = _danoOriginal;
     }
 }

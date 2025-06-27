@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Classe { Guerreiro, Arqueiro, Mago }
+public enum Classe { Guerreiro, Ladino, Elementalista, Sacerdote }
 public enum PreferenciaAtributo{ Forca, Agilidade, Destreza, Constituicao, Inteligencia, Sabedoria }
 
 [System.Serializable]
@@ -35,8 +35,6 @@ public class PersonagemData
     [Header("Definições Batalha")]
     public float hp; //valor do hp (vida) máximo do personagem
     public float ataque; //valor do ataque do personagem
-    public float ataqueMagico; //valor do ataque mágico do personagem
-    public float ataqueDistancia; //valor do ataque à distância do personagem
     public float defesa; //valor defesa do personagem
     public float defesaMagica; //valor da defesa mágica do personagem
     public float velocidadeAtaque; //velocidade de ataque do personagem
@@ -212,8 +210,6 @@ public class PersonagemData
         //restaura os padrões
         hp = 99;
         ataque = arma.dano;
-        ataqueMagico = arma.danoMagico;
-        ataqueDistancia = arma.danoDistancia;
         velocidadeAtaque = arma.velocidadeDeAtaque;
         esquiva = 0;
         precisao = 1;
@@ -226,12 +222,17 @@ public class PersonagemData
                 defesaMagica = 4;
                 suporte = 4;
                 break;
-            case Classe.Arqueiro:
+            case Classe.Ladino:
                 defesa = 8;
                 defesaMagica = 8;
                 suporte = 9;
                 break;
-            case Classe.Mago:
+            case Classe.Elementalista:
+                defesa = 4;
+                defesaMagica = 9;
+                suporte = 9;
+                break;
+            case Classe.Sacerdote:
                 defesa = 4;
                 defesaMagica = 9;
                 suporte = 9;
@@ -246,10 +247,10 @@ public class PersonagemData
 
         ataque += (forca);
 
-        ataqueMagico += (inteligencia);
+        //ataqueMagico += (inteligencia);
         pontosDeHabilidade += inteligencia;
 
-        ataqueDistancia += (destreza);
+        //ataqueDistancia += (destreza);
         precisao += destreza;
 
         velocidadeAtaque = Mathf.Clamp(arma.velocidadeDeAtaque - (agilidade * 0.01f), 0.2f, arma.velocidadeDeAtaque);
