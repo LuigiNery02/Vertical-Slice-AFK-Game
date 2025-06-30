@@ -49,6 +49,8 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
 
     [Header("Tela Arma")]
     [SerializeField]
+    private GameObject[] _armaImagem; //imagem do personagem criado
+    [SerializeField]
     private Text _danoArmaTipoTexto; //texto do dano da arma do personagem
     [SerializeField]
     private Text _velocidadeAtaqueArmaTexto; //texto da velocidade de ataque da arma do personagem
@@ -91,7 +93,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
     [SerializeField]
     private Text _hpTexto; //texto do hp do personagem
     [SerializeField]
-    private Text _danoArmaTexto; //texto do dano do personagem
+    private Text _ataqueTexto; //texto do dano do personagem
     [SerializeField]
     private Text _defesaTexto; //texto da defesa mágica do personagem
     [SerializeField]
@@ -283,11 +285,19 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
     {
         personagemEmCriacao.arma = armas[valorArma];
 
-        personagemEmCriacao.armaID = valorArma;
+        personagemEmCriacao.armaID = armas[valorArma].id;
 
         _telasArmas.SetActive(false); //desativa a telas de seleção de armas
 
+        ResetarAtributosDePreferência();
+
         _telaPreferenciaHatributo.SetActive(true); //ativa a tela de seleção de atributos de preferência
+    }
+
+    public void ResetarAtributosDePreferência() //função que reseta os atributos de preferência do personagem em criação
+    {
+        personagemEmCriacao.atributosDePreferencia.Clear();
+        personagemEmCriacao.listaSortearAtributo.Clear();
     }
 
     public void DefinirPreferenciaDeAtributo(int valorAtributoPreferencia) //função que define as preferências de atributo do personagem
@@ -344,8 +354,16 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
         if (atributos >= 2)
         {
             _telaPreferenciaHatributo.SetActive(false); //desativa a tela de preferências de atributo
-            PersonagemCriado();
+            if(personagemEmCriacao.nivel == 0)
+            {
+                PersonagemCriado();
+            }
+            else
+            {
+                personagemEmCriacao.DefinicoesAtributos();
+            }
             _telaPersonagem.SetActive(true); //ativa a tela do personagem
+            ResetarTelaPersonagem();
             AtualizarTelaPersonagem();
         }
     }
@@ -873,7 +891,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
             _sabedoriaTexto.text += (" " + personagemEmCriacao.sabedoria);
 
             _hpTexto.text = ("HP: " + personagemEmCriacao.hp.ToString());
-            _danoArmaTexto.text = ("Dano Melee: " + personagemEmCriacao.ataque);
+            _ataqueTexto.text = ("Ataque: " + personagemEmCriacao.ataque);
             _defesaTexto.text = ("Defesa: " + personagemEmCriacao.defesa);
             _defesaMagicaTexto.text = ("Defesa Mágica: " + personagemEmCriacao.defesaMagica);
             _velocidadeAtaqueTexto.text = ("Velocidade de Ataque: " + personagemEmCriacao.velocidadeAtaque);
@@ -883,20 +901,31 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
             _pontosHabilidadeTexto.text = ("Pontos de Habilidade: " + personagemEmCriacao.pontosDeHabilidade);
             _expProximoNivelTexto.text = ("EXP para o próximo Nível: " + ((int)personagemEmCriacao.expProximoNível - personagemEmCriacao.expAtual));
 
-            _danoArmaTexto.text = ("Dano: " + (personagemEmCriacao.arma.dano + 1));
             switch (personagemEmCriacao.arma.armaDano)
             {
                 case TipoDeDano.DANO_MELEE:
-                    _danoArmaTipoTexto.text = ("Dano Melee: " + (personagemEmCriacao.arma.dano + 1));
+                    _danoArmaTipoTexto.text = ("Ataque Melee: " + personagemEmCriacao.arma.dano);
                     break;
                 case TipoDeDano.DANO_RANGED:
-                    _danoArmaTipoTexto.text = ("Dano Ranged: " + (personagemEmCriacao.arma.dano + 1));
+                    _danoArmaTipoTexto.text = ("Ataque Ranged: " + personagemEmCriacao.arma.dano);
                     break;
                 case TipoDeDano.DANO_MAGICO:
-                    _danoArmaTipoTexto.text = ("Dano Mágico: " + (personagemEmCriacao.arma.dano + 1));
+                    _danoArmaTipoTexto.text = ("Ataque Mágico: " + personagemEmCriacao.arma.dano);
                     break;
             }
-            _velocidadeAtaqueArmaTexto.text = ("Velocidade de Ataque: " + (personagemEmCriacao.arma.velocidadeDeAtaque - 0.01f));
+
+            for (int i = 0; i < _armaImagem.Length; i++)
+            {
+                if (i == personagemEmCriacao.armaID)
+                {
+                    _armaImagem[i].SetActive(true);
+                }
+                else
+                {
+                    _armaImagem[i].SetActive(false);
+                }
+            }
+            _velocidadeAtaqueArmaTexto.text = ("Velocidade de Ataque: " + (personagemEmCriacao.arma.velocidadeDeAtaque));
 
             if (personagemEmCriacao.equipamentoCabecaAcessorio != null)
             {
@@ -1077,7 +1106,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
         _sabedoriaTexto.text = ("Sabedoria:");
 
         _hpTexto.text = "";
-        _danoArmaTexto.text = "";
+        _ataqueTexto.text = "";
         _defesaTexto.text = "";
         _defesaMagicaTexto.text = "";
         _velocidadeAtaqueTexto.text = "";

@@ -680,9 +680,6 @@ public class IAPersonagemBase : MonoBehaviour
                 yield return new WaitForSeconds(0.5f);
                 _hitAtaquePersonagem.gameObject.SetActive(false);
             }
-
-            Habilidade2 habilidade2 = GetComponent<Habilidade2>();
-            habilidade2.RemoverEfeito();
         }
 
         if (_personagemAlvo != null && _personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)

@@ -86,30 +86,7 @@ public class PersonagemData
     public delegateSubirNivel funcaoSubirNivel; //função de subir nível do personagem
     public void DefinirPersonagem() //função que define dados iniciais importantes do personagem
     {
-        #region Pesos Atributos
-        //adiciona na lista atributos com peso 8
-        foreach (var atributo in atributosDePreferencia)
-        {
-            for(int i = 0; i < 8; i++)
-            {
-                listaSortearAtributo.Add(atributo);
-            }
-        }
-
-        //adiciona na lista atributos com peso 2
-        foreach (PreferenciaAtributo atributo in Enum.GetValues(typeof(PreferenciaAtributo)))
-        {
-            if (!atributosDePreferencia.Contains(atributo))
-            {
-                for(int i = 0; i < 2; i++)
-                {
-                    listaSortearAtributo.Add(atributo);
-                }
-
-            }
-        }
-        #endregion
-
+        DefinicoesAtributos();
         DefinicoesBatalha();
     }
 
@@ -129,16 +106,11 @@ public class PersonagemData
 
     public void SubirDeNivel() //função que sobe o nível do personagem
     {
-        nivel++;
+        if(nivel < 99)
+        {
+            nivel++;
 
-        //define o nível máximo como 99
-        if(nivel >= 99)
-        {
-            nivel = 99;
-        }
-        else
-        {
-            switch(nivel)
+            switch (nivel)
             {
                 case 8:
                     GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Classe, this.classe, 1, this);
@@ -163,13 +135,13 @@ public class PersonagemData
                     break;
             }
             expProximoNível += (expProximoNível / 10); //atualiza o valor necessário para passar de nível
-            if(funcaoSubirNivel != null)
+            if (funcaoSubirNivel != null)
             {
                 funcaoSubirNivel();
             }
-        }
 
-        DefinicoesBatalha();
+            DefinicoesBatalha();
+        }
     }
 
     public void EscolherAtributo() //função que sorteia um dos atributos do personagem para melhorar
@@ -183,27 +155,94 @@ public class PersonagemData
             switch (atributoEscolhido)
             {
                 case PreferenciaAtributo.Forca:
-                    forca++;
+                    if(forca < 50)
+                    {
+                        forca++;
+                    }
+                    else
+                    {
+                        EscolherAtributo();
+                    }
                     break;
                 case PreferenciaAtributo.Agilidade:
-                    agilidade++;
+                    if (agilidade < 50)
+                    {
+                        agilidade++;
+                    }
+                    else
+                    {
+                        EscolherAtributo();
+                    }
                     break;
                 case PreferenciaAtributo.Destreza:
-                    destreza++;
+                    if (destreza < 50)
+                    {
+                        destreza++;
+                    }
+                    else
+                    {
+                        EscolherAtributo();
+                    }
                     break;
                 case PreferenciaAtributo.Constituicao:
-                    constituicao++;
+                    if (constituicao < 50)
+                    {
+                        constituicao++;
+                    }
+                    else
+                    {
+                        EscolherAtributo();
+                    }
                     break;
                 case PreferenciaAtributo.Inteligencia:
-                    inteligencia++;
+                    if (inteligencia < 50)
+                    {
+                        inteligencia++;
+                    }
+                    else
+                    {
+                        EscolherAtributo();
+                    }
                     break;
                 case PreferenciaAtributo.Sabedoria:
-                    sabedoria++;
+                    if (sabedoria < 50)
+                    {
+                        sabedoria++;
+                    }
+                    else
+                    {
+                        EscolherAtributo();
+                    }
                     break;
             }
         }
     }
     #endregion
+
+    public void DefinicoesAtributos() //função que define a lista de atributos com mais chance de serem escolhidos
+    {
+        //adiciona na lista atributos com peso 8
+        foreach (var atributo in atributosDePreferencia)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                listaSortearAtributo.Add(atributo);
+            }
+        }
+
+        //adiciona na lista atributos com peso 2
+        foreach (PreferenciaAtributo atributo in Enum.GetValues(typeof(PreferenciaAtributo)))
+        {
+            if (!atributosDePreferencia.Contains(atributo))
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    listaSortearAtributo.Add(atributo);
+                }
+
+            }
+        }
+    }
 
     public void DefinicoesBatalha() //função que define os atributos de batalha do personagem
     {

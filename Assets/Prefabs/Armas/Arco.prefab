@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: Arco
-  armaTipo: 0
-  dano: -1
-  danoMagico: -1
-  danoDistancia: 7
-  velocidadeDeAtaque: 3.01
+  armaTipo: 1
+  armaDano: 1
+  dano: 8
+  velocidadeDeAtaque: 3
+  id: 1

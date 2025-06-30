@@ -9,4 +9,5 @@ public class ArmaBase: MonoBehaviour
     public TipoDeDano armaDano; //tipo de dano da arma
     public float dano; //valor do dano da arma
     public float velocidadeDeAtaque; //velocidade de ataque da arma
+    public int id; //id da arma
 }

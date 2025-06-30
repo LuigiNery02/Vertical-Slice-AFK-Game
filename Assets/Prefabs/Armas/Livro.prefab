@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: Livro
-  armaTipo: 0
-  dano: -1
-  danoMagico: 9
-  danoDistancia: -1
-  velocidadeDeAtaque: 4.01
+  armaTipo: 1
+  armaDano: 2
+  dano: 13
+  velocidadeDeAtaque: 4
+  id: 2
