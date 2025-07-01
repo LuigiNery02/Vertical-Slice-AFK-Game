@@ -1,16 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeAssassinatoEmCadeiaNv2 : MonoBehaviour
+public class HabilidadeAssassinatoEmCadeiaNv2 : HabilidadeBase
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

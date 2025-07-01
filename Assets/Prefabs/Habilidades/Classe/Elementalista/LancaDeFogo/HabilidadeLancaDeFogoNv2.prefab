@@ -44,3 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da044d10cb061443a48ac6e830e02ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nome: "Lan\xE7a de Fogo"
+  descricao: 
+  tipoDeHabilidade: 0
+  nivel: 2
+  idHabilidade: HabilidadeLancaDeFogo
+  pontosDeHabilidade: 0
+  temTempoDeEfeito: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 0
+  spriteHabilidade: {fileID: 0}
+  podeAtivarEfeito: 1
+  personagem: {fileID: 0}

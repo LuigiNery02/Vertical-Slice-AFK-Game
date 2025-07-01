@@ -44,3 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 429e39eb0cfc2ac4daebad9a45ef8224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nome: Nevasca
+  descricao: 
+  tipoDeHabilidade: 0
+  nivel: 2
+  idHabilidade: HabilidadeNevasca
+  pontosDeHabilidade: 0
+  temTempoDeEfeito: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 0
+  spriteHabilidade: {fileID: 0}
+  podeAtivarEfeito: 1
+  personagem: {fileID: 0}

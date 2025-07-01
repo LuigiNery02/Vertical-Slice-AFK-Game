@@ -93,8 +93,6 @@ MonoBehaviour:
     "expProximoN\xEDvel": 0
     hp: 0
     ataque: 0
-    ataqueMagico: 0
-    ataqueDistancia: 0
     defesa: 0
     defesaMagica: 0
     velocidadeAtaque: 0
@@ -131,9 +129,10 @@ MonoBehaviour:
   nivelPersonagem: {fileID: 3686690657975189081}
   imagemPersonagem: {fileID: 6149059497575890712}
   sprites:
-  - {fileID: 21300000, guid: 5b9f19720f9114d4f819eedf637d21a3, type: 3}
-  - {fileID: 21300000, guid: 9340aa5e2d43353449132f55801ed2b6, type: 3}
-  - {fileID: 21300000, guid: e70e688f96648944a8d83d1e9eb592c0, type: 3}
+  - {fileID: 21300000, guid: 7327dcdd636cd904da5b0d7771d64891, type: 3}
+  - {fileID: 21300000, guid: f256519d69379564d9755b75c3711d5a, type: 3}
+  - {fileID: 21300000, guid: 19623b30101f88c418c568af0544bbd8, type: 3}
+  - {fileID: 21300000, guid: 2ccb50afeaeb1d643a316bc600fb65f7, type: 3}
   personagemIndice: 0
   imagemClasse: 0
   botao: {fileID: 1426175719073841163}

@@ -21,9 +21,13 @@ public class SlotPersonagemBatalha : MonoBehaviour
 
     private GerenciadorDePersonagens _gerenciadorDePersonagens; //gerenciador de personagens
 
+    private void OnEnable()
+    {
+        _gerenciadorDePersonagens = FindFirstObjectByType<GerenciadorDePersonagens>();
+    }
+
     public void SelecionarPersonagem() //função que define o personagem selecionado pelo seu slot
     {
-        _gerenciadorDePersonagens = FindObjectOfType<GerenciadorDePersonagens>();
         _gerenciadorDePersonagens.SelecionarPersonagem(personagemData, this);
         check.SetActive(slotSelecionado);
     }

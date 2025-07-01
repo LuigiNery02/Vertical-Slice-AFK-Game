@@ -44,3 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 475d317487bf2d34e927601a71c1e3f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nome: Arco Elemental
+  descricao: 
+  tipoDeHabilidade: 0
+  nivel: 3
+  idHabilidade: HabilidadeArcoElemental
+  pontosDeHabilidade: 0
+  temTempoDeEfeito: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 0
+  spriteHabilidade: {fileID: 0}
+  podeAtivarEfeito: 1
+  personagem: {fileID: 0}

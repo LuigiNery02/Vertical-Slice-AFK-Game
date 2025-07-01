@@ -239,22 +239,13 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
                     break;
             }
 
+            loop:
             HabilidadeBase habilidadeSorteada = listaClasseOriginal[Random.Range(0, listaClasseOriginal.Count)]; //sorteia uma habilidade
             HabilidadeBase habilidadeExistente = personagem.listaDeHabilidadesDeClasse.Find(id => id.idHabilidade == habilidadeSorteada.idHabilidade); //verifica so o personagem já possui a habilidade
 
             if(habilidadeExistente != null) //caso o personagem já a possua a habilidade sorteada
             {
-                //atualiza o nível da habilidade existente do personagem
-                if(nivel > habilidadeExistente.nivel)
-                {
-                    habilidadeExistente.nivel = nivel;
-                    DadosHabilidade dadosExistente = personagem.habilidadesDeClasseSalvas.Find(id => id.idHabilidade == habilidadeExistente.idHabilidade);
-                    if(dadosExistente != null)
-                    {
-                        dadosExistente.nivel = habilidadeExistente.nivel;
-                    }
-                    MostrarMensagem("Habilidade Evoluída: " + habilidadeExistente.nome + "\nNível: " + habilidadeExistente.nivel + "\nHerói: " + personagem.apelido + " - Nível: " + personagem.nivel);
-                }
+                goto loop;
             }
             else //do contrário
             {

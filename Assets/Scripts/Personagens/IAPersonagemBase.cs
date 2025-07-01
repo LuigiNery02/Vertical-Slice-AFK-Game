@@ -35,7 +35,6 @@ public class IAPersonagemBase : MonoBehaviour
     //área referente aos equipamentos do personagem
     [Header("Equipamentos")]
     public int numeroDeEquipamentos; //número de equipamentos do personagem (apenas visualmente demonstrativo)
-    public Sprite[] spriteEquipamentos; //sprites dos equipamentos do personagem 
 
     //área referente ao hp (vida) do personagem
     [Header("HP")]
@@ -58,6 +57,10 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("Habilidades")]
     public HabilidadeBase habilidade1;
     public HabilidadeBase habilidade2;
+
+    //Área referente às animações
+    [Header("Animação")]
+    public RuntimeAnimatorController[] controllerAnimatorArma; //controller animator referente à arma do personagem
 
     //Área referente aos sfx
     [Header("SFX")]
@@ -203,13 +206,24 @@ public class IAPersonagemBase : MonoBehaviour
                 velocidadeDoProjetil = 10;
                 break;
             case Classe.Sacerdote:
-                id = 2;
+                id = 3;
                 _tipo = personagem.arma.armaTipo;
                 distanciaMinimaParaAtacar = 10;
                 velocidadeDoProjetil = 10;
                 break;
         }
+
         personagemVisual[id].SetActive(true);
+        AtivarArmaPersonagem armaPersonagem = personagemVisual[id].GetComponent<AtivarArmaPersonagem>();
+        if(armaPersonagem != null)
+        {
+            armaPersonagem.AtivarArma(personagem.arma.id);
+        }
+        Animator animatorPersonagem = personagemVisual[id].GetComponent<Animator>();
+        if(animatorPersonagem != null)
+        {
+            animatorPersonagem.runtimeAnimatorController = controllerAnimatorArma[personagem.arma.id];
+        }
         canvas.SetActive(true);
 
         _hpMaximoEInicial = personagem.hp;

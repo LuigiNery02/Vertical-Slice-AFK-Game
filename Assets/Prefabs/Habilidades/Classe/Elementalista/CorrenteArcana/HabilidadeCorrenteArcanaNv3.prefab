@@ -44,3 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede9c6ac968b6c6408aa1ad44556e80d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nome: Corrente Arcana
+  descricao: 
+  tipoDeHabilidade: 0
+  nivel: 3
+  idHabilidade: HabilidadeCorrenteArcana
+  pontosDeHabilidade: 0
+  temTempoDeEfeito: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 0
+  spriteHabilidade: {fileID: 0}
+  podeAtivarEfeito: 1
+  personagem: {fileID: 0}

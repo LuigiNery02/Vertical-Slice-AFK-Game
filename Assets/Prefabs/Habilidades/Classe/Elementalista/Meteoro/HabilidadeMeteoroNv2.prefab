@@ -44,3 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88942731bc64ace4f9b427cbd49cc4a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nome: Meteoro
+  descricao: 
+  tipoDeHabilidade: 0
+  nivel: 2
+  idHabilidade: HabilidadeMeteoro
+  pontosDeHabilidade: 0
+  temTempoDeEfeito: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 0
+  spriteHabilidade: {fileID: 0}
+  podeAtivarEfeito: 1
+  personagem: {fileID: 0}

@@ -1,16 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeAtaquePesadoNv3 : MonoBehaviour
+public class HabilidadeAtaquePesadoNv3 : HabilidadeBase
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

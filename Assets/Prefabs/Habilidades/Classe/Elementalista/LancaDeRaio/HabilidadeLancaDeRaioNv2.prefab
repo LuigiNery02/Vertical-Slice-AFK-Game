@@ -44,3 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d7e8c9e56c439045b5f39db9b7eaf0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nome: "Lan\xE7a de Raio"
+  descricao: 
+  tipoDeHabilidade: 0
+  nivel: 2
+  idHabilidade: HabilidadeLancaDeRaio
+  pontosDeHabilidade: 0
+  temTempoDeEfeito: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 0
+  spriteHabilidade: {fileID: 0}
+  podeAtivarEfeito: 1
+  personagem: {fileID: 0}

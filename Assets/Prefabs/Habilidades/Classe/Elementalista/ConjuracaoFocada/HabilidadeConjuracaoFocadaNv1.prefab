@@ -44,3 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d203ece9b36425448a736fc91d7dc2db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nome: "Conjura\xE7\xE3o Focada"
+  descricao: 
+  tipoDeHabilidade: 0
+  nivel: 1
+  idHabilidade: HabilidadeConjuracaoFocada
+  pontosDeHabilidade: 0
+  temTempoDeEfeito: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 0
+  spriteHabilidade: {fileID: 0}
+  podeAtivarEfeito: 1
+  personagem: {fileID: 0}

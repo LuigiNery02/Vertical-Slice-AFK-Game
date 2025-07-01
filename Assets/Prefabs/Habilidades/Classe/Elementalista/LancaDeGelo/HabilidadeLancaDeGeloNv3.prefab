@@ -44,3 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 485d3be2c295c81468be5974a3aa8441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nome: "Lan\xE7a de Gelo"
+  descricao: 
+  tipoDeHabilidade: 0
+  nivel: 3
+  idHabilidade: HabilidadeLancaDeGelo
+  pontosDeHabilidade: 0
+  temTempoDeEfeito: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 0
+  spriteHabilidade: {fileID: 0}
+  podeAtivarEfeito: 1
+  personagem: {fileID: 0}

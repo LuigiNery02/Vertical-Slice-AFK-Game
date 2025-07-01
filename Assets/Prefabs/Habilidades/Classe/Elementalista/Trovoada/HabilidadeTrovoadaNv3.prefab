@@ -44,3 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1861db01215be4e4fbb829d3fc3baffc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nome: Trovoada
+  descricao: 
+  tipoDeHabilidade: 0
+  nivel: 3
+  idHabilidade: HabilidadeTrovoada
+  pontosDeHabilidade: 0
+  temTempoDeEfeito: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 0
+  spriteHabilidade: {fileID: 0}
+  podeAtivarEfeito: 1
+  personagem: {fileID: 0}
