@@ -63,65 +63,22 @@ sealed class HitAtaquePersonagem : MonoBehaviour
         {
             IAPersonagemBase alvo = other.GetComponent<IAPersonagemBase>(); //define o personagem colidido como alvo
 
-            //verifica se o persomagem que criou este ataque está lançando um ataque especial
-            if(other != _personagemPai && _personagemPai._comportamento == EstadoDoPersonagem.MOVIMENTO_ESPECIAL)
-            {
-                IAPersonagemBase alvoDoDAno = other.GetComponent<IAPersonagemBase>();
-                if(CalcularPrecisao(_personagemPai.personagem.precisao, alvoDoDAno.personagem.esquiva))
-                {
-                    switch (_personagemPai.personagem.classe)
-                    {
-                        case Classe.Guerreiro:
-                            _personagemPai.CausarDano(alvoDoDAno, 0);
-                            break;
-                        case Classe.Ladino:
-                            _personagemPai.CausarDano(alvoDoDAno, 1);
-                            break;
-                        case Classe.Elementalista:
-                            _personagemPai.CausarDano(alvoDoDAno, 2);
-                            break;
-                        case Classe.Sacerdote:
-                            _personagemPai.CausarDano(alvoDoDAno, 3);
-                            break;
-                    }
-
-                    if (_personagemPai.efeitoPorAtaqueAtivado)
-                    {
-                        _personagemPai.efeitoPorAtaque();
-                    }
-                }
-                else
-                {
-                    alvoDoDAno.Esquivar();
-
-                    if (alvoDoDAno.efeitoPorEsquivaAtivado)
-                    {
-                        alvoDoDAno.efeitoPorEsquiva();
-                    }
-                }
-           
-                gameObject.SetActive(false);
-            }
-            //checa se o alvo não é o personagem que criou este ataque, se o alvo não está morto e se o alvo é o atual alvo do personagem que criou este ataque
-            else if(other != _personagemPai && alvo._comportamento != EstadoDoPersonagem.MORTO && alvo == _personagemPai._personagemAlvo)
+            if(other != _personagemPai && alvo._comportamento != EstadoDoPersonagem.MORTO && alvo == _personagemPai._personagemAlvo)
             {
                 //define para o personagem que este ataque colidiu com um personagem
                 IAPersonagemBase alvoDoDAno = other.GetComponent<IAPersonagemBase>();
-                if (CalcularPrecisao(_personagemPai.personagem.precisao, alvoDoDAno.personagem.esquiva))
+                if (CalcularPrecisao(_personagemPai.precisao, alvoDoDAno.esquiva))
                 {
-                    switch (_personagemPai.personagem.classe)
+                    switch (_personagemPai.personagem.arma.armaDano)
                     {
-                        case Classe.Guerreiro:
+                        case TipoDeDano.DANO_MELEE:
                             _personagemPai.CausarDano(alvoDoDAno, 0);
                             break;
-                        case Classe.Ladino:
+                        case TipoDeDano.DANO_RANGED:
+                            _personagemPai.CausarDano(alvoDoDAno, 0);
+                            break;
+                        case TipoDeDano.DANO_MAGICO:
                             _personagemPai.CausarDano(alvoDoDAno, 1);
-                            break;
-                        case Classe.Elementalista:
-                            _personagemPai.CausarDano(alvoDoDAno, 2);
-                            break;
-                        case Classe.Sacerdote:
-                            _personagemPai.CausarDano(alvoDoDAno, 3);
                             break;
                     }
 
@@ -178,10 +135,9 @@ sealed class HitAtaquePersonagem : MonoBehaviour
         transform.localPosition = _posicaoInicial;
     }
 
-    private bool CalcularPrecisao(int precisao, int esquiva) //função que calcula a precisão do ataque
+    private bool CalcularPrecisao(float precisao, float esquiva) //função que calcula a precisão do ataque
     {
-        int chance = 75 + (precisao - esquiva);
-        chance = Mathf.Clamp(chance, 5, 95);
+        float chance = (100 - (precisao - esquiva));
         int rng = Random.Range(0, 100);
 
         return rng < chance;

@@ -49,6 +49,5 @@ MonoBehaviour:
   armaDano: 1
   dano: 8
   velocidadeDeAtaque: 3
+  velocidadeDoProjetil: 15
   id: 1
-  posicao: {x: 0, y: 0, z: 0}
-  rotacao: {x: 0, y: 0, z: 0}

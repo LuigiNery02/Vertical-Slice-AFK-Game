@@ -37,7 +37,7 @@ public class HabilidadeBase : MonoBehaviour
     {
         if(personagem.pontosDeHabilidadeTexto != null)
         {
-            personagem.pontosDeHabilidadeTexto.text = (personagem.pontosDeHabilidadeAtual + " / " + personagem.personagem.pontosDeHabilidade);
+            personagem.pontosDeHabilidadeTexto.text = (personagem.spAtual + " / " + personagem._spMaximoEInicial);
         }
     }
 
@@ -46,7 +46,7 @@ public class HabilidadeBase : MonoBehaviour
         bool podeUsarHabilidade = false;
         if (podeAtivarEfeito && personagem._comportamento != EstadoDoPersonagem.MORTO)
         {
-            if(personagem.pontosDeHabilidadeAtual >= pontosDeHabilidade)
+            if(personagem.spAtual >= pontosDeHabilidade)
             {
                 switch (nivel)
                 {
@@ -94,7 +94,7 @@ public class HabilidadeBase : MonoBehaviour
                 if (podeUsarHabilidade)
                 {
                     Debug.Log("Efeito Ativado");
-                    personagem.pontosDeHabilidadeAtual -= pontosDeHabilidade;
+                    personagem.spAtual -= pontosDeHabilidade;
                     if(SistemaDeBatalha.usarSfxs)
                     {
                         personagem._audio.clip = personagem._habilidadeSFX;
@@ -102,7 +102,7 @@ public class HabilidadeBase : MonoBehaviour
                     }
                     if (personagem.pontosDeHabilidadeTexto != null)
                     {
-                        personagem.pontosDeHabilidadeTexto.text = (personagem.pontosDeHabilidadeAtual + " / " + personagem.personagem.pontosDeHabilidade);
+                        personagem.pontosDeHabilidadeTexto.text = (personagem.spAtual + " / " + personagem._spMaximoEInicial);
                     }
                     podeAtivarEfeito = false;
                     efeitoHabilidade();
@@ -140,7 +140,7 @@ public class HabilidadeBase : MonoBehaviour
         }
         if (personagem.pontosDeHabilidadeTexto != null)
         {
-            personagem.pontosDeHabilidadeTexto.text = (personagem.pontosDeHabilidadeAtual + " / " + personagem.personagem.pontosDeHabilidade);
+            personagem.pontosDeHabilidadeTexto.text = (personagem.spAtual + " / " + personagem._spMaximoEInicial);
         }
     }
 
@@ -150,7 +150,7 @@ public class HabilidadeBase : MonoBehaviour
         podeAtivarEfeito = true;
         if (personagem.pontosDeHabilidadeTexto != null)
         {
-            personagem.pontosDeHabilidadeTexto.text = (personagem.pontosDeHabilidadeAtual + " / " + personagem.personagem.pontosDeHabilidade);
+            personagem.pontosDeHabilidadeTexto.text = (personagem.spAtual + " / " + personagem._spMaximoEInicial);
         }
         //selecaoDePersonagem.AtualizarSeleção();
     }

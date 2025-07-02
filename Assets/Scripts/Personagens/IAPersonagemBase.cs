@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +9,9 @@ public enum EstadoDoPersonagem { IDLE, PERSEGUINDO, ATACANDO, MORTO, MOVIMENTO_E
 
 public class IAPersonagemBase : MonoBehaviour
 {
+    //área referente aos dados e visual do personagem selecionado
     [Header("Personagem Selecionado")]
+    //[HideInInspector]
     public PersonagemData personagem; //dados do personagem criado
     public GameObject[] personagemVisual; //visual do personagem
     public GameObject canvas; //canvas do personagem
@@ -18,44 +19,94 @@ public class IAPersonagemBase : MonoBehaviour
     //área referente às definições do personagem
     [Header("Definições")]
     public ControladorDoPersonagem controlador;
+    [HideInInspector]
     public TipoDeArma _tipo;
     [HideInInspector]
     public EstadoDoPersonagem _comportamento;
 
-    //área referente às definições do personagem de longa distancia
-    [Header("Definições Longa Distancia")]
-    [SerializeField]
-    private float distanciaMinimaParaAtacar = 5f; //distancia minima que um personagem de longa distancia deve ter para atacar
-    public float velocidadeDoProjetil; //velocidade do projetil do ataque do personagem de longa distancia
-
-    //área referente ao id do personagem
-    [Header("ID")]
-    public int id; //variável para verificar o id do personagem
-
-    //área referente aos equipamentos do personagem
-    [Header("Equipamentos")]
-    public int numeroDeEquipamentos; //número de equipamentos do personagem (apenas visualmente demonstrativo)
-
     //área referente ao hp (vida) do personagem
     [Header("HP")]
+    [SerializeField]
+    private float _hpBaseGuerreiro = 1; //valor base do HP da classe guerreiro
+    [SerializeField]
+    private float _hpBaseLadino = 1; //valor base do HP da classe ladino
+    [SerializeField]
+    private float _hpBaseElementalista = 1; //valor base do HP da classe elementalista
+    [SerializeField]
+    private float _hpBaseSacerdote = 1; //valor base do HP da classe sacerdote
+    [HideInInspector]
     public float _hpMaximoEInicial; //valor inicial que o hp atual do player terá ao iniciar a batalha, e valor máximo que ele pode ter
-    //[HideInInspector]
+    [HideInInspector]
     public float hpAtual; //valor atual do hp (vida) do personagem
+    [HideInInspector]
+    public float hpRegeneracao; //valor por segundo que o personagem recuperará de hp
 
-    //área referente ao movimento do personagem
-    [Header("Movimento")]
-    public float _velocidade; //valor do ataque básico do personagem
+    //área referente ao sp (pontos de habilidade) do personagem
+    [Header("SP")]
+    [SerializeField]
+    private float _spBaseGuerreiro; //valor base do SP da classe guerreiro
+    [SerializeField]
+    private float _spBaseLadino; //valor base do SP da classe ladino
+    [SerializeField]
+    private float _spBaseElementalista; //valor base do SP da classe elementalista
+    [SerializeField]
+    private float _spBaseSacerdote; //valor base do SP da classe sacerdote
+    [HideInInspector]
+    public float _spMaximoEInicial; //valor inicial que o SP atual do player terá ao iniciar a batalha, e valor máximo que ele pode ter
+    [HideInInspector]
+    public float spAtual; //valor atual do SP (pontos de habilidade) do personagem
+    [HideInInspector]
+    public float spRegeneracao; //valor por segundo que o personagem recuperará de sp
+
+    private Coroutine regeneracaoCoroutine; //coroutine de regeneração de hp e sp
+
+    //área referente ao fator classe do personagem
+    [Header("Fator Classe")]
+    [SerializeField]
+    private float _fatorClasseGuerreiro = 1; //fator da classe guerreiro
+    [SerializeField]
+    private float _fatorClasseLadino = 1; //fator da classe ladino
+    [SerializeField]
+    private float _fatorClasseElementalista = 1; //fator da classe elementalista
+    [SerializeField]
+    private float _fatorClasseSacerdote = 1; //fator da classe sacerdote
 
     //área referente ao ataque do personagem
     [Header("Ataque")]
+    public float precisaoBase; //precisão base do personagem
+    [HideInInspector]
+    public float precisao; //precisão do personagem
+    [HideInInspector]
     public float _dano; //valor do dano do ataque do personagem
-    public float _cooldown = 1f; //valor do tempo de espera para cada ataque básico do personagem
+    public float velocidadeDeAtaqueBase = 1f; //valor base do tempo de espera para cada ataque básico do personagem
+    [HideInInspector]
+    public float _velocidadeDeAtaque; //valor da velocidade de ataque do personagem
     private float _cooldownAtual = 0f; //tempo atual para o personagem poder atacar novamente
+    public float esquivaBase; //valor base da esquiva do persongem
+    [HideInInspector]
+    public float esquiva; //valor da esquiva do personagem
     private bool _podeAtacar; //variável que verifica se o personagem pode atacar
+    public float chanceCritico; //valor em porcentagem das chances de crítico
+    public float multiplicadorCritico = 2; //valor do multiplicador do crítico
+
+    //área referente às definições do personagem de longa distancia
+    [Header("Definições Longa Distância")]
+    public float distanciaMinimaParaAtacar = 5f; //distancia minima que um personagem de longa distancia deve ter para atacar
+
+    //área referente ao movimento do personagem
+    [Header("Movimento")]
+    public float _velocidade = 1; //valor da velocidade de movimento do personagem
+
+    //área referente à defesa do personagem
+    [Header("Defesa")]
+    public float defesa; //defesa do personagem
+    public float defesaMagica; //defesa mágica do personagem
 
     //área referente à habilidades
     [Header("Habilidades")]
+    [HideInInspector]
     public HabilidadeBase habilidade1;
+    [HideInInspector]
     public HabilidadeBase habilidade2;
 
     //Área referente às animações
@@ -73,6 +124,8 @@ public class IAPersonagemBase : MonoBehaviour
     public AudioClip _habilidadeSFX;
 
     [HideInInspector]
+    public int id; //variável para verificar o id do personagem
+    [HideInInspector]
     public IAPersonagemBase _personagemAlvo; //alvo de ataques do personagem
     private Transform _alvoAtual; //transform do personagem alvo
     private SistemaDeBatalha _sistemaDeBatalha; //sistema de batalha
@@ -88,8 +141,6 @@ public class IAPersonagemBase : MonoBehaviour
     public bool executandoMovimentoEspecial; //variável para verificar se o personagem está executando o movimento especial
     [HideInInspector]
     public bool imuneADanos; //variável que verifica se o personagem é imune a danos
-    [HideInInspector]
-    public int reducaoDeDano = 0; //valor da redução de dano do personagem
     //função que é ativada quando há um efeito por ataque
     public delegate void EfeitoPorAtaque();
     public EfeitoPorAtaque efeitoPorAtaque;
@@ -117,9 +168,15 @@ public class IAPersonagemBase : MonoBehaviour
     public bool congelamento; //efeito de congelamento
     [HideInInspector]
     public bool envenenamento; //efeito de envenenamento
-    [HideInInspector]
-    public float pontosDeHabilidadeAtual; //pontos de habilidade atuais do personagem
     public Text pontosDeHabilidadeTexto; //texto referente aos pontos de habilidade do personagem
+
+    private int STR; //atributo força do personagem
+    private int AGI; //atributo agilidade do personagem
+    private int DEX; //atributo destreza do personagem
+    private int INT; //atributo inteligência do personagem
+    private int VIT; //atributo constituição do personagem
+    private int LUK; //atributo sabedoria/sorte do personagem
+    private int LVL; //nível do personagem
 
     //Área de feedback visuais
     private Animator _animator; //animator do personagem
@@ -171,8 +228,10 @@ public class IAPersonagemBase : MonoBehaviour
         }
     }
 
-    public void ResetarDadosPersonagem() //função que reseta os dados do personagem selecionado
+    public void ResetarDadosPersonagem() //função que reseta os dados visuais do personagem selecionado
     {
+        personagem.funcaoSubirNivel -= AtualizarNivel;
+
         //reseta os dados do personagem
         for (int i = 0; i < personagemVisual.Length; i++)
         {
@@ -186,30 +245,21 @@ public class IAPersonagemBase : MonoBehaviour
     {
         personagem.funcaoSubirNivel += AtualizarNivel;
 
-        //atualiza os dados do personagem
+        AtualizarDadosPersonagem();
+
         switch (personagem.classe)
         {
             case Classe.Guerreiro:
                 id = 0;
-                _tipo = personagem.arma.armaTipo;
                 break;
             case Classe.Ladino:
                 id = 1;
-                _tipo = personagem.arma.armaTipo;
-                distanciaMinimaParaAtacar = 15;
-                velocidadeDoProjetil = 20;
                 break;
             case Classe.Elementalista:
                 id = 2;
-                _tipo = personagem.arma.armaTipo;
-                distanciaMinimaParaAtacar = 10;
-                velocidadeDoProjetil = 10;
                 break;
             case Classe.Sacerdote:
                 id = 3;
-                _tipo = personagem.arma.armaTipo;
-                distanciaMinimaParaAtacar = 10;
-                velocidadeDoProjetil = 10;
                 break;
         }
 
@@ -226,13 +276,8 @@ public class IAPersonagemBase : MonoBehaviour
         }
         canvas.SetActive(true);
 
-        _hpMaximoEInicial = personagem.hp;
-        _velocidade = personagem.velocidadeDeMovimento;
-        _dano = personagem.ataque;
-        _cooldown = personagem.velocidadeAtaque;
         habilidade1 = personagem.habilidadeClasse;
         habilidade2 = personagem.habilidadeArma;
-        pontosDeHabilidadeAtual = personagem.pontosDeHabilidade;
 
         if(habilidade1 != null)
         {
@@ -259,40 +304,86 @@ public class IAPersonagemBase : MonoBehaviour
         }
     }
 
-    public void AtualizarDadosBatalha() //função que atualiza os dados dos personagens na batalha
+    public void AtualizarDadosPersonagem() //função que atualiza os dados do personagem
     {
-        _hpMaximoEInicial = personagem.hp;
-        _velocidade = personagem.velocidadeDeMovimento;
-        _dano = personagem.ataque;
-        _cooldown = personagem.velocidadeAtaque;
-        pontosDeHabilidadeAtual = personagem.pontosDeHabilidade;
-    }
+        STR = personagem.forca;
+        AGI = personagem.agilidade;
+        DEX = personagem.destreza;
+        INT = personagem.inteligencia;
+        VIT = personagem.constituicao;
+        LUK = personagem.sabedoria;
+        LVL = personagem.nivel;
 
-    public void IniciarBatalha() //função chamada ao inicar a batalha e define os valores e comportamentos iniciais do personagem
-    {
-        if(controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
+        //bônus a cada 10 pontos
+        int bonusSTR = Mathf.FloorToInt(STR / 10f);
+        int bonusAGI = Mathf.FloorToInt(AGI / 10f);
+        int bonusDEX = Mathf.FloorToInt(DEX / 10f);
+        int bonusVIT = Mathf.FloorToInt(VIT / 10f);
+        int bonusINT = Mathf.FloorToInt(INT / 10f);
+        int bonusLUK = Mathf.FloorToInt(LUK / 10f);
+
+        //atualiza os dados do personagem
+        switch (personagem.classe)
         {
-            switch (personagem.classe)
-            {
-                case Classe.Guerreiro:
-                    personagem.defesa = 3;
-                    personagem.defesaMagica = 2;
-                    break;
-                case Classe.Ladino:
-                    personagem.defesa = 3;
-                    personagem.defesaMagica = 3;
-                    break;
-                case Classe.Elementalista:
-                    personagem.defesa = 2;
-                    personagem.defesaMagica = 3;
-                    break;
-                case Classe.Sacerdote:
-                    personagem.defesa = 2;
-                    personagem.defesaMagica = 3;
-                    break;
-            }
+            case Classe.Guerreiro:
+                _hpMaximoEInicial = (((_hpBaseGuerreiro + VIT + STR + LVL) * 20) * (_fatorClasseGuerreiro * 4));
+                _spMaximoEInicial = ((_spBaseGuerreiro + (INT * 10) + (DEX * 3)) * LVL * (_fatorClasseGuerreiro / 4));
+                break;
+            case Classe.Ladino:
+                _hpMaximoEInicial = (((_hpBaseLadino + VIT + STR + LVL) * 20) * (_fatorClasseLadino * 3));
+                _spMaximoEInicial = ((_spBaseLadino + (INT * 10) + (DEX * 3)) * LVL * (_fatorClasseLadino / 2));
+                break;
+            case Classe.Elementalista:
+                _hpMaximoEInicial = (((_hpBaseElementalista + VIT + STR + LVL) * 20) * (_fatorClasseElementalista * 2));
+                _spMaximoEInicial = ((_spBaseElementalista + (INT * 10) + (DEX * 3)) * LVL * (_fatorClasseElementalista / 2));
+                break;
+            case Classe.Sacerdote:
+                _hpMaximoEInicial = (((_hpBaseSacerdote + VIT + STR + LVL) * 20) * (_fatorClasseSacerdote * 2));
+                _spMaximoEInicial = ((_spBaseSacerdote + (INT * 10) + (DEX * 3)) * LVL * (_fatorClasseSacerdote / 1));
+                break;
+        }
+        _hpMaximoEInicial += (_hpMaximoEInicial * 0.01f * bonusVIT); //efeito de bônus do atributo constituição
+        hpRegeneracao = (VIT * 0.5f);
+        spRegeneracao = (INT * 0.5f);
+
+        _tipo = personagem.arma.armaTipo;
+
+        switch (personagem.arma.armaDano)
+        {
+            case TipoDeDano.DANO_MELEE:
+                _dano = personagem.arma.dano + (STR * 3) + (DEX * 1);
+                _dano += (bonusSTR * 6); //efeito de bônus do atributo força
+                break;
+            case TipoDeDano.DANO_RANGED:
+                _dano = personagem.arma.dano + (DEX * 3) + (STR * 1);
+                _dano += (bonusDEX * 3); //efeito de bônus do atributo destreza
+                break;
+            case TipoDeDano.DANO_MAGICO:
+                _dano = personagem.arma.dano + (INT * 4) + (DEX * 1);
+                _dano += (bonusINT * 4); //efeito de bônus do atributo inteligência
+                break;
         }
 
+        precisao = (precisaoBase + (DEX * 2) + (LUK * 0.5f));
+        precisao += (bonusDEX * 10); //efeito de bônus do atributo destreza
+
+        float aspd = velocidadeDeAtaqueBase + (AGI * 0.3f) + (DEX * 0.1f);
+        aspd += (bonusAGI * 0.3f); //efeito de bônus do atributo agilidade
+        _velocidadeDeAtaque = Mathf.Clamp(2f - (aspd * 0.02f), 0.2f, 2f);
+
+        esquiva = (esquivaBase + (AGI * 2) + (LUK * 0.5f));
+        esquiva += (bonusAGI * 10); //efeito de bônus do atributo agilidade
+
+        defesa = (VIT * 0.5f);
+        defesa += defesa * (bonusVIT * 0.01f); //efeito de bônus do atributo constituição
+        defesaMagica = (INT * 0.5f);
+        defesaMagica += defesaMagica * (bonusVIT * 0.01f); //efeito de bônus do atributo constituição
+
+        chanceCritico = (LUK * 0.5f);
+        chanceCritico += (bonusLUK * 2); //efeito de bônus do atributo sabedoria
+    }
+    public void IniciarBatalha() //função chamada ao inicar a batalha e define os valores e comportamentos iniciais do personagem
+    {
         if(habilidade1 != null)
         {
             habilidade1.podeAtivarEfeito = true;
@@ -312,6 +403,13 @@ public class IAPersonagemBase : MonoBehaviour
 
         FeedbacksVisuais(); //chama a função para verificar quais feedbacks visuais irá usar
         SelecionarAlvo(); //chama a função para o personagem encontrar seu alvo
+
+        //inicia a coroutine de regeneração
+        if(regeneracaoCoroutine == null)
+        {
+            regeneracaoCoroutine = StartCoroutine(RegeneracaoLoop());
+        }
+            
     }
 
     public void VerificarComportamento(string comportamento) //função que verifica qual deve ser o comportamento do personagem
@@ -402,7 +500,18 @@ public class IAPersonagemBase : MonoBehaviour
             {
                 VerificarComportamento("selecionarAlvo");
             }
-        } 
+        }
+    }
+
+    private IEnumerator RegeneracaoLoop() //loop de regenera~ção de HP e SP por segundo
+    {
+        while (_comportamento != EstadoDoPersonagem.MORTO && _sistemaDeBatalha.batalhaIniciou)
+        {
+            ReceberHP(hpRegeneracao);
+            ReceberSP(spRegeneracao);
+
+            yield return new WaitForSeconds(1f);
+        }
     }
 
     #region SeleçãoDeAlvo
@@ -588,7 +697,7 @@ public class IAPersonagemBase : MonoBehaviour
 
     private void Ataque() //função do ataque em si
     {
-        _cooldownAtual = _cooldown; //reinicia o cooldown
+        _cooldownAtual = _velocidadeDeAtaque; //reinicia o cooldown
 
         //caso deva usar as animações
         if (SistemaDeBatalha.usarAnimações && _animator != null)
@@ -614,7 +723,7 @@ public class IAPersonagemBase : MonoBehaviour
             if(_tipo == TipoDeArma.LONGA_DISTANCIA)
             {
                 _hitAtaquePersonagem.ResetarPosição(); //reseta a posição do hit
-                _hitAtaquePersonagem.MoverAteAlvo(_alvoAtual, velocidadeDoProjetil); //faz com que ele se mova até o alvo
+                _hitAtaquePersonagem.MoverAteAlvo(_alvoAtual, personagem.arma.velocidadeDoProjetil); //faz com que ele se mova até o alvo
 
                 //toca o sfx de projétil se deve usar os sfxs
                 if (_usarSFX)
@@ -712,30 +821,32 @@ public class IAPersonagemBase : MonoBehaviour
     {
         float dano = 0;
 
+        //verifica as chances de um dano crítico
+        bool critico = false;
+        if (Random.Range(0f, 100f) < chanceCritico)
+        {
+            critico = true;
+        }
+
         switch (tipoDano)
         {
             case 0:
-                dano = (_dano - personagem.personagem.defesa);
-                if(dano <= 0)
-                {
-                    dano = 1;
-                }
+                float defesa = Mathf.Clamp(personagem.defesa, 0f, 75f);
+                dano = _dano * (1f - defesa / 100f);
                 break;
             case 1:
-                dano = (dano - personagem.personagem.defesa);
-                if (dano <= 0)
-                {
-                    dano = 1;
-                }
-                break;
-            case 2:
-                dano = (dano - personagem.personagem.defesaMagica);
-                if (dano <= 0)
-                {
-                    dano = 1;
-                }
+                float defesaMagica = Mathf.Clamp(personagem.defesaMagica, 0f, 75f);
+                dano = _dano * (1f - defesaMagica / 100f);
                 break;
         }
+
+        dano = Mathf.Max(0, dano); //garante que o dano nunca seja negativo
+
+        if (critico)
+        {
+            dano *= multiplicadorCritico; //causa dano crítico
+        }
+
         //causa dano ao personagem se ele for um personagem inimigo e é o alvo atual deste personagem
         if (personagem.controlador != this.controlador && personagem == _personagemAlvo)
         {
@@ -785,7 +896,7 @@ public class IAPersonagemBase : MonoBehaviour
     {
         if (!imuneADanos)
         {
-            hpAtual -= Mathf.RoundToInt(dano * (1f - (reducaoDeDano / 100f))); //sofre o dano
+            hpAtual -= dano; //sofre o dano
 
             if (_usarSliders && _slider != null)
             {
@@ -829,11 +940,29 @@ public class IAPersonagemBase : MonoBehaviour
     }
     #endregion
 
+    #region SP
+    public void ReceberSP(float sp)
+    {
+        spAtual += sp;
+        if(spAtual >= _spMaximoEInicial)
+        {
+            spAtual = _spMaximoEInicial;
+        }
+    }
+    #endregion
+
     #region Morte
     private void Morrer() //função de morte do personagem
     {
+        //para a coroutine de regeneração
+        if (regeneracaoCoroutine != null)
+        {
+            StopCoroutine(regeneracaoCoroutine);
+            regeneracaoCoroutine = null;
+        }
+
         //se remove do time em que faz parte
-        if(controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
+        if (controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
         {
             _sistemaDeBatalha.AtualizarTime(("remover"), ("jogador"), this);
         }
@@ -864,11 +993,7 @@ public class IAPersonagemBase : MonoBehaviour
     #region Nível
     public void AtualizarNivel() //função que atualiza os atributos de batalha do personagem quando sobe de nível
     {
-        _hpMaximoEInicial = personagem.hp;
-        hpAtual = _hpMaximoEInicial;
-        _velocidade = personagem.velocidadeDeMovimento;
-        _dano = personagem.ataque;
-        _cooldown = personagem.velocidadeAtaque;
+        AtualizarDadosPersonagem();
 
         if (habilidade1 != null)
         {

@@ -31,20 +31,6 @@ public class PersonagemData
     public float expProximoNível; //experiência necessária para passar para o próximo nível 
     #endregion
 
-    #region Definições Batalha
-    [Header("Definições Batalha")]
-    public float hp; //valor do hp (vida) máximo do personagem
-    public float ataque; //valor do ataque do personagem
-    public float defesa; //valor defesa do personagem
-    public float defesaMagica; //valor da defesa mágica do personagem
-    public float velocidadeAtaque; //velocidade de ataque do personagem
-    public int esquiva; //probabilidade de esquiva do personagem
-    public int precisao; //precisão do personagem
-    public float pontosDeHabilidade; //pontos de habilidades do personagem
-    public float suporte; //valor do suporte do personagem
-    public float velocidadeDeMovimento; //velocidade de movimento do personagem
-    #endregion
-
     #region Definições Habilidades
     [Header("Definições Habilidades")]
     public bool runaNivel1; //variável que representa se o personagem possuí uma runa nível 1 equipada
@@ -82,8 +68,9 @@ public class PersonagemData
     public List<string> idsEquipamentosEquipados = new List<string>(); //lista com os IDs dos equipamentos equipados ao personagem
     #endregion
 
+    //função de subir nível do personagem
     public delegate void delegateSubirNivel();
-    public delegateSubirNivel funcaoSubirNivel; //função de subir nível do personagem
+    public delegateSubirNivel funcaoSubirNivel;
     public void DefinirPersonagem() //função que define dados iniciais importantes do personagem
     {
         DefinicoesAtributos();
@@ -221,7 +208,7 @@ public class PersonagemData
 
     public void DefinicoesAtributos() //função que define a lista de atributos com mais chance de serem escolhidos
     {
-        //adiciona na lista atributos com peso 8
+        //adiciona na lista atributos com peso 8 (80%)
         foreach (var atributo in atributosDePreferencia)
         {
             for (int i = 0; i < 8; i++)
@@ -230,7 +217,7 @@ public class PersonagemData
             }
         }
 
-        //adiciona na lista atributos com peso 2
+        //adiciona na lista atributos com peso 2 (20%)
         foreach (PreferenciaAtributo atributo in Enum.GetValues(typeof(PreferenciaAtributo)))
         {
             if (!atributosDePreferencia.Contains(atributo))
@@ -239,64 +226,12 @@ public class PersonagemData
                 {
                     listaSortearAtributo.Add(atributo);
                 }
-
             }
         }
     }
 
     public void DefinicoesBatalha() //função que define os atributos de batalha do personagem
     {
-        //restaura os padrões
-        hp = 99;
-        ataque = arma.dano;
-        velocidadeAtaque = arma.velocidadeDeAtaque;
-        esquiva = 0;
-        precisao = 1;
-        pontosDeHabilidade = 59;
-
-        switch (classe)
-        {
-            case Classe.Guerreiro:
-                defesa = 9;
-                defesaMagica = 4;
-                suporte = 4;
-                break;
-            case Classe.Ladino:
-                defesa = 8;
-                defesaMagica = 8;
-                suporte = 9;
-                break;
-            case Classe.Elementalista:
-                defesa = 4;
-                defesaMagica = 9;
-                suporte = 9;
-                break;
-            case Classe.Sacerdote:
-                defesa = 4;
-                defesaMagica = 9;
-                suporte = 9;
-                break;
-        }
-
-        //atualiza os valores
-        hp += constituicao;
-        velocidadeDeMovimento = 2;
-        defesa += constituicao;
-        defesaMagica += constituicao;
-
-        ataque += (forca);
-
-        //ataqueMagico += (inteligencia);
-        pontosDeHabilidade += inteligencia;
-
-        //ataqueDistancia += (destreza);
-        precisao += destreza;
-
-        velocidadeAtaque = Mathf.Clamp(arma.velocidadeDeAtaque - (agilidade * 0.01f), 0.2f, arma.velocidadeDeAtaque);
-        esquiva += agilidade;
-
-        suporte += sabedoria;
-
         for(int i = 1; i < 13; i++)
         {
             AplicarEfeitoEquipamento(i);

@@ -734,7 +734,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
         personagemEmCriacao.constituicao = 1;
         personagemEmCriacao.inteligencia = 1;
         personagemEmCriacao.sabedoria = 1;
-        personagemEmCriacao.expProximoNível = 50;
+        personagemEmCriacao.expProximoNível = 500;
 
         personagemEmCriacao.DefinirPersonagem();
 
@@ -890,15 +890,15 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
             _inteligenciaTexto.text += (" " + personagemEmCriacao.inteligencia);
             _sabedoriaTexto.text += (" " + personagemEmCriacao.sabedoria);
 
-            _hpTexto.text = ("HP: " + personagemEmCriacao.hp.ToString());
-            _ataqueTexto.text = ("Ataque: " + personagemEmCriacao.ataque);
-            _defesaTexto.text = ("Defesa: " + personagemEmCriacao.defesa);
-            _defesaMagicaTexto.text = ("Defesa Mágica: " + personagemEmCriacao.defesaMagica);
-            _velocidadeAtaqueTexto.text = ("Velocidade de Ataque: " + personagemEmCriacao.velocidadeAtaque);
-            _esquivaTexto.text = ("Esquiva: " + personagemEmCriacao.esquiva);
-            _precisaoTexto.text = ("Precisão: " + personagemEmCriacao.precisao);
-            _suporteTexto.text = ("Suporte: " + personagemEmCriacao.suporte);
-            _pontosHabilidadeTexto.text = ("Pontos de Habilidade: " + personagemEmCriacao.pontosDeHabilidade);
+            //_hpTexto.text = ("HP: " + personagemEmCriacao.hp.ToString());
+            //_ataqueTexto.text = ("Ataque: " + personagemEmCriacao.ataque);
+            //_defesaTexto.text = ("Defesa: " + personagemEmCriacao.defesa);
+            //_defesaMagicaTexto.text = ("Defesa Mágica: " + personagemEmCriacao.defesaMagica);
+            //_velocidadeAtaqueTexto.text = ("Velocidade de Ataque: " + personagemEmCriacao.velocidadeAtaque);
+            //_esquivaTexto.text = ("Esquiva: " + personagemEmCriacao.esquiva);
+            //_precisaoTexto.text = ("Precisão: " + personagemEmCriacao.precisao);
+            //_suporteTexto.text = ("Suporte: " + personagemEmCriacao.suporte);
+            //_pontosHabilidadeTexto.text = ("Pontos de Habilidade: " + personagemEmCriacao.pontosDeHabilidade);
             _expProximoNivelTexto.text = ("EXP para o próximo Nível: " + ((int)personagemEmCriacao.expProximoNível - personagemEmCriacao.expAtual));
 
             switch (personagemEmCriacao.arma.armaDano)
@@ -925,7 +925,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
                     _armaImagem[i].SetActive(false);
                 }
             }
-            _velocidadeAtaqueArmaTexto.text = ("Velocidade de Ataque: " + (personagemEmCriacao.arma.velocidadeDeAtaque));
+            //_velocidadeAtaqueArmaTexto.text = ("Velocidade de Ataque: " + (personagemEmCriacao.arma.velocidadeDeAtaque));
 
             if (personagemEmCriacao.equipamentoCabecaAcessorio != null)
             {

@@ -994,7 +994,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &72781972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16433,16 +16433,6 @@ MonoBehaviour:
     sabedoria: 0
     expAtual: 0
     "expProximoN\xEDvel": 0
-    hp: 0
-    ataque: 0
-    defesa: 0
-    defesaMagica: 0
-    velocidadeAtaque: 0
-    esquiva: 0
-    precisao: 0
-    pontosDeHabilidade: 0
-    suporte: 0
-    velocidadeDeMovimento: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0

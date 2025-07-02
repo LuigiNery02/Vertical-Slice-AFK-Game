@@ -551,7 +551,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
             personagem.ResetarEstado(); //chama a função para resetar HP, animação, status, etc.
             if(personagem.controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
             {
-                personagem.AtualizarDadosBatalha();
+                personagem.AtualizarDadosPersonagem();
             }
         }
     }
@@ -612,14 +612,14 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                 float dpsJogadorTotal = 0f;
                 foreach (IAPersonagemBase personagem in _personagensJogador)
                 {
-                    dpsJogadorTotal += personagem._dano / personagem._cooldown;
+                    dpsJogadorTotal += personagem._dano / personagem._velocidadeDeAtaque;
                 }
 
                 //cálculo do DPS dos inimigos sorteados
                 float dpsInimigoTotal = 0f;
                 foreach (IAPersonagemBase inimigo in inimigosNaBatalha)
                 {
-                    dpsInimigoTotal += inimigo._dano / inimigo._cooldown;
+                    dpsInimigoTotal += inimigo._dano / inimigo._velocidadeDeAtaque;
                 }
 
                 //calcula chance de vitória
