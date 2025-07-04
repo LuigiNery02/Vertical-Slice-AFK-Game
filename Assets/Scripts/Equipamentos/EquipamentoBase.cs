@@ -18,14 +18,15 @@ public class EquipamentoBase : MonoBehaviour
     public string id; //ID do equipamento
 
     [Header("Modificadores")] //Área referente aos modificadores do equipamento
-    public float ataqueMelee; //valor do dano de ataque melee
-    public float ataqueDistancia; //valor do dano de ataque à distância
-    public float ataqueMagico; //valor do dano de ataque mágico
+    public float multiplicadorAtaque; //valor do multiplicador de ataque
+    public float chanceCritica; //valor da chance crítica
     public float defesa; //valor da defesa
     public float defesaMagica; //valor da defesa mágica
+    public float velocidadeDeAtaque; //valor da velocidade de ataque
     public float velocidadeDeMovimento; //valor da velocidade de movimento
-    public int precisao; //valor da precisão
-    public float hp; //valor do hp
+    public float hpRegeneracao; //valor da regeneração do hp
+    public float spRegeneracao; //valor da regeneração do sp
+    public float ranged; //valor do ranged
     public bool buffConsumivel; //verifica se o equipamento é um consumivel
 
     [HideInInspector]
@@ -33,33 +34,33 @@ public class EquipamentoBase : MonoBehaviour
 
     public void AplicarEfeito() //função que aplica o efeito do equipamento ao personagem
     {
-        //personagem.ataque += ataqueMelee;
-        //personagem.ataqueMagico += ataqueMagico;
-        //personagem.ataqueDistancia += ataqueDistancia;
+        personagem.multiplicadorAtaque += multiplicadorAtaque;
+        personagem.chanceCritico += chanceCritica;
+        personagem.velocidadeDeAtaque += velocidadeDeAtaque;
+        personagem.ranged += ranged;
 
-        //personagem.defesa += defesa;
-        //personagem.defesaMagica += defesaMagica;
+        personagem.defesa += defesa;
+        personagem.defesaMagica += defesaMagica;
 
-        //personagem.velocidadeMovimento += velocidadeDeMovimento;
+        personagem.velocidadeDeMovimento += velocidadeDeMovimento;
 
-        //personagem.precisao += precisao;
-
-        //personagem.hp += hp;
+        personagem.hpRegeneracao += hpRegeneracao;
+        personagem.spRegeneracao += spRegeneracao;
     }
 
     public void RemoverEfeito() //função que remove o efeito do equipamento do personagem
     {
-        //personagem.ataque -= ataqueMelee;
-        //personagem.ataqueMagico -= ataqueMagico;
-        //personagem.ataqueDistancia -= ataqueDistancia;
+        personagem.multiplicadorAtaque -= multiplicadorAtaque;
+        personagem.chanceCritico -= chanceCritica;
+        personagem.velocidadeDeAtaque -= velocidadeDeAtaque;
+        personagem.ranged -= ranged;
 
-        //personagem.defesa -= defesa;
-        //personagem.defesaMagica -= defesaMagica;
+        personagem.defesa -= defesa;
+        personagem.defesaMagica -= defesaMagica;
 
-        //personagem.velocidadeMovimento -= velocidadeDeMovimento;
+        personagem.velocidadeDeMovimento -= velocidadeDeMovimento;
 
-        //personagem.precisao -= precisao;
-
-        //personagem.hp -= hp;
+        personagem.hpRegeneracao -= hpRegeneracao;
+        personagem.spRegeneracao -= spRegeneracao;
     }
 }

@@ -47,18 +47,19 @@ MonoBehaviour:
   nome: Capa
   tipoEquipamento: 10
   icone: {fileID: 21300000, guid: 9b7afa97fe210a147a93161c718e2b89, type: 3}
-  descricao: 
-  descricaoCurta: 
+  descricao: Aumenta a Velocidade de Ataque em 0.15.
+  descricaoCurta: ATK VEL + 0.15
   indice: 11
   id: EquipamentoAcessorio21
-  ataqueMelee: 0
-  ataqueDistancia: 0
-  ataqueMagico: 0
+  multiplicadorAtaque: 0
+  chanceCritica: 0
   defesa: 0
   defesaMagica: 0
+  velocidadeDeAtaque: 0.15
   velocidadeDeMovimento: 0
-  precisao: 0
-  hp: 0
+  hpRegeneracao: 0
+  spRegeneracao: 0
+  ranged: 0
   buffConsumivel: 0
   personagem:
     classe: 0
@@ -77,17 +78,27 @@ MonoBehaviour:
     sabedoria: 0
     expAtual: 0
     "expProximoN\xEDvel": 0
+    hpBase: 0
     hp: 0
-    ataque: 0
-    ataqueMagico: 0
-    ataqueDistancia: 0
+    hpRegeneracao: 0
+    spBase: 0
+    sp: 0
+    spRegeneracao: 0
+    fatorClasse: 0
+    danoBase: 0
+    dano: 0
+    velocidadeDeAtaque: 0
+    precisaoBase: 0
+    precisao: 0
+    chanceCritico: 0
+    multiplicadorCritico: 0
     defesa: 0
     defesaMagica: 0
-    velocidadeAtaque: 0
+    esquivaBase: 0
     esquiva: 0
-    precisao: 0
-    pontosDeHabilidade: 0
-    suporte: 0
+    velocidadeDeMovimento: 0
+    ranged: 0
+    multiplicadorAtaque: 1
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0

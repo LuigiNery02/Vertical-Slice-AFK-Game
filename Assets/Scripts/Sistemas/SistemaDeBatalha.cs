@@ -99,7 +99,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
 
     private void Awake()
     {
-        _gerenciadorDePersonagens = FindObjectOfType<GerenciadorDePersonagens>();
+        _gerenciadorDePersonagens = FindFirstObjectByType<GerenciadorDePersonagens>();
     }
 
     public void CarregarSave(GameData data) //função que carrega os dados do save

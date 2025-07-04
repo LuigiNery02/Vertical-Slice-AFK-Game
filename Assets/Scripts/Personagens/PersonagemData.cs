@@ -29,6 +29,27 @@ public class PersonagemData
     public int sabedoria; //sabedoria do personagem
     public float expAtual; //expriência atual do personagem
     public float expProximoNível; //experiência necessária para passar para o próximo nível 
+    public float hpBase;
+    public float hp;
+    public float hpRegeneracao;
+    public float spBase;
+    public float sp;
+    public float spRegeneracao;
+    public float fatorClasse;
+    public float danoBase;
+    public float dano;
+    public float velocidadeDeAtaque;
+    public float precisaoBase;
+    public float precisao;
+    public float chanceCritico;
+    public float multiplicadorCritico;
+    public float defesa;
+    public float defesaMagica;
+    public float esquivaBase;
+    public float esquiva;
+    public float velocidadeDeMovimento;
+    public float ranged;
+    public float multiplicadorAtaque = 1;
     #endregion
 
     #region Definições Habilidades
@@ -71,8 +92,41 @@ public class PersonagemData
     //função de subir nível do personagem
     public delegate void delegateSubirNivel();
     public delegateSubirNivel funcaoSubirNivel;
-    public void DefinirPersonagem() //função que define dados iniciais importantes do personagem
+    public void DefinirPersonagem(PersonagemAtributosIniciais atributosIniciais) //função que define dados iniciais importantes do personagem
     {
+        switch (classe)
+        {
+            case Classe.Guerreiro:
+                hpBase = atributosIniciais.hpBaseGuerreiro;
+                spBase = atributosIniciais.spBaseGuerreiro;
+                fatorClasse = atributosIniciais.fatorClasseGuerreiro;
+                break;
+            case Classe.Ladino:
+                hpBase = atributosIniciais.hpBaseLadino;
+                spBase = atributosIniciais.spBaseLadino;
+                fatorClasse = atributosIniciais.fatorClasseLadino;
+                break;
+            case Classe.Elementalista:
+                hpBase = atributosIniciais.hpBaseElementalista;
+                spBase = atributosIniciais.spBaseElementalista;
+                fatorClasse = atributosIniciais.fatorClasseElementalista;
+                break;
+            case Classe.Sacerdote:
+                hpBase = atributosIniciais.hpBaseSacerdote;
+                spBase = atributosIniciais.spBaseSacerdote;
+                fatorClasse = atributosIniciais.fatorClasseSacerdote;
+                break;
+        }
+
+        danoBase = arma.dano;
+        multiplicadorCritico = atributosIniciais.multiplicadorCritico;
+        precisaoBase = atributosIniciais.precisaoBase;
+        ranged = atributosIniciais.rangedBase;
+
+        esquivaBase = atributosIniciais.esquivaBase;
+
+        velocidadeDeMovimento = atributosIniciais.velocidadeDeMovimentoBase;
+
         DefinicoesAtributos();
         DefinicoesBatalha();
     }
@@ -232,7 +286,82 @@ public class PersonagemData
 
     public void DefinicoesBatalha() //função que define os atributos de batalha do personagem
     {
-        for(int i = 1; i < 13; i++)
+        int STR = forca; //atributo força do personagem
+        int AGI = agilidade; //atributo agilidade do personagem
+        int DEX = destreza; //atributo destreza do personagem
+        int INT = inteligencia; //atributo inteligência do personagem
+        int VIT = constituicao; //atributo constituição do personagem
+        int LUK = sabedoria; //atributo sabedoria/sorte do personagem
+        int LVL = nivel; //nível do personagem
+
+        //bônus a cada 10 pontos
+        int bonusSTR = Mathf.FloorToInt(STR / 10f);
+        int bonusAGI = Mathf.FloorToInt(AGI / 10f);
+        int bonusDEX = Mathf.FloorToInt(DEX / 10f);
+        int bonusVIT = Mathf.FloorToInt(VIT / 10f);
+        int bonusINT = Mathf.FloorToInt(INT / 10f);
+        int bonusLUK = Mathf.FloorToInt(LUK / 10f);
+
+        switch (classe)
+        {
+            case Classe.Guerreiro:
+                hp = (((hpBase + VIT + STR + LVL) * 20) * (fatorClasse * 4));
+                sp = ((spBase + (INT * 10) + (DEX * 3)) * LVL * (fatorClasse / 4));
+                break;
+            case Classe.Ladino:
+                hp = (((hpBase + VIT + STR + LVL) * 20) * (fatorClasse * 3));
+                sp = ((spBase + (INT * 10) + (DEX * 3)) * LVL * (fatorClasse / 2));
+                break;
+            case Classe.Elementalista:
+                hp = (((hpBase + VIT + STR + LVL) * 20) * (fatorClasse * 2));
+                sp = ((spBase + (INT * 10) + (DEX * 3)) * LVL * (fatorClasse / 2));
+                break;
+            case Classe.Sacerdote:
+                hp = (((hpBase + VIT + STR + LVL) * 20) * (fatorClasse * 2));
+                sp = ((spBase + (INT * 10) + (DEX * 3)) * LVL * (fatorClasse / 1));
+                break;
+        }
+        hp += (hp * 0.01f * bonusVIT); //efeito de bônus do atributo constituição
+
+        hpRegeneracao = (VIT * 0.5f);
+        spRegeneracao = (INT * 0.5f);
+
+        multiplicadorAtaque = 1;
+        switch (arma.armaDano)
+        {
+            case TipoDeDano.DANO_MELEE:
+                dano = (danoBase + (STR * 3) + (DEX * 1) * multiplicadorAtaque);
+                dano += (bonusSTR * 6); //efeito de bônus do atributo força
+                break;
+            case TipoDeDano.DANO_RANGED:
+                dano = (danoBase + (DEX * 3) + (STR * 1) * multiplicadorAtaque);
+                dano += (bonusDEX * 3); //efeito de bônus do atributo destreza
+                break;
+            case TipoDeDano.DANO_MAGICO:
+                dano = danoBase + ((INT * 4) + (DEX * 1) * multiplicadorAtaque );
+                dano += (bonusINT * 4); //efeito de bônus do atributo inteligência
+                break;
+        }
+
+        precisao = (precisaoBase + (DEX * 2) + (LUK * 0.5f));
+        precisao += (bonusDEX * 10); //efeito de bônus do atributo destreza
+
+        float aspd = arma.velocidadeDeAtaque + (AGI * 0.3f) + (DEX * 0.1f);
+        aspd += (bonusAGI * 0.3f); //efeito de bônus do atributo agilidade
+        velocidadeDeAtaque = Mathf.Clamp(2f - (aspd * 0.02f), 0.2f, 2f);
+
+        esquiva = (esquivaBase + (AGI * 2) + (LUK * 0.5f));
+        esquiva += (bonusAGI * 10); //efeito de bônus do atributo agilidade
+
+        defesa = (VIT * 0.5f);
+        defesa += defesa * (bonusVIT * 0.01f); //efeito de bônus do atributo constituição
+        defesaMagica = (INT * 0.5f);
+        defesaMagica += defesaMagica * (bonusVIT * 0.01f); //efeito de bônus do atributo constituição
+
+        chanceCritico = (LUK * 0.5f);
+        chanceCritico += (bonusLUK * 2); //efeito de bônus do atributo sabedoria
+
+        for (int i = 1; i < 13; i++)
         {
             AplicarEfeitoEquipamento(i);
         }
