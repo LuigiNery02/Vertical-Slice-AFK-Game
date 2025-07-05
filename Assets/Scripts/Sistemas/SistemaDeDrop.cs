@@ -55,7 +55,7 @@ public class SistemaDeDrop : MonoBehaviour, Salvamento
     public void Dropar(Transform inimigo) //função que faz o inimigo dropar
     {
         int probabilidade = UnityEngine.Random.Range(0, 4); //cria uma probabilidade de drop
-        if(probabilidade > 0)
+        if (probabilidade > 0)
         {
             _dropsAtivos++;
             _dropsVisuais[_dropsAtivos - 1].gameObject.SetActive(true);

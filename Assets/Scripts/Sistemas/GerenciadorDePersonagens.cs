@@ -82,7 +82,7 @@ public class GerenciadorDePersonagens : MonoBehaviour
         return -1;
     }
 
-    public void RestaurarSlotsSelecionados()
+    public void RestaurarSlotsSelecionados() //função que restaura os slots selecionados
     {
         SlotPersonagemBatalha[] slots = FindObjectsOfType<SlotPersonagemBatalha>(true);
 
@@ -109,7 +109,7 @@ public class GerenciadorDePersonagens : MonoBehaviour
     }
 
 
-    private int EncontrarIndiceDoPersonagem(IAPersonagemBase p)
+    private int EncontrarIndiceDoPersonagem(IAPersonagemBase p) //função que encontra um índice disponível para o personagem
     {
         for (int i = 0; i < personagem.Length; i++)
         {

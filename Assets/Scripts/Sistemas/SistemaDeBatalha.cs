@@ -70,7 +70,9 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
     [SerializeField]
     private List<IAPersonagemBase> _personagensJogador = new List<IAPersonagemBase>(); //time do jogador
     private List<IAPersonagemBase> _personagensInimigos = new List<IAPersonagemBase>(); //time do inimigo
+    [SerializeField]
     private int _integrantesTimeJogador; //número de integrantes do time do jogador
+    [SerializeField]
     private int _integrantesTimeInimigo; //número de integrantes do time inimigo
     private List<string> _codigosIDPersonagensBatalhaContinua = new List<string>(); //códigos ID dos personagens da última batalha continua
 

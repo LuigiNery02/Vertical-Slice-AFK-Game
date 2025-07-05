@@ -20,7 +20,7 @@ public class PersonagemAtributosIniciais : MonoBehaviour
     [Header("Ataque")]
     public float precisaoBase; //valor base da precisão
     public float multiplicadorCritico = 2; //valor do multiplicador do crítico
-    public float rangedBase;
+    public float rangedBase; //valor base do ranged do personagem
 
     //área referente à esquiva do personagem
     [Header("Esquiva")]

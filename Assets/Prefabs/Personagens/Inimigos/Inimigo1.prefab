@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 7165497326612581751}
   - component: {fileID: 8858359529623007685}
   - component: {fileID: 2007151633361783167}
+  - component: {fileID: 1520822174624118994}
   m_Layer: 0
   m_Name: Inimigo1
   m_TagString: Untagged
@@ -306,7 +307,6 @@ Transform:
   m_Children:
   - {fileID: 768640198259694884}
   - {fileID: 6943677466034272709}
-  - {fileID: 508434042557334776}
   - {fileID: 4200137004110566122}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -361,6 +361,27 @@ MonoBehaviour:
     sabedoria: 0
     expAtual: 0
     "expProximoN\xEDvel": 0
+    hpBase: 0
+    hp: 400
+    hpRegeneracao: 0.5
+    spBase: 0
+    sp: 0
+    spRegeneracao: 0
+    fatorClasse: 1
+    danoBase: 0
+    dano: 10
+    velocidadeDeAtaque: 2.5
+    precisaoBase: 0
+    precisao: 10
+    chanceCritico: 0.5
+    multiplicadorCritico: 2
+    defesa: 10
+    defesaMagica: 10
+    esquivaBase: 0
+    esquiva: 10
+    velocidadeDeMovimento: 2
+    ranged: 7
+    multiplicadorAtaque: 1
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
@@ -390,30 +411,15 @@ MonoBehaviour:
   controlador: 1
   _tipo: 0
   _comportamento: 0
-  _hpBaseGuerreiro: 300
-  _hpBaseLadino: 300
-  _hpBaseElementalista: 300
-  _hpBaseSacerdote: 300
   _hpMaximoEInicial: 100
   hpAtual: 0
   hpRegeneracao: 0
-  _spBaseGuerreiro: 100
-  _spBaseLadino: 100
-  _spBaseElementalista: 100
-  _spBaseSacerdote: 100
   _spMaximoEInicial: 0
   spAtual: 0
   spRegeneracao: 0
-  _fatorClasseGuerreiro: 1
-  _fatorClasseLadino: 1
-  _fatorClasseElementalista: 1
-  _fatorClasseSacerdote: 1
-  precisaoBase: 0
   precisao: 0
   _dano: 0
-  velocidadeDeAtaqueBase: 1
   _velocidadeDeAtaque: 0
-  esquivaBase: 0
   esquiva: 0
   chanceCritico: 0
   multiplicadorCritico: 2
@@ -432,20 +438,8 @@ MonoBehaviour:
   _personagemAlvo: {fileID: 0}
   posicaoInicial: {x: 0, y: 0, z: 0}
   rotacaoInicial: {x: 0, y: 0, z: 0, w: 0}
-  movimentoEspecialAtual: 0
-  executandoMovimentoEspecial: 0
-  imuneADanos: 0
-  efeitoPorAtaqueAtivado: 0
-  efeitoPorEsquivaAtivado: 0
-  efeitoPorDanoAtivado: 0
-  sangramento: 0
-  danoSangramento: 0
-  queimadura: 0
-  danoQueimadura: 0
-  congelamento: 0
-  envenenamento: 0
-  pontosDeHabilidadeTexto: {fileID: 0}
   textoHP: {fileID: 1084130576450980353}
+  pontosDeHabilidadeTexto: {fileID: 0}
 --- !u!136 &7165497326612581751
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -593,6 +587,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1520822174624118994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2215791898656361645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8f3b1b1eeefb442aabf8eade750a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2445538481014003249
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,11 +1569,11 @@ Transform:
   m_GameObject: {fileID: 8877947003103170265}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.297, y: 0.853, z: 1.74}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0, y: 1.195, z: 0}
+  m_LocalScale: {x: 1.6, y: 1.6000004, z: 1.6000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1072069194619778965}
+  m_Father: {fileID: 3590848161965404674}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4566376955032126737
 MeshFilter:
@@ -1584,7 +1590,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8877947003103170265}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1655,7 +1661,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2dcaa59a8706e147a8e8915be0fab5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _posicaoInicial: {x: 0, y: 0, z: 0}
+  _personagemPai: {fileID: 0}
+  poolKey: 
+  gerenciadorDePool: {fileID: 0}
   longaDistancia: 0
   usarSFX: 0
 --- !u!1 &8989344814871004386
@@ -1830,7 +1838,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8627958540866011960, guid: 49ab3366fe18566499ef7aa0d9c35068, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 508434042557334776}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49ab3366fe18566499ef7aa0d9c35068, type: 3}
 --- !u!4 &3590848161965404674 stripped

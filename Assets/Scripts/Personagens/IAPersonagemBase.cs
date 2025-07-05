@@ -11,7 +11,6 @@ public class IAPersonagemBase : MonoBehaviour
 {
     //área referente aos dados e visual do personagem selecionado
     [Header("Personagem Selecionado")]
-    //[HideInInspector]
     public PersonagemData personagem; //dados do personagem criado
     public GameObject[] personagemVisual; //visual do personagem
     public GameObject canvas; //canvas do personagem
@@ -48,9 +47,9 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("Ataque")]
     [HideInInspector]
     public float precisao; //precisão do personagem
-    [HideInInspector]
+    //[HideInInspector]
     public float _dano; //valor do dano do ataque do personagem
-    [HideInInspector]
+    //[HideInInspector]
     public float _velocidadeDeAtaque; //valor da velocidade de ataque do personagem
     private float _cooldownAtual = 0f; //tempo atual para o personagem poder atacar novamente
     [HideInInspector]
@@ -75,9 +74,9 @@ public class IAPersonagemBase : MonoBehaviour
     //área referente à habilidades
     [Header("Habilidades")]
     [HideInInspector]
-    public HabilidadeBase habilidade1;
+    public HabilidadeBase habilidade1; //habilidade 1 (classe) do personagem
     [HideInInspector]
-    public HabilidadeBase habilidade2;
+    public HabilidadeBase habilidade2; //habilidade 2 (arma) do personagem
 
     //Área referente às animações
     [Header("Animação")]
@@ -85,13 +84,13 @@ public class IAPersonagemBase : MonoBehaviour
 
     //Área referente aos sfx
     [Header("SFX")]
-    public AudioSource _audio;
+    public AudioSource _audio; //áudiosource do personagem
     [SerializeField]
-    private AudioClip _contatoSFX;
+    private AudioClip _contatoSFX; //áudio sfx do contato(hit)
     [SerializeField]
-    private AudioClip _projetilSFX;
+    private AudioClip _projetilSFX; //áudio sfx do projétil
     [SerializeField]
-    public AudioClip _habilidadeSFX;
+    public AudioClip _habilidadeSFX; //áudio sfx da habilidade
 
     [HideInInspector]
     public int id; //variável para verificar o id do personagem
@@ -99,52 +98,51 @@ public class IAPersonagemBase : MonoBehaviour
     public IAPersonagemBase _personagemAlvo; //alvo de ataques do personagem
     private Transform _alvoAtual; //transform do personagem alvo
     private SistemaDeBatalha _sistemaDeBatalha; //sistema de batalha
-    [SerializeField]
+    private GerenciadorDeObjectPool _gerenciadorDePool; //gerenciador de object pool
     private HitAtaquePersonagem _hitAtaquePersonagem; //hit do personagem
-    private SkinnedMeshRenderer _malha; //malha do personagem
     [HideInInspector] 
     public Vector3 posicaoInicial; //posição inicial do personagem
     [HideInInspector]
     public Quaternion rotacaoInicial; //rotação inicial do personagem
-    [HideInInspector]
-    public int movimentoEspecialAtual; //identificação do movimento especial do personagem
-    [HideInInspector]
-    public bool executandoMovimentoEspecial; //variável para verificar se o personagem está executando o movimento especial
-    [HideInInspector]
-    public bool imuneADanos; //variável que verifica se o personagem é imune a danos
+    //[HideInInspector]
+    //public int movimentoEspecialAtual; //identificação do movimento especial do personagem
+    //[HideInInspector]
+    //public bool executandoMovimentoEspecial; //variável para verificar se o personagem está executando o movimento especial
+    //[HideInInspector]
+    //public bool imuneADanos; //variável que verifica se o personagem é imune a danos
     //função que é ativada quando há um efeito por ataque
-    public delegate void EfeitoPorAtaque();
-    public EfeitoPorAtaque efeitoPorAtaque;
-    [HideInInspector]
-    public bool efeitoPorAtaqueAtivado; //verifica se efeitos por ataque de habilidades estão ativados
-    //função que é ativada quando há um efeito por esquiva
-    public delegate void EfeitoPorEsquiva();
-    public EfeitoPorAtaque efeitoPorEsquiva;
-    [HideInInspector]
-    public bool efeitoPorEsquivaAtivado; //verifica se efeitos por esquiva de habilidades estão ativados
-    //função que é ativada quando há um efeito por dano
-    public delegate void EfeitoPorDano();
-    public EfeitoPorDano efeitoPorDano;
-    [HideInInspector]
-    public bool efeitoPorDanoAtivado; //verifica se efeitos por dano de habilidades estão ativados
-    [HideInInspector]
-    public bool sangramento; //efeito de sangramento
-    [HideInInspector]
-    public float danoSangramento; //dano do efeito de sangramento
-    [HideInInspector]
-    public bool queimadura; //efeito de queimadura
-    [HideInInspector]
-    public float danoQueimadura; //dano do efeito de sangramento
-    [HideInInspector]
-    public bool congelamento; //efeito de congelamento
-    [HideInInspector]
-    public bool envenenamento; //efeito de envenenamento
-    public Text pontosDeHabilidadeTexto; //texto referente aos pontos de habilidade do personagem
+    //public delegate void EfeitoPorAtaque();
+    //public EfeitoPorAtaque efeitoPorAtaque;
+    //[HideInInspector]
+    //public bool efeitoPorAtaqueAtivado; //verifica se efeitos por ataque de habilidades estão ativados
+    ////função que é ativada quando há um efeito por esquiva
+    //public delegate void EfeitoPorEsquiva();
+    //public EfeitoPorAtaque efeitoPorEsquiva;
+    //[HideInInspector]
+    //public bool efeitoPorEsquivaAtivado; //verifica se efeitos por esquiva de habilidades estão ativados
+    ////função que é ativada quando há um efeito por dano
+    //public delegate void EfeitoPorDano();
+    //public EfeitoPorDano efeitoPorDano;
+    //[HideInInspector]
+    //public bool efeitoPorDanoAtivado; //verifica se efeitos por dano de habilidades estão ativados
+    //[HideInInspector]
+    //public bool sangramento; //efeito de sangramento
+    //[HideInInspector]
+    //public float danoSangramento; //dano do efeito de sangramento
+    //[HideInInspector]
+    //public bool queimadura; //efeito de queimadura
+    //[HideInInspector]
+    //public float danoQueimadura; //dano do efeito de sangramento
+    //[HideInInspector]
+    //public bool congelamento; //efeito de congelamento
+    //[HideInInspector]
+    //public bool envenenamento; //efeito de envenenamento
 
     //Área de feedback visuais
     private Animator _animator; //animator do personagem
     private Slider _slider; //slider do hp do personagem
     public Text textoHP; //texto mostrando a atualização do hp do personagem
+    public Text pontosDeHabilidadeTexto; //texto referente aos pontos de habilidade do personagem
     private bool _usarAnimações; //variável para verificar se deve usar as animações
     private bool _usarSliders; //variável para verificar se deve usar os sliders
     private bool _usarSFX; //variável para verificar se deve usar os sfxs
@@ -152,20 +150,14 @@ public class IAPersonagemBase : MonoBehaviour
     private void Start()
     {
         _sistemaDeBatalha = GameObject.FindGameObjectWithTag("SistemaDeBatalha").GetComponent<SistemaDeBatalha>(); //encontra o sistema de batalha na cena
+        _gerenciadorDePool = FindFirstObjectByType<GerenciadorDeObjectPool>(); //encontra o gerenciador de pool na cena
 
+        //verifica se deve usar os sliders, e os encontra se for personagem inimigo
         if (SistemaDeBatalha.usarSliders)
         {
             if (controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
             {
                 _slider = GetComponentInChildren<Slider>();
-            }
-        }
-
-        if (SistemaDeBatalha.usarAnimações)
-        {
-            if (controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
-            {
-                _malha = GetComponentInChildren<SkinnedMeshRenderer>();
             }
         }
     }
@@ -174,6 +166,7 @@ public class IAPersonagemBase : MonoBehaviour
     {
         _sistemaDeBatalha = GameObject.FindGameObjectWithTag("SistemaDeBatalha").GetComponent<SistemaDeBatalha>(); //encontra o sistema de batalha na cena
 
+        //verifica se deve usar os sliders, e os encontra se for personagem inimigo
         if (SistemaDeBatalha.usarSliders)
         {
             if (controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
@@ -182,20 +175,18 @@ public class IAPersonagemBase : MonoBehaviour
             }
         }
 
-        if (SistemaDeBatalha.usarAnimações)
+        //recebe os dados de batalha do personagem caso for um inimigo
+        if (controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
         {
-            if (controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
-            {
-                _malha = GetComponentInChildren<SkinnedMeshRenderer>();
-            }
+            AtualizarDadosPersonagem();
         }
     }
 
     public void ResetarDadosPersonagem() //função que reseta os dados visuais do personagem selecionado
     {
+        //reseta os dados do personagem
         personagem.funcaoSubirNivel -= AtualizarNivel;
 
-        //reseta os dados do personagem
         for (int i = 0; i < personagemVisual.Length; i++)
         {
             personagemVisual[i].gameObject.SetActive(false);
@@ -204,7 +195,7 @@ public class IAPersonagemBase : MonoBehaviour
         canvas.SetActive(false);
     }
 
-    public void ReceberDadosPersonagem() //função que atualiza os dados do personagem selecionado
+    public void ReceberDadosPersonagem() //função que recebe e define os dados do personagem selecionado
     {
         personagem.funcaoSubirNivel += AtualizarNivel;
 
@@ -259,19 +250,11 @@ public class IAPersonagemBase : MonoBehaviour
         {
             _slider = transform.GetComponentInChildren<Slider>();
         }
-
-        //encontra a malha do personagem caso tenha
-        if (personagemVisual[id].GetComponentInChildren<SkinnedMeshRenderer>() != null)
-        {
-            _malha = personagemVisual[id].GetComponentInChildren<SkinnedMeshRenderer>();
-        }
     }
 
-    public void AtualizarDadosPersonagem() //função que atualiza os dados do personagem
+    public void AtualizarDadosPersonagem() //função que atualiza os dados de batalha do personagem
     {
-        //atualiza os dados do personagem
         _tipo = personagem.arma.armaTipo;
-
         _dano = personagem.dano;
         _velocidadeDeAtaque = personagem.velocidadeDeAtaque;
         precisao = personagem.precisao;
@@ -289,11 +272,12 @@ public class IAPersonagemBase : MonoBehaviour
         hpRegeneracao = personagem.hpRegeneracao;
         _spMaximoEInicial = personagem.sp;
         spRegeneracao = personagem.spRegeneracao;
-
     }
     public void IniciarBatalha() //função chamada ao inicar a batalha e define os valores e comportamentos iniciais do personagem
     {
-        if(habilidade1 != null)
+        //verifica se há habilidades equipadas, e habilita elas se sim
+
+        if (habilidade1 != null)
         {
             habilidade1.podeAtivarEfeito = true;
         }
@@ -303,29 +287,29 @@ public class IAPersonagemBase : MonoBehaviour
             habilidade2.podeAtivarEfeito = true;
         }
 
-        //encontra o hit dentro de si
-        HitAtaquePersonagem[] hits = GetComponentsInChildren<HitAtaquePersonagem>(true);
-
-        foreach (HitAtaquePersonagem hit in hits)
+        //encontra o hit dentro de si caso esteja com uma arma melee equipada e à ativa
+        if(personagem.arma.armaDano == TipoDeDano.DANO_MELEE)
         {
-            Transform atual = hit.transform.parent;
-
-            if (atual.gameObject.name == personagem.arma.nome && atual.gameObject.activeSelf)
-            {
-                _hitAtaquePersonagem = atual.GetComponentInChildren<HitAtaquePersonagem>(true);
-            }
+            _hitAtaquePersonagem = GetComponentInChildren<HitAtaquePersonagem>(true);
         }
 
         hpAtual = _hpMaximoEInicial; //define o hp atual do personagem igual ao valor máximo e inicial
+        spAtual = _spMaximoEInicial; //define o sp atual do personagem igual ao valor máximo e inicial
 
-        sangramento = false;
-        queimadura = false;
-        congelamento = false;
+        //
+        if (pontosDeHabilidadeTexto != null)
+        {
+            pontosDeHabilidadeTexto.text = (spAtual + " / " + _spMaximoEInicial);
+        }
+
+        //sangramento = false;
+        //queimadura = false;
+        //congelamento = false;
 
         FeedbacksVisuais(); //chama a função para verificar quais feedbacks visuais irá usar
         SelecionarAlvo(); //chama a função para o personagem encontrar seu alvo
 
-        //inicia a coroutine de regeneração
+        //inicia a coroutine de regeneração de hp e sp
         if(regeneracaoCoroutine == null)
         {
             regeneracaoCoroutine = StartCoroutine(RegeneracaoLoop());
@@ -367,13 +351,13 @@ public class IAPersonagemBase : MonoBehaviour
         else if(comportamento == "movimentoEspecial")
         {
             _comportamento = EstadoDoPersonagem.MOVIMENTO_ESPECIAL;
-            MovimentoEspecial(movimentoEspecialAtual);
+            //MovimentoEspecial(movimentoEspecialAtual);
         }
-        else if(comportamento == "paralisia")
-        {
-            _comportamento = EstadoDoPersonagem.IDLE;
-            Paralisia();
-        }
+        //else if(comportamento == "paralisia")
+        //{
+        //    _comportamento = EstadoDoPersonagem.IDLE;
+        //    Paralisia();
+        //}
     }
 
     public void ResetarEstado() //funções para resetar os estados do personagem
@@ -389,12 +373,7 @@ public class IAPersonagemBase : MonoBehaviour
         FeedbacksVisuais();
         if (_usarAnimações)
         {
-            _malha.gameObject.SetActive(true);
             _animator.Rebind();
-        }
-        else
-        {
-            _malha.gameObject.SetActive(true);
         }
     }
 
@@ -412,21 +391,29 @@ public class IAPersonagemBase : MonoBehaviour
             {
                 Atacar();
             }
-            else if (_comportamento == EstadoDoPersonagem.MOVIMENTO_ESPECIAL)
-            {
-                MovimentoEspecial(movimentoEspecialAtual);
-            }
+            //else if (_comportamento == EstadoDoPersonagem.MOVIMENTO_ESPECIAL)
+            //{
+            //    MovimentoEspecial(movimentoEspecialAtual);
+            //}
 
-            if (_personagemAlvo != null && _personagemAlvo._comportamento == EstadoDoPersonagem.MORTO)
+
+            if (_personagemAlvo != null)
             {
-                VerificarComportamento("selecionarAlvo");
+                transform.LookAt(_personagemAlvo.transform); //faz o personagem sempre olhar para seu alvo
+
+                //se seu alvo morreu, procura outro alvo
+                if (_personagemAlvo._comportamento == EstadoDoPersonagem.MORTO)
+                {
+                    VerificarComportamento("selecionarAlvo");
+                }
             }
         }
     }
 
     private IEnumerator RegeneracaoLoop() //loop de regeneração de HP e SP por segundo
     {
-        while (_comportamento != EstadoDoPersonagem.MORTO && _sistemaDeBatalha.batalhaIniciou && hpAtual < _hpMaximoEInicial)
+        //regenera hp e sp por segundo enquanto não está morto e enquanto a batalha está acontecendo
+        while (_comportamento != EstadoDoPersonagem.MORTO && _sistemaDeBatalha.batalhaIniciou)
         {
             ReceberHP(hpRegeneracao);
             ReceberSP(spRegeneracao);
@@ -639,18 +626,50 @@ public class IAPersonagemBase : MonoBehaviour
         {
             _hitAtaquePersonagem.gameObject.SetActive(true);
             _hitAtaquePersonagem.usarSFX = _usarSFX;
-
-            //se é um personagem de longa distancia, transtorma o hit em um ataque de longa distancia
-            if(_tipo == TipoDeArma.LONGA_DISTANCIA)
+            
+        }
+        else
+        {
+            //se é um personagem com arma de longa distancia, transtorma o hit em um ataque de longa distancia
+            if (_tipo == TipoDeArma.LONGA_DISTANCIA)
             {
-                _hitAtaquePersonagem.ResetarPosição(); //reseta a posição do hit
-                _hitAtaquePersonagem.MoverAteAlvo(_alvoAtual, personagem.arma.velocidadeDoProjetil); //faz com que ele se mova até o alvo
+                string chaveDoPool = personagem.arma.nome; //define o pool que quer buscar pelo nome da arma
+                GameObject projetil = _gerenciadorDePool.ObterPool(chaveDoPool);
 
-                //toca o sfx de projétil se deve usar os sfxs
-                if (_usarSFX)
+                if (projetil != null)
                 {
-                    _audio.clip = _projetilSFX;
-                    _audio.Play();
+                    if (controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR) //se é um personagem do jogador...
+                    {
+                        if (_tipo == TipoDeArma.LONGA_DISTANCIA) //se é um personagem com uma arma de longa distancia equipada...
+                        {
+                            //define a posição do projétil para a posição da arma do personagem
+                            AtivarArmaPersonagem arma = GetComponentInChildren<AtivarArmaPersonagem>();
+                            projetil.transform.position = arma.armas[arma.armaAtual].transform.position;
+                        }
+                    }
+                    else //do contrário...
+                    {
+                        //posiciona o projétil em uma posição especíifica do personagem
+                        Vector3 posicao = transform.position;
+                        posicao.y += 1.5f;
+                        projetil.transform.position = posicao;
+                    }
+
+                    //define o projétil
+                    var prefab = _gerenciadorDePool.ObterPrefab(chaveDoPool);
+                    if(prefab != null)
+                    {
+                        projetil.transform.rotation = prefab.transform.rotation;
+                    }
+                    HitAtaquePersonagem hit = projetil.GetComponent<HitAtaquePersonagem>();
+                    if (hit != null)
+                    {
+                        hit._personagemPai = this;
+                        hit.usarSFX = _usarSFX;
+                        hit.MoverAteAlvo(_alvoAtual, personagem.arma.velocidadeDoProjetil);
+                        hit.poolKey = chaveDoPool;
+                        hit.gerenciadorDePool = _gerenciadorDePool;
+                    }
                 }
             }
         }
@@ -658,61 +677,61 @@ public class IAPersonagemBase : MonoBehaviour
     #endregion
 
     #region Movimento Especial
-    private void MovimentoEspecial(int movimento) //função do movimento especial do personagem
-    {
-        //retorna caso já esteja executando o movimento especial
-        if(executandoMovimentoEspecial)
-        {
-            return;
-        }
+    //private void MovimentoEspecial(int movimento) //função do movimento especial do personagem
+    //{
+    //    //retorna caso já esteja executando o movimento especial
+    //    if(executandoMovimentoEspecial)
+    //    {
+    //        return;
+    //    }
 
-        executandoMovimentoEspecial = true;
+    //    executandoMovimentoEspecial = true;
 
-        if (movimento == 1)
-        {
-            if(SistemaDeBatalha.usarAnimações && _animator != null)
-            {
-                _animator.ResetTrigger("Perseguir");
-                _animator.ResetTrigger("Atacar");
-                _animator.SetTrigger("Combo");
-            }
-            else
-            {
-                StartCoroutine(TempoMovimentoEspecial(movimento));
-            }
-        }
-        else if(movimento == 2)
-        {
-            if (SistemaDeBatalha.usarAnimações && _animator != null)
-            {
-                _animator.ResetTrigger("Perseguir");
-                _animator.ResetTrigger("Atacar");
-                _animator.SetTrigger("Defender");
-            }
-        }
-    }
+    //    if (movimento == 1)
+    //    {
+    //        if(SistemaDeBatalha.usarAnimações && _animator != null)
+    //        {
+    //            _animator.ResetTrigger("Perseguir");
+    //            _animator.ResetTrigger("Atacar");
+    //            _animator.SetTrigger("Combo");
+    //        }
+    //        else
+    //        {
+    //            StartCoroutine(TempoMovimentoEspecial(movimento));
+    //        }
+    //    }
+    //    else if(movimento == 2)
+    //    {
+    //        if (SistemaDeBatalha.usarAnimações && _animator != null)
+    //        {
+    //            _animator.ResetTrigger("Perseguir");
+    //            _animator.ResetTrigger("Atacar");
+    //            _animator.SetTrigger("Defender");
+    //        }
+    //    }
+    //}
 
-    public void FinalizarMovimentoEspecial() //função que finaliza o movimento especial externamente
-    {
-        executandoMovimentoEspecial = false;
+    //public void FinalizarMovimentoEspecial() //função que finaliza o movimento especial externamente
+    //{
+    //    executandoMovimentoEspecial = false;
 
-        if(movimentoEspecialAtual == 1)
-        {
-            if(habilidade1 != null)
-            {
-                habilidade1.RemoverEfeito();
-            }
-        }
+    //    if(movimentoEspecialAtual == 1)
+    //    {
+    //        if(habilidade1 != null)
+    //        {
+    //            habilidade1.RemoverEfeito();
+    //        }
+    //    }
 
-        if (_personagemAlvo != null && _personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
-        {
-            VerificarComportamento("perseguir");
-        }
-        else
-        {
-            VerificarComportamento("selecionarAlvo");
-        }
-    }
+    //    if (_personagemAlvo != null && _personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
+    //    {
+    //        VerificarComportamento("perseguir");
+    //    }
+    //    else
+    //    {
+    //        VerificarComportamento("selecionarAlvo");
+    //    }
+    //}
 
     IEnumerator TempoMovimentoEspecial(int movimento) //função de movimento especial que utiliza tempo
     {
@@ -749,6 +768,7 @@ public class IAPersonagemBase : MonoBehaviour
             critico = true;
         }
 
+        //verifica o tipo de dano (físico ou mágico)
         switch (tipoDano)
         {
             case 0:
@@ -763,7 +783,7 @@ public class IAPersonagemBase : MonoBehaviour
 
         dano = Mathf.Max(0, dano); //garante que o dano nunca seja negativo
 
-        if (critico)
+        if (critico) //se as chances deram verdadeiras para um dano crítico
         {
             dano *= multiplicadorCritico; //causa dano crítico
         }
@@ -771,7 +791,7 @@ public class IAPersonagemBase : MonoBehaviour
         //causa dano ao personagem se ele for um personagem inimigo e é o alvo atual deste personagem
         if (personagem.controlador != this.controlador && personagem == _personagemAlvo)
         {
-            personagem.SofrerDano(dano);
+            personagem.SofrerDano(dano, critico);
 
             if(controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
             {
@@ -792,53 +812,52 @@ public class IAPersonagemBase : MonoBehaviour
         textoHP.gameObject.SetActive(true);
         textoHP.text = ("Esquivou");
         StartCoroutine(DesativarTextoHP(this));
-        StartCoroutine(TempoDeEsquiva());
     }
 
-    IEnumerator TempoDeEsquiva()
-    {
-        _malha.gameObject.SetActive(false);
-        yield return new WaitForSeconds(0.1f);
-        _malha.gameObject.SetActive(true);
-    }
-
-    public void DesativarTextoHPPersonagem(IAPersonagemBase personagem)
+    public void DesativarTextoHPPersonagem(IAPersonagemBase personagem) //função para chamar a coroutine "DesativarTextoHP"
     {
         StartCoroutine(DesativarTextoHP(personagem));
     }
 
     private IEnumerator DesativarTextoHP(IAPersonagemBase personagem) //coroutine que desativa o texto do ho do personagem
     {
-        yield return new WaitForSeconds(1);
-        personagem.textoHP.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.75f); //tempo de espera
+        personagem.textoHP.gameObject.SetActive(false); //desativa o texto
     }
 
-    public void SofrerDano(float dano) //função para sofrer dano
+    public void SofrerDano(float dano, bool critico) //função para sofrer dano
     {
-        if (!imuneADanos)
-        {
+        //if (!imuneADanos)
+        //{
             hpAtual -= dano; //sofre o dano
 
             if (_usarSliders && _slider != null)
             {
-                //atualiza o slider
+                //atualiza o slider e o texto de hp
                 _slider.value = hpAtual;
                 textoHP.gameObject.SetActive(true);
-                textoHP.text = ("-" + dano);
+                if (critico)
+                {
+                    textoHP.text = ("-" + dano + " (Crítico)");
+                }
+                else
+                {
+                    textoHP.text = ("-" + dano);
+                }
                 StartCoroutine(DesativarTextoHP(this));
             }
 
-            if (efeitoPorDanoAtivado)
-            {
-                efeitoPorDano();
-            }
+            //if (efeitoPorDanoAtivado)
+            //{
+            //    efeitoPorDano();
+            //}
 
             if (hpAtual <= 0)
             {
                 hpAtual = 0;
                 VerificarComportamento("morrer");
             }
-        }
+       // }
     }
 
     public void ReceberHP(float cura) //função para receber hp
@@ -854,17 +873,21 @@ public class IAPersonagemBase : MonoBehaviour
         {
             //atualiza o slider
             _slider.value = hpAtual;
-            textoHP.gameObject.SetActive(true);
-            textoHP.text = ("+" + cura);
-            StartCoroutine(DesativarTextoHP(this));
+            
+            if(hpAtual < _hpMaximoEInicial)
+            {
+                textoHP.gameObject.SetActive(true);
+                textoHP.text = ("+" + cura);
+                StartCoroutine(DesativarTextoHP(this));
+            }
         }
     }
     #endregion
 
     #region SP
-    public void ReceberSP(float sp)
+    public void ReceberSP(float sp) //função que recebe sp
     {
-        spAtual += sp;
+        spAtual += sp; //recebe o sp
         if(spAtual >= _spMaximoEInicial)
         {
             spAtual = _spMaximoEInicial;
@@ -899,21 +922,30 @@ public class IAPersonagemBase : MonoBehaviour
             _animator.ResetTrigger("Atacar");
             _animator.SetTrigger("Morrer");
         }
-        else
+
+        //desativa o hit caso seja melee, ou o manda para o pool caso seja longa distância
+        if (_gerenciadorDePool != null && _tipo == TipoDeArma.LONGA_DISTANCIA)
         {
-            //desativa a malha
-            if(_malha != null)
+            if (_hitAtaquePersonagem != null)
             {
-                _malha.gameObject.SetActive(false);
+                _gerenciadorDePool.DevolverPool(personagem.arma.nome, _hitAtaquePersonagem.gameObject);
             }
         }
-        _hitAtaquePersonagem.gameObject.SetActive(false); //desativa o hit
+        else
+        {
+            if(_hitAtaquePersonagem != null)
+            {
+                _hitAtaquePersonagem.gameObject.SetActive(false);
+            }
+        }  
     }
     #endregion
 
     #region Nível
     public void AtualizarNivel() //função que atualiza os atributos de batalha do personagem quando sobe de nível
     {
+        //atualiza o personagem
+
         AtualizarDadosPersonagem();
 
         if (habilidade1 != null)
@@ -963,57 +995,57 @@ public class IAPersonagemBase : MonoBehaviour
     #endregion
 
     #region Efeitos
-    public void Paralisia() //função de paralisia do personagem
-    {
-        _alvoAtual = null;
-        _personagemAlvo = null;
-        if (_usarAnimações)
-        {
-            _animator.Rebind();
-        }
-    }
+    //public void Paralisia() //função de paralisia do personagem
+    //{
+    //    _alvoAtual = null;
+    //    _personagemAlvo = null;
+    //    if (_usarAnimações)
+    //    {
+    //        _animator.Rebind();
+    //    }
+    //}
 
-    public void Sangramento() //função de sangramento do personagem
-    {
-        if (sangramento)
-        {
-            StartCoroutine(DanoSangramento());
-        }
-    }
+    //public void Sangramento() //função de sangramento do personagem
+    //{
+    //    if (sangramento)
+    //    {
+    //        StartCoroutine(DanoSangramento());
+    //    }
+    //}
 
-    IEnumerator DanoSangramento()
-    {
-        if(_comportamento != EstadoDoPersonagem.MORTO)
-        {
-            SofrerDano(danoSangramento);
-        }
-        yield return new WaitForSeconds(1);
-        if (sangramento)
-        {
-            Sangramento();
-        }
-    }
+    //IEnumerator DanoSangramento()
+    //{
+    //    if(_comportamento != EstadoDoPersonagem.MORTO)
+    //    {
+    //        SofrerDano(danoSangramento);
+    //    }
+    //    yield return new WaitForSeconds(1);
+    //    if (sangramento)
+    //    {
+    //        Sangramento();
+    //    }
+    //}
 
-    public void Queimadura() //função de queimadura do personagem
-    {
-        if (queimadura)
-        {
-            StartCoroutine(DanoQueimadura());
-        }
-    }
+    //public void Queimadura() //função de queimadura do personagem
+    //{
+    //    if (queimadura)
+    //    {
+    //        StartCoroutine(DanoQueimadura());
+    //    }
+    //}
 
-    IEnumerator DanoQueimadura()
-    {
-        if (_comportamento != EstadoDoPersonagem.MORTO)
-        {
-            SofrerDano(danoQueimadura);
-        }
-        yield return new WaitForSeconds(1);
-        if (queimadura)
-        {
-            Queimadura();
-        }
-    }
+    //IEnumerator DanoQueimadura()
+    //{
+    //    if (_comportamento != EstadoDoPersonagem.MORTO)
+    //    {
+    //        SofrerDano(danoQueimadura);
+    //    }
+    //    yield return new WaitForSeconds(1);
+    //    if (queimadura)
+    //    {
+    //        Queimadura();
+    //    }
+    //}
     #endregion
 
     #region Feedbacks Visuais
@@ -1047,6 +1079,7 @@ public class IAPersonagemBase : MonoBehaviour
             
         }
 
+        //encontra o slider do hp no objeto
         if (_usarSliders)
         {
             if (_slider == null)

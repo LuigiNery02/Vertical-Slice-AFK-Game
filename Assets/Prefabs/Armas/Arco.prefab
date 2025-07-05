@@ -49,5 +49,6 @@ MonoBehaviour:
   armaDano: 1
   dano: 8
   velocidadeDeAtaque: 3
-  velocidadeDoProjetil: 15
+  projetil: {fileID: 950635480755687092, guid: e3c4112dd90a5594782cc9e498e0659b, type: 3}
+  velocidadeDoProjetil: 25
   id: 1

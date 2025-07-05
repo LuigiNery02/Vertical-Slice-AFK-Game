@@ -29,27 +29,27 @@ public class PersonagemData
     public int sabedoria; //sabedoria do personagem
     public float expAtual; //expriência atual do personagem
     public float expProximoNível; //experiência necessária para passar para o próximo nível 
-    public float hpBase;
-    public float hp;
-    public float hpRegeneracao;
-    public float spBase;
-    public float sp;
-    public float spRegeneracao;
-    public float fatorClasse;
-    public float danoBase;
-    public float dano;
-    public float velocidadeDeAtaque;
-    public float precisaoBase;
-    public float precisao;
-    public float chanceCritico;
-    public float multiplicadorCritico;
-    public float defesa;
-    public float defesaMagica;
-    public float esquivaBase;
-    public float esquiva;
-    public float velocidadeDeMovimento;
-    public float ranged;
-    public float multiplicadorAtaque = 1;
+    public float hpBase; //hpBase por classe
+    public float hp; //valor do hp do personagem
+    public float hpRegeneracao; //valor da regeneração do hp do personagem
+    public float spBase; //sp base por classe
+    public float sp; //valor do sp do personagem
+    public float spRegeneracao; //valor da regeneração do sp do personagem
+    public float fatorClasse; //valor do fator classe
+    public float danoBase; //dano base da arma
+    public float dano; //valor do dano geral do personagem
+    public float velocidadeDeAtaque; //valor da velocidade de ataque do personagem
+    public float precisaoBase; //precisão base
+    public float precisao; //valor da precisão do personagem
+    public float chanceCritico; //valor da chance de crítico do personagem
+    public float multiplicadorCritico; //valor do multiplicador de crítico do personagem
+    public float defesa; //valor da defesa do personagem
+    public float defesaMagica; //valor da defesa mágica do personagem
+    public float esquivaBase; //esquiva base
+    public float esquiva; //valor da esquiva base do personagem
+    public float velocidadeDeMovimento; //valor da velocidade de movimento do personagem
+    public float ranged; //valor do distância mínima para atacar de personagens com armas de longa distância
+    public float multiplicadorAtaque = 1; //valor geral do multiplicador de ataque do personagem
     #endregion
 
     #region Definições Habilidades
@@ -284,7 +284,7 @@ public class PersonagemData
         }
     }
 
-    public void DefinicoesBatalha() //função que define os atributos de batalha do personagem
+    public void DefinicoesBatalha() //função que define os atributos de batalha do personagem (fórmula de build)
     {
         int STR = forca; //atributo força do personagem
         int AGI = agilidade; //atributo agilidade do personagem
@@ -338,7 +338,7 @@ public class PersonagemData
                 dano += (bonusDEX * 3); //efeito de bônus do atributo destreza
                 break;
             case TipoDeDano.DANO_MAGICO:
-                dano = danoBase + ((INT * 4) + (DEX * 1) * multiplicadorAtaque );
+                dano = danoBase + ((INT * 4) + (DEX * 1) * multiplicadorAtaque);
                 dano += (bonusINT * 4); //efeito de bônus do atributo inteligência
                 break;
         }

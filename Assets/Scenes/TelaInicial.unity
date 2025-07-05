@@ -1087,7 +1087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _iniciarSalvamentoSeNulo: 1
-  _nomeDoArquivo: saveDemo.data
+  _nomeDoArquivo: saveDemo2.data
   _encriptar: 0
 --- !u!4 &72781973
 Transform:
@@ -4427,6 +4427,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 819733445}
+        m_TargetAssemblyTypeName: GerenciadorDeInventario, Assembly-CSharp
+        m_MethodName: ReceberPersonagensCriados
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -16451,6 +16463,7 @@ MonoBehaviour:
     esquiva: 0
     velocidadeDeMovimento: 0
     ranged: 0
+    multiplicadorAtaque: 1
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0

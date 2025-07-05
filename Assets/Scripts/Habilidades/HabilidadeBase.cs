@@ -35,92 +35,92 @@ public class HabilidadeBase : MonoBehaviour
 
     public virtual void Inicializar() //função que inicializa a habilidade quando o personagem é definido na batalha
     {
-        if(personagem.pontosDeHabilidadeTexto != null)
-        {
-            personagem.pontosDeHabilidadeTexto.text = (personagem.spAtual + " / " + personagem._spMaximoEInicial);
-        }
+        //if(personagem.pontosDeHabilidadeTexto != null)
+        //{
+        //    personagem.pontosDeHabilidadeTexto.text = (personagem.spAtual + " / " + personagem._spMaximoEInicial);
+        //}
     }
 
     public void AtivarEfeito() //função que ativa o efeito da habilidade
     {
-        bool podeUsarHabilidade = false;
-        if (podeAtivarEfeito && personagem._comportamento != EstadoDoPersonagem.MORTO)
-        {
-            if(personagem.spAtual >= pontosDeHabilidade)
-            {
-                switch (nivel)
-                {
-                    case 1:
-                        if (personagem.personagem.runaNivel1)
-                        {
-                            podeUsarHabilidade = true;
-                        }
-                        else
-                        {
-                            if (GerenciadorDeInventario.instancia != null)
-                            {
-                                GerenciadorDeInventario.instancia.MostrarMensagem("Runa Nível 1 não equipada");
-                            }
-                        }
-                        break;
-                    case 2:
-                        if (personagem.personagem.runaNivel2)
-                        {
-                            podeUsarHabilidade = true;
-                        }
-                        else
-                        {
-                            if (GerenciadorDeInventario.instancia != null)
-                            {
-                                GerenciadorDeInventario.instancia.MostrarMensagem("Runa Nível 2 não equipada");
-                            }
-                        }
-                        break;
-                    case 3:
-                        if (personagem.personagem.runaNivel3)
-                        {
-                            podeUsarHabilidade = true;
-                        }
-                        else
-                        {
-                            if (GerenciadorDeInventario.instancia != null)
-                            {
-                                GerenciadorDeInventario.instancia.MostrarMensagem("Runa Nível 3 não equipada");
-                            }
-                        }
-                        break;
-                }
+        //bool podeUsarHabilidade = false;
+        //if (podeAtivarEfeito && personagem._comportamento != EstadoDoPersonagem.MORTO)
+        //{
+        //    if(personagem.spAtual >= pontosDeHabilidade)
+        //    {
+        //        switch (nivel)
+        //        {
+        //            case 1:
+        //                if (personagem.personagem.runaNivel1)
+        //                {
+        //                    podeUsarHabilidade = true;
+        //                }
+        //                else
+        //                {
+        //                    if (GerenciadorDeInventario.instancia != null)
+        //                    {
+        //                        GerenciadorDeInventario.instancia.MostrarMensagem("Runa Nível 1 não equipada");
+        //                    }
+        //                }
+        //                break;
+        //            case 2:
+        //                if (personagem.personagem.runaNivel2)
+        //                {
+        //                    podeUsarHabilidade = true;
+        //                }
+        //                else
+        //                {
+        //                    if (GerenciadorDeInventario.instancia != null)
+        //                    {
+        //                        GerenciadorDeInventario.instancia.MostrarMensagem("Runa Nível 2 não equipada");
+        //                    }
+        //                }
+        //                break;
+        //            case 3:
+        //                if (personagem.personagem.runaNivel3)
+        //                {
+        //                    podeUsarHabilidade = true;
+        //                }
+        //                else
+        //                {
+        //                    if (GerenciadorDeInventario.instancia != null)
+        //                    {
+        //                        GerenciadorDeInventario.instancia.MostrarMensagem("Runa Nível 3 não equipada");
+        //                    }
+        //                }
+        //                break;
+        //        }
 
-                if (podeUsarHabilidade)
-                {
-                    Debug.Log("Efeito Ativado");
-                    personagem.spAtual -= pontosDeHabilidade;
-                    if(SistemaDeBatalha.usarSfxs)
-                    {
-                        personagem._audio.clip = personagem._habilidadeSFX;
-                        personagem._audio.Play();
-                    }
-                    if (personagem.pontosDeHabilidadeTexto != null)
-                    {
-                        personagem.pontosDeHabilidadeTexto.text = (personagem.spAtual + " / " + personagem._spMaximoEInicial);
-                    }
-                    podeAtivarEfeito = false;
-                    efeitoHabilidade();
-                    if (temTempoDeEfeito)
-                    {
-                        personagem.EsperarEfeitoHabilidade(this, tempoDeEfeito);
-                    }
-                    //selecaoDePersonagem.AtualizarSeleção();
-                }
-            }
-            else
-            {
-                if(GerenciadorDeInventario.instancia != null)
-                {
-                    GerenciadorDeInventario.instancia.MostrarMensagem("Pontos de Habilidade Insuficientes");
-                }
-            }
-        }
+        //        if (podeUsarHabilidade)
+        //        {
+        //            Debug.Log("Efeito Ativado");
+        //            personagem.spAtual -= pontosDeHabilidade;
+        //            if(SistemaDeBatalha.usarSfxs)
+        //            {
+        //                personagem._audio.clip = personagem._habilidadeSFX;
+        //                personagem._audio.Play();
+        //            }
+        //            if (personagem.pontosDeHabilidadeTexto != null)
+        //            {
+        //                personagem.pontosDeHabilidadeTexto.text = (personagem.spAtual + " / " + personagem._spMaximoEInicial);
+        //            }
+        //            podeAtivarEfeito = false;
+        //            efeitoHabilidade();
+        //            if (temTempoDeEfeito)
+        //            {
+        //                personagem.EsperarEfeitoHabilidade(this, tempoDeEfeito);
+        //            }
+        //            //selecaoDePersonagem.AtualizarSeleção();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if(GerenciadorDeInventario.instancia != null)
+        //        {
+        //            GerenciadorDeInventario.instancia.MostrarMensagem("Pontos de Habilidade Insuficientes");
+        //        }
+        //    }
+        //}
     }
 
     //IEnumerator TempoDeEfeito() //função que conta em segundos o tempo que a habilidade está ativa
@@ -132,27 +132,27 @@ public class HabilidadeBase : MonoBehaviour
 
     public void RemoverEfeito() //função que desativa o efeito da habilidade que não possui tempo de efeito
     {
-        Debug.Log("Fim de Efeito");
-        removerEfeitoHabilidade();
-        if(tempoDeRecarga != 0)
-        {
-            personagem.EsperarRecargaHabilidade(this, tempoDeRecarga);
-        }
-        if (personagem.pontosDeHabilidadeTexto != null)
-        {
-            personagem.pontosDeHabilidadeTexto.text = (personagem.spAtual + " / " + personagem._spMaximoEInicial);
-        }
+        //Debug.Log("Fim de Efeito");
+        //removerEfeitoHabilidade();
+        //if(tempoDeRecarga != 0)
+        //{
+        //    personagem.EsperarRecargaHabilidade(this, tempoDeRecarga);
+        //}
+        //if (personagem.pontosDeHabilidadeTexto != null)
+        //{
+        //    personagem.pontosDeHabilidadeTexto.text = (personagem.spAtual + " / " + personagem._spMaximoEInicial);
+        //}
     }
 
     public void RemoverEfeitoExternamente() //função que remove o efeito da habilidade de forma externa
     {
-        removerEfeitoHabilidade();
-        podeAtivarEfeito = true;
-        if (personagem.pontosDeHabilidadeTexto != null)
-        {
-            personagem.pontosDeHabilidadeTexto.text = (personagem.spAtual + " / " + personagem._spMaximoEInicial);
-        }
-        //selecaoDePersonagem.AtualizarSeleção();
+        //removerEfeitoHabilidade();
+        //podeAtivarEfeito = true;
+        //if (personagem.pontosDeHabilidadeTexto != null)
+        //{
+        //    personagem.pontosDeHabilidadeTexto.text = (personagem.spAtual + " / " + personagem._spMaximoEInicial);
+        //}
+        ////selecaoDePersonagem.AtualizarSeleção();
     }
 
     //IEnumerator TempoDeRecargaDoEfeito() //função que conta em segundos o tempo para recaregar a habilidade

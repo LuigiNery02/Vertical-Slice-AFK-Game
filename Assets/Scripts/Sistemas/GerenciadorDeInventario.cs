@@ -204,8 +204,13 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
                 }
             }
 
-            personagensCriados = _sistemaDeCriacaoDePersonagens.personagensCriados;
+            ReceberPersonagensCriados();
         }
+    }
+
+    public void ReceberPersonagensCriados()
+    {
+        personagensCriados = _sistemaDeCriacaoDePersonagens.personagensCriados;
     }
 
     public void CarregandoCena(Scene cena, LoadSceneMode modo) //função chamada quando carregar outra cena

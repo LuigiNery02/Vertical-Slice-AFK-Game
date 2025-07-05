@@ -4,21 +4,27 @@ using UnityEngine;
 
 sealed class HitAtaquePersonagem : MonoBehaviour
 {
-    private IAPersonagemBase _personagemPai; //personagem que criou este ataque
+    [HideInInspector]
+    public IAPersonagemBase _personagemPai; //personagem que criou este ataque
     private Transform _alvo; //alvo do ataque
     private float _velocidade; //velocidade do ataque
-    [SerializeField]
-    private Vector3 _posicaoInicial; //posição inicial do objeto
     private TrailRenderer _trailRenderer; //trilha da movimentação do hit
 
-    [HideInInspector]
+    [HideInInspector] 
+    public string poolKey; //chave do pool a ser buscado ou 
+    [HideInInspector] 
+    public GerenciadorDeObjectPool gerenciadorDePool; //gerenciador do pool
+
     public bool longaDistancia; //variável para verificar se este ataque é de longa distancia
     [HideInInspector]
     public bool usarSFX; //variável para verificar se deve usar SFX
 
     private void OnEnable() //quando for ativado
     {
-        _personagemPai = transform.GetComponentInParent<IAPersonagemBase>(); //encontra o personagem que criou este ataque
+        if (!longaDistancia)
+        {
+            _personagemPai = transform.GetComponentInParent<IAPersonagemBase>(); //encontra o personagem que criou este ataque
+        }
     }
 
     private void OnDisable() //quando for desativado
@@ -35,11 +41,21 @@ sealed class HitAtaquePersonagem : MonoBehaviour
 
     private void Update()
     {
-        //se desativa caso o personagem que criou este ataque está morto
-        if(_personagemPai._comportamento != EstadoDoPersonagem.ATACANDO && _personagemPai._comportamento != EstadoDoPersonagem.MOVIMENTO_ESPECIAL)
+        //auto desativa caso o personagem que criou este ataque está morto ou é um porjétil
+        if(_personagemPai._comportamento != EstadoDoPersonagem.ATACANDO && _personagemPai._comportamento != EstadoDoPersonagem.MOVIMENTO_ESPECIAL && longaDistancia)
         {
-            gameObject.SetActive(false);
+            //desativa ou devolve para o pool
+
+            if (gerenciadorDePool != null)
+            {
+                gerenciadorDePool.DevolverPool(poolKey, gameObject);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            } 
         }
+
         //se for um hit de longa distancia, se move até o alvo
         if(longaDistancia)
         {
@@ -51,6 +67,13 @@ sealed class HitAtaquePersonagem : MonoBehaviour
 
                 //mantém o mesmo y da posição atual
                 posicaoAlvo.y = posicaoAtual.y;
+
+                transform.LookAt(posicaoAlvo);
+
+                //crrige a rotação X para 90 graus
+                Vector3 rotacaoCorrigida = transform.eulerAngles;
+                rotacaoCorrigida.x = 90f;
+                transform.eulerAngles = rotacaoCorrigida;
 
                 //move apenas em X e Z (altura fica fixa)
                 transform.position = Vector3.MoveTowards(posicaoAtual, posicaoAlvo, _velocidade * Time.deltaTime);
@@ -67,8 +90,9 @@ sealed class HitAtaquePersonagem : MonoBehaviour
             {
                 //define para o personagem que este ataque colidiu com um personagem
                 IAPersonagemBase alvoDoDAno = other.GetComponent<IAPersonagemBase>();
-                if (CalcularPrecisao(_personagemPai.precisao, alvoDoDAno.esquiva))
+                if (CalcularPrecisao(_personagemPai.precisao, alvoDoDAno.esquiva)) //calcula a precisão do hit
                 {
+                    //verifica o tipo de dano que causará (físico ou mágico)
                     switch (_personagemPai.personagem.arma.armaDano)
                     {
                         case TipoDeDano.DANO_MELEE:
@@ -82,28 +106,47 @@ sealed class HitAtaquePersonagem : MonoBehaviour
                             break;
                     }
 
-                    if (_personagemPai.efeitoPorAtaqueAtivado)
-                    {
-                        _personagemPai.efeitoPorAtaque();
-                    }
+                    //if (_personagemPai.efeitoPorAtaqueAtivado)
+                    //{
+                    //    _personagemPai.efeitoPorAtaque();
+                    //}
                 }
                 else
                 {
-                    alvoDoDAno.Esquivar();
+                    alvoDoDAno.Esquivar(); //faz o alvo esquivar
 
-                    if (alvoDoDAno.efeitoPorEsquivaAtivado)
-                    {
-                        alvoDoDAno.efeitoPorEsquiva();
-                    }
+                    //if (alvoDoDAno.efeitoPorEsquivaAtivado)
+                    //{
+                    //    alvoDoDAno.efeitoPorEsquiva();
+                    //}
                 }
-                gameObject.SetActive(false);
+
+                //verifica se volta para o pool ou se auto desativa
+
+                if (gerenciadorDePool != null && longaDistancia)
+                {
+                    gerenciadorDePool.DevolverPool(poolKey, gameObject);
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+                }
             }
         }
         else
         {
-            if(other.GetComponent<HitAtaquePersonagem>() == null)
+            if(other.GetComponent<HitAtaquePersonagem>() == null) //verifica se não colidiu com outro hit
             {
-                gameObject.SetActive(false);
+                //verifica se volta para o pool ou se auto desativa
+
+                if (gerenciadorDePool != null && longaDistancia)
+                {
+                    gerenciadorDePool.DevolverPool(poolKey, gameObject);
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -112,7 +155,7 @@ sealed class HitAtaquePersonagem : MonoBehaviour
     {
         if(alvo == null)
         {
-            return;
+            return; //não se move caso o alvo não esteja mais acessível ou nulo
         }
 
         _alvo = alvo;
@@ -128,11 +171,6 @@ sealed class HitAtaquePersonagem : MonoBehaviour
                 _trailRenderer.enabled = true;
             }
         }
-    }
-
-    public void ResetarPosição() //reseta a posição do hit
-    {
-        transform.localPosition = _posicaoInicial;
     }
 
     private bool CalcularPrecisao(float precisao, float esquiva) //função que calcula a precisão do ataque
