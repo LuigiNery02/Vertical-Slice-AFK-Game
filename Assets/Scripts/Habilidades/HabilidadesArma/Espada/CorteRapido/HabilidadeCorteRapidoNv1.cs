@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeCorteRapidoNv1 : HabilidadeBase
+public class HabilidadeCorteRapidoNv1 : MonoBehaviour
 {
 
 }

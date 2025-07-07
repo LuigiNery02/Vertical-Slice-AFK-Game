@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeMentePartilhadaNv3 : HabilidadeBase
+public class HabilidadeMentePartilhadaNv3 : MonoBehaviour
 {
 
 }

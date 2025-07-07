@@ -124,7 +124,7 @@ public class SelecaoDePersonagem : MonoBehaviour
             _textoTituloHabilidade2.text = _tituloHabilidade2;
             _textoDescricaoHabilidade2.text = _detalheHabilidade2;
 
-            if (_personagemSelecionado.habilidade1 != null && _personagemSelecionado.habilidade1.podeAtivarEfeito)
+            if (_personagemSelecionado.habilidade1 != null && _personagemSelecionado.podeAtivarEfeitoHabilidade1)
             {
                 _imagemHabilidade1Funções.color = Color.white;
             }
@@ -133,7 +133,7 @@ public class SelecaoDePersonagem : MonoBehaviour
                 _imagemHabilidade1Funções.color = Color.gray;
             }
 
-            if (_personagemSelecionado.habilidade2 != null && _personagemSelecionado.habilidade2.podeAtivarEfeito)
+            if (_personagemSelecionado.habilidade2 != null && _personagemSelecionado.podeAtivarEfeitoHabilidade2)
             {
                 _imagemHabilidade2Funções.color = Color.white;
             }
@@ -265,7 +265,7 @@ public class SelecaoDePersonagem : MonoBehaviour
         {
             if(_personagemSelecionado.habilidade1 != null)
             {
-                _personagemSelecionado.habilidade1.AtivarEfeito();
+                _personagemSelecionado.habilidade1.AtivarEfeito(_personagemSelecionado);
             }
         }
     }
@@ -276,7 +276,7 @@ public class SelecaoDePersonagem : MonoBehaviour
         {
             if(_personagemSelecionado.habilidade2 != null)
             {
-                _personagemSelecionado.habilidade2.AtivarEfeito();
+                _personagemSelecionado.habilidade2.AtivarEfeito(_personagemSelecionado);
             }
         }  
     }

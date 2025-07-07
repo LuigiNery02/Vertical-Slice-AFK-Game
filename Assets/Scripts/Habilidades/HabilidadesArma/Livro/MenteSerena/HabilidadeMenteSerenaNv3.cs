@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeMenteSerenaNv3 : HabilidadeBase
+public class HabilidadeMenteSerenaNv3 : MonoBehaviour
 {
 
 }

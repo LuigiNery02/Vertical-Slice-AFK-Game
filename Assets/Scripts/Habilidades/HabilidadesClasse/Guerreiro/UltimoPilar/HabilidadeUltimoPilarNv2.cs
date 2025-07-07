@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeUltimoPilarNv2 : HabilidadeBase
+public class HabilidadeUltimoPilarNv2 : MonoBehaviour
 {
 
 }

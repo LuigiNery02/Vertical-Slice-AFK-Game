@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeRejuvenescerNv3 : HabilidadeBase
+public class HabilidadeRejuvenescerNv3 : MonoBehaviour
 {
 
 }

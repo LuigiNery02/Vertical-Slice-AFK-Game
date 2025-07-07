@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeMeteoroNv1 : HabilidadeBase
+public class HabilidadeMeteoroNv1 : MonoBehaviour
 {
 
 }

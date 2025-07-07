@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeCorrenteArcanaNv3 : HabilidadeBase
+public class HabilidadeCorrenteArcanaNv3 : MonoBehaviour
 {
 
 }

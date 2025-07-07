@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeAssassinatoEmCadeiaNv1 : HabilidadeBase
+public class HabilidadeAssassinatoEmCadeiaNv1 : MonoBehaviour
 {
 
 }

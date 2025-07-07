@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeOportunistaNv2 : HabilidadeBase
+public class HabilidadeOportunistaNv2 : MonoBehaviour
 {
 
 }

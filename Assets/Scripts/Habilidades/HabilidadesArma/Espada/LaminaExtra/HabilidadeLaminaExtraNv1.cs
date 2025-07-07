@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeLaminaExtraNv1 : HabilidadeBase
+public class HabilidadeLaminaExtraNv1 : MonoBehaviour
 {
 
 }

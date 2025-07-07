@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeMarcaSagradaNv2 : HabilidadeBase
+public class HabilidadeMarcaSagradaNv2 : MonoBehaviour
 {
 
 }

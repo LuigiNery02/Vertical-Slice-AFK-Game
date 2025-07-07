@@ -474,16 +474,16 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         {
             if(personagem.habilidade1 != null)
             {
-                personagem.habilidade1.StopAllCoroutines();
-                personagem.habilidade1.RemoverEfeitoExternamente();
-                personagem.habilidade1.podeAtivarEfeito = true;
+                //personagem.StopAllCoroutines();
+                //personagem.habilidade1.RemoverEfeitoExternamente();
+                personagem.podeAtivarEfeitoHabilidade1 = true;
             }
 
             if (personagem.habilidade2 != null)
             {
-                personagem.habilidade2.StopAllCoroutines();
-                personagem.habilidade2.RemoverEfeitoExternamente();
-                personagem.habilidade2.podeAtivarEfeito = true;
+                //personagem.habilidade2.StopAllCoroutines();
+                //personagem.habilidade2.RemoverEfeitoExternamente();
+                personagem.podeAtivarEfeitoHabilidade2 = true;
             }
         }
 

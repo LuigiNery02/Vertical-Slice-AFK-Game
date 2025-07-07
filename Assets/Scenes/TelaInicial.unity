@@ -1073,7 +1073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &72781972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12430,75 +12430,67 @@ MonoBehaviour:
   textoMensagem: {fileID: 1273995158}
   duracao: 3
   habilidadesClasseGuerreiro:
-  - {fileID: 8543338634571400395, guid: 1ab50510f7d401b44837f34abb371ce0, type: 3}
-  - {fileID: 5393509728971280561, guid: 6e45c45556268aa4f83aa5325f05ac38, type: 3}
-  - {fileID: 2567003020776137062, guid: b9199d4d6401dcd4783e1cde9bb9ceda, type: 3}
-  - {fileID: 3298628120264295972, guid: 4dcfb73914415ea4cb2375445c04bf71, type: 3}
-  - {fileID: 4867781153513195576, guid: 284c11c977942484d91c8e67f7213fda, type: 3}
-  - {fileID: 4953546902392013480, guid: 4572fa0c9afb0bf4a83ca28755d1b89e, type: 3}
-  - {fileID: 2599317795723217480, guid: a63b47329c1eb14448faacfddf8771e6, type: 3}
-  - {fileID: 1039733665763792789, guid: 89818f3ad0dc682459ca5d7e2f48a9cc, type: 3}
-  - {fileID: 5856985455237591719, guid: 825d06058290691499d8323c8416b0b8, type: 3}
+  - {fileID: 11400000, guid: 37228b9b17e32af448afa0481e38fff6, type: 2}
   habilidadesClasseLadino:
-  - {fileID: 8054374989312084620, guid: 19a93a74313338a4d9ce9b869ea54555, type: 3}
-  - {fileID: 3292700354711952789, guid: be38a8ecea008f04988eca839e10a8f4, type: 3}
-  - {fileID: 276995430809800551, guid: 56e23dbd1c8fc8845aaa44cb05cd30aa, type: 3}
-  - {fileID: 5587000293654613294, guid: 8bd56f744329bae4296b030e955a5b95, type: 3}
-  - {fileID: 4526213717366325163, guid: 709582668e597a6488920ef47e2c4eee, type: 3}
-  - {fileID: 6545777927235465525, guid: 0f21d6be64e017f4091358067f8acd6b, type: 3}
-  - {fileID: 986364272209788229, guid: fd803f3b8780ec744920196247c88b4a, type: 3}
-  - {fileID: 5706922819693597336, guid: 83dbc1105502a7940847dc02eef75bbb, type: 3}
-  - {fileID: 8241384503604448336, guid: 651a719f9d5d9144dba18c3fc9e1f937, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   habilidadesClasseElementalista:
-  - {fileID: 9182628734368744359, guid: a192e33474217a34e9896a1b4750c619, type: 3}
-  - {fileID: 7006363524878646711, guid: 903877b891c836b4ca0c72bd8e02630d, type: 3}
-  - {fileID: 1833692184757219811, guid: 543b7dd64f2153e44b93538d10aa2c73, type: 3}
-  - {fileID: 1807630041151372041, guid: 19fa9914cb3fad94dab8e80ad6a711bc, type: 3}
-  - {fileID: 4368944499099304117, guid: b120105ed85a5a345a75de7a8f280b22, type: 3}
-  - {fileID: 2381692484910759887, guid: d69f71472de18ba4c8153016cbee3ec0, type: 3}
-  - {fileID: 7831242165475616731, guid: 8ba42f2905d668a4592647df6799a794, type: 3}
-  - {fileID: 712096406231058469, guid: 827487cc168b71f41ba0fc05838edc57, type: 3}
-  - {fileID: 5238286634218256502, guid: 2d8cd41416bc6b940b47331f503ba26a, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   habilidadesClasseSacerdote:
-  - {fileID: 1524426959795093580, guid: a89cb17255b98f24e99a227688dad7ff, type: 3}
-  - {fileID: 7647692906169322060, guid: d97c53350cdb9f64b939339f60072559, type: 3}
-  - {fileID: 1145337782306594180, guid: 65c380e6db509214b843325a4c486f26, type: 3}
-  - {fileID: 5050780301555992651, guid: 1290f44aa13650746be8b01abef47f1b, type: 3}
-  - {fileID: 3881613368722974911, guid: a20dfe346b7c56144a4e8c42edfaef44, type: 3}
-  - {fileID: 4038158781972344782, guid: b2a0de7b90f271644a1295b1fdd56309, type: 3}
-  - {fileID: 8773083241451413307, guid: 5b6925096a5dca44db28ad80b135bb3e, type: 3}
-  - {fileID: 1041592395162477982, guid: 71b3839bd8325f546a576388c2800438, type: 3}
-  - {fileID: 5077886793461062150, guid: 02c86dbfb35071141862d93bd32a3b93, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   habilidadesEspada:
-  - {fileID: 7295373251432968004, guid: 60cdff5de40a8244c8cfc8d27fb03bcc, type: 3}
-  - {fileID: 2039849398183452550, guid: 202ad91fd7b5b74469b8cc96bbfe4f49, type: 3}
-  - {fileID: 1321603487701670152, guid: d0b44c084acdf6c41b58aaa2db9938b1, type: 3}
-  - {fileID: 5067347784823659204, guid: 451c866a42736434f93b7d3813f31e1e, type: 3}
-  - {fileID: 5882790896865415968, guid: 9dd79c313548b674ab2c4556c382db64, type: 3}
-  - {fileID: 3922180250029331089, guid: 43991cf14b237ac4aaf621ec3ef1c3ed, type: 3}
-  - {fileID: 6552225986449974712, guid: 29f507e0fee877540a118e6fd705ca05, type: 3}
-  - {fileID: 7493848337401266749, guid: 77c9264b2e6bea2419c39139b543dd62, type: 3}
-  - {fileID: 6522590398058251052, guid: e66f0b2ced83a5e459774512e904139a, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   habilidadesArco:
-  - {fileID: 5436366291605183484, guid: 6724ef5bed64fb347b4b62ba2b5ccc68, type: 3}
-  - {fileID: 3903418215217811664, guid: 61b744f8bfeafa04fb44aa319ef3a34f, type: 3}
-  - {fileID: 6880968954332319814, guid: ee32cee371e3223419f72f0248b8a83e, type: 3}
-  - {fileID: 2587656085981349454, guid: ce023116b9e75264693293d103f3715c, type: 3}
-  - {fileID: 1084142531900506113, guid: 25d44d2360745c941b16377373c9ca9e, type: 3}
-  - {fileID: 789130506560036437, guid: 79d1a58f6d41c9147bd2a987c724079b, type: 3}
-  - {fileID: 3015848687432557631, guid: 233e555b3a9fda346b2c4b6dc7fbd193, type: 3}
-  - {fileID: 2190838425395694756, guid: 39af56fc776393e4da92a3515a38cca9, type: 3}
-  - {fileID: 8201715751631468101, guid: a87190f87fe90854d9f1295e3df9c9a7, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   habilidadesLivro:
-  - {fileID: 2688354554716605993, guid: 094bcccda7e043b46a0c0e79cce890a9, type: 3}
-  - {fileID: 7236375820215388070, guid: a5bd203e2cb0301409a96c39cb3335ea, type: 3}
-  - {fileID: 5694927248887311308, guid: f13a9fdf7b07b0a498760a4be19cdfeb, type: 3}
-  - {fileID: 7520616664584116192, guid: 2aa9ba589dcc59043b69cc024bb9ac52, type: 3}
-  - {fileID: 3114482685110394833, guid: bddf81bf0b5159449b8a23944328d24a, type: 3}
-  - {fileID: 203451585523993013, guid: 5a50e035601e2b844bfb383af87aac33, type: 3}
-  - {fileID: 379069695125287436, guid: d27e846d5ed869b48861358f078674ee, type: 3}
-  - {fileID: 8987082339358528206, guid: d60607d00a16a93478644ee64f050d53, type: 3}
-  - {fileID: 758482831921265231, guid: 5a57ac121b4d4ac479fbb9c2dcea1b3f, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   equipamentosCabecaAcessorio:
   - {fileID: 8618569578638717159, guid: dc0c58e7a162dcc40bef8c7cedd4baa8, type: 3}
   equipamentosCabecaTopo:

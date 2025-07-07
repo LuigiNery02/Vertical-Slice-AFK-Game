@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeBencaoDivinaNv3 : HabilidadeBase
+public class HabilidadeBencaoDivinaNv3 : MonoBehaviour
 {
 
 }

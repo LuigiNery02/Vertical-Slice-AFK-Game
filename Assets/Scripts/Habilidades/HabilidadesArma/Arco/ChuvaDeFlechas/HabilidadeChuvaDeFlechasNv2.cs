@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeChuvaDeFlechasNv2 : HabilidadeBase
+public class HabilidadeChuvaDeFlechasNv2 : MonoBehaviour
 {
 
 }

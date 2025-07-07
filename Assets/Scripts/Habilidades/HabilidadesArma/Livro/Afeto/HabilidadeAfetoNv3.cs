@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeAfetoNv3 : HabilidadeBase
+public class HabilidadeAfetoNv3 : MonoBehaviour
 {
 
 }

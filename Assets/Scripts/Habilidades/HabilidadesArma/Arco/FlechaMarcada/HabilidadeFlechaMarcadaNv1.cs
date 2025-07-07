@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeFlechaMarcadaNv1 : HabilidadeBase
+public class HabilidadeFlechaMarcadaNv1 : MonoBehaviour
 {
 
 }

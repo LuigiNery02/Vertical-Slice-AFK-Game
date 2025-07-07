@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeInvestidaRealNv2 : HabilidadeBase
+public class HabilidadeInvestidaRealNv2 : MonoBehaviour
 {
 
 }

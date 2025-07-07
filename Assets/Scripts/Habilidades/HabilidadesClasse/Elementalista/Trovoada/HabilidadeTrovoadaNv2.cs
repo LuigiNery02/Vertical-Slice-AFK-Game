@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeTrovoadaNv2 : HabilidadeBase
+public class HabilidadeTrovoadaNv2 : MonoBehaviour
 {
 
 }

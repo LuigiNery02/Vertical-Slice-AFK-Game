@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeEscudoDeLuzNv1 : HabilidadeBase
+public class HabilidadeEscudoDeLuzNv1 : MonoBehaviour
 {
 
 }

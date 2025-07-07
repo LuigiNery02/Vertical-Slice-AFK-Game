@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeDisparoPrecisoNv3 : HabilidadeBase
+public class HabilidadeDisparoPrecisoNv3 : MonoBehaviour
 {
 
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeAscenderNv3 : HabilidadeBase
+public class HabilidadeAscenderNv3 : MonoBehaviour
 {
 
 }

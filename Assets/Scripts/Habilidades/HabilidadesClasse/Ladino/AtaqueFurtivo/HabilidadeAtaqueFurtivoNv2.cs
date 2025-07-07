@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeAtaqueFurtivoNv2 : HabilidadeBase
+public class HabilidadeAtaqueFurtivoNv2 : MonoBehaviour
 {
 
 }

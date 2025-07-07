@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeFlechaEstaticaNv2 : HabilidadeBase
+public class HabilidadeFlechaEstaticaNv2 : MonoBehaviour
 {
 
 }

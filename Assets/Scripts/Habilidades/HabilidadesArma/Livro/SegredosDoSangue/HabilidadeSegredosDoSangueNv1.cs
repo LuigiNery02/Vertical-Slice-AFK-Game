@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeSegredosDoSangueNv1 : HabilidadeBase
+public class HabilidadeSegredosDoSangueNv1 : MonoBehaviour
 {
 
 }

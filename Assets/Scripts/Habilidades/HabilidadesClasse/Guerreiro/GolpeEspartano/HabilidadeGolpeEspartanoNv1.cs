@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeGolpeEspartanoNv1 : HabilidadeBase
+public class HabilidadeGolpeEspartanoNv1 : MonoBehaviour
 {
 
 }

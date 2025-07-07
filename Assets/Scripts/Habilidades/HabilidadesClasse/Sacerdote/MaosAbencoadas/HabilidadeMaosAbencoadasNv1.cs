@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeMaosAbencoadasNv1 : HabilidadeBase
+public class HabilidadeMaosAbencoadasNv1 : MonoBehaviour
 {
 
 }

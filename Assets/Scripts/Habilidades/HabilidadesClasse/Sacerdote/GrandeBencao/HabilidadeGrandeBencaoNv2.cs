@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeGrandeBencaoNv2 : HabilidadeBase
+public class HabilidadeGrandeBencaoNv2 : MonoBehaviour
 {
 
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeEspadaBastardaNv3 : HabilidadeBase
+public class HabilidadeEspadaBastardaNv3 : MonoBehaviour
 {
 
 }

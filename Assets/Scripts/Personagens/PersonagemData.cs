@@ -6,6 +6,8 @@ using UnityEngine;
 public enum Classe { Guerreiro, Ladino, Elementalista, Sacerdote }
 public enum PreferenciaAtributo{ Forca, Agilidade, Destreza, Constituicao, Inteligencia, Sabedoria }
 
+public enum StatusEspecial { Willpower, MarcadoresDeAlvo, CargasElementais, Barreira }
+
 [System.Serializable]
 public class PersonagemData
 {
@@ -54,6 +56,7 @@ public class PersonagemData
 
     #region Definições Habilidades
     [Header("Definições Habilidades")]
+    public StatusEspecial statusEspecial;
     public bool runaNivel1; //variável que representa se o personagem possuí uma runa nível 1 equipada
     public bool runaNivel2; //variável que representa se o personagem possuí uma runa nível 2 equipada
     public bool runaNivel3; //variável que representa se o personagem possuí uma runa nível 3 equipada
@@ -100,21 +103,25 @@ public class PersonagemData
                 hpBase = atributosIniciais.hpBaseGuerreiro;
                 spBase = atributosIniciais.spBaseGuerreiro;
                 fatorClasse = atributosIniciais.fatorClasseGuerreiro;
+                statusEspecial = StatusEspecial.Willpower;
                 break;
             case Classe.Ladino:
                 hpBase = atributosIniciais.hpBaseLadino;
                 spBase = atributosIniciais.spBaseLadino;
                 fatorClasse = atributosIniciais.fatorClasseLadino;
+                statusEspecial = StatusEspecial.MarcadoresDeAlvo;
                 break;
             case Classe.Elementalista:
                 hpBase = atributosIniciais.hpBaseElementalista;
                 spBase = atributosIniciais.spBaseElementalista;
                 fatorClasse = atributosIniciais.fatorClasseElementalista;
+                statusEspecial = StatusEspecial.CargasElementais;
                 break;
             case Classe.Sacerdote:
                 hpBase = atributosIniciais.hpBaseSacerdote;
                 spBase = atributosIniciais.spBaseSacerdote;
                 fatorClasse = atributosIniciais.fatorClasseSacerdote;
+                statusEspecial = StatusEspecial.Barreira;
                 break;
         }
 

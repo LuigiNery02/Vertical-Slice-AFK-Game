@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeFarolGuiaNv1 : HabilidadeBase
+public class HabilidadeFarolGuiaNv1 : MonoBehaviour
 {
 
 }

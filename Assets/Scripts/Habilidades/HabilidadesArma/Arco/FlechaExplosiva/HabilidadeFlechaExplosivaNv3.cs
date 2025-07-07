@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeFlechaExplosivaNv3 : HabilidadeBase
+public class HabilidadeFlechaExplosivaNv3 : MonoBehaviour
 {
 
 }

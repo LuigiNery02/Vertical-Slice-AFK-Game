@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeFocoNv1 : HabilidadeBase
+public class HabilidadeFocoNv1 : MonoBehaviour
 {
 
 }

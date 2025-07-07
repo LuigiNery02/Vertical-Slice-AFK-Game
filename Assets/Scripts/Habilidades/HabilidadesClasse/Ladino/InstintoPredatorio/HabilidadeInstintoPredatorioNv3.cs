@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeInstintoPredatorioNv3 : HabilidadeBase
+public class HabilidadeInstintoPredatorioNv3 : MonoBehaviour
 {
 
 }

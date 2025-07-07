@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeLancaDeRaioNv1 : HabilidadeBase
+public class HabilidadeLancaDeRaioNv1 : MonoBehaviour
 {
 
 }

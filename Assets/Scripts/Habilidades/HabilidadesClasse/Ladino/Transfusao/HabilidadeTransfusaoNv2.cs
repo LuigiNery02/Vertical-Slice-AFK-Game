@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeTransfusaoNv2 : HabilidadeBase
+public class HabilidadeTransfusaoNv2 : MonoBehaviour
 {
 
 }

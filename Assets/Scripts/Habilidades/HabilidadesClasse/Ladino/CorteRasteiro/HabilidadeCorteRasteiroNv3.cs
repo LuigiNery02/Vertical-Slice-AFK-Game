@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeCorteRasteiroNv3 : HabilidadeBase
+public class HabilidadeCorteRasteiroNv3 : MonoBehaviour
 {
 
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeConjuracaoFocadaNv3 : HabilidadeBase
+public class HabilidadeConjuracaoFocadaNv3 : MonoBehaviour
 {
 
 }

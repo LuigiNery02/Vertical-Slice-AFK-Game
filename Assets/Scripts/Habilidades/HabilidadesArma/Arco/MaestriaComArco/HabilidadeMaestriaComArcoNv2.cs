@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeMaestriaComArcoNv2 : HabilidadeBase
+public class HabilidadeMaestriaComArcoNv2 : MonoBehaviour
 {
 
 }

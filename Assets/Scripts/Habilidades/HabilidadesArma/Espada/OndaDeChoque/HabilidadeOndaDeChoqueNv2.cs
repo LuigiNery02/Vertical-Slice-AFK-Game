@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeOndaDeChoqueNv2 : HabilidadeBase
+public class HabilidadeOndaDeChoqueNv2 : MonoBehaviour
 {
 
 }

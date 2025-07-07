@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeFonteDeLuzNv2 : HabilidadeBase
+public class HabilidadeFonteDeLuzNv2 : MonoBehaviour
 {
 
 }

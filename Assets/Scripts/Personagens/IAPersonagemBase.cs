@@ -73,10 +73,13 @@ public class IAPersonagemBase : MonoBehaviour
 
     //área referente à habilidades
     [Header("Habilidades")]
-    [HideInInspector]
+    public int willPower;
+    //[HideInInspector]
     public HabilidadeBase habilidade1; //habilidade 1 (classe) do personagem
-    [HideInInspector]
+    //[HideInInspector]
     public HabilidadeBase habilidade2; //habilidade 2 (arma) do personagem
+    public bool podeAtivarEfeitoHabilidade1 = true; //variável que determina se pode ativar ou não o efeito da habilidade 1
+    public bool podeAtivarEfeitoHabilidade2 = true; //variável que determina se pode ativar ou não o efeito da habilidade 2
 
     //Área referente às animações
     [Header("Animação")]
@@ -110,11 +113,13 @@ public class IAPersonagemBase : MonoBehaviour
     //public bool executandoMovimentoEspecial; //variável para verificar se o personagem está executando o movimento especial
     //[HideInInspector]
     //public bool imuneADanos; //variável que verifica se o personagem é imune a danos
+
     //função que é ativada quando há um efeito por ataque
-    //public delegate void EfeitoPorAtaque();
-    //public EfeitoPorAtaque efeitoPorAtaque;
-    //[HideInInspector]
-    //public bool efeitoPorAtaqueAtivado; //verifica se efeitos por ataque de habilidades estão ativados
+    public delegate void EfeitoPorAtaque(bool acerto);
+    public EfeitoPorAtaque efeitoPorAtaque;
+    [HideInInspector]
+    public bool efeitoPorAtaqueAtivado; //verifica se efeitos por ataque de habilidades estão ativados
+
     ////função que é ativada quando há um efeito por esquiva
     //public delegate void EfeitoPorEsquiva();
     //public EfeitoPorAtaque efeitoPorEsquiva;
@@ -142,6 +147,7 @@ public class IAPersonagemBase : MonoBehaviour
     private Animator _animator; //animator do personagem
     private Slider _slider; //slider do hp do personagem
     public Text textoHP; //texto mostrando a atualização do hp do personagem
+    public Text textoWillPower; //texto mostrando a atualização do willpower do personagem
     public Text pontosDeHabilidadeTexto; //texto referente aos pontos de habilidade do personagem
     private bool _usarAnimações; //variável para verificar se deve usar as animações
     private bool _usarSliders; //variável para verificar se deve usar os sliders
@@ -235,14 +241,12 @@ public class IAPersonagemBase : MonoBehaviour
 
         if(habilidade1 != null)
         {
-            habilidade1.personagem = this;
-            habilidade1.Inicializar();
+            //habilidade1.Inicializar();
         }
         
         if(habilidade2 != null)
         {
-            habilidade2.personagem = this;
-            habilidade2.Inicializar();
+            //habilidade2.Inicializar();
         }
 
         //encontra o slider do personagem caso tenha
@@ -279,12 +283,12 @@ public class IAPersonagemBase : MonoBehaviour
 
         if (habilidade1 != null)
         {
-            habilidade1.podeAtivarEfeito = true;
+            podeAtivarEfeitoHabilidade1 = true;
         }
 
         if(habilidade2 != null)
         {
-            habilidade2.podeAtivarEfeito = true;
+            podeAtivarEfeitoHabilidade2 = true;
         }
 
         //encontra o hit dentro de si caso esteja com uma arma melee equipada e à ativa
@@ -296,10 +300,11 @@ public class IAPersonagemBase : MonoBehaviour
         hpAtual = _hpMaximoEInicial; //define o hp atual do personagem igual ao valor máximo e inicial
         spAtual = _spMaximoEInicial; //define o sp atual do personagem igual ao valor máximo e inicial
 
-        //
-        if (pontosDeHabilidadeTexto != null)
+        AtualizarFeedbackSP();
+
+        if(personagem.statusEspecial == StatusEspecial.Willpower && textoWillPower != null)
         {
-            pontosDeHabilidadeTexto.text = (spAtual + " / " + _spMaximoEInicial);
+            textoWillPower.text = "WillPower: " + willPower;
         }
 
         //sangramento = false;
@@ -831,7 +836,7 @@ public class IAPersonagemBase : MonoBehaviour
         //{
             hpAtual -= dano; //sofre o dano
 
-            if (_usarSliders && _slider != null)
+        if (_usarSliders && _slider != null)
             {
                 //atualiza o slider e o texto de hp
                 _slider.value = hpAtual;
@@ -892,6 +897,25 @@ public class IAPersonagemBase : MonoBehaviour
         {
             spAtual = _spMaximoEInicial;
         }
+        AtualizarFeedbackSP();
+    }
+
+    public void GastarSP(float sp) //função que recebe sp
+    {
+        spAtual -= sp; //recebe o sp
+        if (spAtual <= 0)
+        {
+            spAtual = 0;
+        }
+        AtualizarFeedbackSP();
+    }
+
+    private void AtualizarFeedbackSP()
+    {
+        if (pontosDeHabilidadeTexto != null)
+        {
+            pontosDeHabilidadeTexto.text = (spAtual + " / " + _spMaximoEInicial);
+        }
     }
     #endregion
 
@@ -950,14 +974,12 @@ public class IAPersonagemBase : MonoBehaviour
 
         if (habilidade1 != null)
         {
-            habilidade1.personagem = this;
-            habilidade1.Inicializar();
+            //habilidade1.Inicializar();
         }
 
         if (habilidade2 != null)
         {
-            habilidade2.personagem = this;
-            habilidade2.Inicializar();
+            //habilidade2.Inicializar();
         }
 
         if (_usarSliders && _slider != null)
@@ -970,27 +992,64 @@ public class IAPersonagemBase : MonoBehaviour
 
     #region Habilidades
 
-    public void EsperarEfeitoHabilidade(HabilidadeBase habilidade, float tempo)
+    public void EsperarEfeitoHabilidade(int habilidade, float tempo)
     {
-        if(habilidade.tempoDeEfeito != 0)
-        {
-            StartCoroutine(TempoEfeitoHabilidade(habilidade, tempo));
-        }
+        StartCoroutine(TempoEfeitoHabilidade(habilidade, tempo));
     }
-    IEnumerator TempoEfeitoHabilidade(HabilidadeBase habilidade, float tempo) //coroutine que espera um tempo para remover o efeito da habilidade
+    IEnumerator TempoEfeitoHabilidade(int habilidade, float tempo) //coroutine que espera um tempo para remover o efeito da habilidade
     {
         yield return new WaitForSeconds(tempo);
-        habilidade.RemoverEfeito();
+        if(habilidade == 1)
+        {
+            habilidade1.RemoverEfeito(this);
+        }
+        else if(habilidade == 2)
+        {
+            habilidade2.RemoverEfeito(this);
+        }
     }
-    public void EsperarRecargaHabilidade(HabilidadeBase habilidade, float tempo)
+    public void EsperarRecargaHabilidade(int habilidade, float tempo)
     {
         StartCoroutine(TempoRecargaHabilidade(habilidade, tempo));
     }
-    IEnumerator TempoRecargaHabilidade(HabilidadeBase habilidade, float tempo) //coroutine que espera um tempo para recarregar o efeito da habilidade
+    IEnumerator TempoRecargaHabilidade(int habilidade, float tempo) //coroutine que espera um tempo para recarregar o efeito da habilidade
     {
         yield return new WaitForSeconds(tempo);
-        habilidade.podeAtivarEfeito = true;
+        if (habilidade == 1)
+        {
+            podeAtivarEfeitoHabilidade1 = true;
+        }
+        else if (habilidade == 2)
+        {
+            podeAtivarEfeitoHabilidade2 = true;
+        }
         Debug.Log("Pode Ativar Efeito");
+    }
+
+    public void AtualizarWillPower(int valor, bool valorPositivo)
+    {
+        if (valorPositivo)
+        {
+            willPower += valor;
+        }
+        else
+        {
+            willPower -= valor;
+        }
+
+        if(willPower >= 10)
+        {
+            willPower = 10;
+        }
+        else if(willPower <= 0)
+        {
+            willPower = 0;
+        }
+
+        if(textoWillPower != null)
+        {
+            textoWillPower.text = "WillPower: " + willPower;
+        }
     }
     #endregion
 

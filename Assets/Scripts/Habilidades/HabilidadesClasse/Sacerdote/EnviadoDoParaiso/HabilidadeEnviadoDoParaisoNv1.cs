@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeEnviadoDoParaisoNv1 : HabilidadeBase
+public class HabilidadeEnviadoDoParaisoNv1 : MonoBehaviour
 {
 
 }

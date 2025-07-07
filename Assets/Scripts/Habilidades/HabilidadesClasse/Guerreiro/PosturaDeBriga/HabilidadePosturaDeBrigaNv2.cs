@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadePosturaDeBrigaNv2 : HabilidadeBase
+public class HabilidadePosturaDeBrigaNv2 : MonoBehaviour
 {
 
 }

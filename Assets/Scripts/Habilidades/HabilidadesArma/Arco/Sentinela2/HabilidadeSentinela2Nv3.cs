@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeSentinela2Nv3 : HabilidadeBase
+public class HabilidadeSentinela2Nv3 : MonoBehaviour
 {
 
 }

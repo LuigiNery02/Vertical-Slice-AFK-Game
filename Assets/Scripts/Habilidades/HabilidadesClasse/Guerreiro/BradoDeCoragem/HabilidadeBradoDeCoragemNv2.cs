@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeBradoDeCoragemNv2 : HabilidadeBase
+public class HabilidadeBradoDeCoragemNv2 : MonoBehaviour
 {
 
 }

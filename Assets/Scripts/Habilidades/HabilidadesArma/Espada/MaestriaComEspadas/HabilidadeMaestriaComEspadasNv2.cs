@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeMaestriaComEspadasNv2 : HabilidadeBase
+public class HabilidadeMaestriaComEspadasNv2 : MonoBehaviour
 {
 
 }

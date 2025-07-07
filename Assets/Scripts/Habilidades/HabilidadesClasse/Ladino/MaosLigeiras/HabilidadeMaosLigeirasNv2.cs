@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeMaosLigeirasNv2 : HabilidadeBase
+public class HabilidadeMaosLigeirasNv2 : MonoBehaviour
 {
 
 }

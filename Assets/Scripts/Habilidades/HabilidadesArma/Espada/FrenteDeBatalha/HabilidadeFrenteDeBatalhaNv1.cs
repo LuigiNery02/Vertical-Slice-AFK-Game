@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeFrenteDeBatalhaNv1 : HabilidadeBase
+public class HabilidadeFrenteDeBatalhaNv1 : MonoBehaviour
 {
 
 }

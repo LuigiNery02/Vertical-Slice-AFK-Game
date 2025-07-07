@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeLiderancaNv2 : HabilidadeBase
+public class HabilidadeLiderancaNv2 : MonoBehaviour
 {
 
 }

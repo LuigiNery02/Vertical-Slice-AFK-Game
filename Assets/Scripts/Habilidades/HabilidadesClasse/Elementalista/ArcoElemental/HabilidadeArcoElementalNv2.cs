@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeArcoElementalNv2 : HabilidadeBase
+public class HabilidadeArcoElementalNv2 : MonoBehaviour
 {
 
 }

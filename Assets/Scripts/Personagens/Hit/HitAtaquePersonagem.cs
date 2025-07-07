@@ -89,31 +89,46 @@ sealed class HitAtaquePersonagem : MonoBehaviour
             if(other != _personagemPai && alvo._comportamento != EstadoDoPersonagem.MORTO && alvo == _personagemPai._personagemAlvo)
             {
                 //define para o personagem que este ataque colidiu com um personagem
-                IAPersonagemBase alvoDoDAno = other.GetComponent<IAPersonagemBase>();
-                if (CalcularPrecisao(_personagemPai.precisao, alvoDoDAno.esquiva)) //calcula a precisão do hit
+                IAPersonagemBase alvoDoDano = other.GetComponent<IAPersonagemBase>();
+                if (CalcularPrecisao(_personagemPai.precisao, alvoDoDano.esquiva)) //calcula a precisão do hit
                 {
+                    if (_personagemPai.efeitoPorAtaqueAtivado)
+                    {
+                        _personagemPai.efeitoPorAtaque(true);
+                    }
+
                     //verifica o tipo de dano que causará (físico ou mágico)
                     switch (_personagemPai.personagem.arma.armaDano)
                     {
                         case TipoDeDano.DANO_MELEE:
-                            _personagemPai.CausarDano(alvoDoDAno, 0);
+                            _personagemPai.CausarDano(alvoDoDano, 0);
                             break;
                         case TipoDeDano.DANO_RANGED:
-                            _personagemPai.CausarDano(alvoDoDAno, 0);
+                            _personagemPai.CausarDano(alvoDoDano, 0);
                             break;
                         case TipoDeDano.DANO_MAGICO:
-                            _personagemPai.CausarDano(alvoDoDAno, 1);
+                            _personagemPai.CausarDano(alvoDoDano, 1);
                             break;
                     }
 
-                    //if (_personagemPai.efeitoPorAtaqueAtivado)
-                    //{
-                    //    _personagemPai.efeitoPorAtaque();
-                    //}
+                    if(_personagemPai.personagem.statusEspecial == StatusEspecial.Willpower)
+                    {
+                        _personagemPai.AtualizarWillPower(1, true);
+                    }
+
+                    if(alvoDoDano.personagem.statusEspecial == StatusEspecial.Willpower)
+                    {
+                        alvoDoDano.AtualizarWillPower(1, true);
+                    }
                 }
                 else
                 {
-                    alvoDoDAno.Esquivar(); //faz o alvo esquivar
+                    if (_personagemPai.efeitoPorAtaqueAtivado)
+                    {
+                        _personagemPai.efeitoPorAtaque(false);
+                    }
+
+                    alvoDoDano.Esquivar(); //faz o alvo esquivar
 
                     //if (alvoDoDAno.efeitoPorEsquivaAtivado)
                     //{
@@ -135,7 +150,12 @@ sealed class HitAtaquePersonagem : MonoBehaviour
         }
         else
         {
-            if(other.GetComponent<HitAtaquePersonagem>() == null) //verifica se não colidiu com outro hit
+            if (_personagemPai.efeitoPorAtaqueAtivado)
+            {
+                _personagemPai.efeitoPorAtaque(false);
+            }
+
+            if (other.GetComponent<HitAtaquePersonagem>() == null) //verifica se não colidiu com outro hit
             {
                 //verifica se volta para o pool ou se auto desativa
 

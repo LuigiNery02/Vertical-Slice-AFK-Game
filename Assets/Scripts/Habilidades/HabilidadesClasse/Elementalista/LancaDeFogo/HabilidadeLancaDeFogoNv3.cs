@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeLancaDeFogoNv3 : HabilidadeBase
+public class HabilidadeLancaDeFogoNv3 : MonoBehaviour
 {
 
 }

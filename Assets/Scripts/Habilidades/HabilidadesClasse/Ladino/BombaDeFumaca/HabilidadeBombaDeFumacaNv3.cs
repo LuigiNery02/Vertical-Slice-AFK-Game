@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeBombaDeFumacaNv3 : HabilidadeBase
+public class HabilidadeBombaDeFumacaNv3 : MonoBehaviour
 {
 
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeRetiradaTaticaNv1 : HabilidadeBase
+public class HabilidadeRetiradaTaticaNv1 : MonoBehaviour
 {
 
 }

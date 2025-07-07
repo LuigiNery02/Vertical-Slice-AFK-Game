@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeBarreiraNv2 : HabilidadeBase
+public class HabilidadeBarreiraNv2 : MonoBehaviour
 {
 
 }

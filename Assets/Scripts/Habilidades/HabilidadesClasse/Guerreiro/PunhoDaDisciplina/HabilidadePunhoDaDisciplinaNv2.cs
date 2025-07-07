@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadePunhoDaDisciplinaNv2 : HabilidadeBase
+public class HabilidadePunhoDaDisciplinaNv2 : MonoBehaviour
 {
 
 }

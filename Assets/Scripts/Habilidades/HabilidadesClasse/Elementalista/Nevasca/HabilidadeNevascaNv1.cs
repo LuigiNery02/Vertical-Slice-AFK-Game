@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeNevascaNv1 : HabilidadeBase
+public class HabilidadeNevascaNv1 : MonoBehaviour
 {
 
 }

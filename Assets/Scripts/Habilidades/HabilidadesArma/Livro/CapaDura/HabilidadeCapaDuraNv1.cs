@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeCapaDuraNv1 : HabilidadeBase
+public class HabilidadeCapaDuraNv1 : MonoBehaviour
 {
 
 }

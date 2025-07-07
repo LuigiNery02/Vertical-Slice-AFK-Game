@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HabilidadeAtaquePesadoNv3 : HabilidadeBase
+public class HabilidadeAtaquePesadoNv3 : MonoBehaviour
 {
 
 }
