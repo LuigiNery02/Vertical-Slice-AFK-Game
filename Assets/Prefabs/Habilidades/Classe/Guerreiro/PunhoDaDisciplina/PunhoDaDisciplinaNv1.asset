@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72ce39db0fe75d4da555b2db2b96f1b, type: 3}
+  m_Name: PunhoDaDisciplinaNv1
+  m_EditorClassIdentifier: 
+  nome: Punho da Disciplina
+  descricao: "Causa 150% de ATQ f\xEDsico no oponente.\nElemento: Neutro\nCast Fixo:
+    Instant\xE2neo\nCast Vari\xE1vel: Instant\xE2neo\nCusto de Mana: 32\nCooldown:
+    2  segundos\r\n\n"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 0
+  nivel: 1
+  spriteHabilidade: {fileID: 21300000, guid: aeb31def086466745b570d082197ee1f, type: 3}
+  idHabilidade: HabilidadePunhoDaDisciplina
+  habilidadeProximoNivel: {fileID: 11400000, guid: 1ac503bd51f35fe45a01a7120317e89d, type: 2}
+  elemento: 0
+  custoDeMana: 32
+  castFixo: 0
+  castVariavel: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 2
+  multiplicadorDeDano: 1.5
+  vfx: {fileID: 7155335147208632822, guid: 97c43495f80a3244fad1301dfafbe252, type: 3}

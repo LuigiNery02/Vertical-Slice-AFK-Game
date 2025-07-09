@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02ad1d06d9f66314983a56bb55cf8416, type: 3}
+  m_Name: CantoDeBatalhaNv3
+  m_EditorClassIdentifier: 
+  nome: Canto de Batalha
+  descricao: "Consome todas as 10 cargas de Willpower de uma vez para aumentaa a
+    Def e DefM do time em 50% por 5 segundos e deixa o time imune a magias por 3
+    segundos.\nElemento: Neutro\nCast Fixo: Instant\xE2neo\nCast Vari\xE1vel: Instant\xE2neo\nCusto
+    de Mana: 64\nCooldown: 45 segundos\r\n\r\n"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 0
+  nivel: 3
+  spriteHabilidade: {fileID: 21300000, guid: c46d83f2b73aaa141bd5015819342d81, type: 3}
+  idHabilidade: HabilidadeCantoDeBatalha
+  habilidadeProximoNivel: {fileID: 0}
+  elemento: 0
+  custoDeMana: 64
+  castFixo: 0
+  castVariavel: 0
+  tempoDeEfeito: 5
+  tempoDeRecarga: 45
+  consumoDeWillPower: 10
+  bonusPorcentagemDefesas: 50
+  tempoImuneAMagias: 3
+  vfx: {fileID: 7155335147208632822, guid: 97c43495f80a3244fad1301dfafbe252, type: 3}

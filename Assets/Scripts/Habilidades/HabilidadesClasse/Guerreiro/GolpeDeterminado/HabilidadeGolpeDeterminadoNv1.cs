@@ -4,49 +4,51 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Habilidades/Ativa/Classe/Guerreiro/Golpe Determinado/Nv1")]
 public class HabilidadeGolpeDeterminadoNv1 : HabilidadeAtiva
 {
-    public float multiplicadorDeDano = 2f;
-    public int consumoDeWillPower = 3;
+    [Header("Configurações Habilidade")]
+    [SerializeField]
+    private float multiplicadorDeDano = 2;
+    [SerializeField]
+    private int consumoDeWillPower = 3;
     public GameObject vfx;
 
     private float _personagemDanoOriginal;
-    private bool efeitoAtivado = false;
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
-        Debug.Log("porra");
-        if (!efeitoAtivado)
+        if (personagem.podeAtivarEfeitoHabilidade1)
         {
-            Debug.Log("porra2");
             if (base.ChecarAtivacao(personagem) && personagem.willPower >= consumoDeWillPower)
             {
-                efeitoAtivado = true;
                 _personagemDanoOriginal = personagem._dano;
                 personagem.efeitoPorAtaque = null;
                 personagem.efeitoPorAtaqueAtivado = true;
                 personagem.podeAtivarEfeitoHabilidade1 = false;
 
-                Instantiate(vfx);
-                vfx.transform.parent = personagem.transform;
-                vfx.transform.localPosition = Vector3.zero;
-
                 personagem.AtualizarWillPower(consumoDeWillPower, false);
                 personagem.GastarSP(custoDeMana);
-                Debug.Log("porra3");
 
                 personagem.efeitoPorAtaque = (bool acerto) =>
                 {
                     if (acerto)
                     {
-                        Debug.Log("porra4");
                         personagem._dano *= multiplicadorDeDano;
                         personagem.StartCoroutine(EsperarFrame(personagem));
                     }
                     else
                     {
-                        Debug.Log("porra5");
                         RemoverEfeito(personagem);
                     }
 
                 };
+
+                if(personagem.vfxHabilidade1 == null)
+                {
+                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
+                    personagem.vfxHabilidade1 = vfxInstanciado;
+                }
+                else
+                {
+                    personagem.GerenciarVFXHabilidade(1, true);
+                }
             }
         }
     }
@@ -56,9 +58,8 @@ public class HabilidadeGolpeDeterminadoNv1 : HabilidadeAtiva
         personagem._dano = _personagemDanoOriginal;
         personagem.efeitoPorAtaque = null;
         personagem.efeitoPorAtaqueAtivado = false;
-        personagem.podeAtivarEfeitoHabilidade1 = false;
-        efeitoAtivado = false;
-        Destroy(vfx);
+        base.RemoverEfeito(personagem);
+        personagem.GerenciarVFXHabilidade(1, false);
     }
 
     IEnumerator EsperarFrame(IAPersonagemBase personagem)

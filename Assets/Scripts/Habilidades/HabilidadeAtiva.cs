@@ -3,6 +3,7 @@ using UnityEngine;
 public enum HabilidadeElemento { Neutro, Agua, Fogo, Vento, Sagrado }
 public class HabilidadeAtiva : HabilidadeBase
 {
+    public HabilidadeElemento elemento;
     public float custoDeMana;
     public float castFixo;
     public float castVariavel;
@@ -43,7 +44,7 @@ public class HabilidadeAtiva : HabilidadeBase
                 indice = 2;
             }
 
-            personagem.EsperarRecargaHabilidade(indice, tempoDeEfeito);
+            personagem.EsperarRecargaHabilidade(indice, tempoDeRecarga);
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public enum ControladorDoPersonagem { PERSONAGEM_DO_JOGADOR, PERSONAGEM_INIMIGO } //quem controla o personagem, se é controlado pelo jogador ou pela IA inimiga
 public enum TipoDeArma { CURTA_DISTANCIA, LONGA_DISTANCIA } //características referente ao comportamento de ataque da arma do personagem, se é um ataque de curta ou longa distância
-public enum EstadoDoPersonagem { IDLE, PERSEGUINDO, ATACANDO, MORTO, MOVIMENTO_ESPECIAL} //estados de comportamento do personagem
+public enum EstadoDoPersonagem { IDLE, PERSEGUINDO, ATACANDO, MORTO, MOVIMENTO_ESPECIAL, STUNADO, CONJURANDO_HABILIDADE} //estados de comportamento do personagem
 
 public class IAPersonagemBase : MonoBehaviour
 {
@@ -80,6 +80,8 @@ public class IAPersonagemBase : MonoBehaviour
     public HabilidadeBase habilidade2; //habilidade 2 (arma) do personagem
     public bool podeAtivarEfeitoHabilidade1 = true; //variável que determina se pode ativar ou não o efeito da habilidade 1
     public bool podeAtivarEfeitoHabilidade2 = true; //variável que determina se pode ativar ou não o efeito da habilidade 2
+    public GameObject vfxHabilidade1;
+    public GameObject vfxHabilidade2;
 
     //Área referente às animações
     [Header("Animação")]
@@ -99,7 +101,8 @@ public class IAPersonagemBase : MonoBehaviour
     public int id; //variável para verificar o id do personagem
     [HideInInspector]
     public IAPersonagemBase _personagemAlvo; //alvo de ataques do personagem
-    private Transform _alvoAtual; //transform do personagem alvo
+    [HideInInspector]
+    public Transform _alvoAtual; //transform do personagem alvo
     private SistemaDeBatalha _sistemaDeBatalha; //sistema de batalha
     private GerenciadorDeObjectPool _gerenciadorDePool; //gerenciador de object pool
     private HitAtaquePersonagem _hitAtaquePersonagem; //hit do personagem
@@ -119,6 +122,27 @@ public class IAPersonagemBase : MonoBehaviour
     public EfeitoPorAtaque efeitoPorAtaque;
     [HideInInspector]
     public bool efeitoPorAtaqueAtivado; //verifica se efeitos por ataque de habilidades estão ativados
+
+    [HideInInspector]
+    public bool stunado;
+    [HideInInspector]
+    public float tempoDeStun;
+    [HideInInspector]
+    public bool ataqueDiminuido;
+    [HideInInspector]
+    public bool imuneAMagias;
+
+    [HideInInspector]
+    public bool recebeuDebuffPunhoDisciplina;
+
+    [HideInInspector]
+    public bool conjurandoHabilidade;
+    [HideInInspector]
+    public float tempoDeCast;
+    [HideInInspector]
+    public int habilidadeSendoConjurada;
+
+    
 
     ////função que é ativada quando há um efeito por esquiva
     //public delegate void EfeitoPorEsquiva();
@@ -307,10 +331,6 @@ public class IAPersonagemBase : MonoBehaviour
             textoWillPower.text = "WillPower: " + willPower;
         }
 
-        //sangramento = false;
-        //queimadura = false;
-        //congelamento = false;
-
         FeedbacksVisuais(); //chama a função para verificar quais feedbacks visuais irá usar
         SelecionarAlvo(); //chama a função para o personagem encontrar seu alvo
 
@@ -358,6 +378,23 @@ public class IAPersonagemBase : MonoBehaviour
             _comportamento = EstadoDoPersonagem.MOVIMENTO_ESPECIAL;
             //MovimentoEspecial(movimentoEspecialAtual);
         }
+        else if (comportamento == "stun")
+        {
+            _comportamento = EstadoDoPersonagem.STUNADO;
+            Stun();
+        }
+        else if (comportamento == "conjurarHabilidade1" && !conjurandoHabilidade)
+        {
+            _comportamento = EstadoDoPersonagem.CONJURANDO_HABILIDADE;
+            habilidadeSendoConjurada = 1;
+            ConjurarHabilidade();
+        }
+        else if (comportamento == "conjurarHabilidade2" && !conjurandoHabilidade)
+        {
+            _comportamento = EstadoDoPersonagem.CONJURANDO_HABILIDADE;
+            habilidadeSendoConjurada = 2;
+            ConjurarHabilidade();
+        }
         //else if(comportamento == "paralisia")
         //{
         //    _comportamento = EstadoDoPersonagem.IDLE;
@@ -380,12 +417,17 @@ public class IAPersonagemBase : MonoBehaviour
         {
             _animator.Rebind();
         }
+
+        willPower = 0;
+        stunado = false;
+        conjurandoHabilidade = false;
+        imuneAMagias = false;
     }
 
     private void Update()
     {
         //checa se o personagem não está morto, se a batalha iniciou e se o personagem não está em idle
-        if(_comportamento != EstadoDoPersonagem.MORTO && _sistemaDeBatalha.batalhaIniciou && _comportamento != EstadoDoPersonagem.IDLE)
+        if(_comportamento != EstadoDoPersonagem.MORTO && _sistemaDeBatalha.batalhaIniciou && _comportamento != EstadoDoPersonagem.IDLE && _comportamento != EstadoDoPersonagem.STUNADO)
         {
             //checa atualizadamente os estados de comportamento do personagem
             if (_comportamento == EstadoDoPersonagem.PERSEGUINDO)
@@ -944,6 +986,7 @@ public class IAPersonagemBase : MonoBehaviour
         {
             _animator.ResetTrigger("Perseguir");
             _animator.ResetTrigger("Atacar");
+            _animator.ResetTrigger("Stun");
             _animator.SetTrigger("Morrer");
         }
 
@@ -992,6 +1035,47 @@ public class IAPersonagemBase : MonoBehaviour
 
     #region Habilidades
 
+    public void ConjurarHabilidade()
+    {
+        conjurandoHabilidade = true;
+        _animator.SetTrigger("Cast");
+        StartCoroutine(EsperarCast());
+    }
+
+    public void CancelarHabilidade()
+    {
+        StopCoroutine(EsperarCast());
+        conjurandoHabilidade = false;
+        habilidadeSendoConjurada = 0;
+        _comportamento = EstadoDoPersonagem.IDLE;
+        _animator.ResetTrigger("Cast");
+        _animator.SetTrigger("Idle");
+        VerificarComportamento("selecionarAlvo");
+    }
+
+    IEnumerator EsperarCast()
+    {
+        yield return new WaitForSeconds(tempoDeCast);
+        if (_comportamento != EstadoDoPersonagem.MORTO && _sistemaDeBatalha.batalhaIniciou && _comportamento != EstadoDoPersonagem.IDLE)
+        {
+            conjurandoHabilidade = false;
+            if(habilidadeSendoConjurada == 1)
+            {
+                //ativa o efeito da habilidade 1
+            }
+            else if(habilidadeSendoConjurada == 2)
+            {
+                //ativa o efeito da habilidade 2
+            }
+            //ativa a habilidade
+            _comportamento = EstadoDoPersonagem.IDLE;
+            _animator.ResetTrigger("Cast");
+            _animator.SetTrigger("Idle");
+            VerificarComportamento("selecionarAlvo");
+            habilidadeSendoConjurada = 0;
+        }
+    }
+
     public void EsperarEfeitoHabilidade(int habilidade, float tempo)
     {
         StartCoroutine(TempoEfeitoHabilidade(habilidade, tempo));
@@ -1026,6 +1110,18 @@ public class IAPersonagemBase : MonoBehaviour
         Debug.Log("Pode Ativar Efeito");
     }
 
+    public void GerenciarVFXHabilidade(int habilidade, bool ativar)
+    {
+        if(habilidade == 1)
+        {
+            vfxHabilidade1.SetActive(ativar);
+        }
+        else if(habilidade == 2)
+        {
+            vfxHabilidade2.SetActive(ativar);
+        }
+    }
+
     public void AtualizarWillPower(int valor, bool valorPositivo)
     {
         if (valorPositivo)
@@ -1054,6 +1150,39 @@ public class IAPersonagemBase : MonoBehaviour
     #endregion
 
     #region Efeitos
+
+    public void Stun()
+    {
+        stunado = true;
+        _animator.SetTrigger("Stun");
+        StartCoroutine(EsperarTempoStun());
+    }
+
+    IEnumerator EsperarTempoStun()
+    {
+        yield return new WaitForSeconds(tempoDeStun);
+        if (_comportamento != EstadoDoPersonagem.MORTO && _sistemaDeBatalha.batalhaIniciou && _comportamento != EstadoDoPersonagem.IDLE)
+        {
+            stunado = false;
+            _comportamento = EstadoDoPersonagem.IDLE;
+            _animator.ResetTrigger("Stun");
+            _animator.SetTrigger("Idle");
+            VerificarComportamento("selecionarAlvo");
+        }
+    }
+
+    public bool VerificarEfeitoNegativo()
+    {
+        if (ataqueDiminuido)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     //public void Paralisia() //função de paralisia do personagem
     //{
     //    _alvoAtual = null;

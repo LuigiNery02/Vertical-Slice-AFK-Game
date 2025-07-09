@@ -23,9 +23,15 @@ MonoBehaviour:
   spriteHabilidade: {fileID: 21300000, guid: 3925691c2a021aa429c1dc89712a1253, type: 3}
   idHabilidade: HabilidadeGolpeDeterminado
   habilidadeProximoNivel: {fileID: 0}
+  elemento: 0
   custoDeMana: 90
   castFixo: 0
   castVariavel: 0
   tempoDeEfeito: 0
   tempoDeRecarga: 1
-  statusEspecial: 1
+  multiplicadorDeDano: 4
+  consumoDeWillPower: 3
+  ignorarDefesaInimigo: 25
+  probabilidadeDeStun: 25
+  tempoDeStun: 2
+  vfx: {fileID: 7155335147208632822, guid: 97c43495f80a3244fad1301dfafbe252, type: 3}

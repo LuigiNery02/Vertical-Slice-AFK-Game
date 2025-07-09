@@ -1073,7 +1073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &72781972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16456,6 +16456,7 @@ MonoBehaviour:
     velocidadeDeMovimento: 0
     ranged: 0
     multiplicadorAtaque: 1
+    statusEspecial: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
