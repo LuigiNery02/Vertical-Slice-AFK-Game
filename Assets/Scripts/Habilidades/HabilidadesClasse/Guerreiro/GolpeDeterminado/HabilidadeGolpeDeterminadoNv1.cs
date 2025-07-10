@@ -11,39 +11,36 @@ public class HabilidadeGolpeDeterminadoNv1 : HabilidadeAtiva
     private int consumoDeWillPower = 3;
     public GameObject vfx;
 
-    private float _personagemDanoOriginal;
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
-        if (personagem.podeAtivarEfeitoHabilidade1)
+        if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
         {
             if (base.ChecarAtivacao(personagem) && personagem.willPower >= consumoDeWillPower)
             {
-                _personagemDanoOriginal = personagem._dano;
-                personagem.efeitoPorAtaque = null;
+                float danoOriginal = personagem._dano;
                 personagem.efeitoPorAtaqueAtivado = true;
-                personagem.podeAtivarEfeitoHabilidade1 = false;
+                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
 
                 personagem.AtualizarWillPower(consumoDeWillPower, false);
                 personagem.GastarSP(custoDeMana);
 
-                personagem.efeitoPorAtaque = (bool acerto) =>
+                personagem.AtivarEfeitoPorAtaque("GolpeDeterminadoNv1", (bool acerto) =>
                 {
                     if (acerto)
                     {
                         personagem._dano *= multiplicadorDeDano;
-                        personagem.StartCoroutine(EsperarFrame(personagem));
+                        personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal));
                     }
                     else
                     {
                         RemoverEfeito(personagem);
                     }
+                });
 
-                };
-
-                if(personagem.vfxHabilidade1 == null)
+                if (personagem.vfxHabilidadeAtivaClasse == null)
                 {
                     GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidade1 = vfxInstanciado;
+                    personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
                 }
                 else
                 {
@@ -55,16 +52,16 @@ public class HabilidadeGolpeDeterminadoNv1 : HabilidadeAtiva
 
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
-        personagem._dano = _personagemDanoOriginal;
-        personagem.efeitoPorAtaque = null;
+        personagem.RemoverEfeitoPorAtaque("GolpeDeterminadoNv1");
         personagem.efeitoPorAtaqueAtivado = false;
         base.RemoverEfeito(personagem);
         personagem.GerenciarVFXHabilidade(1, false);
     }
 
-    IEnumerator EsperarFrame(IAPersonagemBase personagem)
+    IEnumerator EsperarFrame(IAPersonagemBase personagem, float dano)
     {
         yield return null; //agurada um frame
+        personagem._dano = dano;
         RemoverEfeito(personagem);
     }
 }

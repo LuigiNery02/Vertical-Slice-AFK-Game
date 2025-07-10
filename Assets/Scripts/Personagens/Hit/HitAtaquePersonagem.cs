@@ -42,7 +42,7 @@ sealed class HitAtaquePersonagem : MonoBehaviour
     private void Update()
     {
         //auto desativa caso o personagem que criou este ataque está morto ou é um porjétil
-        if(_personagemPai._comportamento != EstadoDoPersonagem.ATACANDO && _personagemPai._comportamento != EstadoDoPersonagem.MOVIMENTO_ESPECIAL && longaDistancia)
+        if(_personagemPai != null && _personagemPai._comportamento != EstadoDoPersonagem.ATACANDO && _personagemPai._comportamento != EstadoDoPersonagem.MOVIMENTO_ESPECIAL && longaDistancia)
         {
             //desativa ou devolve para o pool
 
@@ -54,6 +54,17 @@ sealed class HitAtaquePersonagem : MonoBehaviour
             {
                 gameObject.SetActive(false);
             } 
+        }
+        else if(_personagemPai == null)
+        {
+            if (gerenciadorDePool != null)
+            {
+                gerenciadorDePool.DevolverPool(poolKey, gameObject);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
 
         //se for um hit de longa distancia, se move até o alvo
@@ -94,7 +105,12 @@ sealed class HitAtaquePersonagem : MonoBehaviour
                 {
                     if (_personagemPai.efeitoPorAtaqueAtivado)
                     {
-                        _personagemPai.efeitoPorAtaque(true);
+                        _personagemPai.ExecutarEfeitosDeAtaque(true);
+                    }
+
+                    if (alvoDoDano.efeitoPorAtaqueRecebidoAtivado)
+                    {
+                        alvoDoDano.ExecutarEfeitosDeAtaqueRecebidos(true);
                     }
 
                     //verifica o tipo de dano que causará (físico ou mágico)
@@ -125,7 +141,12 @@ sealed class HitAtaquePersonagem : MonoBehaviour
                 {
                     if (_personagemPai.efeitoPorAtaqueAtivado)
                     {
-                        _personagemPai.efeitoPorAtaque(false);
+                        _personagemPai.ExecutarEfeitosDeAtaque(false);
+                    }
+
+                    if (alvoDoDano.efeitoPorAtaqueRecebidoAtivado)
+                    {
+                        alvoDoDano.ExecutarEfeitosDeAtaqueRecebidos(false);
                     }
 
                     alvoDoDano.Esquivar(); //faz o alvo esquivar
@@ -152,7 +173,7 @@ sealed class HitAtaquePersonagem : MonoBehaviour
         {
             if (_personagemPai.efeitoPorAtaqueAtivado)
             {
-                _personagemPai.efeitoPorAtaque(false);
+                _personagemPai.ExecutarEfeitosDeAtaque(false);
             }
 
             if (other.GetComponent<HitAtaquePersonagem>() == null) //verifica se não colidiu com outro hit

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fc78499f412e8446812a24e0a5c2a3c, type: 3}
+  m_Name: PosturaDeBrigaNv2
+  m_EditorClassIdentifier: 
+  nome: Postura de Briga
+  descricao: "Enquanto estiver com 6 willpower, recebe +5% de def e mdef e 5% de
+    Atq base\r"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 1
+  nivel: 2
+  spriteHabilidade: {fileID: 21300000, guid: 14a0f66a7be165c4ba476e3d7c40e390, type: 3}
+  idHabilidade: HabilidadePosturaDeBriga
+  habilidadeProximoNivel: {fileID: 11400000, guid: 1230c5a9cde00644fbb64bb6ece6cb76, type: 2}
+  bonusDefesas: 5
+  multiplicadorBonusAtaque: 0.05

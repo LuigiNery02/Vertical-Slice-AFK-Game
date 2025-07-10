@@ -1,6 +1,87 @@
+using System.Collections;
 using UnityEngine;
 
-public class HabilidadePosturaDeBrigaNv3 : MonoBehaviour
+[CreateAssetMenu(menuName = "Habilidades/Passiva/Classe/Guerreiro/Postura de Briga/Nv3")]
+public class HabilidadePosturaDeBrigaNv3 : HabilidadePassiva
 {
+    [Header("Configurações Habilidade")]
+    [SerializeField]
+    private float bonusDefesas = 8;
+    [SerializeField]
+    private float multiplicadorBonusAtaque = 0.08f;
+    public override void AtivarEfeito(IAPersonagemBase personagem)
+    {
+        if (!personagem.dadosDasHabilidadesPassivas.ContainsKey(this))
+        {
+            personagem.dadosDasHabilidadesPassivas[this] = new DadosHabilidadePassiva();
+        }
 
+        var dados = personagem.dadosDasHabilidadesPassivas[this];
+        dados.monitoramento = personagem.StartCoroutine(MonitorarCondicao(personagem, dados));
+    }
+
+    public override void RemoverEfeito(IAPersonagemBase personagem)
+    {
+        if (!personagem.dadosDasHabilidadesPassivas.ContainsKey(this))
+        {
+            return;
+        }
+
+        var dados = personagem.dadosDasHabilidadesPassivas[this];
+
+        if (dados.monitoramento != null)
+        {
+            personagem.StopCoroutine(dados.monitoramento);
+        }
+
+        if (dados.bonusAplicado)
+        {
+            RemoverBonus(personagem);
+        }
+
+        personagem.dadosDasHabilidadesPassivas.Remove(this);
+    }
+
+    private IEnumerator MonitorarCondicao(IAPersonagemBase personagem, DadosHabilidadePassiva dados)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.2f);
+
+            if (personagem.willPower >= 4)
+            {
+                if (!dados.bonusAplicado)
+                {
+                    AplicarBonus(personagem);
+                    dados.bonusAplicado = true;
+                }
+            }
+            else
+            {
+                if (dados.bonusAplicado)
+                {
+                    RemoverBonus(personagem);
+                    dados.bonusAplicado = false;
+                }
+            }
+        }
+    }
+
+    private void AplicarBonus(IAPersonagemBase personagem)
+    {
+        personagem.defesa += bonusDefesas;
+        personagem.defesaMagica += bonusDefesas;
+        personagem.personagem.danoBase += (personagem.personagem.danoBase * multiplicadorBonusAtaque);
+        personagem.personagem.DefinicoesBatalha();
+        personagem.AtualizarDadosPersonagem();
+    }
+
+    private void RemoverBonus(IAPersonagemBase personagem)
+    {
+        personagem.defesa -= bonusDefesas;
+        personagem.defesaMagica -= bonusDefesas;
+        personagem.personagem.danoBase -= (personagem.personagem.danoBase * multiplicadorBonusAtaque);
+        personagem.personagem.DefinicoesBatalha();
+        personagem.AtualizarDadosPersonagem();
+    }
 }

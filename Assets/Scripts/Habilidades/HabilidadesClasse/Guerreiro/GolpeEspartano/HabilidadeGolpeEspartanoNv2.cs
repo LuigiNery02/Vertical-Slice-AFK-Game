@@ -8,40 +8,37 @@ public class HabilidadeGolpeEspartanoNv2 : HabilidadeAtiva
 {
     [Header("Configurações Habilidade")]
     [SerializeField]
-    private float tempoDeTaunt;
+    private float tempoDeTaunt = 2;
     [SerializeField]
     private float raioDeDistanciaDoTaunt;
     public GameObject vfx;
-
-    private Dictionary<IAPersonagemBase, IAPersonagemBase> alvosOriginais = new();
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
-        if (personagem.podeAtivarEfeitoHabilidade1)
+        if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
         {
             if (base.ChecarAtivacao(personagem))
             {
-                personagem.efeitoPorAtaque = null;
                 personagem.efeitoPorAtaqueAtivado = true;
-                personagem.podeAtivarEfeitoHabilidade1 = false;
+                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
 
                 personagem.GastarSP(custoDeMana);
 
-                personagem.efeitoPorAtaque = (bool acerto) =>
+                personagem.AtivarEfeitoPorAtaque("GolpeEspartanoNv2", (bool acerto) =>
                 {
                     if (acerto)
                     {
-                        AplicarTaunt(personagem);
+                        personagem.StartCoroutine(EsperarTempoDeTaunt(personagem));
                     }
                     else
                     {
                         RemoverEfeito(personagem);
                     }
-                };
+                });
 
-                if (personagem.vfxHabilidade1 == null)
+                if (personagem.vfxHabilidadeAtivaClasse == null)
                 {
                     GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidade1 = vfxInstanciado;
+                    personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
                 }
                 else
                 {
@@ -53,14 +50,16 @@ public class HabilidadeGolpeEspartanoNv2 : HabilidadeAtiva
 
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
-        personagem.efeitoPorAtaque = null;
+        personagem.RemoverEfeitoPorAtaque("GolpeEspartanoNv2");
         personagem.efeitoPorAtaqueAtivado = false;
         base.RemoverEfeito(personagem);
         personagem.GerenciarVFXHabilidade(1, false);
     }
 
-    private void AplicarTaunt(IAPersonagemBase personagem)
+    IEnumerator EsperarTempoDeTaunt(IAPersonagemBase personagem)
     {
+        Dictionary<IAPersonagemBase, IAPersonagemBase> alvosOriginais = new();
+
         Collider[] colliders = Physics.OverlapSphere(personagem.transform.position, raioDeDistanciaDoTaunt);
 
         foreach (var collider in colliders)
@@ -69,24 +68,16 @@ public class HabilidadeGolpeEspartanoNv2 : HabilidadeAtiva
 
             if (inimigo != null && inimigo.controlador != personagem.controlador && inimigo._comportamento != EstadoDoPersonagem.MORTO)
             {
-                if (!alvosOriginais.ContainsKey(inimigo))
+                alvosOriginais[inimigo] = inimigo._personagemAlvo;
+                inimigo._personagemAlvo = personagem;
+                inimigo._alvoAtual = personagem.transform;
+                if (!inimigo.stunado)
                 {
-                    alvosOriginais[inimigo] = inimigo._personagemAlvo;
-                    inimigo._personagemAlvo = personagem;
-                    inimigo._alvoAtual = personagem.transform;
-                    if (!inimigo.stunado)
-                    {
-                        inimigo.VerificarComportamento("perseguir");
-                    }
+                    inimigo.VerificarComportamento("perseguir");
                 }
             }
         }
 
-        personagem.StartCoroutine(EsperarTempoDeTaunt(personagem));
-    }
-
-    IEnumerator EsperarTempoDeTaunt(IAPersonagemBase personagem)
-    {
         yield return new WaitForSeconds(tempoDeTaunt);
 
         foreach (var par in alvosOriginais)
@@ -102,7 +93,6 @@ public class HabilidadeGolpeEspartanoNv2 : HabilidadeAtiva
             }
         }
 
-        alvosOriginais.Clear();
         RemoverEfeito(personagem);
     }
 }

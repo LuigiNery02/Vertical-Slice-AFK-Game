@@ -17,53 +17,54 @@ public class HabilidadeGolpeDeterminadoNv3 : HabilidadeAtiva
     private int tempoDeStun = 2;
     public GameObject vfx;
 
-    private float _personagemDanoOriginal;
-    private float _inimigoDefesaOriginal;
-    private IAPersonagemBase _inimigo;
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
-        if (personagem.podeAtivarEfeitoHabilidade1)
+        if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
         {
             if (base.ChecarAtivacao(personagem) && personagem.willPower >= consumoDeWillPower)
             {
-                _personagemDanoOriginal = personagem._dano;
-                personagem.efeitoPorAtaque = null;
+                float danoOriginal = personagem._dano;
+
                 personagem.efeitoPorAtaqueAtivado = true;
-                personagem.podeAtivarEfeitoHabilidade1 = false;
+                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
 
                 personagem.AtualizarWillPower(consumoDeWillPower, false);
                 personagem.GastarSP(custoDeMana);
 
-                personagem.efeitoPorAtaque = (bool acerto) =>
+                personagem.AtivarEfeitoPorAtaque("GolpeDeterminadoNv3", (bool acerto) =>
                 {
                     if (acerto)
                     {
                         personagem._dano *= multiplicadorDeDano;
-                        _inimigo = personagem._personagemAlvo;
-                        _inimigoDefesaOriginal = _inimigo.defesa;
-                        _inimigo.defesa -= ignorarDefesaInimigo;
-                        if (_inimigo.defesa <= 0)
+
+                        IAPersonagemBase inimigo = personagem._personagemAlvo;
+
+                        float defesaOriginal = inimigo.defesa;
+                        inimigo.defesa -= ignorarDefesaInimigo;
+
+                        inimigo.defesa -= ignorarDefesaInimigo;
+                        if (inimigo.defesa <= 0)
                         {
-                            _inimigo.defesa = 0;
+                            inimigo.defesa = 0;
                         }
-                        if (CalcularProbabiilidadeDeStun() && !_inimigo.stunado)
+                        if (CalcularProbabiilidadeDeStun() && !inimigo.stunado)
                         {
-                            _inimigo.tempoDeStun = tempoDeStun;
-                            _inimigo.VerificarComportamento("stun");
+                            inimigo.tempoDeStun = tempoDeStun;
+                            inimigo.VerificarComportamento("stun");
                         }
-                        personagem.StartCoroutine(EsperarFrame(personagem));
+                        personagem.StartCoroutine(EsperarFrame(personagem, inimigo, danoOriginal, defesaOriginal));
                     }
                     else
                     {
                         RemoverEfeito(personagem);
                     }
 
-                };
+                });
 
-                if (personagem.vfxHabilidade1 == null)
+                if (personagem.vfxHabilidadeAtivaClasse == null)
                 {
                     GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidade1 = vfxInstanciado;
+                    personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
                 }
                 else
                 {
@@ -75,15 +76,21 @@ public class HabilidadeGolpeDeterminadoNv3 : HabilidadeAtiva
 
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
-        personagem._dano = _personagemDanoOriginal;
-        if (_inimigo == personagem._personagemAlvo)
-        {
-            _inimigo.defesa = _inimigoDefesaOriginal;
-        }
-        personagem.efeitoPorAtaque = null;
+        personagem.RemoverEfeitoPorAtaque("GolpeDeterminadoNv3");
         personagem.efeitoPorAtaqueAtivado = false;
         base.RemoverEfeito(personagem);
         personagem.GerenciarVFXHabilidade(1, false);
+    }
+
+    IEnumerator EsperarFrame(IAPersonagemBase personagem, IAPersonagemBase inimigo, float dano, float defesa)
+    {
+        yield return null; //agurada um frame
+        personagem._dano = dano;
+        if (inimigo == personagem._personagemAlvo)
+        {
+            inimigo.defesa = defesa;
+        }
+        RemoverEfeito(personagem);
     }
 
     private bool CalcularProbabiilidadeDeStun()
@@ -91,11 +98,5 @@ public class HabilidadeGolpeDeterminadoNv3 : HabilidadeAtiva
         int rng = Random.Range(0, 100);
 
         return rng < probabilidadeDeStun;
-    }
-
-    IEnumerator EsperarFrame(IAPersonagemBase personagem)
-    {
-        yield return null; //agurada um frame
-        RemoverEfeito(personagem);
     }
 }

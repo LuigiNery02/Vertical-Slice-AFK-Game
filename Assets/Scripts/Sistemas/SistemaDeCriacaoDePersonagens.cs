@@ -136,40 +136,76 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
 
         for (int i = 0; i < personagensCriados.Count; i++)
         {
-            personagensCriados[i].listaDeHabilidadesDeClasse = new List<HabilidadeBase>();
-            personagensCriados[i].listaDeHabilidadesDeArma = new List<HabilidadeBase>();
+            personagensCriados[i].listaDeHabilidadesAtivasDeClasse = new List<HabilidadeAtiva>();
+            personagensCriados[i].listaDeHabilidadesAtivasDeArma = new List<HabilidadeAtiva>();
+            personagensCriados[i].listaDeHabilidadesPassivasDeClasse = new List<HabilidadePassiva>();
+            personagensCriados[i].listaDeHabilidadesPassivasDeArma = new List<HabilidadePassiva>();
 
             personagensCriados[i].arma = armas[personagensCriados[i].armaID];
 
-            foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesDeArmaSalvas)
+            foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesAtivasDeArmaSalvas)
             {
                 switch (personagensCriados[i].arma.nome)
                 {
                     case "Espada":
-                        HabilidadeBase habilidadeEspada = GerenciadorDeInventario.instancia.habilidadesEspada.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                        if (habilidadeEspada != null)
+                        HabilidadeAtiva habilidadeAtivaEspada = GerenciadorDeInventario.instancia.habilidadesAtivasEspada.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                        if (habilidadeAtivaEspada != null)
                         {
-                            habilidadeEspada.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                            personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeEspada);
-                            personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesEspada.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
+                            habilidadeAtivaEspada.nivel = personagensCriados[i].habilidadesAtivasDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                            personagensCriados[i].listaDeHabilidadesAtivasDeArma.Add(habilidadeAtivaEspada);
+                            personagensCriados[i].habilidadeAtivaArma = GerenciadorDeInventario.instancia.habilidadesAtivasEspada.Find(h => h.idHabilidade == personagensCriados[i].habilidadeAtivaArmaID);
                         }
                         break;
                     case "Arco":
-                        HabilidadeBase habilidadeArco = GerenciadorDeInventario.instancia.habilidadesArco.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                        if (habilidadeArco != null)
+                        HabilidadeAtiva habilidadeAtivaArco = GerenciadorDeInventario.instancia.habilidadesAtivasArco.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                        if (habilidadeAtivaArco != null)
                         {
-                            habilidadeArco.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                            personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeArco);
-                            personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesArco.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
+                            habilidadeAtivaArco.nivel = personagensCriados[i].habilidadesAtivasDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                            personagensCriados[i].listaDeHabilidadesAtivasDeArma.Add(habilidadeAtivaArco);
+                            personagensCriados[i].habilidadeAtivaArma = GerenciadorDeInventario.instancia.habilidadesAtivasArco.Find(h => h.idHabilidade == personagensCriados[i].habilidadeAtivaArmaID);
                         }
                         break;
                     case "Livro":
-                        HabilidadeBase habilidadeLivro = GerenciadorDeInventario.instancia.habilidadesLivro.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                        if (habilidadeLivro != null)
+                        HabilidadeAtiva habilidadeAtivaLivro = GerenciadorDeInventario.instancia.habilidadesAtivasLivro.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                        if (habilidadeAtivaLivro != null)
                         {
-                            habilidadeLivro.nivel = personagensCriados[i].habilidadesDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                            personagensCriados[i].listaDeHabilidadesDeArma.Add(habilidadeLivro);
-                            personagensCriados[i].habilidadeArma = GerenciadorDeInventario.instancia.habilidadesLivro.Find(h => h.idHabilidade == personagensCriados[i].habilidadeArmaID);
+                            habilidadeAtivaLivro.nivel = personagensCriados[i].habilidadesAtivasDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                            personagensCriados[i].listaDeHabilidadesAtivasDeArma.Add(habilidadeAtivaLivro);
+                            personagensCriados[i].habilidadeAtivaArma = GerenciadorDeInventario.instancia.habilidadesAtivasLivro.Find(h => h.idHabilidade == personagensCriados[i].habilidadeAtivaArmaID);
+                        }
+                        break;
+                }
+            }
+
+            foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesPassivasDeArmaSalvas)
+            {
+                switch (personagensCriados[i].arma.nome)
+                {
+                    case "Espada":
+                        HabilidadePassiva habilidadePassivaEspada = GerenciadorDeInventario.instancia.habilidadesPassivasEspada.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                        if (habilidadePassivaEspada != null)
+                        {
+                            habilidadePassivaEspada.nivel = personagensCriados[i].habilidadesPassivasDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                            personagensCriados[i].listaDeHabilidadesPassivasDeArma.Add(habilidadePassivaEspada);
+                            personagensCriados[i].habilidadePassivaArma = GerenciadorDeInventario.instancia.habilidadesPassivasEspada.Find(h => h.idHabilidade == personagensCriados[i].habilidadePassivaArmaID);
+                        }
+                        break;
+                    case "Arco":
+                        HabilidadePassiva habilidadePassivaArco = GerenciadorDeInventario.instancia.habilidadesPassivasArco.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                        if (habilidadePassivaArco != null)
+                        {
+                            habilidadePassivaArco.nivel = personagensCriados[i].habilidadesPassivasDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                            personagensCriados[i].listaDeHabilidadesPassivasDeArma.Add(habilidadePassivaArco);
+                            personagensCriados[i].habilidadePassivaArma = GerenciadorDeInventario.instancia.habilidadesPassivasArco.Find(h => h.idHabilidade == personagensCriados[i].habilidadePassivaArmaID);
+                        }
+                        break;
+                    case "Livro":
+                        HabilidadePassiva habilidadePassivaLivro = GerenciadorDeInventario.instancia.habilidadesPassivasLivro.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                        if (habilidadePassivaLivro != null)
+                        {
+                            habilidadePassivaLivro.nivel = personagensCriados[i].habilidadesPassivasDeArmaSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                            personagensCriados[i].listaDeHabilidadesPassivasDeArma.Add(habilidadePassivaLivro);
+                            personagensCriados[i].habilidadePassivaArma = GerenciadorDeInventario.instancia.habilidadesPassivasLivro.Find(h => h.idHabilidade == personagensCriados[i].habilidadePassivaArmaID);
                         }
                         break;
                 }
@@ -177,59 +213,107 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
 
             if (personagensCriados[i].classe == Classe.Guerreiro)
             {
-                foreach(DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesDeClasseSalvas)
+                foreach(DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesAtivasDeClasseSalvas)
                 {
-                    HabilidadeBase habilidade = GerenciadorDeInventario.instancia.habilidadesClasseGuerreiro.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                    if (habilidade != null)
+                    HabilidadeAtiva habilidadeAtiva = GerenciadorDeInventario.instancia.habilidadesAtivasClasseGuerreiro.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                    if (habilidadeAtiva != null)
                     {
-                        habilidade.nivel = personagensCriados[i].habilidadesDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                        personagensCriados[i].listaDeHabilidadesDeClasse.Add(habilidade);
+                        habilidadeAtiva.nivel = personagensCriados[i].habilidadesAtivasDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                        personagensCriados[i].listaDeHabilidadesAtivasDeClasse.Add(habilidadeAtiva);
                     }
                 }
 
-                personagensCriados[i].habilidadeClasse = GerenciadorDeInventario.instancia.habilidadesClasseGuerreiro.Find(h => h.idHabilidade == personagensCriados[i].habilidadeClasseID);
+                personagensCriados[i].habilidadeAtivaClasse = GerenciadorDeInventario.instancia.habilidadesAtivasClasseGuerreiro.Find(h => h.idHabilidade == personagensCriados[i].habilidadeAtivaClasseID);
+
+                foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesPassivasDeClasseSalvas)
+                {
+                    HabilidadePassiva habilidadePassiva = GerenciadorDeInventario.instancia.habilidadesPassivasClasseGuerreiro.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                    if (habilidadePassiva != null)
+                    {
+                        habilidadePassiva.nivel = personagensCriados[i].habilidadesPassivasDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                        personagensCriados[i].listaDeHabilidadesPassivasDeClasse.Add(habilidadePassiva);
+                    }
+                }
+
+                personagensCriados[i].habilidadePassivaClasse = GerenciadorDeInventario.instancia.habilidadesPassivasClasseGuerreiro.Find(h => h.idHabilidade == personagensCriados[i].habilidadePassivaClasseID);
             }
             else if (personagensCriados[i].classe == Classe.Ladino)
             {
-                foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesDeClasseSalvas)
+                foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesAtivasDeClasseSalvas)
                 {
-                    HabilidadeBase habilidade = GerenciadorDeInventario.instancia.habilidadesClasseLadino.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                    if (habilidade != null)
+                    HabilidadeAtiva habilidadeAtiva = GerenciadorDeInventario.instancia.habilidadesAtivasClasseLadino.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                    if (habilidadeAtiva != null)
                     {
-                        habilidade.nivel = personagensCriados[i].habilidadesDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                        personagensCriados[i].listaDeHabilidadesDeClasse.Add(habilidade);
+                        habilidadeAtiva.nivel = personagensCriados[i].habilidadesAtivasDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                        personagensCriados[i].listaDeHabilidadesAtivasDeClasse.Add(habilidadeAtiva);
                     }
                 }
 
-                personagensCriados[i].habilidadeClasse = GerenciadorDeInventario.instancia.habilidadesClasseLadino.Find(h => h.idHabilidade == personagensCriados[i].habilidadeClasseID);
+                personagensCriados[i].habilidadeAtivaClasse = GerenciadorDeInventario.instancia.habilidadesAtivasClasseLadino.Find(h => h.idHabilidade == personagensCriados[i].habilidadeAtivaClasseID);
+
+                foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesAtivasDeClasseSalvas)
+                {
+                    HabilidadePassiva habilidadePassiva = GerenciadorDeInventario.instancia.habilidadesPassivasClasseLadino.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                    if (habilidadePassiva != null)
+                    {
+                        habilidadePassiva.nivel = personagensCriados[i].habilidadesPassivasDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                        personagensCriados[i].listaDeHabilidadesPassivasDeClasse.Add(habilidadePassiva);
+                    }
+                }
+
+                personagensCriados[i].habilidadePassivaClasse = GerenciadorDeInventario.instancia.habilidadesPassivasClasseLadino.Find(h => h.idHabilidade == personagensCriados[i].habilidadePassivaClasseID);
             }
             else if (personagensCriados[i].classe == Classe.Elementalista)
             {
-                foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesDeClasseSalvas)
+                foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesAtivasDeClasseSalvas)
                 {
-                    HabilidadeBase habilidade = GerenciadorDeInventario.instancia.habilidadesClasseElementalista.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                    if (habilidade != null)
+                    HabilidadeAtiva habilidadeAtiva = GerenciadorDeInventario.instancia.habilidadesAtivasClasseElementalista.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                    if (habilidadeAtiva != null)
                     {
-                        habilidade.nivel = personagensCriados[i].habilidadesDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                        personagensCriados[i].listaDeHabilidadesDeClasse.Add(habilidade);
+                        habilidadeAtiva.nivel = personagensCriados[i].habilidadesAtivasDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                        personagensCriados[i].listaDeHabilidadesAtivasDeClasse.Add(habilidadeAtiva);
                     }
                 }
 
-                personagensCriados[i].habilidadeClasse = GerenciadorDeInventario.instancia.habilidadesClasseElementalista.Find(h => h.idHabilidade == personagensCriados[i].habilidadeClasseID);
+                personagensCriados[i].habilidadeAtivaClasse = GerenciadorDeInventario.instancia.habilidadesAtivasClasseElementalista.Find(h => h.idHabilidade == personagensCriados[i].habilidadeAtivaClasseID);
+
+                foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesPassivasDeClasseSalvas)
+                {
+                    HabilidadePassiva habilidadePassiva = GerenciadorDeInventario.instancia.habilidadesPassivasClasseElementalista.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                    if (habilidadePassiva != null)
+                    {
+                        habilidadePassiva.nivel = personagensCriados[i].habilidadesPassivasDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                        personagensCriados[i].listaDeHabilidadesPassivasDeClasse.Add(habilidadePassiva);
+                    }
+                }
+
+                personagensCriados[i].habilidadePassivaClasse = GerenciadorDeInventario.instancia.habilidadesPassivasClasseElementalista.Find(h => h.idHabilidade == personagensCriados[i].habilidadePassivaClasseID);
             }
             else if (personagensCriados[i].classe == Classe.Sacerdote)
             {
-                foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesDeClasseSalvas)
+                foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesAtivasDeClasseSalvas)
                 {
-                    HabilidadeBase habilidade = GerenciadorDeInventario.instancia.habilidadesClasseSacerdote.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
-                    if (habilidade != null)
+                    HabilidadeAtiva habilidadeAtiva = GerenciadorDeInventario.instancia.habilidadesAtivasClasseSacerdote.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                    if (habilidadeAtiva != null)
                     {
-                        habilidade.nivel = personagensCriados[i].habilidadesDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
-                        personagensCriados[i].listaDeHabilidadesDeClasse.Add(habilidade);
+                        habilidadeAtiva.nivel = personagensCriados[i].habilidadesAtivasDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                        personagensCriados[i].listaDeHabilidadesAtivasDeClasse.Add(habilidadeAtiva);
                     }
                 }
 
-                personagensCriados[i].habilidadeClasse = GerenciadorDeInventario.instancia.habilidadesClasseSacerdote.Find(h => h.idHabilidade == personagensCriados[i].habilidadeClasseID);
+                personagensCriados[i].habilidadeAtivaClasse = GerenciadorDeInventario.instancia.habilidadesAtivasClasseSacerdote.Find(h => h.idHabilidade == personagensCriados[i].habilidadeAtivaClasseID);
+
+                foreach (DadosHabilidade dadosHabilidade in personagensCriados[i].habilidadesPassivasDeClasseSalvas)
+                {
+                    HabilidadePassiva habilidadePassiva = GerenciadorDeInventario.instancia.habilidadesPassivasClasseSacerdote.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade);
+                    if (habilidadePassiva != null)
+                    {
+                        habilidadePassiva.nivel = personagensCriados[i].habilidadesPassivasDeClasseSalvas.Find(h => h.idHabilidade == dadosHabilidade.idHabilidade).nivel;
+                        personagensCriados[i].listaDeHabilidadesPassivasDeClasse.Add(habilidadePassiva);
+                    }
+                }
+
+                personagensCriados[i].habilidadePassivaClasse = GerenciadorDeInventario.instancia.habilidadesPassivasClasseSacerdote.Find(h => h.idHabilidade == personagensCriados[i].habilidadePassivaClasseID);
             }
         }
 
@@ -375,7 +459,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
         _gerenciadorDeSlots.AtualizarSlots();
     }
 
-    public void DefinirHabilidade(HabilidadeBase habilidade) //função para definir as habilidades do personagem
+    public void DefinirHabilidadeAtiva(HabilidadeAtiva habilidade) //função para definir a habilidade ativa do personagem
     {
         if(habilidade.tipoDeHabilidade == TipoDeHabilidade.Classe)
         {
@@ -400,8 +484,8 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
                     GerenciadorDeInventario.instancia.MostrarMensagem("Runa nível 3 não equipada, necessária para utilizar habilidade");
                 }
             }
-            personagemEmCriacao.habilidadeClasse = habilidade;
-            personagemEmCriacao.habilidadeClasseID = habilidade.idHabilidade;
+            personagemEmCriacao.habilidadeAtivaClasse = habilidade;
+            personagemEmCriacao.habilidadeAtivaClasseID = habilidade.idHabilidade;
             ResetarTelaPersonagem();
             AtualizarTelaPersonagem();
         }
@@ -428,8 +512,68 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
                     GerenciadorDeInventario.instancia.MostrarMensagem("Runa nível 3 não equipada, necessária para utilizar habilidade");
                 }
             }
-            personagemEmCriacao.habilidadeArma = habilidade;
-            personagemEmCriacao.habilidadeArmaID = habilidade.idHabilidade;
+            personagemEmCriacao.habilidadeAtivaArma = habilidade;
+            personagemEmCriacao.habilidadeAtivaArmaID = habilidade.idHabilidade;
+            ResetarTelaPersonagem();
+            AtualizarTelaPersonagem();
+        }
+    }
+
+    public void DefinirHabilidadePassiva(HabilidadePassiva habilidade) //função para definir a habilidade passiva do personagem
+    {
+        if (habilidade.tipoDeHabilidade == TipoDeHabilidade.Classe)
+        {
+            if (habilidade.nivel == 1)
+            {
+                if (!personagemEmCriacao.runaNivel1)
+                {
+                    GerenciadorDeInventario.instancia.MostrarMensagem("Runa nível 1 não equipada, necessária para utilizar habilidade");
+                }
+            }
+            else if (habilidade.nivel == 2)
+            {
+                if (!personagemEmCriacao.runaNivel2)
+                {
+                    GerenciadorDeInventario.instancia.MostrarMensagem("Runa nível 2 não equipada, necessária para utilizar habilidade");
+                }
+            }
+            else if (habilidade.nivel == 3)
+            {
+                if (!personagemEmCriacao.runaNivel3)
+                {
+                    GerenciadorDeInventario.instancia.MostrarMensagem("Runa nível 3 não equipada, necessária para utilizar habilidade");
+                }
+            }
+            personagemEmCriacao.habilidadePassivaClasse = habilidade;
+            personagemEmCriacao.habilidadePassivaClasseID = habilidade.idHabilidade;
+            ResetarTelaPersonagem();
+            AtualizarTelaPersonagem();
+        }
+        else if (habilidade.tipoDeHabilidade == TipoDeHabilidade.Arma)
+        {
+            if (habilidade.nivel == 1)
+            {
+                if (!personagemEmCriacao.runaNivel1)
+                {
+                    GerenciadorDeInventario.instancia.MostrarMensagem("Runa nível 1 não equipada, necessária para utilizar habilidade");
+                }
+            }
+            else if (habilidade.nivel == 2)
+            {
+                if (!personagemEmCriacao.runaNivel2)
+                {
+                    GerenciadorDeInventario.instancia.MostrarMensagem("Runa nível 2 não equipada, necessária para utilizar habilidade");
+                }
+            }
+            else if (habilidade.nivel == 3)
+            {
+                if (!personagemEmCriacao.runaNivel3)
+                {
+                    GerenciadorDeInventario.instancia.MostrarMensagem("Runa nível 3 não equipada, necessária para utilizar habilidade");
+                }
+            }
+            personagemEmCriacao.habilidadePassivaArma = habilidade;
+            personagemEmCriacao.habilidadePassivaArmaID = habilidade.idHabilidade;
             ResetarTelaPersonagem();
             AtualizarTelaPersonagem();
         }
@@ -1063,14 +1207,14 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
             }
 
             //atualiza as habilidades
-            if (personagemEmCriacao.habilidadeClasse != null)
+            if (personagemEmCriacao.habilidadeAtivaClasse != null)
             {
                 _botaoHabilidadesClasse.gameObject.SetActive(false);
                 _visualHabilidadeClasse.SetActive(true);
-                _habilidadeClasseImagem.sprite = personagemEmCriacao.habilidadeClasse.spriteHabilidade;
-                _habilidadeClasseTituloTexto.text = personagemEmCriacao.habilidadeClasse.nome;
-                _habilidadeClasseDescricaoTexto.text = personagemEmCriacao.habilidadeClasse.descricao;
-                _habilidadeClasseTipoTexto.text = ("Habilidade de " + personagemEmCriacao.habilidadeClasse.tipoDeHabilidade.ToString());
+                _habilidadeClasseImagem.sprite = personagemEmCriacao.habilidadeAtivaClasse.spriteHabilidade;
+                _habilidadeClasseTituloTexto.text = personagemEmCriacao.habilidadeAtivaClasse.nome;
+                _habilidadeClasseDescricaoTexto.text = personagemEmCriacao.habilidadeAtivaClasse.descricao;
+                _habilidadeClasseTipoTexto.text = ("Habilidade Ativa de" + personagemEmCriacao.habilidadeAtivaClasse.tipoDeHabilidade.ToString());
             }
             else
             {
@@ -1078,14 +1222,46 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
                 _botaoHabilidadesClasse.gameObject.SetActive(true);
             }
 
-            if (personagemEmCriacao.habilidadeArma != null)
+            if (personagemEmCriacao.habilidadeAtivaArma != null)
             {
                 _botaoHabilidadesArma.gameObject.SetActive(false);
                 _visualHabilidadeArma.SetActive(true);
-                _habilidadeArmaImagem.sprite = personagemEmCriacao.habilidadeArma.spriteHabilidade;
-                _habilidadeArmaTituloTexto.text = personagemEmCriacao.habilidadeArma.nome;
-                _habilidadeArmaDescricaoTexto.text = personagemEmCriacao.habilidadeArma.descricao;
-                _habilidadeArmaTipoTexto.text = ("Habilidade de " + personagemEmCriacao.habilidadeArma.tipoDeHabilidade.ToString());
+                _habilidadeArmaImagem.sprite = personagemEmCriacao.habilidadeAtivaArma.spriteHabilidade;
+                _habilidadeArmaTituloTexto.text = personagemEmCriacao.habilidadeAtivaArma.nome;
+                _habilidadeArmaDescricaoTexto.text = personagemEmCriacao.habilidadeAtivaArma.descricao;
+                _habilidadeArmaTipoTexto.text = ("Habilidade Ativa de " + personagemEmCriacao.habilidadeAtivaArma.tipoDeHabilidade.ToString());
+            }
+            else
+            {
+                _visualHabilidadeArma.SetActive(false);
+              
+                
+                _botaoHabilidadesArma.gameObject.SetActive(true);
+            }
+
+            if (personagemEmCriacao.habilidadePassivaClasse != null)
+            {
+                _botaoHabilidadesClasse.gameObject.SetActive(false);
+                _visualHabilidadeClasse.SetActive(true);
+                _habilidadeClasseImagem.sprite = personagemEmCriacao.habilidadePassivaClasse.spriteHabilidade;
+                _habilidadeClasseTituloTexto.text = personagemEmCriacao.habilidadePassivaClasse.nome;
+                _habilidadeClasseDescricaoTexto.text = personagemEmCriacao.habilidadePassivaClasse.descricao;
+                _habilidadeClasseTipoTexto.text = ("Habilidade Passiva de " + personagemEmCriacao.habilidadePassivaClasse.tipoDeHabilidade.ToString());
+            }
+            else
+            {
+                _visualHabilidadeClasse.SetActive(false);
+                _botaoHabilidadesClasse.gameObject.SetActive(true);
+            }
+
+            if (personagemEmCriacao.habilidadePassivaArma != null)
+            {
+                _botaoHabilidadesArma.gameObject.SetActive(false);
+                _visualHabilidadeArma.SetActive(true);
+                _habilidadeArmaImagem.sprite = personagemEmCriacao.habilidadePassivaArma.spriteHabilidade;
+                _habilidadeArmaTituloTexto.text = personagemEmCriacao.habilidadePassivaArma.nome;
+                _habilidadeArmaDescricaoTexto.text = personagemEmCriacao.habilidadePassivaArma.descricao;
+                _habilidadeArmaTipoTexto.text = ("Habilidade Passiva de " + personagemEmCriacao.habilidadePassivaArma.tipoDeHabilidade.ToString());
             }
             else
             {

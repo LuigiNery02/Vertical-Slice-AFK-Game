@@ -75,13 +75,20 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("Habilidades")]
     public int willPower;
     //[HideInInspector]
-    public HabilidadeBase habilidade1; //habilidade 1 (classe) do personagem
+    public HabilidadeAtiva habilidadeAtivaClasse; //habilidade ativa de classe do personagem
     //[HideInInspector]
-    public HabilidadeBase habilidade2; //habilidade 2 (arma) do personagem
-    public bool podeAtivarEfeitoHabilidade1 = true; //variável que determina se pode ativar ou não o efeito da habilidade 1
-    public bool podeAtivarEfeitoHabilidade2 = true; //variável que determina se pode ativar ou não o efeito da habilidade 2
-    public GameObject vfxHabilidade1;
-    public GameObject vfxHabilidade2;
+    public HabilidadeAtiva habilidadeAtivaArma; //habilidade ativa de arma do personagem
+    //[HideInInspector]
+    public HabilidadePassiva habilidadePassivaClasse; //habilidade passiva de classe do personagem
+    //[HideInInspector]
+    public HabilidadePassiva habilidadePassivaArma; //habilidade passiva de arma do personagem
+    public bool podeAtivarEfeitoHabilidadeAtivaClasse = true; //variável que determina se pode ativar ou não o efeito da habilidade ativa de classe
+    public bool podeAtivarEfeitoHabilidadeAtivaArma = true; //variável que determina se pode ativar ou não o efeito da habilidade ativa de arma
+    public bool podeAtivarEfeitoHabilidadePassivaClasse = true; //variável que determina se pode ativar ou não o efeito da habilidade passiva de classe
+    public bool podeAtivarEfeitoHabilidadePassivaArma = true; //variável que determina se pode ativar ou não o efeito da habilidade passiva de arma
+    public Dictionary<HabilidadePassiva, DadosHabilidadePassiva> dadosDasHabilidadesPassivas = new();
+    public GameObject vfxHabilidadeAtivaClasse;
+    public GameObject vfxHabilidadeAtivaArma;
 
     //Área referente às animações
     [Header("Animação")]
@@ -122,6 +129,19 @@ public class IAPersonagemBase : MonoBehaviour
     public EfeitoPorAtaque efeitoPorAtaque;
     [HideInInspector]
     public bool efeitoPorAtaqueAtivado; //verifica se efeitos por ataque de habilidades estão ativados
+    [HideInInspector]
+    public Dictionary<string, EfeitoPorAtaque> efeitosPorAtaque = new();
+    [HideInInspector]
+    public event EfeitoPorAtaque OnAtaqueComEfeito;
+
+    public delegate void EfeitoPorAtaqueRecebido(bool acerto);
+    public EfeitoPorAtaque efeitoPorAtaqueRecebido;
+    [HideInInspector]
+    public bool efeitoPorAtaqueRecebidoAtivado; //verifica se efeitos por ataque recebidos de habilidades estão ativados
+    [HideInInspector]
+    public Dictionary<string, EfeitoPorAtaqueRecebido> efeitosPorAtaqueRecebidos = new();
+    [HideInInspector]
+    public event EfeitoPorAtaqueRecebido OnAtaqueRecebidoComEfeito;
 
     [HideInInspector]
     public bool stunado;
@@ -131,6 +151,10 @@ public class IAPersonagemBase : MonoBehaviour
     public bool ataqueDiminuido;
     [HideInInspector]
     public bool imuneAMagias;
+    [HideInInspector]
+    public bool imuneAStun;
+    [HideInInspector]
+    public bool imuneAKnockback;
 
     [HideInInspector]
     public bool recebeuDebuffPunhoDisciplina;
@@ -260,18 +284,8 @@ public class IAPersonagemBase : MonoBehaviour
         }
         canvas.SetActive(true);
 
-        habilidade1 = personagem.habilidadeClasse;
-        habilidade2 = personagem.habilidadeArma;
-
-        if(habilidade1 != null)
-        {
-            //habilidade1.Inicializar();
-        }
-        
-        if(habilidade2 != null)
-        {
-            //habilidade2.Inicializar();
-        }
+        habilidadeAtivaClasse = personagem.habilidadeAtivaClasse;
+        habilidadeAtivaArma = personagem.habilidadeAtivaArma;
 
         //encontra o slider do personagem caso tenha
         if (transform.GetComponentInChildren<Slider>() != null)
@@ -305,18 +319,30 @@ public class IAPersonagemBase : MonoBehaviour
     {
         //verifica se há habilidades equipadas, e habilita elas se sim
 
-        if (habilidade1 != null)
+        if (habilidadeAtivaClasse != null)
         {
-            podeAtivarEfeitoHabilidade1 = true;
+            podeAtivarEfeitoHabilidadeAtivaClasse = true;
         }
 
-        if(habilidade2 != null)
+        if(habilidadeAtivaArma != null)
         {
-            podeAtivarEfeitoHabilidade2 = true;
+            podeAtivarEfeitoHabilidadeAtivaArma = true;
+        }
+
+        if (habilidadePassivaClasse != null)
+        {
+            podeAtivarEfeitoHabilidadePassivaClasse = true;
+            habilidadePassivaClasse.AtivarEfeito(this);
+        }
+
+        if (habilidadePassivaArma != null)
+        {
+            podeAtivarEfeitoHabilidadePassivaArma = true;
+            habilidadePassivaArma.AtivarEfeito(this);
         }
 
         //encontra o hit dentro de si caso esteja com uma arma melee equipada e à ativa
-        if(personagem.arma.armaDano == TipoDeDano.DANO_MELEE)
+        if (personagem.arma.armaDano == TipoDeDano.DANO_MELEE)
         {
             _hitAtaquePersonagem = GetComponentInChildren<HitAtaquePersonagem>(true);
         }
@@ -422,6 +448,9 @@ public class IAPersonagemBase : MonoBehaviour
         stunado = false;
         conjurandoHabilidade = false;
         imuneAMagias = false;
+        imuneAStun = false;
+        imuneAKnockback = false;
+        recebeuDebuffPunhoDisciplina = false;
     }
 
     private void Update()
@@ -1015,16 +1044,6 @@ public class IAPersonagemBase : MonoBehaviour
 
         AtualizarDadosPersonagem();
 
-        if (habilidade1 != null)
-        {
-            //habilidade1.Inicializar();
-        }
-
-        if (habilidade2 != null)
-        {
-            //habilidade2.Inicializar();
-        }
-
         if (_usarSliders && _slider != null)
         {
             //atualiza o slider
@@ -1085,11 +1104,11 @@ public class IAPersonagemBase : MonoBehaviour
         yield return new WaitForSeconds(tempo);
         if(habilidade == 1)
         {
-            habilidade1.RemoverEfeito(this);
+            habilidadeAtivaClasse.RemoverEfeito(this);
         }
         else if(habilidade == 2)
         {
-            habilidade2.RemoverEfeito(this);
+            habilidadeAtivaArma.RemoverEfeito(this);
         }
     }
     public void EsperarRecargaHabilidade(int habilidade, float tempo)
@@ -1101,11 +1120,11 @@ public class IAPersonagemBase : MonoBehaviour
         yield return new WaitForSeconds(tempo);
         if (habilidade == 1)
         {
-            podeAtivarEfeitoHabilidade1 = true;
+            podeAtivarEfeitoHabilidadeAtivaClasse = true;
         }
         else if (habilidade == 2)
         {
-            podeAtivarEfeitoHabilidade2 = true;
+            podeAtivarEfeitoHabilidadeAtivaArma = true;
         }
         Debug.Log("Pode Ativar Efeito");
     }
@@ -1114,11 +1133,17 @@ public class IAPersonagemBase : MonoBehaviour
     {
         if(habilidade == 1)
         {
-            vfxHabilidade1.SetActive(ativar);
+            if(vfxHabilidadeAtivaClasse != null)
+            {
+                vfxHabilidadeAtivaClasse.SetActive(ativar);
+            }
         }
         else if(habilidade == 2)
         {
-            vfxHabilidade2.SetActive(ativar);
+            if (vfxHabilidadeAtivaArma != null)
+            {
+                vfxHabilidadeAtivaArma.SetActive(ativar);
+            }
         }
     }
 
@@ -1151,11 +1176,64 @@ public class IAPersonagemBase : MonoBehaviour
 
     #region Efeitos
 
+    public void AtivarEfeitoPorAtaque(string chave, EfeitoPorAtaque efeito)
+    {
+        if (efeitosPorAtaque.ContainsKey(chave))
+        {
+            OnAtaqueComEfeito -= efeitosPorAtaque[chave];
+        }
+
+        efeitosPorAtaque[chave] = efeito;
+        OnAtaqueComEfeito += efeito;
+    }
+
+    public void RemoverEfeitoPorAtaque(string chave)
+    {
+        if (efeitosPorAtaque.TryGetValue(chave, out var efeito))
+        {
+            OnAtaqueComEfeito -= efeito;
+            efeitosPorAtaque.Remove(chave);
+        }
+    }
+
+    public void ExecutarEfeitosDeAtaque(bool acerto)
+    {
+        OnAtaqueComEfeito?.Invoke(acerto);
+    }
+
+    public void AtivarEfeitoPorAtaqueRecebido(string chave, EfeitoPorAtaqueRecebido efeito)
+    {
+        if (efeitosPorAtaqueRecebidos.ContainsKey(chave))
+        {
+            OnAtaqueRecebidoComEfeito -= efeitosPorAtaqueRecebidos[chave];
+        }
+
+        efeitosPorAtaqueRecebidos[chave] = efeito;
+        OnAtaqueRecebidoComEfeito += efeito;
+    }
+
+    public void RemoverEfeitoPorAtaqueRecebido(string chave)
+    {
+        if (efeitosPorAtaqueRecebidos.TryGetValue(chave, out var efeito))
+        {
+            OnAtaqueRecebidoComEfeito -= efeito;
+            efeitosPorAtaqueRecebidos.Remove(chave);
+        }
+    }
+
+    public void ExecutarEfeitosDeAtaqueRecebidos(bool acerto)
+    {
+        OnAtaqueRecebidoComEfeito?.Invoke(acerto);
+    }
+
     public void Stun()
     {
-        stunado = true;
-        _animator.SetTrigger("Stun");
-        StartCoroutine(EsperarTempoStun());
+        if (!imuneAStun)
+        {
+            stunado = true;
+            _animator.SetTrigger("Stun");
+            StartCoroutine(EsperarTempoStun());
+        }
     }
 
     IEnumerator EsperarTempoStun()

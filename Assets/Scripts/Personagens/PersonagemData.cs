@@ -60,18 +60,30 @@ public class PersonagemData
     public bool runaNivel1; //variável que representa se o personagem possuí uma runa nível 1 equipada
     public bool runaNivel2; //variável que representa se o personagem possuí uma runa nível 2 equipada
     public bool runaNivel3; //variável que representa se o personagem possuí uma runa nível 3 equipada
-    public List<HabilidadeBase> listaDeHabilidadesDeClasse = new List<HabilidadeBase>(); //lista de habilidades de classe que o personagem possuí
-    public List<HabilidadeBase> listaDeHabilidadesDeArma = new List<HabilidadeBase>(); //lista de habilidades de arma que o personagem possuí
-    public HabilidadeBase habilidadeClasse; //habilidade de classe do personagem
-    public HabilidadeBase habilidadeArma; //habilidade de arma do personagem
+    public List<HabilidadeAtiva> listaDeHabilidadesAtivasDeClasse = new List<HabilidadeAtiva>(); //lista de habilidades ativas de classe que o personagem possuí
+    public List<HabilidadeAtiva> listaDeHabilidadesAtivasDeArma = new List<HabilidadeAtiva>(); //lista de habilidades ativas de arma que o personagem possuí
+    public List<HabilidadePassiva> listaDeHabilidadesPassivasDeClasse = new List<HabilidadePassiva>(); //lista de habilidades passivas de classe que o personagem possuí
+    public List<HabilidadePassiva> listaDeHabilidadesPassivasDeArma = new List<HabilidadePassiva>(); //lista de habilidades passivas de arma que o personagem possuí
+    public HabilidadeAtiva habilidadeAtivaClasse; //habilidade ativa de classe do personagem
+    public HabilidadeAtiva habilidadeAtivaArma; //habilidade ativa de arma do personagem
+    public HabilidadePassiva habilidadePassivaClasse; //habilidade passiva de classe do personagem
+    public HabilidadePassiva habilidadePassivaArma; //habilidade passiva de arma do personagem
     [HideInInspector]
-    public List<DadosHabilidade> habilidadesDeClasseSalvas = new List<DadosHabilidade>(); //dados das habilidades de classe salvas
+    public List<DadosHabilidade> habilidadesAtivasDeClasseSalvas = new List<DadosHabilidade>(); //dados das habilidades ativas de classe salvas
     [HideInInspector]
-    public List<DadosHabilidade> habilidadesDeArmaSalvas = new List<DadosHabilidade>(); //dados das habilidades de arma salvas
+    public List<DadosHabilidade> habilidadesAtivasDeArmaSalvas = new List<DadosHabilidade>(); //dados das habilidades ativas de arma salvas
     [HideInInspector]
-    public string habilidadeClasseID; //id da habilidade de classe equipada
+    public List<DadosHabilidade> habilidadesPassivasDeClasseSalvas = new List<DadosHabilidade>(); //dados das habilidades passivas de classe salvas
     [HideInInspector]
-    public string habilidadeArmaID; //id da habilidade de arma equipada
+    public List<DadosHabilidade> habilidadesPassivasDeArmaSalvas = new List<DadosHabilidade>(); //dados das habilidades passivas de arma salvas
+    [HideInInspector]
+    public string habilidadeAtivaClasseID; //id da habilidade ativa de classe equipada
+    [HideInInspector]
+    public string habilidadeAtivaArmaID; //id da habilidade ativa de arma equipada
+    [HideInInspector]
+    public string habilidadePassivaClasseID; //id da habilidade passiva de classe equipada
+    [HideInInspector]
+    public string habilidadePassivaArmaID; //id da habilidade passiva de classe equipada
     #endregion
 
     #region Equipamento
@@ -161,22 +173,22 @@ public class PersonagemData
             switch (nivel)
             {
                 case 8:
-                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Classe, this.classe, 1, this);
+                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Classe, this.classe, 1, this, "ativa");
                     break;
                 case 18:
-                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Arma, this.classe, 1, this);
+                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Arma, this.classe, 1, this, "ativa");
                     break;
                 case 28:
-                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Classe, this.classe, 1, this);
+                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Classe, this.classe, 1, this, "passiva");
                     break;
                 case 48:
-                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Arma, this.classe, 1, this);
+                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Arma, this.classe, 1, this, "passiva");
                     break;
                 case 60:
-                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Classe, this.classe, 1, this);
+                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Classe, this.classe, 1, this, "ambas");
                     break;
                 case 80:
-                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Arma, this.classe, 1, this);
+                    GerenciadorDeInventario.instancia.SortearHabilidade(TipoDeHabilidade.Arma, this.classe, 1, this, "ambas");
                     break;
                 default:
                     GerenciadorDeInventario.instancia.MostrarMensagem("Herói " + apelido + " subiu para o nível " + nivel);
@@ -334,6 +346,8 @@ public class PersonagemData
         spRegeneracao = (INT * 0.5f);
 
         multiplicadorAtaque = 1;
+
+        danoBase = arma.dano;
         switch (arma.armaDano)
         {
             case TipoDeDano.DANO_MELEE:

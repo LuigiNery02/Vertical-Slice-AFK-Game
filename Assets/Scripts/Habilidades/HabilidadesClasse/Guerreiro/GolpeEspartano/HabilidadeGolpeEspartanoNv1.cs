@@ -9,17 +9,16 @@ public class HabilidadeGolpeEspartanoNv1 : HabilidadeAtiva
 
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
-        if (personagem.podeAtivarEfeitoHabilidade1)
+        if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
         {
             if (base.ChecarAtivacao(personagem))
             {
-                personagem.efeitoPorAtaque = null;
                 personagem.efeitoPorAtaqueAtivado = true;
-                personagem.podeAtivarEfeitoHabilidade1 = false;
+                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
 
                 personagem.GastarSP(custoDeMana);
 
-                personagem.efeitoPorAtaque = (bool acerto) =>
+                personagem.AtivarEfeitoPorAtaque("GolpeEspartanoNv1", (bool acerto) =>
                 {
                     if (acerto)
                     {
@@ -28,17 +27,21 @@ public class HabilidadeGolpeEspartanoNv1 : HabilidadeAtiva
                             personagem._personagemAlvo.CancelarHabilidade();
                             personagem.StartCoroutine(EsperarFrame(personagem));
                         }
+                        else
+                        {
+                            RemoverEfeito(personagem);
+                        }
                     }
                     else
                     {
                         RemoverEfeito(personagem);
                     }
-                };
+                });
 
-                if (personagem.vfxHabilidade1 == null)
+                if (personagem.vfxHabilidadeAtivaClasse == null)
                 {
                     GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidade1 = vfxInstanciado;
+                    personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
                 }
                 else
                 {
@@ -50,7 +53,7 @@ public class HabilidadeGolpeEspartanoNv1 : HabilidadeAtiva
 
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
-        personagem.efeitoPorAtaque = null;
+        personagem.RemoverEfeitoPorAtaque("GolpeEspartanoNv1");
         personagem.efeitoPorAtaqueAtivado = false;
         base.RemoverEfeito(personagem);
         personagem.GerenciarVFXHabilidade(1, false);

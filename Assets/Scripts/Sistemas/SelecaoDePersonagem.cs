@@ -104,18 +104,18 @@ public class SelecaoDePersonagem : MonoBehaviour
             _textos[3].text = "Arma: " + _armaNome;
 
             //atualiza visualmente as imagens das habilidades do personagem selecionado
-            if(_personagemSelecionado.habilidade1 != null)
+            if(_personagemSelecionado.habilidadeAtivaClasse != null)
             {
-                _imagemHabilidade1.sprite = _personagemSelecionado.habilidade1.spriteHabilidade;
-                _tituloHabilidade1 = _personagemSelecionado.habilidade1.nome;
-                _detalheHabilidade1 = _personagemSelecionado.habilidade1.descricao;
+                _imagemHabilidade1.sprite = _personagemSelecionado.habilidadeAtivaClasse.spriteHabilidade;
+                _tituloHabilidade1 = _personagemSelecionado.habilidadeAtivaClasse.nome;
+                _detalheHabilidade1 = _personagemSelecionado.habilidadeAtivaClasse.descricao;
             }
             
-            if(_personagemSelecionado.habilidade2 != null)
+            if(_personagemSelecionado.habilidadeAtivaArma != null)
             {
-                _imagemHabilidade2.sprite = _personagemSelecionado.habilidade2.spriteHabilidade;
-                _tituloHabilidade2 = _personagemSelecionado.habilidade2.nome;
-                _detalheHabilidade2 = _personagemSelecionado.habilidade2.descricao;
+                _imagemHabilidade2.sprite = _personagemSelecionado.habilidadeAtivaArma.spriteHabilidade;
+                _tituloHabilidade2 = _personagemSelecionado.habilidadeAtivaArma.nome;
+                _detalheHabilidade2 = _personagemSelecionado.habilidadeAtivaArma.descricao;
             }
 
             _textoTituloHabilidade1.text = _tituloHabilidade1;
@@ -124,7 +124,7 @@ public class SelecaoDePersonagem : MonoBehaviour
             _textoTituloHabilidade2.text = _tituloHabilidade2;
             _textoDescricaoHabilidade2.text = _detalheHabilidade2;
 
-            if (_personagemSelecionado.habilidade1 != null && _personagemSelecionado.podeAtivarEfeitoHabilidade1)
+            if (_personagemSelecionado.habilidadeAtivaClasse != null && _personagemSelecionado.podeAtivarEfeitoHabilidadeAtivaClasse)
             {
                 _imagemHabilidade1Funções.color = Color.white;
             }
@@ -133,7 +133,7 @@ public class SelecaoDePersonagem : MonoBehaviour
                 _imagemHabilidade1Funções.color = Color.gray;
             }
 
-            if (_personagemSelecionado.habilidade2 != null && _personagemSelecionado.podeAtivarEfeitoHabilidade2)
+            if (_personagemSelecionado.habilidadeAtivaArma != null && _personagemSelecionado.podeAtivarEfeitoHabilidadeAtivaArma)
             {
                 _imagemHabilidade2Funções.color = Color.white;
             }
@@ -263,9 +263,9 @@ public class SelecaoDePersonagem : MonoBehaviour
     {
         if(_sistemaDeBatalha.batalhaIniciou)
         {
-            if(_personagemSelecionado.habilidade1 != null)
+            if(_personagemSelecionado.habilidadeAtivaClasse != null)
             {
-                _personagemSelecionado.habilidade1.AtivarEfeito(_personagemSelecionado);
+                _personagemSelecionado.habilidadeAtivaClasse.AtivarEfeito(_personagemSelecionado);
             }
         }
     }
@@ -274,9 +274,9 @@ public class SelecaoDePersonagem : MonoBehaviour
     {
         if (_sistemaDeBatalha.batalhaIniciou)
         {
-            if(_personagemSelecionado.habilidade2 != null)
+            if(_personagemSelecionado.habilidadeAtivaArma != null)
             {
-                _personagemSelecionado.habilidade2.AtivarEfeito(_personagemSelecionado);
+                _personagemSelecionado.habilidadeAtivaArma.AtivarEfeito(_personagemSelecionado);
             }
         }  
     }

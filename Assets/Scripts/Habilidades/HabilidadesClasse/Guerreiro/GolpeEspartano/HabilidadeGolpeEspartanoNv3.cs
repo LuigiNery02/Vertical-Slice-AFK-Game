@@ -8,49 +8,45 @@ public class HabilidadeGolpeEspartanoNv3 : HabilidadeAtiva
 {
     [Header("Configurações Habilidade")]
     [SerializeField]
-    private float tempoDeTaunt;
+    private float tempoDeTaunt = 3;
     [SerializeField]
     private float raioDeDistanciaDoTaunt;
     [SerializeField]
-    private int tempoDeStun = 2;
+    private int tempoDeStun = 3;
     public GameObject vfx;
 
-    private Dictionary<IAPersonagemBase, IAPersonagemBase> alvosOriginais = new();
-    private IAPersonagemBase _inimigo;
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
-        if (personagem.podeAtivarEfeitoHabilidade1)
+        if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
         {
             if (base.ChecarAtivacao(personagem))
             {
-                personagem.efeitoPorAtaque = null;
                 personagem.efeitoPorAtaqueAtivado = true;
-                personagem.podeAtivarEfeitoHabilidade1 = false;
+                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
 
                 personagem.GastarSP(custoDeMana);
 
-                personagem.efeitoPorAtaque = (bool acerto) =>
+                personagem.AtivarEfeitoPorAtaque("GolpeEspartanoNv3", (bool acerto) =>
                 {
                     if (acerto)
                     {
-                        AplicarTaunt(personagem);
-                        _inimigo = personagem._personagemAlvo;
-                        if (!_inimigo.stunado)
+                        personagem.StartCoroutine(ExecutarEfeito(personagem, personagem._personagemAlvo));
+                        if (!personagem._personagemAlvo)
                         {
-                            _inimigo.tempoDeStun = tempoDeStun;
-                            _inimigo.VerificarComportamento("stun");
+                            personagem._personagemAlvo.tempoDeStun = tempoDeStun;
+                            personagem._personagemAlvo.VerificarComportamento("stun");
                         }
                     }
                     else
                     {
                         RemoverEfeito(personagem);
                     }
-                };
+                });
 
-                if (personagem.vfxHabilidade1 == null)
+                if (personagem.vfxHabilidadeAtivaClasse == null)
                 {
                     GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidade1 = vfxInstanciado;
+                    personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
                 }
                 else
                 {
@@ -62,14 +58,16 @@ public class HabilidadeGolpeEspartanoNv3 : HabilidadeAtiva
 
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
-        personagem.efeitoPorAtaque = null;
+        personagem.RemoverEfeitoPorAtaque("GolpeEspartanoNv3");
         personagem.efeitoPorAtaqueAtivado = false;
         base.RemoverEfeito(personagem);
         personagem.GerenciarVFXHabilidade(1, false);
     }
 
-    private void AplicarTaunt(IAPersonagemBase personagem)
+    private IEnumerator ExecutarEfeito(IAPersonagemBase personagem, IAPersonagemBase inimigoStunado)
     {
+        Dictionary<IAPersonagemBase, IAPersonagemBase> alvosOriginais = new();
+
         Collider[] colliders = Physics.OverlapSphere(personagem.transform.position, raioDeDistanciaDoTaunt);
 
         foreach (var collider in colliders)
@@ -78,24 +76,23 @@ public class HabilidadeGolpeEspartanoNv3 : HabilidadeAtiva
 
             if (inimigo != null && inimigo.controlador != personagem.controlador && inimigo._comportamento != EstadoDoPersonagem.MORTO)
             {
-                if (!alvosOriginais.ContainsKey(inimigo))
+                alvosOriginais[inimigo] = inimigo._personagemAlvo;
+                inimigo._personagemAlvo = personagem;
+                inimigo._alvoAtual = personagem.transform;
+
+                if (!inimigo.stunado && inimigo != inimigoStunado)
                 {
-                    alvosOriginais[inimigo] = inimigo._personagemAlvo;
-                    inimigo._personagemAlvo = personagem;
-                    inimigo._alvoAtual = personagem.transform;
-                    if (!inimigo.stunado && inimigo != _inimigo)
-                    {
-                        inimigo.VerificarComportamento("perseguir");
-                    }
+                    inimigo.VerificarComportamento("perseguir");
                 }
             }
         }
 
-        personagem.StartCoroutine(EsperarTempoDeTaunt(personagem));
-    }
+        if (inimigoStunado != null && !inimigoStunado.stunado)
+        {
+            inimigoStunado.tempoDeStun = tempoDeStun;
+            inimigoStunado.VerificarComportamento("stun");
+        }
 
-    IEnumerator EsperarTempoDeTaunt(IAPersonagemBase personagem)
-    {
         yield return new WaitForSeconds(tempoDeTaunt);
 
         foreach (var par in alvosOriginais)
@@ -111,7 +108,6 @@ public class HabilidadeGolpeEspartanoNv3 : HabilidadeAtiva
             }
         }
 
-        alvosOriginais.Clear();
         RemoverEfeito(personagem);
     }
 }

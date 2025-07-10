@@ -12,17 +12,17 @@ public class GerenciadorDeUI : MonoBehaviour
     public GameObject painelEquipamentos;
     public List<SlotEquipamentoUI> slotsEquipamentos;
 
-    public void MostrarHabilidades(string tipo) //função para mostrar as habilidades do personagem
+    public void MostrarHabilidadesAtiva(string tipo) //função para mostrar as habilidades ativas do personagem
     {
-        List<HabilidadeBase> lista = new List<HabilidadeBase>(); //reseta a lista
+        List<HabilidadeAtiva> listaHabilidadesAtivas = new List<HabilidadeAtiva>(); //reseta a lista
 
         if (tipo == "Classe")
         {
-            lista = sistemaDeCriacaoDePersonagens.personagemEmCriacao.listaDeHabilidadesDeClasse; //recebe a lista de habilidades de classe do personagem
+            listaHabilidadesAtivas = sistemaDeCriacaoDePersonagens.personagemEmCriacao.listaDeHabilidadesAtivasDeClasse; //recebe a lista de habilidades ativas de classe do personagem
         }
         else if(tipo == "Arma")
         {
-            lista = sistemaDeCriacaoDePersonagens.personagemEmCriacao.listaDeHabilidadesDeArma; //recebe a lista de habilidades de arma do personagem
+            listaHabilidadesAtivas = sistemaDeCriacaoDePersonagens.personagemEmCriacao.listaDeHabilidadesAtivasDeArma; //recebe a lista de habilidades ativas de arma do personagem
         }
         painelHabilidades.SetActive(true);
 
@@ -31,9 +31,35 @@ public class GerenciadorDeUI : MonoBehaviour
             slot.gameObject.SetActive(false);
         }
 
-        for(int i = 0; i < lista.Count && i < slotsHabilidade.Count; i++)
+        for(int i = 0; i < listaHabilidadesAtivas.Count && i < slotsHabilidade.Count; i++)
         {
-            slotsHabilidade[i].AtualizarSlot(lista[i]);
+            slotsHabilidade[i].AtualizarSlotHabilidadeAtiva(listaHabilidadesAtivas[i]);
+            slotsHabilidade[i].gameObject.SetActive(true);
+        }
+    }
+
+    public void MostrarHabilidadesPassiva(string tipo) //função para mostrar as habilidades passivas do personagem
+    {
+        List<HabilidadePassiva> listaHabilidadesPassivas = new List<HabilidadePassiva>(); //reseta a lista
+
+        if (tipo == "Classe")
+        {
+            listaHabilidadesPassivas = sistemaDeCriacaoDePersonagens.personagemEmCriacao.listaDeHabilidadesPassivasDeClasse; //recebe a lista de habilidades passivas de classe do personagem
+        }
+        else if (tipo == "Arma")
+        {
+            listaHabilidadesPassivas = sistemaDeCriacaoDePersonagens.personagemEmCriacao.listaDeHabilidadesPassivasDeArma; //recebe a lista de habilidades passivas de arma do personagem
+        }
+        painelHabilidades.SetActive(true);
+
+        foreach (var slot in slotsHabilidade)
+        {
+            slot.gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < listaHabilidadesPassivas.Count && i < slotsHabilidade.Count; i++)
+        {
+            slotsHabilidade[i].AtualizarSlotHabilidadePassiva(listaHabilidadesPassivas[i]);
             slotsHabilidade[i].gameObject.SetActive(true);
         }
     }

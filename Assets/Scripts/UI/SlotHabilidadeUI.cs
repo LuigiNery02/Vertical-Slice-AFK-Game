@@ -11,11 +11,12 @@ public class SlotHabilidadeUI : MonoBehaviour
 
     public SistemaDeCriacaoDePersonagens sistemaDeCriacaoDePersonagens; //sistema de criação de personagens
 
-    private HabilidadeBase _habilidade;
+    private HabilidadeAtiva _habilidadeAtiva;
+    private HabilidadePassiva _habilidadePassiva;
 
-    public void AtualizarSlot(HabilidadeBase habilidade) //função que atualiza o slot de habilidades
+    public void AtualizarSlotHabilidadeAtiva(HabilidadeAtiva habilidade) //função que atualiza o slot de habilidades ativas
     {
-        _habilidade = habilidade;
+        _habilidadeAtiva = habilidade;
 
         nomeTexto.text = "";
         nivelTexto.text = "";
@@ -25,8 +26,25 @@ public class SlotHabilidadeUI : MonoBehaviour
         imagem.sprite = habilidade.spriteHabilidade;
     }
 
-    public void DefinirHabilidadeSistemaDeCriacao()
+    public void AtualizarSlotHabilidadePassiva(HabilidadePassiva habilidade) //função que atualiza o slot de habilidades passivas
     {
-        sistemaDeCriacaoDePersonagens.DefinirHabilidade(_habilidade);
+        _habilidadePassiva = habilidade;
+
+        nomeTexto.text = "";
+        nivelTexto.text = "";
+
+        nomeTexto.text = habilidade.nome;
+        nivelTexto.text += ("Nv: " + habilidade.nivel);
+        imagem.sprite = habilidade.spriteHabilidade;
+    }
+
+    public void DefinirHabilidadeAtivaSistemaDeCriacao()
+    {
+        sistemaDeCriacaoDePersonagens.DefinirHabilidadeAtiva(_habilidadeAtiva);
+    }
+
+    public void DefinirHabilidadePassivaSistemaDeCriacao()
+    {
+        sistemaDeCriacaoDePersonagens.DefinirHabilidadePassiva(_habilidadePassiva);
     }
 }

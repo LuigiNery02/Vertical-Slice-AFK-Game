@@ -472,18 +472,16 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
 
         foreach (IAPersonagemBase personagem in personagens)
         {
-            if(personagem.habilidade1 != null)
+            if(personagem.habilidadePassivaClasse != null)
             {
                 //personagem.StopAllCoroutines();
-                //personagem.habilidade1.RemoverEfeitoExternamente();
-                personagem.podeAtivarEfeitoHabilidade1 = true;
+                personagem.habilidadePassivaClasse.RemoverEfeito(personagem);
             }
 
-            if (personagem.habilidade2 != null)
+            if (personagem.habilidadePassivaArma != null)
             {
                 //personagem.habilidade2.StopAllCoroutines();
-                //personagem.habilidade2.RemoverEfeitoExternamente();
-                personagem.podeAtivarEfeitoHabilidade2 = true;
+                personagem.habilidadePassivaArma.RemoverEfeito(personagem);
             }
         }
 

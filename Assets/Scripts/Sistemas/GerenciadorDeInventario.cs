@@ -13,16 +13,27 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
     public Text textoMensagem; //texto da mensagem
     public float duracao; //duração da mensagem na tela
 
-    [Header("Lista de Habilidades de Classe")]
-    public List<HabilidadeBase> habilidadesClasseGuerreiro = new List<HabilidadeBase>(); //lista de habilidades da classe guerreiro
-    public List<HabilidadeBase> habilidadesClasseLadino = new List<HabilidadeBase>(); //lista de habilidades da classe ladino
-    public List<HabilidadeBase> habilidadesClasseElementalista = new List<HabilidadeBase>(); //lista de habilidades da classe elementalista
-    public List<HabilidadeBase> habilidadesClasseSacerdote = new List<HabilidadeBase>(); //lista de habilidades da classe sacerdote
+    [Header("Lista de Habilidades Ativas de Classe")]
+    public List<HabilidadeAtiva> habilidadesAtivasClasseGuerreiro = new List<HabilidadeAtiva>(); //lista de habilidades ativas da classe guerreiro
+    public List<HabilidadeAtiva> habilidadesAtivasClasseLadino = new List<HabilidadeAtiva>(); //lista de habilidades ativas da classe ladino
+    public List<HabilidadeAtiva> habilidadesAtivasClasseElementalista = new List<HabilidadeAtiva>(); //lista de habilidades ativas da classe elementalista
+    public List<HabilidadeAtiva> habilidadesAtivasClasseSacerdote = new List<HabilidadeAtiva>(); //lista de habilidades ativas da classe sacerdote
 
-    [Header("Lista de Habilidades de Arma")]
-    public List<HabilidadeBase> habilidadesEspada = new List<HabilidadeBase>(); //lista de habilidades da espada
-    public List<HabilidadeBase> habilidadesArco = new List<HabilidadeBase>(); //lista de habilidades do arco
-    public List<HabilidadeBase> habilidadesLivro = new List<HabilidadeBase>(); //lista de habilidades do livro
+    [Header("Lista de Habilidades Ativas de Arma")]
+    public List<HabilidadeAtiva> habilidadesAtivasEspada = new List<HabilidadeAtiva>(); //lista de habilidades ativas da espada
+    public List<HabilidadeAtiva> habilidadesAtivasArco = new List<HabilidadeAtiva>(); //lista de habilidades ativas do arco
+    public List<HabilidadeAtiva> habilidadesAtivasLivro = new List<HabilidadeAtiva>(); //lista de habilidades ativas do livro
+
+    [Header("Lista de Habilidades Passivas de Classe")]
+    public List<HabilidadePassiva> habilidadesPassivasClasseGuerreiro = new List<HabilidadePassiva>(); //lista de habilidades passivas da classe guerreiro
+    public List<HabilidadePassiva> habilidadesPassivasClasseLadino = new List<HabilidadePassiva>(); //lista de habilidades passivas da classe ladino
+    public List<HabilidadePassiva> habilidadesPassivasClasseElementalista = new List<HabilidadePassiva>(); //lista de habilidades passivas da classe elementalista
+    public List<HabilidadePassiva> habilidadesPassivasClasseSacerdote = new List<HabilidadePassiva>(); //lista de habilidades passivas da classe sacerdote
+
+    [Header("Lista de Habilidades Passivas de Arma")]
+    public List<HabilidadePassiva> habilidadesPassivasEspada = new List<HabilidadePassiva>(); //lista de habilidades passivas da espada
+    public List<HabilidadePassiva> habilidadesPassivasArco = new List<HabilidadePassiva>(); //lista de habilidades passivas do arco
+    public List<HabilidadePassiva> habilidadesPassivasLivro = new List<HabilidadePassiva>(); //lista de habilidades passivas do livro
 
     [Header("Lista Equipamentos")]
     public List<EquipamentoBase> equipamentosCabecaAcessorio = new List<EquipamentoBase>(); //lista de equipamentos da cabeça acessório
@@ -221,88 +232,171 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
         canvasAtual = GameObject.Find("Canvas").transform; //encontra o canvas na cena
     }
 
-    public void SortearHabilidade(TipoDeHabilidade tipo, Classe classe, int nivel ,PersonagemData personagem) //função que sorteia uma habilidade para o personagem
+    public void SortearHabilidade(TipoDeHabilidade tipo, Classe classe, int nivel ,PersonagemData personagem, string modoAtivacao) //função que sorteia uma habilidade para o personagem
     {
-        if(tipo == TipoDeHabilidade.Classe)
+        if(modoAtivacao == "ativa")
         {
-            //define o sorteio da habilidade baseado na classe do personagem
-            List<HabilidadeBase> listaClasseOriginal = null;
-
-            switch (classe)
+            if (tipo == TipoDeHabilidade.Classe)
             {
-                case Classe.Guerreiro:
-                    listaClasseOriginal = habilidadesClasseGuerreiro;
-                    break;
-                case Classe.Ladino:
-                    listaClasseOriginal = habilidadesClasseLadino;
-                    break;
-                case Classe.Elementalista:
-                    listaClasseOriginal = habilidadesClasseElementalista;
-                    break;
-                case Classe.Sacerdote:
-                    listaClasseOriginal = habilidadesClasseSacerdote;
-                    break;
-            }
+                //define o sorteio da habilidade baseado na classe do personagem
+                List<HabilidadeAtiva> listaClasseOriginal = null;
 
-            loop:
-            HabilidadeBase habilidadeSorteada = listaClasseOriginal[Random.Range(0, listaClasseOriginal.Count)]; //sorteia uma habilidade
-            HabilidadeBase habilidadeExistente = personagem.listaDeHabilidadesDeClasse.Find(id => id.idHabilidade == habilidadeSorteada.idHabilidade); //verifica so o personagem já possui a habilidade
-
-            if(habilidadeExistente != null) //caso o personagem já a possua a habilidade sorteada
-            {
-                goto loop;
-            }
-            else //do contrário
-            {
-                //adiciona a habilidade sorteada ao inventário do personagem
-                habilidadeSorteada.nivel = nivel;
-                personagem.listaDeHabilidadesDeClasse.Add(habilidadeSorteada);
-                personagem.habilidadesDeClasseSalvas.Add(new DadosHabilidade(habilidadeSorteada.idHabilidade, habilidadeSorteada.nivel));
-                MostrarMensagem("Habilidade Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido + " - Nível: " + personagem.nivel);
-            }
-        }
-        else if(tipo == TipoDeHabilidade.Arma)
-        {
-            //define o sorteio da habilidade 
-            List<HabilidadeBase> listaArmaOriginal = null;
-
-            switch (personagem.arma.nome)
-            {
-                case "Espada":
-                    listaArmaOriginal = habilidadesEspada;
-                    break;
-                case "Arco":
-                    listaArmaOriginal = habilidadesArco;
-                    break;
-                case "Livro":
-                    listaArmaOriginal = habilidadesLivro;
-                    break;
-            }
-
-            HabilidadeBase habilidadeSorteada = listaArmaOriginal[Random.Range(0, listaArmaOriginal.Count)]; //sorteia uma habilidade
-            HabilidadeBase habilidadeExistente = personagem.listaDeHabilidadesDeArma.Find(id => id.idHabilidade == habilidadeSorteada.idHabilidade); //verifica so o personagem já possui a habilidade
-
-            if (habilidadeExistente != null) //caso o personagem já a possua a habilidade sorteada
-            {
-                //atualiza o nível da habilidade existente do personagem
-                if (nivel > habilidadeExistente.nivel)
+                switch (classe)
                 {
-                    habilidadeExistente.nivel = nivel;
-                    DadosHabilidade dadosExistente = personagem.habilidadesDeArmaSalvas.Find(id => id.idHabilidade == habilidadeExistente.idHabilidade);
-                    if (dadosExistente != null)
-                    {
-                        dadosExistente.nivel = habilidadeExistente.nivel;
-                    }
-                    MostrarMensagem("Habilidade Evoluída: " + habilidadeExistente.nome + "\nNível: " + habilidadeExistente.nivel + "\nHerói: " + personagem.apelido + " - Nível: " + personagem.nivel);
+                    case Classe.Guerreiro:
+                        listaClasseOriginal = habilidadesAtivasClasseGuerreiro;
+                        break;
+                    case Classe.Ladino:
+                        listaClasseOriginal = habilidadesAtivasClasseLadino;
+                        break;
+                    case Classe.Elementalista:
+                        listaClasseOriginal = habilidadesAtivasClasseElementalista;
+                        break;
+                    case Classe.Sacerdote:
+                        listaClasseOriginal = habilidadesAtivasClasseSacerdote;
+                        break;
+                }
+
+            loopHabilidadesAtivasClasse:
+                HabilidadeAtiva habilidadeSorteada = listaClasseOriginal[Random.Range(0, listaClasseOriginal.Count)]; //sorteia uma habilidade
+                HabilidadeAtiva habilidadeExistente = personagem.listaDeHabilidadesAtivasDeClasse.Find(id => id.idHabilidade == habilidadeSorteada.idHabilidade); //verifica so o personagem já possui a habilidade
+
+                if (habilidadeExistente != null) //caso o personagem já a possua a habilidade sorteada
+                {
+                    goto loopHabilidadesAtivasClasse;
+                }
+                else //do contrário
+                {
+                    //adiciona a habilidade sorteada ao inventário do personagem
+                    habilidadeSorteada.nivel = nivel;
+                    personagem.listaDeHabilidadesAtivasDeClasse.Add(habilidadeSorteada);
+                    personagem.habilidadesAtivasDeClasseSalvas.Add(new DadosHabilidade(habilidadeSorteada.idHabilidade, habilidadeSorteada.nivel));
+                    MostrarMensagem("Habilidade Ativa Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido + " - Nível: " + personagem.nivel);
                 }
             }
-            else //do contrário
+            else if (tipo == TipoDeHabilidade.Arma)
             {
-                //adiciona a habilidade sorteada ao inventário do personagem
-                habilidadeSorteada.nivel = nivel;
-                personagem.listaDeHabilidadesDeArma.Add(habilidadeSorteada);
-                personagem.habilidadesDeArmaSalvas.Add(new DadosHabilidade(habilidadeSorteada.idHabilidade, habilidadeSorteada.nivel));
-                MostrarMensagem("Habilidade Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido + " - Nível: " + personagem.nivel);
+                //define o sorteio da habilidade 
+                List<HabilidadeAtiva> listaArmaOriginal = null;
+
+                switch (personagem.arma.nome)
+                {
+                    case "Espada":
+                        listaArmaOriginal = habilidadesAtivasEspada;
+                        break;
+                    case "Arco":
+                        listaArmaOriginal = habilidadesAtivasArco;
+                        break;
+                    case "Livro":
+                        listaArmaOriginal = habilidadesAtivasLivro;
+                        break;
+                }
+
+            loopHabilidadesAtivasArma:
+                HabilidadeAtiva habilidadeSorteada = listaArmaOriginal[Random.Range(0, listaArmaOriginal.Count)]; //sorteia uma habilidade
+                HabilidadeAtiva habilidadeExistente = personagem.listaDeHabilidadesAtivasDeArma.Find(id => id.idHabilidade == habilidadeSorteada.idHabilidade); //verifica so o personagem já possui a habilidade
+
+                if (habilidadeExistente != null) //caso o personagem já a possua a habilidade sorteada
+                {
+                    goto loopHabilidadesAtivasArma;
+                }
+                else //do contrário
+                {
+                    //adiciona a habilidade sorteada ao inventário do personagem
+                    habilidadeSorteada.nivel = nivel;
+                    personagem.listaDeHabilidadesAtivasDeArma.Add(habilidadeSorteada);
+                    personagem.habilidadesAtivasDeArmaSalvas.Add(new DadosHabilidade(habilidadeSorteada.idHabilidade, habilidadeSorteada.nivel));
+                    MostrarMensagem("Habilidade Ativa Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido + " - Nível: " + personagem.nivel);
+                }
+            }
+        }
+        else if (modoAtivacao == "passiva")
+        {
+            if (tipo == TipoDeHabilidade.Classe)
+            {
+                //define o sorteio da habilidade baseado na classe do personagem
+                List<HabilidadePassiva> listaClasseOriginal = null;
+
+                switch (classe)
+                {
+                    case Classe.Guerreiro:
+                        listaClasseOriginal = habilidadesPassivasClasseGuerreiro;
+                        break;
+                    case Classe.Ladino:
+                        listaClasseOriginal = habilidadesPassivasClasseLadino;
+                        break;
+                    case Classe.Elementalista:
+                        listaClasseOriginal = habilidadesPassivasClasseElementalista;
+                        break;
+                    case Classe.Sacerdote:
+                        listaClasseOriginal = habilidadesPassivasClasseSacerdote;
+                        break;
+                }
+
+            loopHabilidadesPassivasClasse:
+                HabilidadePassiva habilidadeSorteada = listaClasseOriginal[Random.Range(0, listaClasseOriginal.Count)]; //sorteia uma habilidade
+                HabilidadePassiva habilidadeExistente = personagem.listaDeHabilidadesPassivasDeClasse.Find(id => id.idHabilidade == habilidadeSorteada.idHabilidade); //verifica so o personagem já possui a habilidade
+
+                if (habilidadeExistente != null) //caso o personagem já a possua a habilidade sorteada
+                {
+                    goto loopHabilidadesPassivasClasse;
+                }
+                else //do contrário
+                {
+                    //adiciona a habilidade sorteada ao inventário do personagem
+                    habilidadeSorteada.nivel = nivel;
+                    personagem.listaDeHabilidadesPassivasDeClasse.Add(habilidadeSorteada);
+                    personagem.habilidadesPassivasDeClasseSalvas.Add(new DadosHabilidade(habilidadeSorteada.idHabilidade, habilidadeSorteada.nivel));
+                    MostrarMensagem("Habilidade Passiva Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido + " - Nível: " + personagem.nivel);
+                }
+            }
+            else if (tipo == TipoDeHabilidade.Arma)
+            {
+                //define o sorteio da habilidade 
+                List<HabilidadePassiva> listaArmaOriginal = null;
+
+                switch (personagem.arma.nome)
+                {
+                    case "Espada":
+                        listaArmaOriginal = habilidadesPassivasEspada;
+                        break;
+                    case "Arco":
+                        listaArmaOriginal = habilidadesPassivasArco;
+                        break;
+                    case "Livro":
+                        listaArmaOriginal = habilidadesPassivasLivro;
+                        break;
+                }
+
+            loopHabilidadesPassivasArma:
+                HabilidadePassiva habilidadeSorteada = listaArmaOriginal[Random.Range(0, listaArmaOriginal.Count)]; //sorteia uma habilidade
+                HabilidadePassiva habilidadeExistente = personagem.listaDeHabilidadesPassivasDeArma.Find(id => id.idHabilidade == habilidadeSorteada.idHabilidade); //verifica so o personagem já possui a habilidade
+
+                if (habilidadeExistente != null) //caso o personagem já a possua a habilidade sorteada
+                {
+                    goto loopHabilidadesPassivasArma;
+                }
+                else //do contrário
+                {
+                    //adiciona a habilidade sorteada ao inventário do personagem
+                    habilidadeSorteada.nivel = nivel;
+                    personagem.listaDeHabilidadesPassivasDeArma.Add(habilidadeSorteada);
+                    personagem.habilidadesPassivasDeArmaSalvas.Add(new DadosHabilidade(habilidadeSorteada.idHabilidade, habilidadeSorteada.nivel));
+                    MostrarMensagem("Habilidade Passiva Adquirída: " + habilidadeSorteada.nome + "\nNível: " + habilidadeSorteada.nivel + "\nHerói: " + personagem.apelido + " - Nível: " + personagem.nivel);
+                }
+            }
+        }
+        else if (modoAtivacao == "ambas")
+        {
+            int modoAorteado = Random.Range(0, 2);
+
+            if(modoAorteado == 0)
+            {
+                SortearHabilidade(tipo, classe, nivel, personagem, "ativa");
+            }
+            else if(modoAorteado == 1)
+            {
+                SortearHabilidade(tipo, classe, nivel, personagem, "passiva");
             }
         }
     }

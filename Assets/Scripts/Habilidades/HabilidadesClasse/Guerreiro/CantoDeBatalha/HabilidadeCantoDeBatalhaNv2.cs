@@ -12,62 +12,64 @@ public class HabilidadeCantoDeBatalhaNv2 : HabilidadeAtiva
     [SerializeField]
     private float bonusPorcentagemDefesas = 5;
     public GameObject vfx;
-
-    private Dictionary<IAPersonagemBase, float> defesaOriginal = new();
-    private Dictionary<IAPersonagemBase, float> defesaMagicaOriginal = new();
-    private Dictionary<IAPersonagemBase, GameObject> vfxInstanciados = new();
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
-        if (personagem.podeAtivarEfeitoHabilidade1)
+        if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
         {
             if (base.ChecarAtivacao(personagem) && personagem.willPower >= consumoDeWillPower)
             {
-                personagem.podeAtivarEfeitoHabilidade1 = false;
+                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
 
                 personagem.AtualizarWillPower(consumoDeWillPower, false);
                 personagem.GastarSP(custoDeMana);
 
-                IAPersonagemBase[] aliados = GameObject.FindObjectsOfType<IAPersonagemBase>();
-                List<IAPersonagemBase> aliadosAfetados = new();
-
-                foreach (var aliado in aliados)
-                {
-                    if (aliado.controlador == personagem.controlador)
-                    {
-                        defesaOriginal[aliado] = aliado.defesa;
-                        defesaMagicaOriginal[aliado] = aliado.defesaMagica;
-
-                        aliado.defesa += bonusPorcentagemDefesas;
-                        aliado.defesaMagica += bonusPorcentagemDefesas;
-
-                        aliadosAfetados.Add(aliado);
-
-                        if (vfx != null)
-                        {
-                            GameObject vfxObj = GameObject.Instantiate(vfx, aliado.transform.position + Vector3.zero, aliado.transform.rotation, aliado.transform);
-                            vfxInstanciados[aliado] = vfxObj;
-                        }
-                    }
-                }
-
-                if (personagem.vfxHabilidade1 == null)
-                {
-                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidade1 = vfxInstanciado;
-                }
-                else
-                {
-                    personagem.GerenciarVFXHabilidade(1, true);
-                }
-
-                base.AtivarEfeito(personagem);
+                personagem.StartCoroutine(ExecutarBuff(personagem));
             }
         }
     }
 
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
-        IAPersonagemBase[] aliados = GameObject.FindObjectsOfType<IAPersonagemBase>();
+        personagem.GerenciarVFXHabilidade(1, false);
+        personagem.podeAtivarEfeitoHabilidadeAtivaClasse = true;
+    }
+
+    private IEnumerator ExecutarBuff(IAPersonagemBase personagem)
+    {
+        var aliados = GameObject.FindObjectsOfType<IAPersonagemBase>();
+        var defesaOriginal = new Dictionary<IAPersonagemBase, float>();
+        var defesaMagicaOriginal = new Dictionary<IAPersonagemBase, float>();
+        var vfxInstanciados = new Dictionary<IAPersonagemBase, GameObject>();
+
+        foreach (var aliado in aliados)
+        {
+            if (aliado.controlador == personagem.controlador)
+            {
+                defesaOriginal[aliado] = aliado.defesa;
+                defesaMagicaOriginal[aliado] = aliado.defesaMagica;
+
+                aliado.defesa += bonusPorcentagemDefesas;
+                aliado.defesaMagica += bonusPorcentagemDefesas;
+
+                if (vfx != null)
+                {
+                    GameObject vfxObj = GameObject.Instantiate(vfx, aliado.transform.position, aliado.transform.rotation, aliado.transform);
+                    vfxInstanciados[aliado] = vfxObj;
+                }
+            }
+        }
+
+        if (personagem.vfxHabilidadeAtivaClasse == null)
+        {
+            GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position, personagem.transform.rotation, personagem.transform);
+            personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
+        }
+        else
+        {
+            personagem.GerenciarVFXHabilidade(1, true);
+        }
+
+        yield return new WaitForSeconds(tempoDeEfeito);
 
         foreach (var aliado in aliados)
         {
@@ -77,6 +79,7 @@ public class HabilidadeCantoDeBatalhaNv2 : HabilidadeAtiva
                 {
                     aliado.defesa = def;
                 }
+
                 if (defesaMagicaOriginal.TryGetValue(aliado, out float defM))
                 {
                     aliado.defesaMagica = defM;
@@ -89,11 +92,6 @@ public class HabilidadeCantoDeBatalhaNv2 : HabilidadeAtiva
             }
         }
 
-        defesaOriginal.Clear();
-        defesaMagicaOriginal.Clear();
-        vfxInstanciados.Clear();
-
-        personagem.GerenciarVFXHabilidade(1, false);
-        personagem.podeAtivarEfeitoHabilidade1 = true;
+        RemoverEfeito(personagem);
     }
 }
