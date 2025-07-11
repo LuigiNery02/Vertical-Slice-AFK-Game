@@ -16,10 +16,11 @@ MonoBehaviour:
   descricao: "Enquanto estiver com 4 willpower, recebe +8% de def e mdef e 8% de
     Atq base\r"
   tipoDeHabilidade: 0
-  modoDeAtivacao: 0
+  modoDeAtivacao: 1
   nivel: 3
   spriteHabilidade: {fileID: 21300000, guid: 14a0f66a7be165c4ba476e3d7c40e390, type: 3}
   idHabilidade: HabilidadePosturaDeBriga
   habilidadeProximoNivel: {fileID: 0}
+  willPowerNecessario: 4
   bonusDefesas: 8
   multiplicadorBonusAtaque: 0.08

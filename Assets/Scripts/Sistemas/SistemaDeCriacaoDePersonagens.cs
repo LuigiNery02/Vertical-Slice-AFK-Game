@@ -598,7 +598,7 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
                     personagemEmCriacao.idsEquipamentosEquipados.Remove(equipamento.id);
                     personagemEmCriacao.equipamentoCabecaAcessorio = null;
                     equipamento.RemoverEfeito();
-                    personagemEmCriacao.DefinicoesBatalha();
+                    personagemEmCriacao.DefinicoesBatalha(false);
                     equipamento.personagem = null;
                     GerenciadorDeInventario.instancia.equipamentosCabecaAcessorio.Add(equipamento);
                 }

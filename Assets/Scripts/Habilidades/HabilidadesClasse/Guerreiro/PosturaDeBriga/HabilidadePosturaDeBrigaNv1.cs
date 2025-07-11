@@ -7,6 +7,8 @@ public class HabilidadePosturaDeBrigaNv1 : HabilidadePassiva
 {
     [Header("Configurações Habilidade")]
     [SerializeField]
+    private int willPowerNecessario = 8;
+    [SerializeField]
     private float bonusDefesas = 5;
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
@@ -47,7 +49,7 @@ public class HabilidadePosturaDeBrigaNv1 : HabilidadePassiva
         {
             yield return new WaitForSeconds(0.2f);
 
-            if (personagem.willPower >= 8)
+            if (personagem.willPower >= willPowerNecessario)
             {
                 if (!dados.bonusAplicado)
                 {

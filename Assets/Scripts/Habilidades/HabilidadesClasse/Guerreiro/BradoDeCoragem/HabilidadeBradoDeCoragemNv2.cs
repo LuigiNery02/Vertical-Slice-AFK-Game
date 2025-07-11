@@ -11,7 +11,7 @@ public class HabilidadeBradoDeCoragemNv2 : HabilidadeAtiva
     {
         if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
         {
-            if (base.ChecarAtivacao(personagem))
+            if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
                 personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
 

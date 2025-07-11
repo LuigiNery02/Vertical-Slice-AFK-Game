@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25a98eef3c0bc98488d145c5c56b765e, type: 3}
+  m_Name: AscenderNv3
+  m_EditorClassIdentifier: 
+  nome: Ascender
+  descricao: "Para cada 2 Willpower gasto, ganha +10% de Atq Base, 10% de def e defM
+    por 2 segundos  e um escudo de 10% de HP n\xE3o cumulativo \r"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 1
+  nivel: 3
+  spriteHabilidade: {fileID: 21300000, guid: b066c869b51f9384fa8ac9cce36b4648, type: 3}
+  idHabilidade: HabilidadeAscender
+  habilidadeProximoNivel: {fileID: 0}
+  efeitoPorWillPowerGasto: 2
+  multiplicadorBonusAtaque: 0.1
+  bonusDefesas: 10
+  bonusEscudo: 10
+  tempoDeEfeito: 2
+  vfx: {fileID: 1289543790355709915, guid: b99922c2f59b1a542bdd06ae8bee47ae, type: 3}

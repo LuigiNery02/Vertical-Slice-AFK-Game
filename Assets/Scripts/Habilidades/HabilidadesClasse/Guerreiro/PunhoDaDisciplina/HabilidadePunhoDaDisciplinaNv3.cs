@@ -17,75 +17,78 @@ public class HabilidadePunhoDaDisciplinaNv3 : HabilidadeAtiva
 
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
-        if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse && base.ChecarAtivacao(personagem))
+        if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
         {
-            float danoOriginal = personagem._dano;
-            personagem.efeitoPorAtaqueAtivado = true;
-            personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
-
-            personagem.GastarSP(custoDeMana);
-
-            Dictionary<IAPersonagemBase, Coroutine> debuffsAtivos = new();
-            Dictionary<IAPersonagemBase, float> danosOriginais = new();
-
-            personagem.AtivarEfeitoPorAtaque("PunhoDaDisciplinaNv3", (bool acerto) =>
+            if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
-                if (acerto)
+                float danoOriginal = personagem._dano;
+                personagem.efeitoPorAtaqueAtivado = true;
+                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
+
+                personagem.GastarSP(custoDeMana);
+
+                Dictionary<IAPersonagemBase, Coroutine> debuffsAtivos = new();
+                Dictionary<IAPersonagemBase, float> danosOriginais = new();
+
+                personagem.AtivarEfeitoPorAtaque("PunhoDaDisciplinaNv3", (bool acerto) =>
                 {
-                    IAPersonagemBase inimigo = personagem._personagemAlvo;
-
-                    float danoFinal = multiplicadorDeDano;
-                    float debuffFinal = multiplicadorDiminuicaoDeDanoInimigo;
-                    float tempoFinal = tempoDiminuicaoDeDanoInimigo;
-
-                    if (inimigo != null && inimigo.VerificarEfeitoNegativo())
+                    if (acerto)
                     {
-                        danoFinal *= 2;
-                        debuffFinal *= debuffFinal;
-                        tempoFinal *= 2;
-                    }
+                        IAPersonagemBase inimigo = personagem._personagemAlvo;
 
-                    personagem._dano *= danoFinal;
+                        float danoFinal = multiplicadorDeDano;
+                        float debuffFinal = multiplicadorDiminuicaoDeDanoInimigo;
+                        float tempoFinal = tempoDiminuicaoDeDanoInimigo;
 
-                    if (inimigo != null)
-                    {
-                        if (debuffsAtivos.TryGetValue(inimigo, out var coroutine))
+                        if (inimigo != null && inimigo.VerificarEfeitoNegativo())
                         {
-                            personagem.StopCoroutine(coroutine);
-                            inimigo._dano = danosOriginais[inimigo];
+                            danoFinal *= 2;
+                            debuffFinal *= debuffFinal;
+                            tempoFinal *= 2;
                         }
 
-                        float danoOriginalInimigo = inimigo._dano;
-                        danosOriginais[inimigo] = danoOriginalInimigo;
-                        inimigo._dano *= debuffFinal;
-                        inimigo.recebeuDebuffPunhoDisciplina = true;
-                        inimigo.ataqueDiminuido = true;
+                        personagem._dano *= danoFinal;
 
-                        Coroutine novaCorrotina = personagem.StartCoroutine(TempoEfeitoDiminuirDano(inimigo, tempoFinal, danoOriginalInimigo, () =>
+                        if (inimigo != null)
                         {
-                            danosOriginais.Remove(inimigo);
-                            debuffsAtivos.Remove(inimigo);
-                        }));
+                            if (debuffsAtivos.TryGetValue(inimigo, out var coroutine))
+                            {
+                                personagem.StopCoroutine(coroutine);
+                                inimigo._dano = danosOriginais[inimigo];
+                            }
 
-                        debuffsAtivos[inimigo] = novaCorrotina;
+                            float danoOriginalInimigo = inimigo._dano;
+                            danosOriginais[inimigo] = danoOriginalInimigo;
+                            inimigo._dano *= debuffFinal;
+                            inimigo.recebeuDebuffPunhoDisciplina = true;
+                            inimigo.ataqueDiminuido = true;
+
+                            Coroutine novaCorrotina = personagem.StartCoroutine(TempoEfeitoDiminuirDano(inimigo, tempoFinal, danoOriginalInimigo, () =>
+                            {
+                                danosOriginais.Remove(inimigo);
+                                debuffsAtivos.Remove(inimigo);
+                            }));
+
+                            debuffsAtivos[inimigo] = novaCorrotina;
+                        }
+
+                        personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal));
                     }
+                    else
+                    {
+                        RemoverEfeito(personagem);
+                    }
+                });
 
-                    personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal));
+                if (personagem.vfxHabilidadeAtivaClasse == null)
+                {
+                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position, personagem.transform.rotation, personagem.transform);
+                    personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
                 }
                 else
                 {
-                    RemoverEfeito(personagem);
+                    personagem.GerenciarVFXHabilidade(1, true);
                 }
-            });
-
-            if (personagem.vfxHabilidadeAtivaClasse == null)
-            {
-                GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position, personagem.transform.rotation, personagem.transform);
-                personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
-            }
-            else
-            {
-                personagem.GerenciarVFXHabilidade(1, true);
             }
         }
     }

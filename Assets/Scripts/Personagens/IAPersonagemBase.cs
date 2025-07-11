@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -71,6 +72,11 @@ public class IAPersonagemBase : MonoBehaviour
     public float defesa; //defesa do personagem
     public float defesaMagica; //defesa mágica do personagem
 
+    //área referente ao escudo do personagem
+    [Header("Escudo")]
+    public bool escudoAtivado; //define se o escudo está ativado ou não
+    public float valorEscudo; //valor em % do escudo
+
     //área referente à habilidades
     [Header("Habilidades")]
     public int willPower;
@@ -89,6 +95,8 @@ public class IAPersonagemBase : MonoBehaviour
     public Dictionary<HabilidadePassiva, DadosHabilidadePassiva> dadosDasHabilidadesPassivas = new();
     public GameObject vfxHabilidadeAtivaClasse;
     public GameObject vfxHabilidadeAtivaArma;
+    public GameObject vfxHabilidadePassivaClasse;
+    public GameObject vfxHabilidadePassivaArma;
 
     //Área referente às animações
     [Header("Animação")]
@@ -143,6 +151,8 @@ public class IAPersonagemBase : MonoBehaviour
     [HideInInspector]
     public event EfeitoPorAtaqueRecebido OnAtaqueRecebidoComEfeito;
 
+    public event Action<int> aoGastarWillPower;
+
     [HideInInspector]
     public bool stunado;
     [HideInInspector]
@@ -166,7 +176,7 @@ public class IAPersonagemBase : MonoBehaviour
     [HideInInspector]
     public int habilidadeSendoConjurada;
 
-    
+
 
     ////função que é ativada quando há um efeito por esquiva
     //public delegate void EfeitoPorEsquiva();
@@ -190,6 +200,8 @@ public class IAPersonagemBase : MonoBehaviour
     //public bool congelamento; //efeito de congelamento
     //[HideInInspector]
     //public bool envenenamento; //efeito de envenenamento
+
+    private bool atualizandoDados = false;
 
     //Área de feedback visuais
     private Animator _animator; //animator do personagem
@@ -284,9 +296,6 @@ public class IAPersonagemBase : MonoBehaviour
         }
         canvas.SetActive(true);
 
-        habilidadeAtivaClasse = personagem.habilidadeAtivaClasse;
-        habilidadeAtivaArma = personagem.habilidadeAtivaArma;
-
         //encontra o slider do personagem caso tenha
         if (transform.GetComponentInChildren<Slider>() != null)
         {
@@ -296,6 +305,33 @@ public class IAPersonagemBase : MonoBehaviour
 
     public void AtualizarDadosPersonagem() //função que atualiza os dados de batalha do personagem
     {
+        if (atualizandoDados)
+        {
+            return;
+        }
+
+        atualizandoDados = true;
+
+        if (habilidadeAtivaClasse == null)
+        {
+            habilidadeAtivaClasse = personagem.habilidadeAtivaClasse;
+        }
+
+        if (habilidadeAtivaArma == null)
+        {
+            habilidadeAtivaArma = personagem.habilidadeAtivaArma;
+        }
+
+        if (habilidadePassivaClasse == null)
+        {
+            habilidadePassivaClasse = personagem.habilidadePassivaClasse;
+        }
+
+        if (habilidadePassivaArma == null)
+        {
+            habilidadePassivaArma = personagem.habilidadePassivaArma;
+        }
+
         _tipo = personagem.arma.armaTipo;
         _dano = personagem.dano;
         _velocidadeDeAtaque = personagem.velocidadeDeAtaque;
@@ -314,6 +350,19 @@ public class IAPersonagemBase : MonoBehaviour
         hpRegeneracao = personagem.hpRegeneracao;
         _spMaximoEInicial = personagem.sp;
         spRegeneracao = personagem.spRegeneracao;
+
+        if (habilidadePassivaClasse != null && podeAtivarEfeitoHabilidadePassivaClasse)
+        {
+            habilidadePassivaClasse.RemoverEfeito(this);
+            habilidadePassivaClasse.AtivarEfeito(this);
+        }
+        if (habilidadePassivaArma != null && podeAtivarEfeitoHabilidadePassivaArma)
+        {
+            habilidadePassivaArma.RemoverEfeito(this);
+            habilidadePassivaArma.AtivarEfeito(this);
+        }
+
+        atualizandoDados = false;
     }
     public void IniciarBatalha() //função chamada ao inicar a batalha e define os valores e comportamentos iniciais do personagem
     {
@@ -839,7 +888,7 @@ public class IAPersonagemBase : MonoBehaviour
 
         //verifica as chances de um dano crítico
         bool critico = false;
-        if (Random.Range(0f, 100f) < chanceCritico)
+        if (UnityEngine.Random.Range(0f, 100f) < chanceCritico)
         {
             critico = true;
         }
@@ -903,9 +952,19 @@ public class IAPersonagemBase : MonoBehaviour
 
     public void SofrerDano(float dano, bool critico) //função para sofrer dano
     {
-        //if (!imuneADanos)
-        //{
+        if (escudoAtivado)
+        {
+            dano -= valorEscudo;
+            if(dano <= 0)
+            {
+                dano = 0;
+            }
             hpAtual -= dano; //sofre o dano
+        }
+        else
+        {
+            hpAtual -= dano; //sofre o dano
+        } 
 
         if (_usarSliders && _slider != null)
             {
@@ -1145,6 +1204,20 @@ public class IAPersonagemBase : MonoBehaviour
                 vfxHabilidadeAtivaArma.SetActive(ativar);
             }
         }
+        else if (habilidade == 3)
+        {
+            if (vfxHabilidadePassivaClasse != null)
+            {
+                vfxHabilidadePassivaClasse.SetActive(ativar);
+            }
+        }
+        else if (habilidade == 4)
+        {
+            if (vfxHabilidadePassivaArma != null)
+            {
+                vfxHabilidadePassivaArma.SetActive(ativar);
+            }
+        }
     }
 
     public void AtualizarWillPower(int valor, bool valorPositivo)
@@ -1156,6 +1229,7 @@ public class IAPersonagemBase : MonoBehaviour
         else
         {
             willPower -= valor;
+            aoGastarWillPower?.Invoke(valor);
         }
 
         if(willPower >= 10)

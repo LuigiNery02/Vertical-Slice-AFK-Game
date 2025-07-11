@@ -147,7 +147,7 @@ public class PersonagemData
         velocidadeDeMovimento = atributosIniciais.velocidadeDeMovimentoBase;
 
         DefinicoesAtributos();
-        DefinicoesBatalha();
+        DefinicoesBatalha(false);
     }
 
     #region Level Up
@@ -195,12 +195,8 @@ public class PersonagemData
                     break;
             }
             expProximoNível += (expProximoNível / 10); //atualiza o valor necessário para passar de nível
-            if (funcaoSubirNivel != null)
-            {
-                funcaoSubirNivel();
-            }
 
-            DefinicoesBatalha();
+            DefinicoesBatalha(true);
         }
     }
 
@@ -303,7 +299,7 @@ public class PersonagemData
         }
     }
 
-    public void DefinicoesBatalha() //função que define os atributos de batalha do personagem (fórmula de build)
+    public void DefinicoesBatalha(bool subirNivel) //função que define os atributos de batalha do personagem (fórmula de build)
     {
         int STR = forca; //atributo força do personagem
         int AGI = agilidade; //atributo agilidade do personagem
@@ -385,6 +381,11 @@ public class PersonagemData
         for (int i = 1; i < 13; i++)
         {
             AplicarEfeitoEquipamento(i);
+        }
+
+        if (funcaoSubirNivel != null && subirNivel)
+        {
+            funcaoSubirNivel();
         }
     }
 

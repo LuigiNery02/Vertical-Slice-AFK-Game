@@ -11,7 +11,7 @@ public class HabilidadeGolpeEspartanoNv1 : HabilidadeAtiva
     {
         if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
         {
-            if (base.ChecarAtivacao(personagem))
+            if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
                 personagem.efeitoPorAtaqueAtivado = true;
                 personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;

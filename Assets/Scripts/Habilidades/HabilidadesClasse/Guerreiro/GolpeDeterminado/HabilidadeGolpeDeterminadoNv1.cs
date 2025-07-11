@@ -15,7 +15,7 @@ public class HabilidadeGolpeDeterminadoNv1 : HabilidadeAtiva
     {
         if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
         {
-            if (base.ChecarAtivacao(personagem) && personagem.willPower >= consumoDeWillPower)
+            if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel) && personagem.willPower >= consumoDeWillPower)
             {
                 float danoOriginal = personagem._dano;
                 personagem.efeitoPorAtaqueAtivado = true;

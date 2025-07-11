@@ -14,7 +14,7 @@ public class HabilidadePunhoDaDisciplinaNv1 : HabilidadeAtiva
     {
         if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
         {
-            if (base.ChecarAtivacao(personagem))
+            if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
                 float danoOriginal = personagem._dano;
                 personagem.efeitoPorAtaqueAtivado = true;

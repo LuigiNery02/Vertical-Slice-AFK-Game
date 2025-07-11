@@ -49,5 +49,6 @@ MonoBehaviour:
   armaDano: 0
   dano: 10
   velocidadeDeAtaque: 1.5
+  projetil: {fileID: 0}
   velocidadeDoProjetil: 0
   id: 0

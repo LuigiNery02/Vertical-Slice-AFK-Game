@@ -12,17 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea11057714d5bc74085669f627d67d25, type: 3}
   m_Name: BradoDeCoragemNv1
   m_EditorClassIdentifier: 
-  nome: 
-  descricao: 
+  nome: Brado de Coragem
+  descricao: "Fica imune a stun e knoback pelo pr\xF3ximo ataque.\nElemento: Neutro\nCast
+    Fixo: Instant\xE2neo\nCast Vari\xE1vel: Instant\xE2neo\nCusto de Mana: 55\nCooldown:
+    6  segundos\r"
   tipoDeHabilidade: 0
   modoDeAtivacao: 0
-  nivel: 0
-  spriteHabilidade: {fileID: 0}
-  idHabilidade: 
-  habilidadeProximoNivel: {fileID: 0}
+  nivel: 1
+  spriteHabilidade: {fileID: 21300000, guid: 2bbebcc9ca74c2c47bc5238486432710, type: 3}
+  idHabilidade: HabilidadeBradoDeCoragem
+  habilidadeProximoNivel: {fileID: 11400000, guid: fa21c78c9a862294998fc800aa0f427f, type: 2}
   elemento: 0
-  custoDeMana: 0
+  custoDeMana: 55
   castFixo: 0
   castVariavel: 0
   tempoDeEfeito: 0
-  tempoDeRecarga: 0
+  tempoDeRecarga: 6
+  vfx: {fileID: 7155335147208632822, guid: 97c43495f80a3244fad1301dfafbe252, type: 3}

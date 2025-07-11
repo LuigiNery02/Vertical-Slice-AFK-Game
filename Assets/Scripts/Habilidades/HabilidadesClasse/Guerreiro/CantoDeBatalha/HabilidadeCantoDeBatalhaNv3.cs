@@ -18,7 +18,7 @@ public class HabilidadeCantoDeBatalhaNv3 : HabilidadeAtiva
     {
         if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
         {
-            if (base.ChecarAtivacao(personagem) && personagem.willPower >= consumoDeWillPower)
+            if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel) && personagem.willPower >= consumoDeWillPower)
             {
                 personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
 
@@ -48,9 +48,6 @@ public class HabilidadeCantoDeBatalhaNv3 : HabilidadeAtiva
         {
             if (aliado.controlador == personagem.controlador)
             {
-                defesaOriginal[aliado] = aliado.defesa;
-                defesaMagicaOriginal[aliado] = aliado.defesaMagica;
-
                 aliado.defesa += bonusPorcentagemDefesas;
                 aliado.defesaMagica += bonusPorcentagemDefesas;
 
@@ -94,15 +91,8 @@ public class HabilidadeCantoDeBatalhaNv3 : HabilidadeAtiva
         {
             if (aliado != null)
             {
-                if (defesaOriginal.TryGetValue(aliado, out float def))
-                {
-                    aliado.defesa = def;
-                } 
-
-                if (defesaMagicaOriginal.TryGetValue(aliado, out float defM))
-                {
-                    aliado.defesaMagica = defM;
-                }
+                aliado.defesa -= bonusPorcentagemDefesas;
+                aliado.defesaMagica -= bonusPorcentagemDefesas;
 
                 if (vfxInstanciados.TryGetValue(aliado, out GameObject vfxObj) && vfxObj != null)
                 {
