@@ -15,26 +15,29 @@ public class HabilidadeAscenderNv1 : HabilidadePassiva
 
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
-        if (!personagem.dadosDasHabilidadesPassivas.ContainsKey(this))
+        if (base.ChecarRuna(personagem, nivel))
         {
-            personagem.dadosDasHabilidadesPassivas[this] = new DadosHabilidadePassiva();
-        }
-
-        var dados = personagem.dadosDasHabilidadesPassivas[this];
-
-        dados.buffsAtaqueAtivos ??= new List<Coroutine>();
-        dados.bonusAplicados ??= new List<float>();
-
-        personagem.aoGastarWillPower += (int quantidade) =>
-        {
-            int blocos = quantidade / efeitoPorWillPowerGasto;
-
-            for (int i = 0; i < blocos; i++)
+            if (!personagem.dadosDasHabilidadesPassivas.ContainsKey(this))
             {
-                Coroutine buff = personagem.StartCoroutine(AplicarBuffTemporario(personagem, dados));
-                dados.buffsAtaqueAtivos.Add(buff);
+                personagem.dadosDasHabilidadesPassivas[this] = new DadosHabilidadePassiva();
             }
-        };
+
+            var dados = personagem.dadosDasHabilidadesPassivas[this];
+
+            dados.buffsAtaqueAtivos ??= new List<Coroutine>();
+            dados.bonusAplicados ??= new List<float>();
+
+            personagem.aoGastarWillPower += (int quantidade) =>
+            {
+                int blocos = quantidade / efeitoPorWillPowerGasto;
+
+                for (int i = 0; i < blocos; i++)
+                {
+                    Coroutine buff = personagem.StartCoroutine(AplicarBuffTemporario(personagem, dados));
+                    dados.buffsAtaqueAtivos.Add(buff);
+                }
+            };
+        } 
     }
 
     public override void RemoverEfeito(IAPersonagemBase personagem)

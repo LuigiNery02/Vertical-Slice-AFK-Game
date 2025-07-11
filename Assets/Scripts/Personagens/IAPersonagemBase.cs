@@ -26,9 +26,9 @@ public class IAPersonagemBase : MonoBehaviour
 
     //área referente ao hp (vida) do personagem
     [Header("HP")]
-    [HideInInspector]
+    //[HideInInspector]
     public float _hpMaximoEInicial; //valor inicial que o hp atual do player terá ao iniciar a batalha, e valor máximo que ele pode ter
-    [HideInInspector]
+    //[HideInInspector]
     public float hpAtual; //valor atual do hp (vida) do personagem
     [HideInInspector]
     public float hpRegeneracao; //valor por segundo que o personagem recuperará de hp
@@ -76,6 +76,7 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("Escudo")]
     public bool escudoAtivado; //define se o escudo está ativado ou não
     public float valorEscudo; //valor em % do escudo
+    public GameObject escudoVfx;
 
     //área referente à habilidades
     [Header("Habilidades")]
@@ -152,6 +153,7 @@ public class IAPersonagemBase : MonoBehaviour
     public event EfeitoPorAtaqueRecebido OnAtaqueRecebidoComEfeito;
 
     public event Action<int> aoGastarWillPower;
+    public event Action<int> aoReceberWillPower;
 
     [HideInInspector]
     public bool stunado;
@@ -356,6 +358,7 @@ public class IAPersonagemBase : MonoBehaviour
             habilidadePassivaClasse.RemoverEfeito(this);
             habilidadePassivaClasse.AtivarEfeito(this);
         }
+
         if (habilidadePassivaArma != null && podeAtivarEfeitoHabilidadePassivaArma)
         {
             habilidadePassivaArma.RemoverEfeito(this);
@@ -954,12 +957,13 @@ public class IAPersonagemBase : MonoBehaviour
     {
         if (escudoAtivado)
         {
-            dano -= valorEscudo;
-            if(dano <= 0)
+            valorEscudo -= dano;
+            if(valorEscudo <= 0)
             {
-                dano = 0;
+                valorEscudo = 0;
+                escudoAtivado = false;
+                escudoVfx.SetActive(false);
             }
-            hpAtual -= dano; //sofre o dano
         }
         else
         {
@@ -967,32 +971,38 @@ public class IAPersonagemBase : MonoBehaviour
         } 
 
         if (_usarSliders && _slider != null)
+        {
+            //atualiza o slider e o texto de hp
+            _slider.value = hpAtual;
+            if (critico && !escudoAtivado)
             {
-                //atualiza o slider e o texto de hp
-                _slider.value = hpAtual;
                 textoHP.gameObject.SetActive(true);
-                if (critico)
+                textoHP.text = ("-" + dano + " (Crítico)");
+            }
+            else
+            {
+                if (!escudoAtivado)
                 {
-                    textoHP.text = ("-" + dano + " (Crítico)");
-                }
-                else
-                {
+                    textoHP.gameObject.SetActive(true);
                     textoHP.text = ("-" + dano);
                 }
-                StartCoroutine(DesativarTextoHP(this));
             }
+            StartCoroutine(DesativarTextoHP(this));
+        }
 
-            //if (efeitoPorDanoAtivado)
-            //{
-            //    efeitoPorDano();
-            //}
+        if (hpAtual <= 0)
+        {
+            hpAtual = 0;
+            VerificarComportamento("morrer");
+        }
 
-            if (hpAtual <= 0)
-            {
-                hpAtual = 0;
-                VerificarComportamento("morrer");
-            }
-       // }
+        //if (efeitoPorDanoAtivado)
+        //{
+        //    efeitoPorDano();
+        //}
+
+
+        // }
     }
 
     public void ReceberHP(float cura) //função para receber hp
@@ -1101,7 +1111,7 @@ public class IAPersonagemBase : MonoBehaviour
     {
         //atualiza o personagem
 
-        AtualizarDadosPersonagem();
+        //AtualizarDadosPersonagem();
 
         if (_usarSliders && _slider != null)
         {
@@ -1229,23 +1239,32 @@ public class IAPersonagemBase : MonoBehaviour
         else
         {
             willPower -= valor;
-            aoGastarWillPower?.Invoke(valor);
         }
 
-        if(willPower >= 10)
+        if (willPower >= 10)
         {
             willPower = 10;
         }
-        else if(willPower <= 0)
+        else if (willPower <= 0)
         {
             willPower = 0;
         }
 
-        if(textoWillPower != null)
+        if (valorPositivo)
+        {
+            aoReceberWillPower?.Invoke(valor);
+        }
+        else
+        {
+            aoGastarWillPower?.Invoke(valor);
+        }
+
+        if (textoWillPower != null)
         {
             textoWillPower.text = "WillPower: " + willPower;
         }
     }
+
     #endregion
 
     #region Efeitos

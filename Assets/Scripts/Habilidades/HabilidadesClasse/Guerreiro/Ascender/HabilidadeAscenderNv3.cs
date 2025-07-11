@@ -20,40 +20,43 @@ public class HabilidadeAscenderNv3 : HabilidadePassiva
 
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
-        if (!personagem.dadosDasHabilidadesPassivas.ContainsKey(this))
+        if (base.ChecarRuna(personagem, nivel))
         {
-            personagem.dadosDasHabilidadesPassivas[this] = new DadosHabilidadePassiva();
-        }
-
-        var dados = personagem.dadosDasHabilidadesPassivas[this];
-        dados.buffsAtaqueAtivos ??= new List<Coroutine>();
-        dados.bonusAplicados ??= new List<float>();
-
-        personagem.aoGastarWillPower += (int quantidade) =>
-        {
-            int blocos = quantidade / efeitoPorWillPowerGasto;
-
-            for (int i = 0; i < blocos; i++)
+            if (!personagem.dadosDasHabilidadesPassivas.ContainsKey(this))
             {
-                if (!personagem.escudoAtivado)
-                {
-                    personagem.escudoAtivado = true;
-                    personagem.valorEscudo = (personagem._hpMaximoEInicial / bonusEscudo);
-                    if (personagem.vfxHabilidadePassivaClasse == null)
-                    {
-                        GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                        personagem.vfxHabilidadePassivaClasse = vfxInstanciado;
-                    }
-                    else
-                    {
-                        personagem.GerenciarVFXHabilidade(3, true);
-                    }
-                    personagem.StartCoroutine(AplicarEscudoTemporario(personagem));
-                }
-                Coroutine buff = personagem.StartCoroutine(AplicarBuffTemporario(personagem, dados));
-                dados.buffsAtaqueAtivos.Add(buff);
+                personagem.dadosDasHabilidadesPassivas[this] = new DadosHabilidadePassiva();
             }
-        };
+
+            var dados = personagem.dadosDasHabilidadesPassivas[this];
+            dados.buffsAtaqueAtivos ??= new List<Coroutine>();
+            dados.bonusAplicados ??= new List<float>();
+
+            personagem.aoGastarWillPower += (int quantidade) =>
+            {
+                int blocos = quantidade / efeitoPorWillPowerGasto;
+
+                for (int i = 0; i < blocos; i++)
+                {
+                    if (!personagem.escudoAtivado)
+                    {
+                        personagem.escudoAtivado = true;
+                        personagem.valorEscudo = (personagem._hpMaximoEInicial / bonusEscudo);
+                        if (personagem.escudoVfx == null)
+                        {
+                            GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
+                            personagem.escudoVfx = vfxInstanciado;
+                        }
+                        else
+                        {
+                            personagem.escudoVfx.SetActive(true);
+                        }
+                        personagem.StartCoroutine(AplicarEscudoTemporario(personagem));
+                    }
+                    Coroutine buff = personagem.StartCoroutine(AplicarBuffTemporario(personagem, dados));
+                    dados.buffsAtaqueAtivos.Add(buff);
+                }
+            };
+        }
     }
 
     public override void RemoverEfeito(IAPersonagemBase personagem)
@@ -124,6 +127,9 @@ public class HabilidadeAscenderNv3 : HabilidadePassiva
         yield return new WaitForSeconds(tempoDeEfeito);
         personagem.escudoAtivado = false;
         personagem.valorEscudo = 0;
-        personagem.GerenciarVFXHabilidade(3, false);
+        if (personagem.escudoVfx != null)
+        {
+            personagem.escudoVfx.SetActive(false);
+        }
     }
 }

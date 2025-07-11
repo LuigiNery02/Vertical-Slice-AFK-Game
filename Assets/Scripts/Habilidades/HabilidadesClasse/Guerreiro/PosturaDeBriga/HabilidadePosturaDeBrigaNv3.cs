@@ -14,16 +14,19 @@ public class HabilidadePosturaDeBrigaNv3 : HabilidadePassiva
 
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
-        if (!personagem.dadosDasHabilidadesPassivas.ContainsKey(this))
+        if (base.ChecarRuna(personagem, nivel))
         {
-            personagem.dadosDasHabilidadesPassivas[this] = new DadosHabilidadePassiva();
+            if (!personagem.dadosDasHabilidadesPassivas.ContainsKey(this))
+            {
+                personagem.dadosDasHabilidadesPassivas[this] = new DadosHabilidadePassiva();
+            }
+
+            var dados = personagem.dadosDasHabilidadesPassivas[this];
+            dados.monitoramento = personagem.StartCoroutine(MonitorarCondicao(personagem, dados));
+
+            dados.valorOriginalAtaque = personagem.personagem.arma.dano;
+            dados.valorMultiplicadoAtaque = (dados.valorOriginalAtaque * multiplicadorBonusAtaque);
         }
-
-        var dados = personagem.dadosDasHabilidadesPassivas[this];
-        dados.monitoramento = personagem.StartCoroutine(MonitorarCondicao(personagem, dados));
-
-        dados.valorOriginalAtaque = personagem.personagem.arma.dano;
-        dados.valorMultiplicadoAtaque = (dados.valorOriginalAtaque * multiplicadorBonusAtaque);
     }
 
     public override void RemoverEfeito(IAPersonagemBase personagem)
