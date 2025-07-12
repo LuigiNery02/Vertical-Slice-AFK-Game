@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d30bd80c4452d49b0bc657f645a3b2, type: 3}
   m_Name: LiderancaNv3
   m_EditorClassIdentifier: 
-  nome: 
-  descricao: 
+  nome: "Lideran\xE7a"
+  descricao: Aumenta o Atq e AtqM de todo o grupo em 2% por Willpower ativo. Aumenta
+    o HP do time em 10%
   tipoDeHabilidade: 0
-  modoDeAtivacao: 0
-  nivel: 0
-  spriteHabilidade: {fileID: 0}
-  idHabilidade: 
+  modoDeAtivacao: 1
+  nivel: 3
+  spriteHabilidade: {fileID: 21300000, guid: b11f9c52da2945740b5078d84177a9ab, type: 3}
+  idHabilidade: HabilidadeLideranca
   habilidadeProximoNivel: {fileID: 0}
   multiplicadorBonusAtaque: 0.02
   multiplicadorBonusHP: 0.1

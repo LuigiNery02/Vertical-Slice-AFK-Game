@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c5af79244e14534da8b6066680af385, type: 3}
   m_Name: UltimoPilarNv1
   m_EditorClassIdentifier: 
-  nome: 
-  descricao: 
+  nome: "\xDAltimo Pilar"
+  descricao: "Recupera 1% de HP por Willpower consumido\r"
   tipoDeHabilidade: 0
-  modoDeAtivacao: 0
-  nivel: 0
-  spriteHabilidade: {fileID: 0}
-  idHabilidade: 
-  habilidadeProximoNivel: {fileID: 0}
-  multiplicadorBonusHP: 0.1
+  modoDeAtivacao: 1
+  nivel: 1
+  spriteHabilidade: {fileID: 21300000, guid: e691198d56e3a1848b5009e1ff94dbb5, type: 3}
+  idHabilidade: HabilidadeUltimoPilar
+  habilidadeProximoNivel: {fileID: 11400000, guid: cdd4ed388d4a06b4d8d1d20b7507d072, type: 2}
+  multiplicadorBonusHP: 0.01

@@ -126,10 +126,8 @@ public class IAPersonagemBase : MonoBehaviour
     public Vector3 posicaoInicial; //posição inicial do personagem
     [HideInInspector]
     public Quaternion rotacaoInicial; //rotação inicial do personagem
-    //[HideInInspector]
-    //public int movimentoEspecialAtual; //identificação do movimento especial do personagem
-    //[HideInInspector]
-    //public bool executandoMovimentoEspecial; //variável para verificar se o personagem está executando o movimento especial
+    [HideInInspector]
+    public bool executandoMovimentoEspecial; //variável para verificar se o personagem está executando o movimento especial
     //[HideInInspector]
     //public bool imuneADanos; //variável que verifica se o personagem é imune a danos
 
@@ -454,7 +452,7 @@ public class IAPersonagemBase : MonoBehaviour
         else if(comportamento == "movimentoEspecial")
         {
             _comportamento = EstadoDoPersonagem.MOVIMENTO_ESPECIAL;
-            //MovimentoEspecial(movimentoEspecialAtual);
+            MovimentoEspecial();
         }
         else if (comportamento == "stun")
         {
@@ -805,73 +803,27 @@ public class IAPersonagemBase : MonoBehaviour
     #endregion
 
     #region Movimento Especial
-    //private void MovimentoEspecial(int movimento) //função do movimento especial do personagem
-    //{
-    //    //retorna caso já esteja executando o movimento especial
-    //    if(executandoMovimentoEspecial)
-    //    {
-    //        return;
-    //    }
-
-    //    executandoMovimentoEspecial = true;
-
-    //    if (movimento == 1)
-    //    {
-    //        if(SistemaDeBatalha.usarAnimações && _animator != null)
-    //        {
-    //            _animator.ResetTrigger("Perseguir");
-    //            _animator.ResetTrigger("Atacar");
-    //            _animator.SetTrigger("Combo");
-    //        }
-    //        else
-    //        {
-    //            StartCoroutine(TempoMovimentoEspecial(movimento));
-    //        }
-    //    }
-    //    else if(movimento == 2)
-    //    {
-    //        if (SistemaDeBatalha.usarAnimações && _animator != null)
-    //        {
-    //            _animator.ResetTrigger("Perseguir");
-    //            _animator.ResetTrigger("Atacar");
-    //            _animator.SetTrigger("Defender");
-    //        }
-    //    }
-    //}
-
-    //public void FinalizarMovimentoEspecial() //função que finaliza o movimento especial externamente
-    //{
-    //    executandoMovimentoEspecial = false;
-
-    //    if(movimentoEspecialAtual == 1)
-    //    {
-    //        if(habilidade1 != null)
-    //        {
-    //            habilidade1.RemoverEfeito();
-    //        }
-    //    }
-
-    //    if (_personagemAlvo != null && _personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
-    //    {
-    //        VerificarComportamento("perseguir");
-    //    }
-    //    else
-    //    {
-    //        VerificarComportamento("selecionarAlvo");
-    //    }
-    //}
-
-    IEnumerator TempoMovimentoEspecial(int movimento) //função de movimento especial que utiliza tempo
+    private void MovimentoEspecial() //função do movimento especial do personagem
     {
-        if(movimento == 1)
+        //retorna caso já esteja executando o movimento especial
+        if (executandoMovimentoEspecial)
         {
-            for (int i = 0; i < 2; i++)
-            {
-                _hitAtaquePersonagem.gameObject.SetActive(true);
-                yield return new WaitForSeconds(0.5f);
-                _hitAtaquePersonagem.gameObject.SetActive(false);
-            }
+            return;
         }
+
+        executandoMovimentoEspecial = true;
+
+        if (_animator != null)
+        {
+            _animator.ResetTrigger("Perseguir");
+            _animator.ResetTrigger("Atacar");
+            _animator.SetTrigger("MovimentoEspecial");
+        }
+    }
+
+    public void FinalizarMovimentoEspecial() //função que finaliza o movimento especial externamente
+    {
+        executandoMovimentoEspecial = false;
 
         if (_personagemAlvo != null && _personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
         {

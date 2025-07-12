@@ -15,8 +15,8 @@ public class AtivarHitPersonagem : MonoBehaviour
         _personagem.AtivarHit(); //chama a função de ativar o hit do personagem
     }
 
-    //public void FinalizarMovimentoEspecial()
-    //{
-    //    _personagem.FinalizarMovimentoEspecial();
-    //}
+    public void FinalizarMovimentoEspecial()
+    {
+        _personagem.FinalizarMovimentoEspecial();
+    }
 }
