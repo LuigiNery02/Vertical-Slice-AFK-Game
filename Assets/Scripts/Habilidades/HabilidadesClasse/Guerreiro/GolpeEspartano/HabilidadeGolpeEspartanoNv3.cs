@@ -12,7 +12,7 @@ public class HabilidadeGolpeEspartanoNv3 : HabilidadeAtiva
     [SerializeField]
     private float raioDeDistanciaDoTaunt;
     [SerializeField]
-    private int tempoDeStun = 3;
+    private float tempoDeStun = 3;
     public GameObject vfx;
 
     public override void AtivarEfeito(IAPersonagemBase personagem)

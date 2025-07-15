@@ -68,13 +68,13 @@ public class PersonagemData
     public HabilidadeAtiva habilidadeAtivaArma; //habilidade ativa de arma do personagem
     public HabilidadePassiva habilidadePassivaClasse; //habilidade passiva de classe do personagem
     public HabilidadePassiva habilidadePassivaArma; //habilidade passiva de arma do personagem
-    [HideInInspector]
+    //[HideInInspector]
     public List<DadosHabilidade> habilidadesAtivasDeClasseSalvas = new List<DadosHabilidade>(); //dados das habilidades ativas de classe salvas
-    [HideInInspector]
+    //[HideInInspector]
     public List<DadosHabilidade> habilidadesAtivasDeArmaSalvas = new List<DadosHabilidade>(); //dados das habilidades ativas de arma salvas
-    [HideInInspector]
+    //[HideInInspector]
     public List<DadosHabilidade> habilidadesPassivasDeClasseSalvas = new List<DadosHabilidade>(); //dados das habilidades passivas de classe salvas
-    [HideInInspector]
+    //[HideInInspector]
     public List<DadosHabilidade> habilidadesPassivasDeArmaSalvas = new List<DadosHabilidade>(); //dados das habilidades passivas de arma salvas
     [HideInInspector]
     public string habilidadeAtivaClasseID; //id da habilidade ativa de classe equipada

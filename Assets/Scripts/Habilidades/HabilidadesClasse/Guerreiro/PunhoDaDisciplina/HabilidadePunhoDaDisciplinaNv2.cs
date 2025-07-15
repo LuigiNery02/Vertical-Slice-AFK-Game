@@ -27,7 +27,7 @@ public class HabilidadePunhoDaDisciplinaNv2 : HabilidadeAtiva
 
                 personagem.GastarSP(custoDeMana);
 
-                personagem.AtivarEfeitoPorAtaque("GolpeDeterminadoNv2", (bool acerto) =>
+                personagem.AtivarEfeitoPorAtaque("PunhoDaDisciplinaNv2", (bool acerto) =>
                 {
                     if (acerto)
                     {
@@ -69,7 +69,7 @@ public class HabilidadePunhoDaDisciplinaNv2 : HabilidadeAtiva
 
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
-        personagem.RemoverEfeitoPorAtaque("GolpeDeterminadoNv2");
+        personagem.RemoverEfeitoPorAtaque("PunhoDaDisciplinaNv2");
         personagem.efeitoPorAtaqueAtivado = false;
         personagem.GerenciarVFXHabilidade(1, false);
         base.RemoverEfeito(personagem);

@@ -6,8 +6,10 @@ public class GerenciadorDeUI : MonoBehaviour
 {
     public SistemaDeCriacaoDePersonagens sistemaDeCriacaoDePersonagens;
 
-    public GameObject painelHabilidades;
-    public List<SlotHabilidadeUI> slotsHabilidade;
+    public GameObject painelHabilidadesAtivas;
+    public GameObject painelHabilidadesPassivas;
+    public List<SlotHabilidadeUI> slotsHabilidadesAtivas;
+    public List<SlotHabilidadeUI> slotsHabilidadesPassivas;
 
     public GameObject painelEquipamentos;
     public List<SlotEquipamentoUI> slotsEquipamentos;
@@ -24,17 +26,19 @@ public class GerenciadorDeUI : MonoBehaviour
         {
             listaHabilidadesAtivas = sistemaDeCriacaoDePersonagens.personagemEmCriacao.listaDeHabilidadesAtivasDeArma; //recebe a lista de habilidades ativas de arma do personagem
         }
-        painelHabilidades.SetActive(true);
+        painelHabilidadesAtivas.SetActive(true);
 
-        foreach(var slot in slotsHabilidade)
+        foreach(var slot in slotsHabilidadesAtivas)
         {
             slot.gameObject.SetActive(false);
         }
 
-        for(int i = 0; i < listaHabilidadesAtivas.Count && i < slotsHabilidade.Count; i++)
+        for(int i = 0; i < listaHabilidadesAtivas.Count && i < slotsHabilidadesAtivas.Count; i++)
         {
-            slotsHabilidade[i].AtualizarSlotHabilidadeAtiva(listaHabilidadesAtivas[i]);
-            slotsHabilidade[i].gameObject.SetActive(true);
+            var hab = listaHabilidadesAtivas[i];
+
+            slotsHabilidadesAtivas[i].AtualizarSlotHabilidadeAtiva(listaHabilidadesAtivas[i]);
+            slotsHabilidadesAtivas[i].gameObject.SetActive(true);
         }
     }
 
@@ -50,17 +54,17 @@ public class GerenciadorDeUI : MonoBehaviour
         {
             listaHabilidadesPassivas = sistemaDeCriacaoDePersonagens.personagemEmCriacao.listaDeHabilidadesPassivasDeArma; //recebe a lista de habilidades passivas de arma do personagem
         }
-        painelHabilidades.SetActive(true);
+        painelHabilidadesPassivas.SetActive(true);
 
-        foreach (var slot in slotsHabilidade)
+        foreach (var slot in slotsHabilidadesPassivas)
         {
             slot.gameObject.SetActive(false);
         }
 
-        for (int i = 0; i < listaHabilidadesPassivas.Count && i < slotsHabilidade.Count; i++)
+        for (int i = 0; i < listaHabilidadesPassivas.Count && i < slotsHabilidadesPassivas.Count; i++)
         {
-            slotsHabilidade[i].AtualizarSlotHabilidadePassiva(listaHabilidadesPassivas[i]);
-            slotsHabilidade[i].gameObject.SetActive(true);
+            slotsHabilidadesPassivas[i].AtualizarSlotHabilidadePassiva(listaHabilidadesPassivas[i]);
+            slotsHabilidadesPassivas[i].gameObject.SetActive(true);
         }
     }
 
@@ -242,7 +246,7 @@ public class GerenciadorDeUI : MonoBehaviour
             slot.gameObject.SetActive(false);
         }
 
-        for (int i = 0; i < lista.Count && i < slotsHabilidade.Count; i++)
+        for (int i = 0; i < lista.Count && i < slotsEquipamentos.Count; i++)
         {
             slotsEquipamentos[i].AtualizarSlot(lista[i]);
             slotsEquipamentos[i].gameObject.SetActive(true);

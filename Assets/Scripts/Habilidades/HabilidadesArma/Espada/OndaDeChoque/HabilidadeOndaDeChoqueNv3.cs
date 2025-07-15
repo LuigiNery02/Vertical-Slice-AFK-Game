@@ -24,9 +24,12 @@ public class HabilidadeOndaDeChoqueNv3 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
+                personagem.GastarSP(custoDeMana);
+
                 float dano = personagem._dano * multiplicadorDeAtaque;
 
                 //movimento especial
+                personagem.movimentoEspecial = "OndaDeChoque";
                 personagem.VerificarComportamento("movimentoEspecial");
 
                 //instancia o hit 

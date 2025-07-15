@@ -36,6 +36,7 @@ Transform:
   - {fileID: 6914576531043300451}
   - {fileID: 3571206265162413357}
   - {fileID: 4565959684475835513}
+  - {fileID: 3263178246143675544}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1248351728983926194
@@ -88,17 +89,26 @@ MonoBehaviour:
     velocidadeDeMovimento: 0
     ranged: 0
     multiplicadorAtaque: 1
+    statusEspecial: 0
     runaNivel1: 0
     runaNivel2: 0
     runaNivel3: 0
-    listaDeHabilidadesDeClasse: []
-    listaDeHabilidadesDeArma: []
-    habilidadeClasse: {fileID: 0}
-    habilidadeArma: {fileID: 0}
-    habilidadesDeClasseSalvas: []
-    habilidadesDeArmaSalvas: []
-    habilidadeClasseID: 
-    habilidadeArmaID: 
+    listaDeHabilidadesAtivasDeClasse: []
+    listaDeHabilidadesAtivasDeArma: []
+    listaDeHabilidadesPassivasDeClasse: []
+    listaDeHabilidadesPassivasDeArma: []
+    habilidadeAtivaClasse: {fileID: 0}
+    habilidadeAtivaArma: {fileID: 0}
+    habilidadePassivaClasse: {fileID: 0}
+    habilidadePassivaArma: {fileID: 0}
+    habilidadesAtivasDeClasseSalvas: []
+    habilidadesAtivasDeArmaSalvas: []
+    habilidadesPassivasDeClasseSalvas: []
+    habilidadesPassivasDeArmaSalvas: []
+    habilidadeAtivaClasseID: 
+    habilidadeAtivaArmaID: 
+    habilidadePassivaClasseID: 
+    habilidadePassivaArmaID: 
     equipamentoCabecaAcessorio: {fileID: 0}
     equipamentoCabecaTopo: {fileID: 0}
     equipamentoCabecaMedio: {fileID: 0}
@@ -137,8 +147,23 @@ MonoBehaviour:
   _velocidade: 2
   defesa: 0
   defesaMagica: 0
-  habilidade1: {fileID: 0}
-  habilidade2: {fileID: 0}
+  escudoAtivado: 0
+  valorEscudo: 0
+  escudoVfx: {fileID: 0}
+  willPower: 0
+  habilidadeAtivaClasse: {fileID: 0}
+  habilidadeAtivaArma: {fileID: 0}
+  habilidadePassivaClasse: {fileID: 0}
+  habilidadePassivaArma: {fileID: 0}
+  podeAtivarEfeitoHabilidadeAtivaClasse: 1
+  podeAtivarEfeitoHabilidadeAtivaArma: 1
+  podeAtivarEfeitoHabilidadePassivaClasse: 1
+  podeAtivarEfeitoHabilidadePassivaArma: 1
+  vfxHabilidadeAtivaClasse: {fileID: 0}
+  vfxHabilidadeAtivaArma: {fileID: 0}
+  vfxHabilidadePassivaClasse: {fileID: 0}
+  vfxHabilidadePassivaArma: {fileID: 0}
+  executandoHabilidadeAtiva: 0
   controllerAnimatorArma:
   - {fileID: 9100000, guid: 528e9f2e1d308554ea6e2256042094b7, type: 2}
   - {fileID: 9100000, guid: 81ea5e2943b20714394ebbbf0780a47a, type: 2}
@@ -149,23 +174,28 @@ MonoBehaviour:
   _habilidadeSFX: {fileID: 8300000, guid: 7c3b1a7e61fa98943ac31ee211d65a95, type: 3}
   id: 0
   _personagemAlvo: {fileID: 0}
-  _hitAtaquePersonagem: {fileID: 0}
+  _alvoAtual: {fileID: 0}
   posicaoInicial: {x: 0, y: 0, z: 0}
   rotacaoInicial: {x: 0, y: 0, z: 0, w: 0}
-  movimentoEspecialAtual: 0
   executandoMovimentoEspecial: 0
-  imuneADanos: 0
+  movimentoEspecial: 
   efeitoPorAtaqueAtivado: 0
-  efeitoPorEsquivaAtivado: 0
-  efeitoPorDanoAtivado: 0
+  efeitoPorAtaqueRecebidoAtivado: 0
+  stunado: 0
+  tempoDeStun: 0
+  ataqueDiminuido: 0
+  imuneAMagias: 0
+  imuneAStun: 0
+  imuneAKnockback: 0
   sangramento: 0
-  danoSangramento: 0
-  queimadura: 0
-  danoQueimadura: 0
-  congelamento: 0
-  envenenamento: 0
-  pontosDeHabilidadeTexto: {fileID: 0}
+  _vfxSangramento: {fileID: 6785617059629475840}
+  recebeuDebuffPunhoDisciplina: 0
+  conjurandoHabilidade: 0
+  tempoDeCast: 0
+  habilidadeSendoConjurada: 0
   textoHP: {fileID: 8474319156127403456}
+  textoWillPower: {fileID: 0}
+  pontosDeHabilidadeTexto: {fileID: 0}
 --- !u!136 &3149517989521937223
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -829,7 +859,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _personagemPai: {fileID: 0}
-  _posicaoInicial: {x: 0, y: 0.853, z: 1.25}
+  poolKey: 
+  gerenciadorDePool: {fileID: 0}
   longaDistancia: 0
   usarSFX: 0
 --- !u!96 &1371070206938139858
@@ -1294,6 +1325,38 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &7596764864332171646
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3263178246143675544}
+  m_Layer: 0
+  m_Name: VFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3263178246143675544
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7596764864332171646}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5911747781971605461}
+  m_Father: {fileID: 7429699393859870427}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8256142946055923643
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,6 +1393,77 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &806088436654930423
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3263178246143675544}
+    m_Modifications:
+    - target: {fileID: 6126188424833946103, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+      propertyPath: m_Name
+      value: Debuff
+      objectReference: {fileID: 0}
+    - target: {fileID: 6126188424833946103, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423666203348373026, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423666203348373026, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423666203348373026, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423666203348373026, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423666203348373026, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423666203348373026, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423666203348373026, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423666203348373026, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423666203348373026, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423666203348373026, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+--- !u!4 &5911747781971605461 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6423666203348373026, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+  m_PrefabInstance: {fileID: 806088436654930423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6785617059629475840 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6126188424833946103, guid: a58aa9a78f2b45b45bb0f3e2e1e3ad3c, type: 3}
+  m_PrefabInstance: {fileID: 806088436654930423}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1093765753914273107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1537,6 +1671,7 @@ MonoBehaviour:
   - {fileID: 8486598543106401484}
   - {fileID: 5913898544612821566}
   - {fileID: 1201365081161670238}
+  armaAtual: 0
 --- !u!4 &7755738926702678845 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8645252082250325769, guid: ec738218c9d1bb347b1e8caf719b621d, type: 3}
@@ -1754,6 +1889,7 @@ MonoBehaviour:
   - {fileID: 8486598543106401484}
   - {fileID: 5913898544612821566}
   - {fileID: 1201365081161670238}
+  armaAtual: 0
 --- !u!1001 &5472275621262033191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1890,6 +2026,7 @@ MonoBehaviour:
   - {fileID: 8486598543106401484}
   - {fileID: 5913898544612821566}
   - {fileID: 1201365081161670238}
+  armaAtual: 0
 --- !u!4 &8775162438778622262 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3618305927068422161, guid: d6e8554238b6a81408b979fb8f5ca52f, type: 3}
@@ -2031,6 +2168,7 @@ MonoBehaviour:
   - {fileID: 8486598543106401484}
   - {fileID: 5913898544612821566}
   - {fileID: 1201365081161670238}
+  armaAtual: 0
 --- !u!4 &7435991500773066388 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 215980651501211880, guid: c15dce4d119bf994cb125bc39eac940d, type: 3}

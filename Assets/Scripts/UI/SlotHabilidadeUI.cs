@@ -14,37 +14,40 @@ public class SlotHabilidadeUI : MonoBehaviour
     private HabilidadeAtiva _habilidadeAtiva;
     private HabilidadePassiva _habilidadePassiva;
 
-    public void AtualizarSlotHabilidadeAtiva(HabilidadeAtiva habilidade) //função que atualiza o slot de habilidades ativas
+    public void AtualizarSlotHabilidadeAtiva(HabilidadeAtiva habilidade)
     {
         _habilidadeAtiva = habilidade;
-
-        nomeTexto.text = "";
-        nivelTexto.text = "";
-
         nomeTexto.text = habilidade.nome;
-        nivelTexto.text += ("Nv: " + habilidade.nivel);
+        nivelTexto.text = ("Nv: " + habilidade.nivel);
         imagem.sprite = habilidade.spriteHabilidade;
+
+        Button botaoDefinir = GetComponent<Button>();
+        botaoDefinir.onClick.RemoveAllListeners();
+
+        HabilidadeAtiva habilidadeCapturada = _habilidadeAtiva;
+
+        botaoDefinir.onClick.AddListener(() =>
+        {
+            sistemaDeCriacaoDePersonagens.DefinirHabilidadeAtiva(habilidadeCapturada);
+        });
     }
+
 
     public void AtualizarSlotHabilidadePassiva(HabilidadePassiva habilidade) //função que atualiza o slot de habilidades passivas
     {
         _habilidadePassiva = habilidade;
-
-        nomeTexto.text = "";
-        nivelTexto.text = "";
-
         nomeTexto.text = habilidade.nome;
         nivelTexto.text += ("Nv: " + habilidade.nivel);
         imagem.sprite = habilidade.spriteHabilidade;
-    }
 
-    public void DefinirHabilidadeAtivaSistemaDeCriacao()
-    {
-        sistemaDeCriacaoDePersonagens.DefinirHabilidadeAtiva(_habilidadeAtiva);
-    }
+        Button botaoDefinir = GetComponent<Button>();
+        botaoDefinir.onClick.RemoveAllListeners();
 
-    public void DefinirHabilidadePassivaSistemaDeCriacao()
-    {
-        sistemaDeCriacaoDePersonagens.DefinirHabilidadePassiva(_habilidadePassiva);
+        HabilidadePassiva habilidadeCapturada = _habilidadePassiva;
+
+        botaoDefinir.onClick.AddListener(() =>
+        {
+            sistemaDeCriacaoDePersonagens.DefinirHabilidadePassiva(habilidadeCapturada);
+        });
     }
 }

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 663705098b40fa64396ead866f2dfca6, type: 3}
+  m_Name: CorteRapidoNv3
+  m_EditorClassIdentifier: 
+  nome: "Corte R\xE1pido"
+  descricao: "Causa 02 ataques de 250% de ATQ f\xEDsico em sequ\xEAncia no oponente
+    e aplica Sangramento, causando 1% de dano por segundo por 5 segundos.\nElemento:
+    Neutro\nCast Fixo: Instant\xE2neo\nCast Vari\xE1vel: Instant\xE2neo\nCusto de
+    Mana: 90\nCooldown: 6 segundos\r\n"
+  tipoDeHabilidade: 1
+  modoDeAtivacao: 0
+  nivel: 3
+  spriteHabilidade: {fileID: 21300000, guid: 3925691c2a021aa429c1dc89712a1253, type: 3}
+  idHabilidade: HabilidadeCorteRapido
+  habilidadeProximoNivel: {fileID: 0}
+  elemento: 0
+  custoDeMana: 90
+  castFixo: 0
+  castVariavel: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 6
+  multiplicadorDeDano: 2.5
+  porcentagemDanoSangramento: 0.01
+  tempoDeSangramento: 5
+  vfx: {fileID: 1758473627833946668, guid: 9b21333b068a5084ba09535839bee3c8, type: 3}

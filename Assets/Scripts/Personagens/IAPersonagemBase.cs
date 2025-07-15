@@ -98,6 +98,8 @@ public class IAPersonagemBase : MonoBehaviour
     public GameObject vfxHabilidadeAtivaArma;
     public GameObject vfxHabilidadePassivaClasse;
     public GameObject vfxHabilidadePassivaArma;
+    [HideInInspector]
+    public bool executandoHabilidadeAtiva;
 
     //Área referente às animações
     [Header("Animação")]
@@ -128,8 +130,8 @@ public class IAPersonagemBase : MonoBehaviour
     public Quaternion rotacaoInicial; //rotação inicial do personagem
     [HideInInspector]
     public bool executandoMovimentoEspecial; //variável para verificar se o personagem está executando o movimento especial
-    //[HideInInspector]
-    //public bool imuneADanos; //variável que verifica se o personagem é imune a danos
+    [HideInInspector]
+    public string movimentoEspecial;
 
     //função que é ativada quando há um efeito por ataque
     public delegate void EfeitoPorAtaque(bool acerto);
@@ -165,6 +167,10 @@ public class IAPersonagemBase : MonoBehaviour
     public bool imuneAStun;
     [HideInInspector]
     public bool imuneAKnockback;
+    [HideInInspector]
+    public bool sangramento;
+    [SerializeField]
+    private GameObject _vfxSangramento;
 
     [HideInInspector]
     public bool recebeuDebuffPunhoDisciplina;
@@ -188,8 +194,7 @@ public class IAPersonagemBase : MonoBehaviour
     //public EfeitoPorDano efeitoPorDano;
     //[HideInInspector]
     //public bool efeitoPorDanoAtivado; //verifica se efeitos por dano de habilidades estão ativados
-    //[HideInInspector]
-    //public bool sangramento; //efeito de sangramento
+    
     //[HideInInspector]
     //public float danoSangramento; //dano do efeito de sangramento
     //[HideInInspector]
@@ -817,7 +822,7 @@ public class IAPersonagemBase : MonoBehaviour
         {
             _animator.ResetTrigger("Perseguir");
             _animator.ResetTrigger("Atacar");
-            _animator.SetTrigger("MovimentoEspecial");
+            _animator.SetTrigger(movimentoEspecial);
         }
     }
 
@@ -825,6 +830,11 @@ public class IAPersonagemBase : MonoBehaviour
     {
         executandoMovimentoEspecial = false;
 
+        if (_animator != null && _usarAnimações)
+        {
+            _animator.SetTrigger("Idle");
+        }
+        
         if (_personagemAlvo != null && _personagemAlvo._comportamento != EstadoDoPersonagem.MORTO)
         {
             VerificarComportamento("perseguir");
@@ -1294,9 +1304,38 @@ public class IAPersonagemBase : MonoBehaviour
         }
     }
 
+    public void Sangramento(float dano, float intervalo, float duracao)
+    {
+        sangramento = true;
+        _vfxSangramento.SetActive(true);
+        StartCoroutine(EsperarTempoSangramento(dano, intervalo, duracao));
+    }
+
+    public IEnumerator EsperarTempoSangramento(float danoPorTick, float intervalo, float duracaoTotal)
+    {
+        float tempoDecorrido = 0f;
+
+        while (tempoDecorrido < duracaoTotal)
+        {
+            if (_comportamento == EstadoDoPersonagem.MORTO)
+            {
+                _vfxSangramento.SetActive(false);
+                yield break;
+            }
+
+            SofrerDano(danoPorTick, false);
+
+            yield return new WaitForSeconds(intervalo);
+            tempoDecorrido += intervalo;
+        }
+
+        sangramento = false;
+        _vfxSangramento.SetActive(false);
+    }
+
     public bool VerificarEfeitoNegativo()
     {
-        if (ataqueDiminuido)
+        if (ataqueDiminuido || sangramento)
         {
             return true;
         }
@@ -1313,27 +1352,6 @@ public class IAPersonagemBase : MonoBehaviour
     //    if (_usarAnimações)
     //    {
     //        _animator.Rebind();
-    //    }
-    //}
-
-    //public void Sangramento() //função de sangramento do personagem
-    //{
-    //    if (sangramento)
-    //    {
-    //        StartCoroutine(DanoSangramento());
-    //    }
-    //}
-
-    //IEnumerator DanoSangramento()
-    //{
-    //    if(_comportamento != EstadoDoPersonagem.MORTO)
-    //    {
-    //        SofrerDano(danoSangramento);
-    //    }
-    //    yield return new WaitForSeconds(1);
-    //    if (sangramento)
-    //    {
-    //        Sangramento();
     //    }
     //}
 
@@ -1416,6 +1434,14 @@ public class IAPersonagemBase : MonoBehaviour
             {
                 _hitAtaquePersonagem.usarSFX = _usarSFX;
             }
+        } 
+    }
+
+    public void DefinirAnimacao(string animacao)
+    {
+        if(_animator != null && _usarAnimações)
+        {
+            _animator.SetTrigger(animacao);
         }
     }
     #endregion
