@@ -1,6 +1,15 @@
 using UnityEngine;
 
-public class HabilidadeLancaDeGeloNv1 : MonoBehaviour
+[CreateAssetMenu(menuName = "Habilidades/Ativa/Classe/Elementalista/Lança de Gelo/Nv1")]
+public class HabilidadeLancaDeGeloNv1 : HabilidadeAtiva
 {
+    public override void AtivarEfeito(IAPersonagemBase personagem)
+    {
 
+    }
+
+    public override void RemoverEfeito(IAPersonagemBase personagem)
+    {
+
+    }
 }

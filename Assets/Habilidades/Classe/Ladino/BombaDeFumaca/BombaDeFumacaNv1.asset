@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4106d98277a578d498089e52c1ac2a39, type: 3}
+  m_Name: BombaDeFumacaNv1
+  m_EditorClassIdentifier: 
+  nome: "Bomba de Fuma\xE7a"
+  descricao: "Some e reaparece em outro lugar. Inimigos deixam de focar o ladino
+    quando a habilidade \xE9 ativada. No Nivel 1, local \xE9 aleat\xF3rio.\nElemento:
+    Neutro\nCast Fixo: Instant\xE2neo\nCast Vari\xE1vel: Instant\xE2neo\nCusto de
+    Mana: 35\nCooldown: 15 segundos"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 0
+  nivel: 1
+  spriteHabilidade: {fileID: 21300000, guid: 0e7966e8857d9da42bd7ac9668f85ce2, type: 3}
+  idHabilidade: HabilidadeBombaDeFumaca
+  habilidadeProximoNivel: {fileID: 11400000, guid: 309ba479ea60d6749a3c3148648b2cbf, type: 2}
+  elemento: 0
+  custoDeMana: 35
+  castFixo: 0
+  castVariavel: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 15

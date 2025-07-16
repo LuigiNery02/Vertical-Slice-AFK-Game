@@ -366,7 +366,7 @@ MonoBehaviour:
     hp: 400
     hpRegeneracao: 0.5
     spBase: 0
-    sp: 0
+    sp: 300
     spRegeneracao: 0
     fatorClasse: 1
     danoBase: 0
@@ -384,9 +384,9 @@ MonoBehaviour:
     ranged: 7
     multiplicadorAtaque: 1
     statusEspecial: 0
-    runaNivel1: 0
-    runaNivel2: 0
-    runaNivel3: 0
+    runaNivel1: 1
+    runaNivel2: 1
+    runaNivel3: 1
     listaDeHabilidadesAtivasDeClasse: []
     listaDeHabilidadesAtivasDeArma: []
     listaDeHabilidadesPassivasDeClasse: []
@@ -441,10 +441,10 @@ MonoBehaviour:
   valorEscudo: 0
   escudoVfx: {fileID: 0}
   willPower: 0
-  habilidadeAtivaClasse: {fileID: 0}
-  habilidadeAtivaArma: {fileID: 0}
-  habilidadePassivaClasse: {fileID: 0}
-  habilidadePassivaArma: {fileID: 0}
+  habilidadeAtivaClasse: {fileID: 11400000, guid: 37228b9b17e32af448afa0481e38fff6, type: 2}
+  habilidadeAtivaArma: {fileID: 11400000, guid: 94e1d9427a4099145a509138e9786193, type: 2}
+  habilidadePassivaClasse: {fileID: 11400000, guid: 19b9ea125a831f549b69635c1c9ae941, type: 2}
+  habilidadePassivaArma: {fileID: 11400000, guid: 2c28ef7c1dbe1bc48847b108662e7369, type: 2}
   podeAtivarEfeitoHabilidadeAtivaClasse: 1
   podeAtivarEfeitoHabilidadeAtivaArma: 1
   podeAtivarEfeitoHabilidadePassivaClasse: 1
@@ -468,6 +468,7 @@ MonoBehaviour:
   movimentoEspecial: 
   efeitoPorAtaqueAtivado: 0
   efeitoPorAtaqueRecebidoAtivado: 0
+  efeitoPorDanoCausadoAtivado: 0
   stunado: 0
   tempoDeStun: 0
   ataqueDiminuido: 0
@@ -476,6 +477,8 @@ MonoBehaviour:
   imuneAKnockback: 0
   sangramento: 0
   _vfxSangramento: {fileID: 6949711892921132531}
+  medo: 0
+  reducaoDanoMedo: 0
   recebeuDebuffPunhoDisciplina: 0
   conjurandoHabilidade: 0
   tempoDeCast: 0

@@ -56,6 +56,7 @@ public class HabilidadeCorteRapidoNv3 : HabilidadeAtiva
                         golpes++;
                         if (golpes > 1)
                         {
+                            personagem._dano = danoOriginal;
                             RemoverEfeito(personagem);
                         }
                     }

@@ -14,7 +14,7 @@ public class HabilidadeGolpeDeterminadoNv3 : HabilidadeAtiva
     [SerializeField]
     private float probabilidadeDeStun = 25;
     [SerializeField]
-    private int tempoDeStun = 2;
+    private float tempoDeStun = 2;
     public GameObject vfx;
 
     public override void AtivarEfeito(IAPersonagemBase personagem)
@@ -47,7 +47,7 @@ public class HabilidadeGolpeDeterminadoNv3 : HabilidadeAtiva
                         {
                             inimigo.defesa = 0;
                         }
-                        if (CalcularProbabiilidadeDeStun() && !inimigo.stunado)
+                        if (CalcularProbabilidadeDeStun() && !inimigo.stunado)
                         {
                             inimigo.tempoDeStun = tempoDeStun;
                             inimigo.VerificarComportamento("stun");
@@ -93,7 +93,7 @@ public class HabilidadeGolpeDeterminadoNv3 : HabilidadeAtiva
         RemoverEfeito(personagem);
     }
 
-    private bool CalcularProbabiilidadeDeStun()
+    private bool CalcularProbabilidadeDeStun()
     {
         int rng = Random.Range(0, 100);
 

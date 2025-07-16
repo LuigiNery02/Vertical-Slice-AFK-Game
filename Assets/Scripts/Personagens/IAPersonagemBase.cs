@@ -26,9 +26,9 @@ public class IAPersonagemBase : MonoBehaviour
 
     //área referente ao hp (vida) do personagem
     [Header("HP")]
-    //[HideInInspector]
+    [HideInInspector]
     public float _hpMaximoEInicial; //valor inicial que o hp atual do player terá ao iniciar a batalha, e valor máximo que ele pode ter
-    //[HideInInspector]
+    [HideInInspector]
     public float hpAtual; //valor atual do hp (vida) do personagem
     [HideInInspector]
     public float hpRegeneracao; //valor por segundo que o personagem recuperará de hp
@@ -48,9 +48,9 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("Ataque")]
     [HideInInspector]
     public float precisao; //precisão do personagem
-    //[HideInInspector]
+    [HideInInspector]
     public float _dano; //valor do dano do ataque do personagem
-    //[HideInInspector]
+    [HideInInspector]
     public float _velocidadeDeAtaque; //valor da velocidade de ataque do personagem
     private float _cooldownAtual = 0f; //tempo atual para o personagem poder atacar novamente
     [HideInInspector]
@@ -89,10 +89,10 @@ public class IAPersonagemBase : MonoBehaviour
     public HabilidadePassiva habilidadePassivaClasse; //habilidade passiva de classe do personagem
     //[HideInInspector]
     public HabilidadePassiva habilidadePassivaArma; //habilidade passiva de arma do personagem
-    public bool podeAtivarEfeitoHabilidadeAtivaClasse = true; //variável que determina se pode ativar ou não o efeito da habilidade ativa de classe
-    public bool podeAtivarEfeitoHabilidadeAtivaArma = true; //variável que determina se pode ativar ou não o efeito da habilidade ativa de arma
-    public bool podeAtivarEfeitoHabilidadePassivaClasse = true; //variável que determina se pode ativar ou não o efeito da habilidade passiva de classe
-    public bool podeAtivarEfeitoHabilidadePassivaArma = true; //variável que determina se pode ativar ou não o efeito da habilidade passiva de arma
+    public bool podeAtivarEfeitoHabilidadeAtivaClasse = false; //variável que determina se pode ativar ou não o efeito da habilidade ativa de classe
+    public bool podeAtivarEfeitoHabilidadeAtivaArma = false; //variável que determina se pode ativar ou não o efeito da habilidade ativa de arma
+    public bool podeAtivarEfeitoHabilidadePassivaClasse = false; //variável que determina se pode ativar ou não o efeito da habilidade passiva de classe
+    public bool podeAtivarEfeitoHabilidadePassivaArma = false; //variável que determina se pode ativar ou não o efeito da habilidade passiva de arma
     public Dictionary<HabilidadePassiva, DadosHabilidadePassiva> dadosDasHabilidadesPassivas = new();
     public GameObject vfxHabilidadeAtivaClasse;
     public GameObject vfxHabilidadeAtivaArma;
@@ -144,13 +144,22 @@ public class IAPersonagemBase : MonoBehaviour
     public event EfeitoPorAtaque OnAtaqueComEfeito;
 
     public delegate void EfeitoPorAtaqueRecebido(bool acerto);
-    public EfeitoPorAtaque efeitoPorAtaqueRecebido;
+    public EfeitoPorAtaqueRecebido efeitoPorAtaqueRecebido;
     [HideInInspector]
     public bool efeitoPorAtaqueRecebidoAtivado; //verifica se efeitos por ataque recebidos de habilidades estão ativados
     [HideInInspector]
     public Dictionary<string, EfeitoPorAtaqueRecebido> efeitosPorAtaqueRecebidos = new();
     [HideInInspector]
     public event EfeitoPorAtaqueRecebido OnAtaqueRecebidoComEfeito;
+
+    public delegate void EfeitoPorDanoCausado();
+    public EfeitoPorDanoCausado efeitoPorDanoCausado;
+    [HideInInspector]
+    public bool efeitoPorDanoCausadoAtivado; //verifica se efeitos por danos causados de habilidades estão ativados
+    [HideInInspector]
+    public Dictionary<string, EfeitoPorDanoCausado> efeitosPorDanosCausados = new();
+    [HideInInspector]
+    public event EfeitoPorDanoCausado OnDanoCausadoComEfeito;
 
     public event Action<int> aoGastarWillPower;
     public event Action<int> aoReceberWillPower;
@@ -171,6 +180,10 @@ public class IAPersonagemBase : MonoBehaviour
     public bool sangramento;
     [SerializeField]
     private GameObject _vfxSangramento;
+    [HideInInspector]
+    public bool medo;
+    [HideInInspector]
+    public float reducaoDanoMedo;
 
     [HideInInspector]
     public bool recebeuDebuffPunhoDisciplina;
@@ -181,30 +194,6 @@ public class IAPersonagemBase : MonoBehaviour
     public float tempoDeCast;
     [HideInInspector]
     public int habilidadeSendoConjurada;
-
-
-
-    ////função que é ativada quando há um efeito por esquiva
-    //public delegate void EfeitoPorEsquiva();
-    //public EfeitoPorAtaque efeitoPorEsquiva;
-    //[HideInInspector]
-    //public bool efeitoPorEsquivaAtivado; //verifica se efeitos por esquiva de habilidades estão ativados
-    ////função que é ativada quando há um efeito por dano
-    //public delegate void EfeitoPorDano();
-    //public EfeitoPorDano efeitoPorDano;
-    //[HideInInspector]
-    //public bool efeitoPorDanoAtivado; //verifica se efeitos por dano de habilidades estão ativados
-    
-    //[HideInInspector]
-    //public float danoSangramento; //dano do efeito de sangramento
-    //[HideInInspector]
-    //public bool queimadura; //efeito de queimadura
-    //[HideInInspector]
-    //public float danoQueimadura; //dano do efeito de sangramento
-    //[HideInInspector]
-    //public bool congelamento; //efeito de congelamento
-    //[HideInInspector]
-    //public bool envenenamento; //efeito de envenenamento
 
     private bool atualizandoDados = false;
 
@@ -396,6 +385,14 @@ public class IAPersonagemBase : MonoBehaviour
             habilidadePassivaArma.AtivarEfeito(this);
         }
 
+        if(controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
+        {
+            if(habilidadeAtivaClasse != null || habilidadeAtivaArma!= null)
+            {
+                StartCoroutine(EsperarAtivacaoHabilidadesInimigo());
+            }
+        }
+
         //encontra o hit dentro de si caso esteja com uma arma melee equipada e à ativa
         if (personagem.arma.armaDano == TipoDeDano.DANO_MELEE)
         {
@@ -476,11 +473,6 @@ public class IAPersonagemBase : MonoBehaviour
             habilidadeSendoConjurada = 2;
             ConjurarHabilidade();
         }
-        //else if(comportamento == "paralisia")
-        //{
-        //    _comportamento = EstadoDoPersonagem.IDLE;
-        //    Paralisia();
-        //}
     }
 
     public void ResetarEstado() //funções para resetar os estados do personagem
@@ -506,6 +498,8 @@ public class IAPersonagemBase : MonoBehaviour
         imuneAStun = false;
         imuneAKnockback = false;
         recebeuDebuffPunhoDisciplina = false;
+        sangramento = false;
+        medo = false;
     }
 
     private void Update()
@@ -734,7 +728,7 @@ public class IAPersonagemBase : MonoBehaviour
         }
     }
 
-    private void Ataque() //função do ataque em si
+    public void Ataque() //função do ataque em si
     {
         _cooldownAtual = _velocidadeDeAtaque; //reinicia o cooldown
 
@@ -871,6 +865,11 @@ public class IAPersonagemBase : MonoBehaviour
                 break;
         }
 
+        if (medo)
+        {
+            dano -= (dano * reducaoDanoMedo);
+        }
+
         dano = Mathf.Max(0, dano); //garante que o dano nunca seja negativo
 
         if (critico) //se as chances deram verdadeiras para um dano crítico
@@ -883,7 +882,12 @@ public class IAPersonagemBase : MonoBehaviour
         {
             personagem.SofrerDano(dano, critico);
 
-            if(controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
+            if (efeitoPorDanoCausadoAtivado)
+            {
+                ExecutarEfeitosDeDanoCausado();
+            }
+
+            if (controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
             {
                 this.personagem.GanharEXP(dano); //caso seja personagem do jogador ganha pontos de exp igual ao dano causado do inimigo
             }
@@ -955,16 +959,9 @@ public class IAPersonagemBase : MonoBehaviour
         if (hpAtual <= 0)
         {
             hpAtual = 0;
+            medo = false;
             VerificarComportamento("morrer");
         }
-
-        //if (efeitoPorDanoAtivado)
-        //{
-        //    efeitoPorDano();
-        //}
-
-
-        // }
     }
 
     public void ReceberHP(float cura) //função para receber hp
@@ -1157,7 +1154,6 @@ public class IAPersonagemBase : MonoBehaviour
         {
             podeAtivarEfeitoHabilidadeAtivaArma = true;
         }
-        Debug.Log("Pode Ativar Efeito");
     }
 
     public void GerenciarVFXHabilidade(int habilidade, bool ativar)
@@ -1227,6 +1223,39 @@ public class IAPersonagemBase : MonoBehaviour
         }
     }
 
+    private void AtivacaoHabildiadesInimigo()
+    {
+        int habilidade = UnityEngine.Random.Range(0, 2);
+
+        if(habilidade == 0 && habilidadeAtivaClasse != null && podeAtivarEfeitoHabilidadeAtivaClasse && _comportamento != EstadoDoPersonagem.MORTO)
+        {
+            habilidadeAtivaClasse.AtivarEfeito(this);
+            StartCoroutine(EsperarAtivacaoHabilidadesInimigo());
+        }
+        else if (habilidade == 1 && habilidadeAtivaArma != null && podeAtivarEfeitoHabilidadeAtivaClasse && _comportamento != EstadoDoPersonagem.MORTO)
+        {
+            habilidadeAtivaArma.AtivarEfeito(this);
+            StartCoroutine(EsperarAtivacaoHabilidadesInimigo());
+        }
+        else
+        {
+            if(_comportamento != EstadoDoPersonagem.MORTO)
+            {
+                StartCoroutine(EsperarAtivacaoHabilidadesInimigo());
+            }
+        }
+    }
+
+    IEnumerator EsperarAtivacaoHabilidadesInimigo()
+    {
+        int tempo = UnityEngine.Random.Range(5, 16);
+        yield return new WaitForSeconds(tempo);
+        if(_comportamento != EstadoDoPersonagem.MORTO)
+        {
+            AtivacaoHabildiadesInimigo();
+        }
+    }
+
     #endregion
 
     #region Efeitos
@@ -1279,6 +1308,31 @@ public class IAPersonagemBase : MonoBehaviour
     public void ExecutarEfeitosDeAtaqueRecebidos(bool acerto)
     {
         OnAtaqueRecebidoComEfeito?.Invoke(acerto);
+    }
+
+    public void AtivarEfeitoPorDanoCausado(string chave, EfeitoPorDanoCausado efeito)
+    {
+        if (efeitosPorDanosCausados.ContainsKey(chave))
+        {
+            OnDanoCausadoComEfeito -= efeitosPorDanosCausados[chave];
+        }
+
+        efeitosPorDanosCausados[chave] = efeito;
+        OnDanoCausadoComEfeito += efeito;
+    }
+
+    public void RemoverEfeitoPorDanoCausado(string chave)
+    {
+        if (efeitosPorDanosCausados.TryGetValue(chave, out var efeito))
+        {
+            OnDanoCausadoComEfeito -= efeito;
+            efeitosPorDanosCausados.Remove(chave);
+        }
+    }
+
+    public void ExecutarEfeitosDeDanoCausado()
+    {
+        OnDanoCausadoComEfeito?.Invoke();
     }
 
     public void Stun()
@@ -1335,7 +1389,7 @@ public class IAPersonagemBase : MonoBehaviour
 
     public bool VerificarEfeitoNegativo()
     {
-        if (ataqueDiminuido || sangramento)
+        if (ataqueDiminuido || sangramento || medo)
         {
             return true;
         }
@@ -1344,37 +1398,6 @@ public class IAPersonagemBase : MonoBehaviour
             return false;
         }
     }
-
-    //public void Paralisia() //função de paralisia do personagem
-    //{
-    //    _alvoAtual = null;
-    //    _personagemAlvo = null;
-    //    if (_usarAnimações)
-    //    {
-    //        _animator.Rebind();
-    //    }
-    //}
-
-    //public void Queimadura() //função de queimadura do personagem
-    //{
-    //    if (queimadura)
-    //    {
-    //        StartCoroutine(DanoQueimadura());
-    //    }
-    //}
-
-    //IEnumerator DanoQueimadura()
-    //{
-    //    if (_comportamento != EstadoDoPersonagem.MORTO)
-    //    {
-    //        SofrerDano(danoQueimadura);
-    //    }
-    //    yield return new WaitForSeconds(1);
-    //    if (queimadura)
-    //    {
-    //        Queimadura();
-    //    }
-    //}
     #endregion
 
     #region Feedbacks Visuais

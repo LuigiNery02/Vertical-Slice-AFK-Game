@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d42964d1ce559884fa03443449914d79, type: 3}
+  m_Name: LancaDeGeloNv2
+  m_EditorClassIdentifier: 
+  nome: "Lan\xE7a de Gelo"
+  descricao: "Conjura duas lan\xE7as de gelo num alvo \xFAnico, causando 300% de
+    ATQM\nElemento: \xC1gua\nCast Fixo: 1 segundo\nCast Vari\xE1vel: 1,5 segundo\nCusto
+    de Mana: 56\nCooldown: 1 segundo\r\n\r\n"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 0
+  nivel: 2
+  spriteHabilidade: {fileID: 21300000, guid: 4029a9cfeb86f134c9c5af05993eaac8, type: 3}
+  idHabilidade: HabilidadeLancaDeGelo
+  habilidadeProximoNivel: {fileID: 11400000, guid: 7607ea8115716bc49b4754a5b575bc8c, type: 2}
+  elemento: 1
+  custoDeMana: 56
+  castFixo: 1
+  castVariavel: 1.5
+  tempoDeEfeito: 0
+  tempoDeRecarga: 1

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f30cb21df231e054c82726265d127b01, type: 3}
+  m_Name: LaminaExtraNv1
+  m_EditorClassIdentifier: 
+  nome: "L\xE2mina Extra"
+  descricao: "Aumenta seu ATQ em 5% por 5 segundos\nElemento: Neutro\nCast Fixo:
+    Instant\xE2neo\nCast Vari\xE1vel: Instant\xE2neo\nCusto de Mana: 32\nCooldown:
+    16  segundos\r\n\r\n"
+  tipoDeHabilidade: 1
+  modoDeAtivacao: 0
+  nivel: 1
+  spriteHabilidade: {fileID: 21300000, guid: 4d7635c366a76274c85747592d98d2f5, type: 3}
+  idHabilidade: HabilidadeLaminaExtra
+  habilidadeProximoNivel: {fileID: 11400000, guid: 0bfb363cd7f9ba64bb4e113de04d85df, type: 2}
+  elemento: 0
+  custoDeMana: 32
+  castFixo: 0
+  castVariavel: 0
+  tempoDeEfeito: 5
+  tempoDeRecarga: 16
+  multiplicadorDeDano: 0.05
+  vfx: {fileID: 7155335147208632822, guid: 97c43495f80a3244fad1301dfafbe252, type: 3}

@@ -302,7 +302,7 @@ MonoBehaviour:
     hp: 400
     hpRegeneracao: 0.5
     spBase: 0
-    sp: 0
+    sp: 300
     spRegeneracao: 0
     fatorClasse: 1
     danoBase: 0
@@ -320,9 +320,9 @@ MonoBehaviour:
     ranged: 7
     multiplicadorAtaque: 1
     statusEspecial: 0
-    runaNivel1: 0
-    runaNivel2: 0
-    runaNivel3: 0
+    runaNivel1: 1
+    runaNivel2: 1
+    runaNivel3: 1
     listaDeHabilidadesAtivasDeClasse: []
     listaDeHabilidadesAtivasDeArma: []
     listaDeHabilidadesPassivasDeClasse: []
@@ -404,6 +404,7 @@ MonoBehaviour:
   movimentoEspecial: 
   efeitoPorAtaqueAtivado: 0
   efeitoPorAtaqueRecebidoAtivado: 0
+  efeitoPorDanoCausadoAtivado: 0
   stunado: 0
   tempoDeStun: 0
   ataqueDiminuido: 0
@@ -412,6 +413,8 @@ MonoBehaviour:
   imuneAKnockback: 0
   sangramento: 0
   _vfxSangramento: {fileID: 7292517800199948038}
+  medo: 0
+  reducaoDanoMedo: 0
   recebeuDebuffPunhoDisciplina: 0
   conjurandoHabilidade: 0
   tempoDeCast: 0

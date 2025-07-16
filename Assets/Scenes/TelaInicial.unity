@@ -15294,26 +15294,42 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6507feb8f553e57499d189113951e0b0, type: 2}
   - {fileID: 11400000, guid: cc19a537c0ef39e458337e0e17a763f5, type: 2}
   - {fileID: 11400000, guid: a34ed5f9d689ced449f3a32a7a6b35ec, type: 2}
-  habilidadesAtivasClasseLadino: []
-  habilidadesAtivasClasseElementalista: []
-  habilidadesAtivasClasseSacerdote: []
+  habilidadesAtivasClasseLadino:
+  - {fileID: 11400000, guid: ddd6a40d16e19134e92231f908d40081, type: 2}
+  habilidadesAtivasClasseElementalista:
+  - {fileID: 11400000, guid: d2c2f61535b69b64c91d3e8e8cb8a59f, type: 2}
+  habilidadesAtivasClasseSacerdote:
+  - {fileID: 11400000, guid: 45160bec2cfb6144292dd7642acbaeab, type: 2}
   habilidadesAtivasEspada:
   - {fileID: 11400000, guid: 00ed042d54728d14d96bdc07ae13e4f7, type: 2}
   - {fileID: 11400000, guid: abd1d24847f8ce540a0d53d4026a3d74, type: 2}
   - {fileID: 11400000, guid: b213b282526bf844faa06b07d465f345, type: 2}
-  habilidadesAtivasArco: []
-  habilidadesAtivasLivro: []
+  - {fileID: 11400000, guid: 94e1d9427a4099145a509138e9786193, type: 2}
+  - {fileID: 11400000, guid: a7b047406e2ae07499fb015f02cd3b67, type: 2}
+  habilidadesAtivasArco:
+  - {fileID: 11400000, guid: 7972503614d1fed499cbfa6b5137e8d1, type: 2}
+  habilidadesAtivasLivro:
+  - {fileID: 11400000, guid: 09a4ad5d39ec9d1478105c5e64746742, type: 2}
   habilidadesPassivasClasseGuerreiro:
   - {fileID: 11400000, guid: 19b9ea125a831f549b69635c1c9ae941, type: 2}
   - {fileID: 11400000, guid: db1508d6c46b6344283efba7d9c638e9, type: 2}
   - {fileID: 11400000, guid: 9d10ec4297430c94da38fa8167a17c44, type: 2}
   - {fileID: 11400000, guid: a5808ee3145836041b0df255ed87d8f9, type: 2}
-  habilidadesPassivasClasseLadino: []
-  habilidadesPassivasClasseElementalista: []
-  habilidadesPassivasClasseSacerdote: []
-  habilidadesPassivasEspada: []
-  habilidadesPassivasArco: []
-  habilidadesPassivasLivro: []
+  habilidadesPassivasClasseLadino:
+  - {fileID: 11400000, guid: 5011450fec9dba843bc219da8f21bbd7, type: 2}
+  habilidadesPassivasClasseElementalista:
+  - {fileID: 11400000, guid: 12a56fbe3f64673498a88e93af57ca4c, type: 2}
+  habilidadesPassivasClasseSacerdote:
+  - {fileID: 11400000, guid: 54c75953c12686645a5dcaff6f085d21, type: 2}
+  habilidadesPassivasEspada:
+  - {fileID: 11400000, guid: 2c28ef7c1dbe1bc48847b108662e7369, type: 2}
+  - {fileID: 11400000, guid: db631b1883a25454bbb7277220e2dd50, type: 2}
+  - {fileID: 11400000, guid: 7a7473936bd30ea469e36c529d6e69db, type: 2}
+  - {fileID: 11400000, guid: e3d8c085c470109499eca691dc1a055c, type: 2}
+  habilidadesPassivasArco:
+  - {fileID: 11400000, guid: d98f5c1e62a7e9f44b45e96d115334c0, type: 2}
+  habilidadesPassivasLivro:
+  - {fileID: 11400000, guid: 35b8a8189fbe7104c8ecf235565d81f8, type: 2}
   equipamentosCabecaAcessorio:
   - {fileID: 8618569578638717159, guid: dc0c58e7a162dcc40bef8c7cedd4baa8, type: 3}
   equipamentosCabecaTopo:

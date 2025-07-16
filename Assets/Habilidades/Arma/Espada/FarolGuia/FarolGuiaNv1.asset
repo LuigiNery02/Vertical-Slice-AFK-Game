@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ffba36d45fea4f8e363f891fcf7c1, type: 3}
+  m_Name: FarolGuiaNv1
+  m_EditorClassIdentifier: 
+  nome: "Far\xF3l Guia"
+  descricao: 'Possui 3% de chance de curar 5% do dano causado.
+
+    
+
+'
+  tipoDeHabilidade: 1
+  modoDeAtivacao: 1
+  nivel: 1
+  spriteHabilidade: {fileID: 21300000, guid: b11f9c52da2945740b5078d84177a9ab, type: 3}
+  idHabilidade: HabilidadeFarolGuia
+  habilidadeProximoNivel: {fileID: 11400000, guid: d2b1a3d03110f564291c3b876f9f0aeb, type: 2}
+  porcentagemDanoCausado: 0.05
+  probabilidadeDeCura: 3
+  vfx: {fileID: 9017484664307500583, guid: 1245b8d2997d5b34fb1637be70a7eb05, type: 3}

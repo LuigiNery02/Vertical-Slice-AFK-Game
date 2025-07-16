@@ -7,8 +7,6 @@ public class HabilidadeUltimoPilarNv3 : HabilidadePassiva
     [Header("Configurações Habilidade")]
     [SerializeField]
     private float multiplicadorBonusHP = 0.01f;
-    [SerializeField]
-    private float bonusEscudo = 1;
     public GameObject vfx;
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {

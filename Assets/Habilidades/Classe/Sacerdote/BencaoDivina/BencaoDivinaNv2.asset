@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f70e65cb89455c48b1c55dba0bc1a16, type: 3}
+  m_Name: BencaoDivinaNv2
+  m_EditorClassIdentifier: 
+  nome: "Ben\xE7\xE3o Divina"
+  descricao: "Cura o aliado com menor vida 200% do ATQM\nElemento: Sagrado\nCast
+    Fixo: Instant\xE2neo\nCast Vari\xE1vel: Instant\xE2neo\nCusto de Mana: 40\nCooldown:
+    0,5segundo\r\n\r\n"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 0
+  nivel: 2
+  spriteHabilidade: {fileID: 21300000, guid: 21df9195ed43b004394e6d7913b03149, type: 3}
+  idHabilidade: HabilidadeBencaoDivina
+  habilidadeProximoNivel: {fileID: 11400000, guid: b18fc6aadda57de458d6e873396cda55, type: 2}
+  elemento: 4
+  custoDeMana: 40
+  castFixo: 0
+  castVariavel: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 0.5
