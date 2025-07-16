@@ -1166,7 +1166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _iniciarSalvamentoSeNulo: 1
-  _nomeDoArquivo: saveDemo2.data
+  _nomeDoArquivo: saveDemo3.data
   _encriptar: 0
 --- !u!4 &72781973
 Transform:
@@ -15296,10 +15296,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a34ed5f9d689ced449f3a32a7a6b35ec, type: 2}
   habilidadesAtivasClasseLadino:
   - {fileID: 11400000, guid: ddd6a40d16e19134e92231f908d40081, type: 2}
+  - {fileID: 11400000, guid: f630e0d0b6cf8e144b49a0abbcb81452, type: 2}
   habilidadesAtivasClasseElementalista:
   - {fileID: 11400000, guid: d2c2f61535b69b64c91d3e8e8cb8a59f, type: 2}
+  - {fileID: 11400000, guid: 3133ad2651e586f46a14e7ec8075f699, type: 2}
   habilidadesAtivasClasseSacerdote:
   - {fileID: 11400000, guid: 45160bec2cfb6144292dd7642acbaeab, type: 2}
+  - {fileID: 11400000, guid: 6567e6231ddcbf243830aa49ad4c8b57, type: 2}
   habilidadesAtivasEspada:
   - {fileID: 11400000, guid: 00ed042d54728d14d96bdc07ae13e4f7, type: 2}
   - {fileID: 11400000, guid: abd1d24847f8ce540a0d53d4026a3d74, type: 2}
@@ -15308,8 +15311,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a7b047406e2ae07499fb015f02cd3b67, type: 2}
   habilidadesAtivasArco:
   - {fileID: 11400000, guid: 7972503614d1fed499cbfa6b5137e8d1, type: 2}
+  - {fileID: 11400000, guid: 07e2872f49ca0fe41af67fd6086a22e2, type: 2}
   habilidadesAtivasLivro:
   - {fileID: 11400000, guid: 09a4ad5d39ec9d1478105c5e64746742, type: 2}
+  - {fileID: 11400000, guid: 4b943c8073ad6a84c95add5caf9a2f6d, type: 2}
   habilidadesPassivasClasseGuerreiro:
   - {fileID: 11400000, guid: 19b9ea125a831f549b69635c1c9ae941, type: 2}
   - {fileID: 11400000, guid: db1508d6c46b6344283efba7d9c638e9, type: 2}
@@ -15317,10 +15322,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a5808ee3145836041b0df255ed87d8f9, type: 2}
   habilidadesPassivasClasseLadino:
   - {fileID: 11400000, guid: 5011450fec9dba843bc219da8f21bbd7, type: 2}
+  - {fileID: 11400000, guid: ffdaa52a9497b3e45a49d8d333acbbbc, type: 2}
   habilidadesPassivasClasseElementalista:
   - {fileID: 11400000, guid: 12a56fbe3f64673498a88e93af57ca4c, type: 2}
+  - {fileID: 11400000, guid: 3810149df4478c54f95d8064746ffa4b, type: 2}
   habilidadesPassivasClasseSacerdote:
   - {fileID: 11400000, guid: 54c75953c12686645a5dcaff6f085d21, type: 2}
+  - {fileID: 11400000, guid: 17f7088ceb5ee5f4cbca06c99b0d9359, type: 2}
   habilidadesPassivasEspada:
   - {fileID: 11400000, guid: 2c28ef7c1dbe1bc48847b108662e7369, type: 2}
   - {fileID: 11400000, guid: db631b1883a25454bbb7277220e2dd50, type: 2}
@@ -15328,8 +15336,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e3d8c085c470109499eca691dc1a055c, type: 2}
   habilidadesPassivasArco:
   - {fileID: 11400000, guid: d98f5c1e62a7e9f44b45e96d115334c0, type: 2}
+  - {fileID: 11400000, guid: 4c81759c548dad34d9a7cb7b18e9e513, type: 2}
   habilidadesPassivasLivro:
   - {fileID: 11400000, guid: 35b8a8189fbe7104c8ecf235565d81f8, type: 2}
+  - {fileID: 11400000, guid: 331909ccfa714204c8dee22cf08299f6, type: 2}
   equipamentosCabecaAcessorio:
   - {fileID: 8618569578638717159, guid: dc0c58e7a162dcc40bef8c7cedd4baa8, type: 3}
   equipamentosCabecaTopo:
@@ -33473,6 +33483,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 978434294}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2022066790}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6

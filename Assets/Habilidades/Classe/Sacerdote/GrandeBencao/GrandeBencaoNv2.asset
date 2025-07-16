@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd73818f553745c41bad22a347db8aa7, type: 3}
+  m_Name: GrandeBencaoNv2
+  m_EditorClassIdentifier: 
+  nome: "Grande Ben\xE7\xE3o"
+  descricao: "Cura todo o time em 150% do ATQ 2x\nElemento: Sagrado\nCast Fixo: 1
+    segundo\nCast Vari\xE1vel: 1,5 segundo\nCusto de Mana: 220\nCooldown: 1 segundo\r"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 0
+  nivel: 2
+  spriteHabilidade: {fileID: 21300000, guid: c3aab7237df394c4890e647a4ae580ea, type: 3}
+  idHabilidade: HabilidadeGrandeBencao
+  habilidadeProximoNivel: {fileID: 11400000, guid: 6851ee251c3b39a4f8e1acd50d817ebf, type: 2}
+  elemento: 4
+  custoDeMana: 220
+  castFixo: 1
+  castVariavel: 1.5
+  tempoDeEfeito: 0
+  tempoDeRecarga: 1

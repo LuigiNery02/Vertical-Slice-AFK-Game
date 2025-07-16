@@ -37,7 +37,7 @@ public class SlotHabilidadeUI : MonoBehaviour
     {
         _habilidadePassiva = habilidade;
         nomeTexto.text = habilidade.nome;
-        nivelTexto.text += ("Nv: " + habilidade.nivel);
+        nivelTexto.text = ("Nv: " + habilidade.nivel);
         imagem.sprite = habilidade.spriteHabilidade;
 
         Button botaoDefinir = GetComponent<Button>();

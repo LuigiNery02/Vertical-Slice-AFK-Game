@@ -1,6 +1,15 @@
 using UnityEngine;
 
-public class HabilidadeChuvaDeFlechasNv1 : MonoBehaviour
+[CreateAssetMenu(menuName = "Habilidades/Ativa/Arma/Arco/Chuva de Flechas/Nv1")]
+public class HabilidadeChuvaDeFlechasNv1 : HabilidadeAtiva
 {
+    public override void AtivarEfeito(IAPersonagemBase personagem)
+    {
 
+    }
+
+    public override void RemoverEfeito(IAPersonagemBase personagem)
+    {
+
+    }
 }

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2cc787432e1557408e3e00e2e548a5b, type: 3}
+  m_Name: FlechaExplosivaNv2
+  m_EditorClassIdentifier: 
+  nome: Flecha Explosiva
+  descricao: "A cada tr\xEAs ataque b\xE1sicos,o quarto ataque tem 150% de ATQ.\r"
+  tipoDeHabilidade: 1
+  modoDeAtivacao: 1
+  nivel: 2
+  spriteHabilidade: {fileID: 21300000, guid: dd3885098198d104888439be4c590aba, type: 3}
+  idHabilidade: HabilidadeFlechaExplosiva
+  habilidadeProximoNivel: {fileID: 11400000, guid: 156fb242458a7ad46846ac72a719a3f7, type: 2}
