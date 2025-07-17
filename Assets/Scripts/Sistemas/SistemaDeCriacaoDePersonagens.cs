@@ -355,6 +355,12 @@ public class SistemaDeCriacaoDePersonagens : MonoBehaviour, Salvamento
 
     public void SalvarSave(GameData data) //função de salvar os dados do sistema de criação de personagens
     {
+        GerenciadorDeInventario gerenciadorDeInventario = FindFirstObjectByType<GerenciadorDeInventario>();
+        if(gerenciadorDeInventario != null)
+        {
+            gerenciadorDeInventario.ReceberPersonagensCriados();
+        }
+
         data.personagens = personagensCriados;
     }
 

@@ -12,17 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093f81b107c8c864a9052215f4defabe, type: 3}
   m_Name: CorteRasteiroNv1
   m_EditorClassIdentifier: 
-  nome: 
-  descricao: 
+  nome: Corte Rasteiro
+  descricao: "Lan\xE7a uma faca. Causa 150% Atq de dano e aplica um Marcador no alvo.\nElemento:
+    Neutro\nCast Fixo: 1 segundo\nCast Vari\xE1vel: Instant\xE2neo\nCusto de Mana:
+    40\nCooldown: 9 segundos"
   tipoDeHabilidade: 0
   modoDeAtivacao: 0
-  nivel: 0
-  spriteHabilidade: {fileID: 0}
-  idHabilidade: 
-  habilidadeProximoNivel: {fileID: 0}
+  nivel: 1
+  spriteHabilidade: {fileID: 21300000, guid: 406984ac0d0fc2c4bbaf906048f7c43e, type: 3}
+  idHabilidade: HabilidadeCorteRasteiro
+  habilidadeProximoNivel: {fileID: 11400000, guid: a2f5375d106acbd47a8275a8aa739ac7, type: 2}
   elemento: 0
-  custoDeMana: 0
+  custoDeMana: 40
   castFixo: 0
   castVariavel: 0
   tempoDeEfeito: 0
-  tempoDeRecarga: 0
+  tempoDeRecarga: 9
+  multiplicadorDeAtaque: 1.5
+  numeroDeMarcadores: 1
+  hit: {fileID: 8873131466866973988, guid: 30797957ef9f7b147b4f100cc59cd38e, type: 3}
+  velocidadeDeMovimento: 20

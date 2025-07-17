@@ -22,6 +22,7 @@ public class HabilidadeOndaDeChoqueNv3 : HabilidadeAtiva
     {
         if (personagem.podeAtivarEfeitoHabilidadeAtivaArma)
         {
+            personagem.podeAtivarEfeitoHabilidadeAtivaArma = false;
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
                 personagem.GastarSP(custoDeMana);
@@ -47,12 +48,13 @@ public class HabilidadeOndaDeChoqueNv3 : HabilidadeAtiva
                     hitComponente.velocidadeDeMovimento = velocidadeDeMovimento;
                     hitComponente.direcaoDeMovimento = personagem.transform.forward;
                 }
+                RemoverEfeito(personagem);
             }
         }
     }
 
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
-
+        base.RemoverEfeito(personagem);
     }
 }

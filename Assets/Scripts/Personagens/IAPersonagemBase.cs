@@ -8,6 +8,8 @@ public enum ControladorDoPersonagem { PERSONAGEM_DO_JOGADOR, PERSONAGEM_INIMIGO 
 public enum TipoDeArma { CURTA_DISTANCIA, LONGA_DISTANCIA } //características referente ao comportamento de ataque da arma do personagem, se é um ataque de curta ou longa distância
 public enum EstadoDoPersonagem { IDLE, PERSEGUINDO, ATACANDO, MORTO, MOVIMENTO_ESPECIAL, STUNADO, CONJURANDO_HABILIDADE} //estados de comportamento do personagem
 
+public enum EfeitoMarcadorDeAlvo { NENHUM, EXPOSTO, SANGRAMENTO, ATORDOADO, CORTACURA, MARCADO_PARA_EXECUCAO}
+
 public class IAPersonagemBase : MonoBehaviour
 {
     //área referente aos dados e visual do personagem selecionado
@@ -81,6 +83,8 @@ public class IAPersonagemBase : MonoBehaviour
     //área referente à habilidades
     [Header("Habilidades")]
     public int willPower;
+    public int marcadoresDeAlvo;
+    public EfeitoMarcadorDeAlvo efeitoMarcadorDeAlvo;
     //[HideInInspector]
     public HabilidadeAtiva habilidadeAtivaClasse; //habilidade ativa de classe do personagem
     //[HideInInspector]
@@ -492,6 +496,8 @@ public class IAPersonagemBase : MonoBehaviour
         }
 
         willPower = 0;
+        marcadoresDeAlvo = 0;
+        efeitoMarcadorDeAlvo = EfeitoMarcadorDeAlvo.NENHUM;
         stunado = false;
         conjurandoHabilidade = false;
         imuneAMagias = false;
@@ -921,6 +927,15 @@ public class IAPersonagemBase : MonoBehaviour
 
     public void SofrerDano(float dano, bool critico) //função para sofrer dano
     {
+        if(efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.EXPOSTO)
+        {
+            dano += (dano * 0.2f);
+        }
+        else if(efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.MARCADO_PARA_EXECUCAO)
+        {
+            dano = (dano * 3);
+        }
+
         if (escudoAtivado)
         {
             valorEscudo -= dano;
@@ -962,27 +977,41 @@ public class IAPersonagemBase : MonoBehaviour
             medo = false;
             VerificarComportamento("morrer");
         }
+        else
+        {
+            if(efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.ATORDOADO)
+            {
+                if (!stunado)
+                {
+                    tempoDeStun = 0.25f;
+                    Stun();
+                }
+            }
+        }
     }
 
     public void ReceberHP(float cura) //função para receber hp
     {
-        hpAtual += cura; //recebe hp
-
-        if (hpAtual >= _hpMaximoEInicial)
+        if(efeitoMarcadorDeAlvo != EfeitoMarcadorDeAlvo.CORTACURA)
         {
-            hpAtual = _hpMaximoEInicial;
-        }
+            hpAtual += cura; //recebe hp
 
-        if (_usarSliders)
-        {
-            //atualiza o slider
-            _slider.value = hpAtual;
-            
-            if(hpAtual < _hpMaximoEInicial)
+            if (hpAtual >= _hpMaximoEInicial)
             {
-                textoHP.gameObject.SetActive(true);
-                textoHP.text = ("+" + cura);
-                StartCoroutine(DesativarTextoHP(this));
+                hpAtual = _hpMaximoEInicial;
+            }
+
+            if (_usarSliders)
+            {
+                //atualiza o slider
+                _slider.value = hpAtual;
+
+                if (hpAtual < _hpMaximoEInicial)
+                {
+                    textoHP.gameObject.SetActive(true);
+                    textoHP.text = ("+" + cura);
+                    StartCoroutine(DesativarTextoHP(this));
+                }
             }
         }
     }
@@ -1223,6 +1252,56 @@ public class IAPersonagemBase : MonoBehaviour
         }
     }
 
+    public void AtualizarMarcadoresDeAlvo(int valor, bool valorPositivo)
+    {
+        if (valorPositivo)
+        {
+            marcadoresDeAlvo += valor;
+        }
+        else
+        {
+            marcadoresDeAlvo -= valor;
+        }
+
+        if (marcadoresDeAlvo >= 5)
+        {
+            marcadoresDeAlvo = 5;
+        }
+        else if (marcadoresDeAlvo <= 0)
+        {
+            marcadoresDeAlvo = 0;
+        }
+
+        switch (marcadoresDeAlvo)
+        {
+            case 0:
+                efeitoMarcadorDeAlvo = EfeitoMarcadorDeAlvo.NENHUM; 
+                break;
+            case 1:
+                efeitoMarcadorDeAlvo = EfeitoMarcadorDeAlvo.EXPOSTO;
+                break;
+            case 2:
+                efeitoMarcadorDeAlvo = EfeitoMarcadorDeAlvo.SANGRAMENTO;
+                if (!sangramento)
+                {
+                    Sangramento(1, 1, 1);
+                }
+                break;
+            case 3:
+                efeitoMarcadorDeAlvo = EfeitoMarcadorDeAlvo.ATORDOADO;
+                break;
+            case 4:
+                efeitoMarcadorDeAlvo = EfeitoMarcadorDeAlvo.CORTACURA;
+                break;
+            case 5:
+                efeitoMarcadorDeAlvo = EfeitoMarcadorDeAlvo.MARCADO_PARA_EXECUCAO;
+                break;
+            default:
+                efeitoMarcadorDeAlvo = EfeitoMarcadorDeAlvo.NENHUM;
+                break;
+        }
+    }
+
     private void AtivacaoHabildiadesInimigo()
     {
         int habilidade = UnityEngine.Random.Range(0, 2);
@@ -1385,6 +1464,11 @@ public class IAPersonagemBase : MonoBehaviour
 
         sangramento = false;
         _vfxSangramento.SetActive(false);
+
+        if(efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.SANGRAMENTO)
+        {
+            Sangramento(1, 1, 1);
+        }
     }
 
     public bool VerificarEfeitoNegativo()

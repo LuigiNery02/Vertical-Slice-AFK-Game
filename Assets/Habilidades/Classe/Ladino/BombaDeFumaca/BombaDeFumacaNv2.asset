@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: BombaDeFumacaNv2
   m_EditorClassIdentifier: 
   nome: "Bomba de Fuma\xE7a"
-  descricao: "Com arma Melee: Aparece atr\xE1s do inimigo mais pr\xF3ximo. \nCom
-    arma Ranged: Aparece longe do inimigo mais pr\xF3ximo.\nElemento: Neutro\nCast
-    Fixo: Instant\xE2neo\nCast Vari\xE1vel: Instant\xE2neo\nCusto de Mana: 35\nCooldown:
-    15 segundos\r\n\r\n"
+  descricao: "Some e reaparece em outro lugar. Inimigos deixam de focar o ladino
+    quando a habilidade \xE9 ativada\nCom arma Melee: Aparece atr\xE1s do inimigo
+    mais pr\xF3ximo. \nCom arma Ranged: Aparece longe do inimigo mais pr\xF3ximo.\nElemento:
+    Neutro\nCast Fixo: Instant\xE2neo\nCast Vari\xE1vel: Instant\xE2neo\nCusto de
+    Mana: 35\nCooldown: 15 segundos\r\n\r\n"
   tipoDeHabilidade: 0
   modoDeAtivacao: 0
   nivel: 2
@@ -29,3 +30,7 @@ MonoBehaviour:
   castVariavel: 0
   tempoDeEfeito: 0
   tempoDeRecarga: 15
+  layerChao:
+    serializedVersion: 2
+    m_Bits: 256
+  vfx: {fileID: 4809171458859421548, guid: 4e91ed1a8efe7044785b9bd97a47d87f, type: 3}

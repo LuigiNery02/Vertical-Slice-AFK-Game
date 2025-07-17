@@ -29,3 +29,9 @@ MonoBehaviour:
   castVariavel: 0
   tempoDeEfeito: 0
   tempoDeRecarga: 15
+  distanciaMaximaTeleporte: 5
+  layerChao:
+    serializedVersion: 2
+    m_Bits: 256
+  tentativasMaximas: 10
+  vfx: {fileID: 4809171458859421548, guid: 4e91ed1a8efe7044785b9bd97a47d87f, type: 3}

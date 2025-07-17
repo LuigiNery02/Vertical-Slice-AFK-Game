@@ -221,6 +221,11 @@ public class GerenciadorDeInventario : MonoBehaviour, Salvamento
 
     public void ReceberPersonagensCriados()
     {
+        if(_sistemaDeCriacaoDePersonagens == null)
+        {
+            _sistemaDeCriacaoDePersonagens = FindFirstObjectByType<SistemaDeCriacaoDePersonagens>();
+        }
+
         personagensCriados = _sistemaDeCriacaoDePersonagens.personagensCriados;
     }
 

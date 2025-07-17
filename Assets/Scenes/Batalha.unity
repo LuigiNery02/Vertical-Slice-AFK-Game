@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Ch\xE3o"
       objectReference: {fileID: 0}
+    - target: {fileID: 8491874948997110818, guid: f1fc6ae80a5ffcc4c84b0ae0abef9818, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9120602792471463576, guid: f1fc6ae80a5ffcc4c84b0ae0abef9818, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
