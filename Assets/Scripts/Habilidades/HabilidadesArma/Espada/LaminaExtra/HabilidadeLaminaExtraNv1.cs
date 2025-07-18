@@ -15,25 +15,26 @@ public class HabilidadeLaminaExtraNv1 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
-                float dano = personagem._dano;
-                dano *= multiplicadorDeDano;
-                personagem._dano += dano;
-
-                personagem.podeAtivarEfeitoHabilidadeAtivaArma = false;
-
                 personagem.GastarSP(custoDeMana);
 
-                personagem.StartCoroutine(EsperarTempoDeEfeito(personagem, dano));
+                base.ChecarCastingHabilidade2(personagem, () =>
+                {
+                    float dano = personagem._dano;
+                    dano *= multiplicadorDeDano;
+                    personagem._dano += dano;
 
-                if (personagem.vfxHabilidadeAtivaArma == null)
-                {
-                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidadeAtivaArma = vfxInstanciado;
-                }
-                else
-                {
-                    personagem.GerenciarVFXHabilidade(2, true);
-                }
+                    personagem.StartCoroutine(EsperarTempoDeEfeito(personagem, dano));
+
+                    if (personagem.vfxHabilidadeAtivaArma == null)
+                    {
+                        GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
+                        personagem.vfxHabilidadeAtivaArma = vfxInstanciado;
+                    }
+                    else
+                    {
+                        personagem.GerenciarVFXHabilidade(2, true);
+                    }
+                });
             }
         }
     }

@@ -20,12 +20,13 @@ public class HabilidadeCantoDeBatalhaNv3 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel) && personagem.willPower >= consumoDeWillPower)
             {
-                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
-
-                personagem.AtualizarWillPower(consumoDeWillPower, false);
                 personagem.GastarSP(custoDeMana);
+                personagem.AtualizarWillPower(consumoDeWillPower, false);
 
-                personagem.StartCoroutine(ExecutarBuff(personagem));
+                base.ChecarCastingHabilidade1(personagem, () =>
+                {
+                    personagem.StartCoroutine(ExecutarBuff(personagem));
+                });
             }
         }
     }
@@ -85,7 +86,7 @@ public class HabilidadeCantoDeBatalhaNv3 : HabilidadeAtiva
             } 
         }
 
-        yield return new WaitForSeconds(tempoDeEfeito - tempoImuneAMagias); //completa os 5s totais do efeito
+        yield return new WaitForSeconds(tempoDeEfeito - tempoImuneAMagias); //completa os segundos totais do efeito
 
         foreach (var aliado in aliadosAfetados)
         {

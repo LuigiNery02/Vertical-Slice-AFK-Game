@@ -18,12 +18,13 @@ public class HabilidadeCantoDeBatalhaNv1 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel) && personagem.willPower >= consumoDeWillPower)
             {
-                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
-
-                personagem.AtualizarWillPower(consumoDeWillPower, false);
                 personagem.GastarSP(custoDeMana);
+                personagem.AtualizarWillPower(consumoDeWillPower, false);
 
-                personagem.StartCoroutine(ExecutarBuff(personagem));
+                base.ChecarCastingHabilidade1(personagem, () =>
+                {
+                    personagem.StartCoroutine(ExecutarBuff(personagem));
+                });
             }
         }
     }

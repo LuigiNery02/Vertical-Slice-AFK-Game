@@ -16,35 +16,38 @@ public class HabilidadePunhoDaDisciplinaNv1 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
-                float danoOriginal = personagem._dano;
-                personagem.efeitoPorAtaqueAtivado = true;
-                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
-
                 personagem.GastarSP(custoDeMana);
 
-                personagem.AtivarEfeitoPorAtaque("PunhoDaDisciplinaNv1", (bool acerto) =>
+                base.ChecarCastingHabilidade1(personagem, () =>
                 {
-                    if (acerto)
+                    personagem.efeitoPorAtaqueAtivado = true;
+
+                    float danoOriginal = personagem._dano;
+
+                    personagem.AtivarEfeitoPorAtaque("PunhoDaDisciplinaNv1", (bool acerto) =>
                     {
-                        personagem._dano *= multiplicadorDeDano;
-                        personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal));
+                        if (acerto)
+                        {
+                            personagem._dano *= multiplicadorDeDano;
+                            personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal));
+                        }
+                        else
+                        {
+                            RemoverEfeito(personagem);
+                        }
+
+                    });
+
+                    if (personagem.vfxHabilidadeAtivaClasse == null)
+                    {
+                        GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
+                        personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
                     }
                     else
                     {
-                        RemoverEfeito(personagem);
+                        personagem.GerenciarVFXHabilidade(1, true);
                     }
-
                 });
-
-                if (personagem.vfxHabilidadeAtivaClasse == null)
-                {
-                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
-                }
-                else
-                {
-                    personagem.GerenciarVFXHabilidade(1, true);
-                }
             }
         }
     }

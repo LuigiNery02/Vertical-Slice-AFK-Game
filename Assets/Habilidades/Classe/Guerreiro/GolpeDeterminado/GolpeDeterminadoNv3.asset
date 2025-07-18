@@ -29,6 +29,8 @@ MonoBehaviour:
   castVariavel: 0
   tempoDeEfeito: 0
   tempoDeRecarga: 1
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
   multiplicadorDeDano: 4
   consumoDeWillPower: 3
   ignorarDefesaInimigo: 25

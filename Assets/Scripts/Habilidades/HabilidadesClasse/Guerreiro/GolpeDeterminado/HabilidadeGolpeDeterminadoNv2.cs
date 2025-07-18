@@ -18,44 +18,46 @@ public class HabilidadeGolpeDeterminadoNv2 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel) && personagem.willPower >= consumoDeWillPower)
             {
-                float danoOriginal = personagem._dano;
-                personagem.efeitoPorAtaque = null;
-                personagem.efeitoPorAtaqueAtivado = true;
-                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
-
-                personagem.AtualizarWillPower(consumoDeWillPower, false);
                 personagem.GastarSP(custoDeMana);
+                personagem.AtualizarWillPower(consumoDeWillPower, false);
 
-                personagem.AtivarEfeitoPorAtaque("GolpeDeterminadoNv2", (bool acerto) =>
+                base.ChecarCastingHabilidade1(personagem, () =>
                 {
-                    if (acerto)
+                    personagem.efeitoPorAtaqueAtivado = true;
+
+                    float danoOriginal = personagem._dano;
+
+                    personagem.AtivarEfeitoPorAtaque("GolpeDeterminadoNv2", (bool acerto) =>
                     {
-                        personagem._dano *= multiplicadorDeDano;
-                        IAPersonagemBase inimigo = personagem._personagemAlvo;
-                        float defesaOriginal = inimigo.defesa;
-                        inimigo.defesa -= ignorarDefesaInimigo;
-                        if(inimigo.defesa <= 0)
+                        if (acerto)
                         {
-                            inimigo.defesa = 0;
+                            personagem._dano *= multiplicadorDeDano;
+                            IAPersonagemBase inimigo = personagem._personagemAlvo;
+                            float defesaOriginal = inimigo.defesa;
+                            inimigo.defesa -= ignorarDefesaInimigo;
+                            if (inimigo.defesa <= 0)
+                            {
+                                inimigo.defesa = 0;
+                            }
+                            personagem.StartCoroutine(EsperarFrame(personagem, inimigo, danoOriginal, defesaOriginal));
                         }
-                        personagem.StartCoroutine(EsperarFrame(personagem, inimigo ,danoOriginal, defesaOriginal));
+                        else
+                        {
+                            RemoverEfeito(personagem);
+                        }
+
+                    });
+
+                    if (personagem.vfxHabilidadeAtivaClasse == null)
+                    {
+                        GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
+                        personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
                     }
                     else
                     {
-                        RemoverEfeito(personagem);
+                        personagem.GerenciarVFXHabilidade(1, true);
                     }
-
                 });
-
-                if (personagem.vfxHabilidadeAtivaClasse == null)
-                {
-                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
-                }
-                else
-                {
-                    personagem.GerenciarVFXHabilidade(1, true);
-                }
             }
         }
     }

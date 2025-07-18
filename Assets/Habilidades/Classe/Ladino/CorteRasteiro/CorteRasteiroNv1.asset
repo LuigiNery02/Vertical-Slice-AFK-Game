@@ -24,10 +24,12 @@ MonoBehaviour:
   habilidadeProximoNivel: {fileID: 11400000, guid: a2f5375d106acbd47a8275a8aa739ac7, type: 2}
   elemento: 0
   custoDeMana: 40
-  castFixo: 0
+  castFixo: 1
   castVariavel: 0
   tempoDeEfeito: 0
   tempoDeRecarga: 9
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
   multiplicadorDeAtaque: 1.5
   numeroDeMarcadores: 1
   hit: {fileID: 8873131466866973988, guid: 30797957ef9f7b147b4f100cc59cd38e, type: 3}

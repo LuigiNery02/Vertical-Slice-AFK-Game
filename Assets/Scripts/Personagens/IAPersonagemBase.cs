@@ -469,13 +469,11 @@ public class IAPersonagemBase : MonoBehaviour
         {
             _comportamento = EstadoDoPersonagem.CONJURANDO_HABILIDADE;
             habilidadeSendoConjurada = 1;
-            ConjurarHabilidade();
         }
         else if (comportamento == "conjurarHabilidade2" && !conjurandoHabilidade)
         {
             _comportamento = EstadoDoPersonagem.CONJURANDO_HABILIDADE;
             habilidadeSendoConjurada = 2;
-            ConjurarHabilidade();
         }
     }
 
@@ -1111,16 +1109,8 @@ public class IAPersonagemBase : MonoBehaviour
 
     #region Habilidades
 
-    public void ConjurarHabilidade()
-    {
-        conjurandoHabilidade = true;
-        _animator.SetTrigger("Cast");
-        StartCoroutine(EsperarCast());
-    }
-
     public void CancelarHabilidade()
     {
-        StopCoroutine(EsperarCast());
         conjurandoHabilidade = false;
         habilidadeSendoConjurada = 0;
         _comportamento = EstadoDoPersonagem.IDLE;
@@ -1129,28 +1119,42 @@ public class IAPersonagemBase : MonoBehaviour
         VerificarComportamento("selecionarAlvo");
     }
 
-    IEnumerator EsperarCast()
+    public void ConjurarHabilidadeComCallback(float tempoDeCast, int idHabilidade, System.Action aoConcluir)
     {
-        yield return new WaitForSeconds(tempoDeCast);
-        if (_comportamento != EstadoDoPersonagem.MORTO && _sistemaDeBatalha.batalhaIniciou && _comportamento != EstadoDoPersonagem.IDLE)
+        StartCoroutine(EsperarCastComCallback(tempoDeCast, idHabilidade, aoConcluir));
+    }
+
+    IEnumerator EsperarCastComCallback(float tempo, int idHabilidade, System.Action aoConcluir)
+    {
+        conjurandoHabilidade = true;
+        _animator.SetTrigger("Cast");
+        habilidadeSendoConjurada = idHabilidade;
+
+        yield return new WaitForSeconds(tempo);
+
+        if (_comportamento != EstadoDoPersonagem.MORTO && _sistemaDeBatalha.batalhaIniciou)
         {
             conjurandoHabilidade = false;
-            if(habilidadeSendoConjurada == 1)
-            {
-                //ativa o efeito da habilidade 1
-            }
-            else if(habilidadeSendoConjurada == 2)
-            {
-                //ativa o efeito da habilidade 2
-            }
-            //ativa a habilidade
-            _comportamento = EstadoDoPersonagem.IDLE;
             _animator.ResetTrigger("Cast");
             _animator.SetTrigger("Idle");
-            VerificarComportamento("selecionarAlvo");
+            if(_personagemAlvo != null)
+            {
+                VerificarComportamento("perseguir");
+            }
+            else
+            {
+                VerificarComportamento("selecionarAlvo");
+            }
             habilidadeSendoConjurada = 0;
+
+            aoConcluir?.Invoke();
+        }
+        else
+        {
+            CancelarHabilidade();
         }
     }
+
 
     public void EsperarEfeitoHabilidade(int habilidade, float tempo)
     {
@@ -1481,6 +1485,13 @@ public class IAPersonagemBase : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void RemoverTodosEfeitosNegativos()
+    {
+        ataqueDiminuido = false;
+        sangramento = false;
+        medo = false;
     }
     #endregion
 

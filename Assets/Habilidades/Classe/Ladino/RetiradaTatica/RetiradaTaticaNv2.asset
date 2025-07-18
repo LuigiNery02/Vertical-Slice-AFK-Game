@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea87a8f2b3e2c7d4093a06780997f62c, type: 3}
+  m_Name: RetiradaTaticaNv2
+  m_EditorClassIdentifier: 
+  nome: "Retirada T\xE1tica"
+  descricao: "Desaparece por 2 segundos e remove os efeitos negativos\nElemento:
+    Neutro\nCast Fixo: Instant\xE2neo\nCast Vari\xE1vel: Instant\xE2neo\nCusto de
+    Mana: 85\nCooldown: 12 segundos\r"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 0
+  nivel: 2
+  spriteHabilidade: {fileID: 21300000, guid: c46be55a65cb30e44b7c89e3c0d531da, type: 3}
+  idHabilidade: HabilidadeRetiradaTatica
+  habilidadeProximoNivel: {fileID: 11400000, guid: 4cd3940525e141948a441f41511a40c3, type: 2}
+  elemento: 0
+  custoDeMana: 85
+  castFixo: 0
+  castVariavel: 0
+  tempoDeEfeito: 2
+  tempoDeRecarga: 12
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
+  posicaoDeDesaparecimento: {x: -10000, y: -10000, z: -10000}
+  vfx: {fileID: 7761031033666763820, guid: 1eb833340b41fb444b576c4dced8d4dc, type: 3}

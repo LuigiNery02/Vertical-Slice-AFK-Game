@@ -20,49 +20,51 @@ public class HabilidadePunhoDaDisciplinaNv2 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
-                float danoOriginal = personagem._dano;
-                personagem.efeitoPorAtaque = null;
-                personagem.efeitoPorAtaqueAtivado = true;
-                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
-
                 personagem.GastarSP(custoDeMana);
 
-                personagem.AtivarEfeitoPorAtaque("PunhoDaDisciplinaNv2", (bool acerto) =>
+                base.ChecarCastingHabilidade1(personagem, () =>
                 {
-                    if (acerto)
+                    personagem.efeitoPorAtaqueAtivado = true;
+
+                    float danoOriginal = personagem._dano;
+
+                    personagem.AtivarEfeitoPorAtaque("PunhoDaDisciplinaNv2", (bool acerto) =>
                     {
-                        personagem._dano *= multiplicadorDeDano;
-
-                        IAPersonagemBase inimigo = personagem._personagemAlvo;
-
-                        if (inimigo != null && !inimigo.recebeuDebuffPunhoDisciplina)
+                        if (acerto)
                         {
-                            inimigo.recebeuDebuffPunhoDisciplina = true;
-                            inimigo.ataqueDiminuido = true;
+                            personagem._dano *= multiplicadorDeDano;
 
-                            float inimigoDanoOriginal = inimigo._dano;
-                            inimigo._dano *= multiplicadorDiminuicaoDeDanoInimigo;
+                            IAPersonagemBase inimigo = personagem._personagemAlvo;
 
-                            personagem.StartCoroutine(TempoEfeitoDiminuirDano(inimigo, inimigoDanoOriginal));
+                            if (inimigo != null && !inimigo.recebeuDebuffPunhoDisciplina)
+                            {
+                                inimigo.recebeuDebuffPunhoDisciplina = true;
+                                inimigo.ataqueDiminuido = true;
+
+                                float inimigoDanoOriginal = inimigo._dano;
+                                inimigo._dano *= multiplicadorDiminuicaoDeDanoInimigo;
+
+                                personagem.StartCoroutine(TempoEfeitoDiminuirDano(inimigo, inimigoDanoOriginal));
+                            }
+
+                            personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal));
                         }
+                        else
+                        {
+                            RemoverEfeito(personagem);
+                        }
+                    });
 
-                        personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal));
+                    if (personagem.vfxHabilidadeAtivaClasse == null)
+                    {
+                        GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position, personagem.transform.rotation, personagem.transform);
+                        personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
                     }
                     else
                     {
-                        RemoverEfeito(personagem);
+                        personagem.GerenciarVFXHabilidade(1, true);
                     }
                 });
-
-                if (personagem.vfxHabilidadeAtivaClasse == null)
-                {
-                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
-                }
-                else
-                {
-                    personagem.GerenciarVFXHabilidade(1, true);
-                }
             }
         }
     }

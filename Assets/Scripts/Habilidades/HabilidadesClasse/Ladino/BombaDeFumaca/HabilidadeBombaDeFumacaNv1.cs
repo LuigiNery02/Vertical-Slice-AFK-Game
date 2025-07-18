@@ -18,26 +18,29 @@ public class HabilidadeBombaDeFumacaNv1 : HabilidadeAtiva
             {
                 personagem.GastarSP(custoDeMana);
 
-                CancelarFocoDosInimigos(personagem);
-
-                Vector3 novaPosicao;
-                if (EncontrarPosicaoAleatoriaProxima(personagem.transform.position, out novaPosicao))
+                base.ChecarCastingHabilidade1(personagem, () =>
                 {
-                    personagem.transform.position = novaPosicao;
-                }
+                    CancelarFocoDosInimigos(personagem);
 
-                if (personagem.vfxHabilidadeAtivaClasse == null)
-                {
-                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
-                }
-                else
-                {
-                    personagem.GerenciarVFXHabilidade(1, true);
-                }
+                    Vector3 novaPosicao;
+                    if (EncontrarPosicaoAleatoriaProxima(personagem.transform.position, out novaPosicao))
+                    {
+                        personagem.transform.position = novaPosicao;
+                    }
 
-                personagem.VerificarComportamento("selecionarAlvo");
-                personagem.StartCoroutine(EsperarVFX(personagem));
+                    if (personagem.vfxHabilidadeAtivaClasse == null)
+                    {
+                        GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
+                        personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
+                    }
+                    else
+                    {
+                        personagem.GerenciarVFXHabilidade(1, true);
+                    }
+
+                    personagem.VerificarComportamento("selecionarAlvo");
+                    personagem.StartCoroutine(EsperarVFX(personagem));
+                });
             }
         }  
     }

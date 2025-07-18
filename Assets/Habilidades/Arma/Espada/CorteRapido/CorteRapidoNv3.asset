@@ -25,10 +25,12 @@ MonoBehaviour:
   habilidadeProximoNivel: {fileID: 0}
   elemento: 0
   custoDeMana: 90
-  castFixo: 0
+  castFixo: 1
   castVariavel: 0
   tempoDeEfeito: 0
   tempoDeRecarga: 6
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
   multiplicadorDeDano: 2.5
   porcentagemDanoSangramento: 0.01
   tempoDeSangramento: 5

@@ -19,8 +19,10 @@ public class HabilidadeInvestidaRealNv1 : HabilidadeAtiva
             {
                 personagem.GastarSP(custoDeMana);
 
-                personagem.podeAtivarEfeitoHabilidadeAtivaArma = false;
-                personagem.StartCoroutine(ExecutarInvestida(personagem));
+                base.ChecarCastingHabilidade2(personagem, () =>
+                {
+                    personagem.StartCoroutine(ExecutarInvestida(personagem));
+                });
             }
         }
     }

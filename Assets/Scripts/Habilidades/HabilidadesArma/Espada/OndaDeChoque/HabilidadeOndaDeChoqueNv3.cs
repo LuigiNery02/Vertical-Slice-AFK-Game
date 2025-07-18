@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Habilidades/Ativa/Arma/Espada/Onda de Choque/Nv3")]
@@ -27,28 +28,16 @@ public class HabilidadeOndaDeChoqueNv3 : HabilidadeAtiva
             {
                 personagem.GastarSP(custoDeMana);
 
-                float dano = personagem._dano * multiplicadorDeAtaque;
-
-                //movimento especial
-                personagem.movimentoEspecial = "OndaDeChoque";
-                personagem.VerificarComportamento("movimentoEspecial");
-
-                //instancia o hit 
-                Vector3 posicaoInstancia = personagem.transform.position + personagem.transform.forward * 1.5f;
-                GameObject ondaDeChoque = Instantiate(hit, posicaoInstancia, hit.transform.rotation);
-
-                HitAtaqueEspecial1Personagem hitComponente = ondaDeChoque.GetComponent<HitAtaqueEspecial1Personagem>();
-                if (hitComponente != null)
+                base.ChecarCastingHabilidade2(personagem, () =>
                 {
-                    hitComponente._personagemPai = personagem;
-                    hitComponente.dano = dano;
-                    hitComponente.velocidadeDeCrescimento = velocidadeDeCrescimento;
-                    hitComponente.escalaMaxima = escalaMaxima;
-                    hitComponente.duracao = duracao;
-                    hitComponente.velocidadeDeMovimento = velocidadeDeMovimento;
-                    hitComponente.direcaoDeMovimento = personagem.transform.forward;
-                }
-                RemoverEfeito(personagem);
+                    float dano = personagem._dano * multiplicadorDeAtaque;
+
+                    //movimento especial
+                    personagem.movimentoEspecial = "OndaDeChoque";
+                    personagem.VerificarComportamento("movimentoEspecial");
+
+                    personagem.StartCoroutine(EsperarTempoParaInstanciarHit(personagem, dano));
+                });
             }
         }
     }
@@ -56,5 +45,27 @@ public class HabilidadeOndaDeChoqueNv3 : HabilidadeAtiva
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
         base.RemoverEfeito(personagem);
+    }
+
+    IEnumerator EsperarTempoParaInstanciarHit(IAPersonagemBase personagem, float dano)
+    {
+        yield return new WaitForSeconds(0.5f);
+        //instancia o hit 
+        Vector3 posicaoInstancia = personagem.transform.position + personagem.transform.forward * 1.5f;
+        GameObject ondaDeChoque = Instantiate(hit, posicaoInstancia, hit.transform.rotation);
+
+        HitAtaqueEspecial1Personagem hitComponente = ondaDeChoque.GetComponent<HitAtaqueEspecial1Personagem>();
+        if (hitComponente != null)
+        {
+            hitComponente._personagemPai = personagem;
+            hitComponente.dano = dano;
+            hitComponente.velocidadeDeCrescimento = velocidadeDeCrescimento;
+            hitComponente.escalaMaxima = escalaMaxima;
+            hitComponente.duracao = duracao;
+            hitComponente.velocidadeDeMovimento = velocidadeDeMovimento;
+            hitComponente.direcaoDeMovimento = personagem.transform.forward;
+        }
+        RemoverEfeito(personagem);
+
     }
 }

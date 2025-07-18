@@ -21,32 +21,33 @@ public class HabilidadeLaminaExtraNv3 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
-                float dano = personagem._dano;
-                dano *= multiplicadorDeDano;
-                personagem._dano += dano;
-
-                personagem.defesa += buffDefesa;
-
-                personagem.defesaMagica += buffDefesaMagica;
-
-                float hp = personagem._hpMaximoEInicial * multiplicadorDeHP;
-                personagem._hpMaximoEInicial += hp;
-
-                personagem.podeAtivarEfeitoHabilidadeAtivaArma = false;
-
                 personagem.GastarSP(custoDeMana);
 
-                personagem.StartCoroutine(EsperarTempoDeEfeito(personagem, dano, hp));
+                base.ChecarCastingHabilidade2(personagem, () =>
+                {
+                    float dano = personagem._dano;
+                    dano *= multiplicadorDeDano;
+                    personagem._dano += dano;
 
-                if (personagem.vfxHabilidadeAtivaArma == null)
-                {
-                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidadeAtivaArma = vfxInstanciado;
-                }
-                else
-                {
-                    personagem.GerenciarVFXHabilidade(2, true);
-                }
+                    personagem.defesa += buffDefesa;
+
+                    personagem.defesaMagica += buffDefesaMagica;
+
+                    float hp = personagem._hpMaximoEInicial * multiplicadorDeHP;
+                    personagem._hpMaximoEInicial += hp;
+
+                    personagem.StartCoroutine(EsperarTempoDeEfeito(personagem, dano, hp));
+
+                    if (personagem.vfxHabilidadeAtivaArma == null)
+                    {
+                        GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
+                        personagem.vfxHabilidadeAtivaArma = vfxInstanciado;
+                    }
+                    else
+                    {
+                        personagem.GerenciarVFXHabilidade(2, true);
+                    }
+                });
             }
         }
     }

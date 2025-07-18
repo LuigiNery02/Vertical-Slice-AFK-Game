@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum HabilidadeElemento { Neutro, Agua, Fogo, Vento, Sagrado }
@@ -9,6 +10,11 @@ public class HabilidadeAtiva : HabilidadeBase
     public float castVariavel;
     public float tempoDeEfeito;
     public float tempoDeRecarga;
+
+    [HideInInspector]
+    public float reducaoCastFixo;
+    [HideInInspector]
+    public float reducaoCastVariavel;
 
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
@@ -95,4 +101,47 @@ public class HabilidadeAtiva : HabilidadeBase
                 default: return false;
         }
     }
+
+    public void ChecarCastingHabilidade1(IAPersonagemBase personagem, Action efeitoFinal)
+    {
+        float tempoTotalCast = Mathf.Max(0f, (castFixo - reducaoCastFixo) + (castVariavel - reducaoCastVariavel));
+
+        if (tempoTotalCast > 0f)
+        {
+            personagem.VerificarComportamento("conjurarHabilidade1");
+
+            personagem.ConjurarHabilidadeComCallback(tempoTotalCast, 1, () =>
+            {
+                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
+                efeitoFinal?.Invoke();
+            });
+        }
+        else
+        {
+            personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
+            efeitoFinal?.Invoke();
+        }
+    }
+
+    public void ChecarCastingHabilidade2(IAPersonagemBase personagem, Action efeitoFinal)
+    {
+        float tempoTotalCast = Mathf.Max(0f, (castFixo - reducaoCastFixo) + (castVariavel - reducaoCastVariavel));
+
+        if (tempoTotalCast > 0f)
+        {
+            personagem.VerificarComportamento("conjurarHabilidade2");
+
+            personagem.ConjurarHabilidadeComCallback(tempoTotalCast, 2, () =>
+            {
+                personagem.podeAtivarEfeitoHabilidadeAtivaArma = false;
+                efeitoFinal?.Invoke();
+            });
+        }
+        else
+        {
+            personagem.podeAtivarEfeitoHabilidadeAtivaArma = false;
+            efeitoFinal?.Invoke();
+        }
+    }
+
 }

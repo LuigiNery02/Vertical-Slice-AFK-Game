@@ -21,37 +21,39 @@ public class HabilidadeGolpeEspartanoNv3 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
-                personagem.efeitoPorAtaqueAtivado = true;
-                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
-
                 personagem.GastarSP(custoDeMana);
 
-                personagem.AtivarEfeitoPorAtaque("GolpeEspartanoNv3", (bool acerto) =>
+                base.ChecarCastingHabilidade1(personagem, () =>
                 {
-                    if (acerto)
+                    personagem.efeitoPorAtaqueAtivado = true;
+
+                    personagem.AtivarEfeitoPorAtaque("GolpeEspartanoNv3", (bool acerto) =>
                     {
-                        personagem.StartCoroutine(ExecutarEfeito(personagem, personagem._personagemAlvo));
-                        if (!personagem._personagemAlvo)
+                        if (acerto)
                         {
-                            personagem._personagemAlvo.tempoDeStun = tempoDeStun;
-                            personagem._personagemAlvo.VerificarComportamento("stun");
+                            personagem.StartCoroutine(ExecutarEfeito(personagem, personagem._personagemAlvo));
+                            if (!personagem._personagemAlvo)
+                            {
+                                personagem._personagemAlvo.tempoDeStun = tempoDeStun;
+                                personagem._personagemAlvo.VerificarComportamento("stun");
+                            }
                         }
+                        else
+                        {
+                            RemoverEfeito(personagem);
+                        }
+                    });
+
+                    if (personagem.vfxHabilidadeAtivaClasse == null)
+                    {
+                        GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
+                        personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
                     }
                     else
                     {
-                        RemoverEfeito(personagem);
+                        personagem.GerenciarVFXHabilidade(1, true);
                     }
                 });
-
-                if (personagem.vfxHabilidadeAtivaClasse == null)
-                {
-                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
-                }
-                else
-                {
-                    personagem.GerenciarVFXHabilidade(1, true);
-                }
             }
         }
     }

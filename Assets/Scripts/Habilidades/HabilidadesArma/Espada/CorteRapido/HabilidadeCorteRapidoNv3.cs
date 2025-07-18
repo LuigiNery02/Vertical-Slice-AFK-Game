@@ -19,51 +19,54 @@ public class HabilidadeCorteRapidoNv3 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
-                personagem.efeitoPorAtaqueAtivado = true;
-                personagem.podeAtivarEfeitoHabilidadeAtivaArma = false;
                 personagem.GastarSP(custoDeMana);
 
-                float danoOriginal = personagem._dano;
-                int golpes = 0;
-
-                personagem.AtivarEfeitoPorAtaque("CorteRapidoNv3", (bool acerto) =>
+                base.ChecarCastingHabilidade2(personagem, () =>
                 {
-                    if (acerto)
+                    personagem.efeitoPorAtaqueAtivado = true;
+
+                    float danoOriginal = personagem._dano;
+                    int golpes = 0;
+
+                    personagem.AtivarEfeitoPorAtaque("CorteRapidoNv3", (bool acerto) =>
                     {
-                        if (personagem.vfxHabilidadeAtivaArma == null)
+                        if (acerto)
                         {
-                            GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                            personagem.vfxHabilidadeAtivaArma = vfxInstanciado;
+                            if (personagem.vfxHabilidadeAtivaArma == null)
+                            {
+                                GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
+                                personagem.vfxHabilidadeAtivaArma = vfxInstanciado;
+                            }
+                            else
+                            {
+                                personagem.GerenciarVFXHabilidade(2, true);
+                            }
+
+                            golpes++;
+                            personagem._dano *= multiplicadorDeDano;
+                            personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal, golpes));
+
+                            float danoSangramento = danoOriginal * porcentagemDanoSangramento;
+
+                            if (personagem._personagemAlvo._comportamento != EstadoDoPersonagem.MORTO && !personagem._personagemAlvo.sangramento)
+                            {
+                                personagem._personagemAlvo.Sangramento(danoSangramento, 1, tempoDeSangramento);
+                            }
                         }
                         else
                         {
-                            personagem.GerenciarVFXHabilidade(2, true);
+                            golpes++;
+                            if (golpes > 1)
+                            {
+                                personagem._dano = danoOriginal;
+                                RemoverEfeito(personagem);
+                            }
                         }
+                    });
 
-                        golpes++;
-                        personagem._dano *= multiplicadorDeDano;
-                        personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal, golpes));
-
-                        float danoSangramento = danoOriginal * porcentagemDanoSangramento;
-
-                        if (personagem._personagemAlvo._comportamento != EstadoDoPersonagem.MORTO && !personagem._personagemAlvo.sangramento)
-                        {
-                            personagem._personagemAlvo.Sangramento(danoSangramento, 1, tempoDeSangramento);
-                        }
-                    }
-                    else
-                    {
-                        golpes++;
-                        if (golpes > 1)
-                        {
-                            personagem._dano = danoOriginal;
-                            RemoverEfeito(personagem);
-                        }
-                    }
+                    personagem.movimentoEspecial = "CorteRapido";
+                    personagem.VerificarComportamento("movimentoEspecial");
                 });
-
-                personagem.movimentoEspecial = "CorteRapido";
-                personagem.VerificarComportamento("movimentoEspecial");
             }
         }
     }

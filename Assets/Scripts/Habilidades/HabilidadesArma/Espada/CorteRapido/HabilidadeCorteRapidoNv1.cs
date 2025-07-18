@@ -15,34 +15,37 @@ public class HabilidadeCorteRapidoNv1 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
-                personagem.efeitoPorAtaqueAtivado = true;
-                personagem.podeAtivarEfeitoHabilidadeAtivaArma = false;
                 personagem.GastarSP(custoDeMana);
 
-                float danoOriginal = personagem._dano;
-
-                personagem.AtivarEfeitoPorAtaque("CorteRapidoNv1", (bool acerto) =>
+                base.ChecarCastingHabilidade2(personagem, () =>
                 {
-                    if (acerto)
+                    personagem.efeitoPorAtaqueAtivado = true;
+
+                    float danoOriginal = personagem._dano;
+
+                    personagem.AtivarEfeitoPorAtaque("CorteRapidoNv1", (bool acerto) =>
                     {
-                        personagem._dano *= multiplicadorDeDano;
-                        personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal));
+                        if (acerto)
+                        {
+                            personagem._dano *= multiplicadorDeDano;
+                            personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal));
+                        }
+                        else
+                        {
+                            RemoverEfeito(personagem);
+                        }
+                    });
+
+                    if (personagem.vfxHabilidadeAtivaArma == null)
+                    {
+                        GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
+                        personagem.vfxHabilidadeAtivaArma = vfxInstanciado;
                     }
                     else
                     {
-                        RemoverEfeito(personagem);
+                        personagem.GerenciarVFXHabilidade(2, true);
                     }
                 });
-
-                if (personagem.vfxHabilidadeAtivaArma == null)
-                {
-                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidadeAtivaArma = vfxInstanciado;
-                }
-                else
-                {
-                    personagem.GerenciarVFXHabilidade(2, true);
-                }
             }
         }
     }

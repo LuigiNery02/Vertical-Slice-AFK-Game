@@ -17,44 +17,46 @@ public class HabilidadeAtaquePesadoNv2 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
-                float danoOriginal = personagem._dano;
-
-                personagem.efeitoPorAtaqueAtivado = true;
-                personagem.podeAtivarEfeitoHabilidadeAtivaArma = false;
-
                 personagem.GastarSP(custoDeMana);
 
-                personagem.AtivarEfeitoPorAtaque("AtaquePesadoNv2", (bool acerto) =>
+                base.ChecarCastingHabilidade2(personagem, () =>
                 {
-                    if (acerto)
+                    float danoOriginal = personagem._dano;
+
+                    personagem.efeitoPorAtaqueAtivado = true;
+
+                    personagem.AtivarEfeitoPorAtaque("AtaquePesadoNv2", (bool acerto) =>
                     {
-                        personagem._dano *= multiplicadorDeDano;
-
-                        IAPersonagemBase inimigo = personagem._personagemAlvo;
-
-                        if (!inimigo.stunado)
+                        if (acerto)
                         {
-                            inimigo.tempoDeStun = tempoDeStun;
-                            inimigo.VerificarComportamento("stun");
+                            personagem._dano *= multiplicadorDeDano;
+
+                            IAPersonagemBase inimigo = personagem._personagemAlvo;
+
+                            if (!inimigo.stunado)
+                            {
+                                inimigo.tempoDeStun = tempoDeStun;
+                                inimigo.VerificarComportamento("stun");
+                            }
+                            personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal));
                         }
-                        personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal));
+                        else
+                        {
+                            RemoverEfeito(personagem);
+                        }
+
+                    });
+
+                    if (personagem.vfxHabilidadeAtivaArma == null)
+                    {
+                        GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
+                        personagem.vfxHabilidadeAtivaArma = vfxInstanciado;
                     }
                     else
                     {
-                        RemoverEfeito(personagem);
+                        personagem.GerenciarVFXHabilidade(2, true);
                     }
-
                 });
-
-                if (personagem.vfxHabilidadeAtivaArma == null)
-                {
-                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidadeAtivaArma = vfxInstanciado;
-                }
-                else
-                {
-                    personagem.GerenciarVFXHabilidade(2, true);
-                }
             }
         }
     }

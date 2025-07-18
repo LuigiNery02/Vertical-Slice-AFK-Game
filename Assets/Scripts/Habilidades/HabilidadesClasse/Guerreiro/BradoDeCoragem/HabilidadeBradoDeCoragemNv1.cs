@@ -14,30 +14,32 @@ public class HabilidadeBradoDeCoragemNv1 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
-                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
-                personagem.efeitoPorAtaqueRecebidoAtivado = true;
-
                 personagem.GastarSP(custoDeMana);
 
-                personagem.imuneAStun = true;
-                personagem.imuneAKnockback = true;
-                personagem.AtivarEfeitoPorAtaqueRecebido("BradoDeCoragemNv1", (bool acerto) =>
+                base.ChecarCastingHabilidade1(personagem, () =>
                 {
-                    if (acerto)
+                    personagem.efeitoPorAtaqueRecebidoAtivado = true;
+
+                    personagem.imuneAStun = true;
+                    personagem.imuneAKnockback = true;
+                    personagem.AtivarEfeitoPorAtaqueRecebido("BradoDeCoragemNv1", (bool acerto) =>
                     {
-                        RemoverEfeito(personagem);
+                        if (acerto)
+                        {
+                            RemoverEfeito(personagem);
+                        }
+                    });
+
+                    if (personagem.vfxHabilidadeAtivaClasse == null)
+                    {
+                        GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
+                        personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
+                    }
+                    else
+                    {
+                        personagem.GerenciarVFXHabilidade(1, true);
                     }
                 });
-
-                if (personagem.vfxHabilidadeAtivaClasse == null)
-                {
-                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
-                }
-                else
-                {
-                    personagem.GerenciarVFXHabilidade(1, true);
-                }
             }
         }
     }

@@ -18,38 +18,41 @@ public class HabilidadeBombaDeFumacaNv3 : HabilidadeAtiva
             {
                 personagem.GastarSP(custoDeMana);
 
-                CancelarFocoDosInimigos(personagem);
-
-                if (personagem.personagem.arma.armaDano == TipoDeDano.DANO_MELEE)
+                base.ChecarCastingHabilidade1(personagem, () =>
                 {
-                    AplicarAtordoamento(personagem);
-                }
+                    CancelarFocoDosInimigos(personagem);
 
-                Vector3 posOrigem = personagem.transform.position;
-                Vector3 novaPosicao;
-
-                if (EncontrarPosicao(personagem, posOrigem, out novaPosicao))
-                {
-                    personagem.transform.position = novaPosicao;
-
-                    if (personagem.personagem.arma.armaDano == TipoDeDano.DANO_RANGED || personagem.personagem.arma.armaDano == TipoDeDano.DANO_MAGICO)
+                    if (personagem.personagem.arma.armaDano == TipoDeDano.DANO_MELEE)
                     {
                         AplicarAtordoamento(personagem);
                     }
-                }
 
-                if (personagem.vfxHabilidadeAtivaClasse == null)
-                {
-                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
-                }
-                else
-                {
-                    personagem.GerenciarVFXHabilidade(1, true);
-                }
+                    Vector3 posOrigem = personagem.transform.position;
+                    Vector3 novaPosicao;
 
-                personagem.VerificarComportamento("selecionarAlvo");
-                personagem.StartCoroutine(EsperarVFX(personagem));
+                    if (EncontrarPosicao(personagem, posOrigem, out novaPosicao))
+                    {
+                        personagem.transform.position = novaPosicao;
+
+                        if (personagem.personagem.arma.armaDano == TipoDeDano.DANO_RANGED || personagem.personagem.arma.armaDano == TipoDeDano.DANO_MAGICO)
+                        {
+                            AplicarAtordoamento(personagem);
+                        }
+                    }
+
+                    if (personagem.vfxHabilidadeAtivaClasse == null)
+                    {
+                        GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position, personagem.transform.rotation, personagem.transform);
+                        personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
+                    }
+                    else
+                    {
+                        personagem.GerenciarVFXHabilidade(1, true);
+                    }
+
+                    personagem.VerificarComportamento("selecionarAlvo");
+                    personagem.StartCoroutine(EsperarVFX(personagem));
+                });
             }
         }   
     }

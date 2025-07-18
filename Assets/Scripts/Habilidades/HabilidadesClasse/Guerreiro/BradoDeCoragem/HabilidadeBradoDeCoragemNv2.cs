@@ -13,24 +13,25 @@ public class HabilidadeBradoDeCoragemNv2 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
-                personagem.podeAtivarEfeitoHabilidadeAtivaClasse = false;
-
                 personagem.GastarSP(custoDeMana);
 
-                personagem.imuneAStun = true;
-                personagem.imuneAKnockback = true;
-
-                if (personagem.vfxHabilidadeAtivaClasse == null)
+                base.ChecarCastingHabilidade1(personagem, () =>
                 {
-                    GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
-                    personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
-                }
-                else
-                {
-                    personagem.GerenciarVFXHabilidade(1, true);
-                }
+                    personagem.imuneAStun = true;
+                    personagem.imuneAKnockback = true;
 
-                base.AtivarEfeito(personagem);
+                    if (personagem.vfxHabilidadeAtivaClasse == null)
+                    {
+                        GameObject vfxInstanciado = GameObject.Instantiate(vfx, personagem.transform.position + Vector3.zero, personagem.transform.rotation, personagem.transform);
+                        personagem.vfxHabilidadeAtivaClasse = vfxInstanciado;
+                    }
+                    else
+                    {
+                        personagem.GerenciarVFXHabilidade(1, true);
+                    }
+
+                    base.AtivarEfeito(personagem);
+                });
             }
         }
     }
