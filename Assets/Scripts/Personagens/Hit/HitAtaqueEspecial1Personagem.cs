@@ -34,13 +34,13 @@ public class HitAtaqueEspecial1Personagem : MonoBehaviour
                 switch (_personagemPai.personagem.arma.armaDano)
                 {
                     case TipoDeDano.DANO_MELEE:
-                        alvoDoDano.SofrerDano(dano, false);
+                        alvoDoDano.SofrerDano(dano, false, _personagemPai);
                         break;
                     case TipoDeDano.DANO_RANGED:
-                        alvoDoDano.SofrerDano(dano, false);
+                        alvoDoDano.SofrerDano(dano, false, _personagemPai);
                         break;
                     case TipoDeDano.DANO_MAGICO:
-                        alvoDoDano.SofrerDano(dano, false);
+                        alvoDoDano.SofrerDano(dano, false, _personagemPai);
                         break;
                 }
             }

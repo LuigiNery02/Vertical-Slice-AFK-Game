@@ -165,6 +165,15 @@ public class IAPersonagemBase : MonoBehaviour
     [HideInInspector]
     public event EfeitoPorDanoCausado OnDanoCausadoComEfeito;
 
+    public delegate void EfeitoPorMorteCausada();
+    public EfeitoPorMorteCausada efeitoPorMorteCausada;
+    [HideInInspector]
+    public bool efeitoPorMorteCausadaAtivada; //verifica se efeitos por mortes causadas de habilidades estão ativados
+    [HideInInspector]
+    public Dictionary<string, EfeitoPorMorteCausada> efeitosPorMortesCausadas = new();
+    [HideInInspector]
+    public event EfeitoPorMorteCausada OnMorteCausadaComEfeito;
+
     public event Action<int> aoGastarWillPower;
     public event Action<int> aoReceberWillPower;
 
@@ -884,7 +893,7 @@ public class IAPersonagemBase : MonoBehaviour
         //causa dano ao personagem se ele for um personagem inimigo e é o alvo atual deste personagem
         if (personagem.controlador != this.controlador && personagem == _personagemAlvo)
         {
-            personagem.SofrerDano(dano, critico);
+            personagem.SofrerDano(dano, critico, this);
 
             if (efeitoPorDanoCausadoAtivado)
             {
@@ -923,7 +932,7 @@ public class IAPersonagemBase : MonoBehaviour
         personagem.textoHP.gameObject.SetActive(false); //desativa o texto
     }
 
-    public void SofrerDano(float dano, bool critico) //função para sofrer dano
+    public void SofrerDano(float dano, bool critico, IAPersonagemBase inimigo) //função para sofrer dano
     {
         if(efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.EXPOSTO)
         {
@@ -974,6 +983,11 @@ public class IAPersonagemBase : MonoBehaviour
             hpAtual = 0;
             medo = false;
             VerificarComportamento("morrer");
+
+            if(inimigo != null && inimigo != this && inimigo.efeitoPorMorteCausadaAtivada)
+            {
+                inimigo.ExecutarEfeitosDeMorteCausada();
+            }
         }
         else
         {
@@ -1418,6 +1432,31 @@ public class IAPersonagemBase : MonoBehaviour
         OnDanoCausadoComEfeito?.Invoke();
     }
 
+    public void AtivarEfeitoPorMorteCausada(string chave, EfeitoPorMorteCausada efeito)
+    {
+        if (efeitosPorMortesCausadas.ContainsKey(chave))
+        {
+            OnMorteCausadaComEfeito -= efeitosPorMortesCausadas[chave];
+        }
+
+        efeitosPorMortesCausadas[chave] = efeito;
+        OnMorteCausadaComEfeito += efeito;
+    }
+
+    public void RemoverEfeitoPorMorteCausada(string chave)
+    {
+        if (efeitosPorMortesCausadas.TryGetValue(chave, out var efeito))
+        {
+            OnMorteCausadaComEfeito -= efeito;
+            efeitosPorMortesCausadas.Remove(chave);
+        }
+    }
+
+    public void ExecutarEfeitosDeMorteCausada()
+    {
+        OnMorteCausadaComEfeito?.Invoke();
+    }
+
     public void Stun()
     {
         if (!imuneAStun)
@@ -1460,7 +1499,7 @@ public class IAPersonagemBase : MonoBehaviour
                 yield break;
             }
 
-            SofrerDano(danoPorTick, false);
+            SofrerDano(danoPorTick, false, this);
 
             yield return new WaitForSeconds(intervalo);
             tempoDecorrido += intervalo;

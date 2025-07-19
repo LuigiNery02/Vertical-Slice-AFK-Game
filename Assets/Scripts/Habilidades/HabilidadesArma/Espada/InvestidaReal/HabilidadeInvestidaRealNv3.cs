@@ -63,7 +63,7 @@ public class HabilidadeInvestidaRealNv3 : HabilidadeAtiva
                 personagem._personagemAlvo.VerificarComportamento("stun");
 
                 float dano = (personagem._dano * multilpicadorAtaque);
-                personagem._personagemAlvo.SofrerDano(dano, false);
+                personagem._personagemAlvo.SofrerDano(dano, false, personagem);
                 personagem.GerenciarVFXHabilidade(2, false);
 
                 RemoverEfeito(personagem);

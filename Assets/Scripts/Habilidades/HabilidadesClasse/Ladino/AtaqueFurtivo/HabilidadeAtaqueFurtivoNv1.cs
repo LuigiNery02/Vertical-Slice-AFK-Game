@@ -28,7 +28,7 @@ public class HabilidadeAtaqueFurtivoNv1 : HabilidadeAtiva
                         personagem.transform.position = novaPosicao;
 
                         float dano = personagem._dano * multiplicadorDeDano;
-                        personagem._personagemAlvo.SofrerDano(dano, false);
+                        personagem._personagemAlvo.SofrerDano(dano, false, personagem);
                         personagem._personagemAlvo.AtualizarMarcadoresDeAlvo(valorMarcadores, true);
                     }
 
