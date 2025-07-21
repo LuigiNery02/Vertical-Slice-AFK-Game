@@ -47,7 +47,6 @@ public class HabilidadeFarolGuiaNv1 : HabilidadePassiva
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
         personagem.RemoverEfeitoPorDanoCausado("FarolGuiaNv1");
-        personagem.efeitoPorDanoCausadoAtivado = false;
         base.RemoverEfeito(personagem);
         personagem.GerenciarVFXHabilidade(4, false);
     }

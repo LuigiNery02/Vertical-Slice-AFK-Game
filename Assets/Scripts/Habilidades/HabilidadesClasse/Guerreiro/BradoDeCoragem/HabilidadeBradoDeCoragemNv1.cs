@@ -49,7 +49,6 @@ public class HabilidadeBradoDeCoragemNv1 : HabilidadeAtiva
         personagem.imuneAStun = false;
         personagem.imuneAKnockback = false;
         personagem.RemoverEfeitoPorAtaqueRecebido("BradoDeCoragemNv1");
-        personagem.efeitoPorAtaqueRecebidoAtivado = false;
         base.RemoverEfeito(personagem);
         personagem.GerenciarVFXHabilidade(1, false);
     }

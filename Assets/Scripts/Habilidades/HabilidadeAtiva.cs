@@ -37,21 +37,18 @@ public class HabilidadeAtiva : HabilidadeBase
 
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
-        if (tempoDeRecarga != 0)
+        int indice = 0;
+
+        if (tipoDeHabilidade == TipoDeHabilidade.Classe)
         {
-            int indice = 0;
-
-            if (tipoDeHabilidade == TipoDeHabilidade.Classe)
-            {
-                indice = 1;
-            }
-            else if (tipoDeHabilidade == TipoDeHabilidade.Arma)
-            {
-                indice = 2;
-            }
-
-            personagem.EsperarRecargaHabilidade(indice, tempoDeRecarga);
+            indice = 1;
         }
+        else if (tipoDeHabilidade == TipoDeHabilidade.Arma)
+        {
+            indice = 2;
+        }
+
+        personagem.EsperarRecargaHabilidade(indice, tempoDeRecarga);
     }
 
     public bool ChecarAtivacao(IAPersonagemBase personagem)

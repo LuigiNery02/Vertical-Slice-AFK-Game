@@ -30,7 +30,6 @@ public class HabilidadeAssassinatoEmCadeiaNv1 : HabilidadePassiva
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
         personagem.RemoverEfeitoPorAtaque("AssassinatoEmCadeiaNv1");
-        personagem.efeitoPorAtaqueAtivado = false;
     }
 
     private bool CalcularChanceDeEfeito(float chanceDeEfeito)

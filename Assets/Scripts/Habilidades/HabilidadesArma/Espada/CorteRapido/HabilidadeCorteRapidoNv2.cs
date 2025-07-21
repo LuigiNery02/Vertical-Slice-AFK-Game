@@ -63,7 +63,6 @@ public class HabilidadeCorteRapidoNv2 : HabilidadeAtiva
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
         personagem.RemoverEfeitoPorAtaque("CorteRapidoNv2");
-        personagem.efeitoPorAtaqueAtivado = false;
         personagem.GerenciarVFXHabilidade(2, false);
         base.RemoverEfeito(personagem);
     }

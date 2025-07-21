@@ -45,7 +45,6 @@ public class HabilidadeEspadaBastardaNv3 : HabilidadePassiva
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
         personagem.RemoverEfeitoPorAtaque("EspadaBastardaNv3");
-        personagem.efeitoPorDanoCausadoAtivado = false;
         base.RemoverEfeito(personagem);
     }
 }

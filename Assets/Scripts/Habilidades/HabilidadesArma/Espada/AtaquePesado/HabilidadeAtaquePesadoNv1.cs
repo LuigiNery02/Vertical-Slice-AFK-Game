@@ -64,7 +64,6 @@ public class HabilidadeAtaquePesadoNv1 : HabilidadeAtiva
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
         personagem.RemoverEfeitoPorAtaque("AtaquePesadoNv1");
-        personagem.efeitoPorAtaqueAtivado = false;
         base.RemoverEfeito(personagem);
         personagem.GerenciarVFXHabilidade(2, false);
     }

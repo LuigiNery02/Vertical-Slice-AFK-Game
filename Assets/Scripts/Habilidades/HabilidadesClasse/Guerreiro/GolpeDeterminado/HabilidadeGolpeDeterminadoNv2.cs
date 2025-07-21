@@ -66,7 +66,6 @@ public class HabilidadeGolpeDeterminadoNv2 : HabilidadeAtiva
     {
         
         personagem.RemoverEfeitoPorAtaque("GolpeDeterminadoNv2");
-        personagem.efeitoPorAtaqueAtivado = false;
         base.RemoverEfeito(personagem);
         personagem.GerenciarVFXHabilidade(1, false);
     }

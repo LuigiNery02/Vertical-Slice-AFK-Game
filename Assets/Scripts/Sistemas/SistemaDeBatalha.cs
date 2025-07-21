@@ -483,6 +483,8 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                 //personagem.habilidade2.StopAllCoroutines();
                 personagem.habilidadePassivaArma.RemoverEfeito(personagem);
             }
+
+            personagem.RemoverEfeitosActions();
         }
 
         yield return new WaitForSeconds(1.5f); //aguarda 1,5 segundo

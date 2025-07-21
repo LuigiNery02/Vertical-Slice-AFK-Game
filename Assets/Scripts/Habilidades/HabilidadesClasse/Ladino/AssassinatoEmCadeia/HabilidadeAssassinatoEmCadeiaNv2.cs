@@ -33,7 +33,5 @@ public class HabilidadeAssassinatoEmCadeiaNv2 : HabilidadePassiva
     {
         personagem.RemoverEfeitoPorAtaque("AssassinatoEmCadeiaNv2");
         personagem.RemoverEfeitoPorMorteCausada("AssassinatoEmCadeiaNv2");
-        personagem.efeitoPorAtaqueAtivado = false;
-        personagem.efeitoPorMorteCausadaAtivada = false;
     }
 }

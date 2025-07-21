@@ -99,7 +99,6 @@ public class HabilidadePunhoDaDisciplinaNv3 : HabilidadeAtiva
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
         personagem.RemoverEfeitoPorAtaque("PunhoDaDisciplinaNv3");
-        personagem.efeitoPorAtaqueAtivado = false;
         personagem.GerenciarVFXHabilidade(1, false);
         base.RemoverEfeito(personagem);
     }

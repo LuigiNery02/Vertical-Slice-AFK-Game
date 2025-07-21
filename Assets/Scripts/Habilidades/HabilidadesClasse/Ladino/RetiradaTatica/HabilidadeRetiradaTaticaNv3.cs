@@ -28,7 +28,6 @@ public class HabilidadeRetiradaTaticaNv3 : HabilidadeAtiva
                         {
                             personagem._personagemAlvo.AtualizarMarcadoresDeAlvo(valorMarcadores, true);
                             personagem.RemoverEfeitoPorAtaque("RetiradaTaticaNv3");
-                            personagem.efeitoPorAtaqueAtivado = false;
                         }
                     });
 

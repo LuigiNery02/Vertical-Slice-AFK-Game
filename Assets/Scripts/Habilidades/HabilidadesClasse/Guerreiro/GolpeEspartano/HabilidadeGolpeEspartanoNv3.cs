@@ -61,7 +61,6 @@ public class HabilidadeGolpeEspartanoNv3 : HabilidadeAtiva
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
         personagem.RemoverEfeitoPorAtaque("GolpeEspartanoNv3");
-        personagem.efeitoPorAtaqueAtivado = false;
         base.RemoverEfeito(personagem);
         personagem.GerenciarVFXHabilidade(1, false);
     }

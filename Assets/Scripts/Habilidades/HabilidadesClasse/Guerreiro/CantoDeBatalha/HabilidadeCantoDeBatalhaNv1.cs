@@ -32,7 +32,7 @@ public class HabilidadeCantoDeBatalhaNv1 : HabilidadeAtiva
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
         personagem.GerenciarVFXHabilidade(1, false);
-        personagem.podeAtivarEfeitoHabilidadeAtivaClasse = true;
+        base.RemoverEfeito(personagem);
     }
 
     private IEnumerator ExecutarBuff(IAPersonagemBase personagem)

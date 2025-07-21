@@ -50,7 +50,7 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("Ataque")]
     [HideInInspector]
     public float precisao; //precisão do personagem
-    [HideInInspector]
+    //[HideInInspector]
     public float _dano; //valor do dano do ataque do personagem
     [HideInInspector]
     public float _velocidadeDeAtaque; //valor da velocidade de ataque do personagem
@@ -1531,6 +1531,14 @@ public class IAPersonagemBase : MonoBehaviour
         ataqueDiminuido = false;
         sangramento = false;
         medo = false;
+    }
+
+    public void RemoverEfeitosActions()
+    {
+        efeitoPorAtaqueAtivado = false;
+        efeitoPorAtaqueRecebidoAtivado = false;
+        efeitoPorDanoCausadoAtivado = false;
+        efeitoPorMorteCausadaAtivada = false;
     }
     #endregion
 

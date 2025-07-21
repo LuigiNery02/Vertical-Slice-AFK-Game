@@ -38,8 +38,6 @@ public class HabilidadeAssassinatoEmCadeiaNv3 : HabilidadePassiva
     {
         personagem.RemoverEfeitoPorAtaque("AssassinatoEmCadeiaNv3");
         personagem.RemoverEfeitoPorMorteCausada("AssassinatoEmCadeiaNv3");
-        personagem.efeitoPorAtaqueAtivado = false;
-        personagem.efeitoPorMorteCausadaAtivada = false;
     }
 
     IEnumerator EsperarBuffAtaque(IAPersonagemBase personagem)

@@ -54,7 +54,6 @@ public class HabilidadeLaminaExtraNv3 : HabilidadeAtiva
 
     public override void RemoverEfeito(IAPersonagemBase personagem)
     {
-        personagem.efeitoPorAtaqueAtivado = false;
         base.RemoverEfeito(personagem);
         personagem.GerenciarVFXHabilidade(2, false);
     }
