@@ -127,7 +127,8 @@ public class IAPersonagemBase : MonoBehaviour
     public Transform _alvoAtual; //transform do personagem alvo
     private SistemaDeBatalha _sistemaDeBatalha; //sistema de batalha
     private GerenciadorDeObjectPool _gerenciadorDePool; //gerenciador de object pool
-    private HitAtaquePersonagem _hitAtaquePersonagem; //hit do personagem
+    [HideInInspector]
+    public HitAtaquePersonagem _hitAtaquePersonagem; //hit do personagem
     [HideInInspector] 
     public Vector3 posicaoInicial; //posição inicial do personagem
     [HideInInspector]
@@ -181,6 +182,7 @@ public class IAPersonagemBase : MonoBehaviour
     public bool stunado;
     [HideInInspector]
     public float tempoDeStun;
+    public HashSet<IAPersonagemBase> bonusStunAplicado = new HashSet<IAPersonagemBase>();
     [HideInInspector]
     public bool ataqueDiminuido;
     [HideInInspector]
@@ -197,9 +199,19 @@ public class IAPersonagemBase : MonoBehaviour
     public bool medo;
     [HideInInspector]
     public float reducaoDanoMedo;
+    [HideInInspector]
+    public float multiplicadorEfeitosNegativos;
+    [HideInInspector]
+    public float multiplicadorEfeitosPositivosParaEfeitosNegativos;
 
     [HideInInspector]
     public bool recebeuDebuffPunhoDisciplina;
+    [HideInInspector]
+    public bool rebaterHit;
+    [HideInInspector]
+    public int numeroDeRebatesDoHit;
+    [HideInInspector]
+    public int rebatesRestantesFlechaEstatica;
 
     [HideInInspector]
     public bool conjurandoHabilidade;
@@ -510,9 +522,16 @@ public class IAPersonagemBase : MonoBehaviour
         imuneAMagias = false;
         imuneAStun = false;
         imuneAKnockback = false;
-        recebeuDebuffPunhoDisciplina = false;
         sangramento = false;
         medo = false;
+        tempoDeStun = 0;
+        reducaoDanoMedo = 0;
+        multiplicadorEfeitosNegativos = 0;
+        multiplicadorEfeitosPositivosParaEfeitosNegativos = 0;
+        recebeuDebuffPunhoDisciplina = false;
+        rebaterHit = false;
+        numeroDeRebatesDoHit = 0;
+        rebatesRestantesFlechaEstatica = 0;
     }
 
     private void Update()
@@ -804,6 +823,8 @@ public class IAPersonagemBase : MonoBehaviour
                     {
                         hit._personagemPai = this;
                         hit.usarSFX = _usarSFX;
+                        hit.rebater = rebaterHit;
+                        hit.numeroDeRebates = numeroDeRebatesDoHit;
                         hit.MoverAteAlvo(_alvoAtual, personagem.arma.velocidadeDoProjetil);
                         hit.poolKey = chaveDoPool;
                         hit.gerenciadorDePool = _gerenciadorDePool;
@@ -880,6 +901,11 @@ public class IAPersonagemBase : MonoBehaviour
 
         if (medo)
         {
+            reducaoDanoMedo -= multiplicadorEfeitosPositivosParaEfeitosNegativos;
+            if(reducaoDanoMedo < 0f)
+            {
+                reducaoDanoMedo = 0;
+            }
             dano -= (dano * reducaoDanoMedo);
         }
 
@@ -891,7 +917,7 @@ public class IAPersonagemBase : MonoBehaviour
         }
 
         //causa dano ao personagem se ele for um personagem inimigo e é o alvo atual deste personagem
-        if (personagem.controlador != this.controlador && personagem == _personagemAlvo)
+        if (personagem.controlador != this.controlador)
         {
             personagem.SofrerDano(dano, critico, this);
 
@@ -934,13 +960,25 @@ public class IAPersonagemBase : MonoBehaviour
 
     public void SofrerDano(float dano, bool critico, IAPersonagemBase inimigo) //função para sofrer dano
     {
-        if(efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.EXPOSTO)
+        if (efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.EXPOSTO)
         {
-            dano += (dano * 0.2f);
+            float danoExposto = 0.2f + multiplicadorEfeitosNegativos;
+            danoExposto -= multiplicadorEfeitosPositivosParaEfeitosNegativos;
+            if(danoExposto <= 0)
+            {
+                danoExposto = 0;
+            }
+            dano *= (1 + danoExposto);
         }
-        else if(efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.MARCADO_PARA_EXECUCAO)
+        else if (efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.MARCADO_PARA_EXECUCAO)
         {
-            dano = (dano * 3);
+            float danoMarcadoExecucao = 3 + multiplicadorEfeitosNegativos;
+            danoMarcadoExecucao -= multiplicadorEfeitosPositivosParaEfeitosNegativos;
+            if(danoMarcadoExecucao <= 0)
+            {
+                danoMarcadoExecucao = 0;
+            }
+            dano *= danoMarcadoExecucao;
         }
 
         if (escudoAtivado)
@@ -995,7 +1033,19 @@ public class IAPersonagemBase : MonoBehaviour
             {
                 if (!stunado)
                 {
-                    tempoDeStun = 0.25f;
+                    if(tempoDeStun == 0)
+                    {
+                        if(multiplicadorEfeitosPositivosParaEfeitosNegativos != 0)
+                        {
+                            tempoDeStun = 0.25f;
+                            float tempoStun = tempoDeStun * multiplicadorEfeitosPositivosParaEfeitosNegativos;
+                            tempoDeStun -= tempoStun;
+                        }
+                        else
+                        {
+                            tempoDeStun = 0.25f;
+                        }
+                    }
                     Stun();
                 }
             }
@@ -1307,6 +1357,7 @@ public class IAPersonagemBase : MonoBehaviour
                 break;
             case 3:
                 efeitoMarcadorDeAlvo = EfeitoMarcadorDeAlvo.ATORDOADO;
+                VerificarComportamento("stun");
                 break;
             case 4:
                 efeitoMarcadorDeAlvo = EfeitoMarcadorDeAlvo.CORTACURA;
@@ -1469,7 +1520,13 @@ public class IAPersonagemBase : MonoBehaviour
 
     IEnumerator EsperarTempoStun()
     {
-        yield return new WaitForSeconds(tempoDeStun);
+        float tempoRestante = tempoDeStun;
+        while (tempoRestante > 0)
+        {
+            yield return null;
+            tempoRestante -= Time.deltaTime;
+        }
+
         if (_comportamento != EstadoDoPersonagem.MORTO && _sistemaDeBatalha.batalhaIniciou && _comportamento != EstadoDoPersonagem.IDLE)
         {
             stunado = false;

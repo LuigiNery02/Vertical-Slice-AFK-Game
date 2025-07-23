@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-sealed class HitAtaquePersonagem : MonoBehaviour
+public class HitAtaquePersonagem : MonoBehaviour
 {
     [HideInInspector]
     public IAPersonagemBase _personagemPai; //personagem que criou este ataque
@@ -16,6 +17,11 @@ sealed class HitAtaquePersonagem : MonoBehaviour
     public GerenciadorDeObjectPool gerenciadorDePool; //gerenciador do pool
 
     public bool longaDistancia; //variável para verificar se este ataque é de longa distancia
+    //[HideInInspector]
+    public bool rebater;
+    [HideInInspector]
+    public int numeroDeRebates;
+    private int rebatesAtuais;
     [HideInInspector]
     public bool usarSFX; //variável para verificar se deve usar SFX
 
@@ -29,6 +35,17 @@ sealed class HitAtaquePersonagem : MonoBehaviour
 
     private void OnDisable() //quando for desativado
     {
+        if (rebater)
+        {
+            rebater = false;
+            numeroDeRebates = 0;
+            rebatesAtuais = 0;
+            if (_personagemPai != null)
+            {
+                _personagemPai.rebatesRestantesFlechaEstatica = rebatesAtuais;
+            }
+        }
+        
         //desativa a trilha caso for um projétil
         if (longaDistancia)
         {
@@ -97,7 +114,7 @@ sealed class HitAtaquePersonagem : MonoBehaviour
         {
             IAPersonagemBase alvo = other.GetComponent<IAPersonagemBase>(); //define o personagem colidido como alvo
 
-            if(other != _personagemPai && alvo._comportamento != EstadoDoPersonagem.MORTO && alvo == _personagemPai._personagemAlvo)
+            if(other != _personagemPai && alvo._comportamento != EstadoDoPersonagem.MORTO && alvo.controlador != _personagemPai.controlador)
             {
                 //define para o personagem que este ataque colidiu com um personagem
                 IAPersonagemBase alvoDoDano = other.GetComponent<IAPersonagemBase>();
@@ -157,15 +174,54 @@ sealed class HitAtaquePersonagem : MonoBehaviour
                     //}
                 }
 
-                //verifica se volta para o pool ou se auto desativa
-
-                if (gerenciadorDePool != null && longaDistancia)
+                if (rebater)
                 {
-                    gerenciadorDePool.DevolverPool(poolKey, gameObject);
+                    if(rebatesAtuais < numeroDeRebates)
+                    {
+                        rebatesAtuais++;
+                        _personagemPai.rebatesRestantesFlechaEstatica = rebatesAtuais;
+                        IAPersonagemBase proximoAlvo = EncontrarOutroAlvo(alvoDoDano);
+                        if (proximoAlvo != null)
+                        {
+                            MoverAteAlvo(proximoAlvo.transform, _personagemPai.personagem.arma.velocidadeDoProjetil);
+                        }
+                        else
+                        {
+                            //verifica se volta para o pool ou se auto desativa
+                            if (gerenciadorDePool != null && longaDistancia)
+                            {
+                                gerenciadorDePool.DevolverPool(poolKey, gameObject);
+                            }
+                            else
+                            {
+                                gameObject.SetActive(false);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //verifica se volta para o pool ou se auto desativa
+                        if (gerenciadorDePool != null && longaDistancia)
+                        {
+                            gerenciadorDePool.DevolverPool(poolKey, gameObject);
+                        }
+                        else
+                        {
+                            gameObject.SetActive(false);
+                        }
+                    }
                 }
                 else
                 {
-                    gameObject.SetActive(false);
+                    //verifica se volta para o pool ou se auto desativa
+                    if (gerenciadorDePool != null && longaDistancia)
+                    {
+                        gerenciadorDePool.DevolverPool(poolKey, gameObject);
+                    }
+                    else
+                    {
+                        gameObject.SetActive(false);
+                    }
                 }
             }
         }
@@ -179,7 +235,6 @@ sealed class HitAtaquePersonagem : MonoBehaviour
             if (other.GetComponent<HitAtaquePersonagem>() == null) //verifica se não colidiu com outro hit
             {
                 //verifica se volta para o pool ou se auto desativa
-
                 if (gerenciadorDePool != null && longaDistancia)
                 {
                     gerenciadorDePool.DevolverPool(poolKey, gameObject);
@@ -221,4 +276,30 @@ sealed class HitAtaquePersonagem : MonoBehaviour
 
         return rng < chance;
     }
+
+    private IAPersonagemBase EncontrarOutroAlvo(IAPersonagemBase excluido)
+    {
+        IAPersonagemBase[] personagens = FindObjectsOfType<IAPersonagemBase>();
+
+        float menorDistancia = float.MaxValue;
+        IAPersonagemBase alvoMaisProximo = null;
+
+        foreach (var possivelAlvo in personagens)
+        {
+            if (possivelAlvo == excluido || possivelAlvo == _personagemPai || possivelAlvo._comportamento == EstadoDoPersonagem.MORTO || possivelAlvo.controlador == _personagemPai.controlador)
+            {
+                continue;
+            }
+
+            float dist = Vector3.Distance(possivelAlvo.transform.position, excluido.transform.position);
+            if (dist < menorDistancia && dist <= 20f)
+            {
+                menorDistancia = dist;
+                alvoMaisProximo = possivelAlvo;
+            }
+        }
+
+        return alvoMaisProximo;
+    }
+
 }
