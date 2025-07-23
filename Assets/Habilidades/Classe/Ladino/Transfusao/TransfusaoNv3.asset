@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b9cd4f1dacabb47861b9b54eaa1c9c, type: 3}
   m_Name: TransfusaoNv3
   m_EditorClassIdentifier: 
-  nome: 
-  descricao: 
+  nome: "Traunsfus\xE3o"
+  descricao: "Os efeitos negativos causados a membros do grupo causam -20% de efeitos.\r"
   tipoDeHabilidade: 0
-  modoDeAtivacao: 0
-  nivel: 0
-  spriteHabilidade: {fileID: 0}
-  idHabilidade: 
+  modoDeAtivacao: 1
+  nivel: 3
+  spriteHabilidade: {fileID: 21300000, guid: 098dafe51c34c254286ed83a925ed4d5, type: 3}
+  idHabilidade: HabilidadeTransfusao
   habilidadeProximoNivel: {fileID: 0}
   multiplicadorEfeitosNegativos: 0.2

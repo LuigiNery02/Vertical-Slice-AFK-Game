@@ -28,3 +28,7 @@ MonoBehaviour:
   castVariavel: 0
   tempoDeEfeito: 0
   tempoDeRecarga: 0
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
+  numeroDeRebates: 1
+  vfx: {fileID: 9080140021571130472, guid: 82066d902ed0dd6488ddfd32eb994801, type: 3}

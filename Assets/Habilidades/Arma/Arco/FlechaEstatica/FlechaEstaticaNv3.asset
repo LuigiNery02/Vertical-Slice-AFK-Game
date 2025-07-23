@@ -16,9 +16,9 @@ MonoBehaviour:
   descricao: "Seus ataques b\xE1sicos passam a ser do elemento Vento e rebatem para
     tr\xEAs inimigos adicionais\nElemento: Vento\nCast Fixo: Instant\xE2neo\nCast
     Vari\xE1vel: Instant\xE2neo\nCusto de Mana: 6\nCooldown: 0 segundos\r\n\r\n"
-  tipoDeHabilidade: 0
+  tipoDeHabilidade: 1
   modoDeAtivacao: 0
-  nivel: 0
+  nivel: 3
   spriteHabilidade: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}
   idHabilidade: HabilidadeFlechaEstatica
   habilidadeProximoNivel: {fileID: 0}
@@ -28,3 +28,7 @@ MonoBehaviour:
   castVariavel: 0
   tempoDeEfeito: 0
   tempoDeRecarga: 0
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
+  numeroDeRebates: 3
+  vfx: {fileID: 9080140021571130472, guid: 82066d902ed0dd6488ddfd32eb994801, type: 3}

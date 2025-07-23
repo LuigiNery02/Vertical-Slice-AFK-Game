@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99cbd5e4c78cd88479922c6a857c3cef, type: 3}
+  m_Name: DisparoPrecisoNv1
+  m_EditorClassIdentifier: 
+  nome: Disparo Preciso
+  descricao: "Atira uma flecha pesada diretamente em um inimigo, causando 200% de
+    ATQ\nElemento: Neutro\nCast Fixo: 1 segundos\nCast Vari\xE1vel: 1 segundos\nCusto
+    de Mana: 36\nCooldown: 12 segundos\r"
+  tipoDeHabilidade: 1
+  modoDeAtivacao: 0
+  nivel: 1
+  spriteHabilidade: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}
+  idHabilidade: HabilidadeDisparoPreciso
+  habilidadeProximoNivel: {fileID: 11400000, guid: b0d73dcca198bf844902c09779f3da02, type: 2}
+  elemento: 0
+  custoDeMana: 36
+  castFixo: 1
+  castVariavel: 1
+  tempoDeEfeito: 0
+  tempoDeRecarga: 12
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
+  multiplicadorDeDano: 2
+  vfx: {fileID: 7155335147208632822, guid: 97c43495f80a3244fad1301dfafbe252, type: 3}

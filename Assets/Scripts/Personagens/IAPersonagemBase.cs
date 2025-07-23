@@ -212,6 +212,8 @@ public class IAPersonagemBase : MonoBehaviour
     public int numeroDeRebatesDoHit;
     [HideInInspector]
     public int rebatesRestantesFlechaEstatica;
+    [HideInInspector]
+    public bool atravessarHit;
 
     [HideInInspector]
     public bool conjurandoHabilidade;
@@ -532,6 +534,7 @@ public class IAPersonagemBase : MonoBehaviour
         rebaterHit = false;
         numeroDeRebatesDoHit = 0;
         rebatesRestantesFlechaEstatica = 0;
+        atravessarHit = false;
     }
 
     private void Update()
@@ -825,9 +828,11 @@ public class IAPersonagemBase : MonoBehaviour
                         hit.usarSFX = _usarSFX;
                         hit.rebater = rebaterHit;
                         hit.numeroDeRebates = numeroDeRebatesDoHit;
+                        hit.atravessar = atravessarHit;
                         hit.MoverAteAlvo(_alvoAtual, personagem.arma.velocidadeDoProjetil);
                         hit.poolKey = chaveDoPool;
                         hit.gerenciadorDePool = _gerenciadorDePool;
+                        _hitAtaquePersonagem = hit;
                     }
                 }
             }

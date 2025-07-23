@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class HitAtaquePersonagem : MonoBehaviour
@@ -17,11 +16,18 @@ public class HitAtaquePersonagem : MonoBehaviour
     public GerenciadorDeObjectPool gerenciadorDePool; //gerenciador do pool
 
     public bool longaDistancia; //variável para verificar se este ataque é de longa distancia
-    //[HideInInspector]
+    [HideInInspector]
     public bool rebater;
     [HideInInspector]
     public int numeroDeRebates;
     private int rebatesAtuais;
+    [HideInInspector]
+    public bool atravessar;
+    private Vector3 direcaoContinuaAposAtravessar;
+
+    [HideInInspector]
+    public System.Action<IAPersonagemBase> efeitoExtraAoAtingirAlvo;
+
     [HideInInspector]
     public bool usarSFX; //variável para verificar se deve usar SFX
 
@@ -53,7 +59,14 @@ public class HitAtaquePersonagem : MonoBehaviour
             {
                 _trailRenderer.enabled = false;
             }
+
+            if(_personagemPai != null)
+            {
+                _personagemPai._hitAtaquePersonagem = null;
+            }
         }
+
+        efeitoExtraAoAtingirAlvo = null;
     }
 
     private void Update()
@@ -144,7 +157,12 @@ public class HitAtaquePersonagem : MonoBehaviour
                             break;
                     }
 
-                    if(_personagemPai.personagem.statusEspecial == StatusEspecial.Willpower)
+                    if (efeitoExtraAoAtingirAlvo != null)
+                    {
+                        efeitoExtraAoAtingirAlvo.Invoke(alvoDoDano);
+                    }
+
+                    if (_personagemPai.personagem.statusEspecial == StatusEspecial.Willpower)
                     {
                         _personagemPai.AtualizarWillPower(1, true);
                     }
@@ -211,6 +229,22 @@ public class HitAtaquePersonagem : MonoBehaviour
                         }
                     }
                 }
+                else if (atravessar)
+                {
+                    Collider colisor = GetComponent<Collider>();
+                    if (colisor != null)
+                    {
+                        colisor.enabled = false;
+                    }
+
+                    _trailRenderer = GetComponent<TrailRenderer>();
+                    if (_trailRenderer != null)
+                    {
+                        _trailRenderer.enabled = true;
+                    }
+
+                    StartCoroutine(Atravessar());
+                }
                 else
                 {
                     //verifica se volta para o pool ou se auto desativa
@@ -258,6 +292,10 @@ public class HitAtaquePersonagem : MonoBehaviour
         _velocidade = velocidade;
         longaDistancia = true;
 
+        Vector3 direcao = (_alvo.position - transform.position);
+        direcao.y = 0f;
+        direcaoContinuaAposAtravessar = direcao.normalized;
+
         //ativa a trilha caso for um projétil
         if (longaDistancia)
         {
@@ -301,5 +339,38 @@ public class HitAtaquePersonagem : MonoBehaviour
 
         return alvoMaisProximo;
     }
+
+    IEnumerator Atravessar()
+    {
+        float tempo = 0f;
+        float duracao = 2f; 
+        float velocidade = _velocidade;
+
+        Vector3 direcao = direcaoContinuaAposAtravessar;
+
+        yield return new WaitForSeconds(0.05f);
+        Collider colisor = GetComponent<Collider>();
+        if (colisor != null)
+        {
+            colisor.enabled = true;
+        }
+
+        while (tempo < duracao)
+        {
+            transform.position += direcao * velocidade * Time.deltaTime;
+            tempo += Time.deltaTime;
+            yield return null;
+        }
+
+        if (gerenciadorDePool != null && longaDistancia)
+        {
+            gerenciadorDePool.DevolverPool(poolKey, gameObject);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
 
 }

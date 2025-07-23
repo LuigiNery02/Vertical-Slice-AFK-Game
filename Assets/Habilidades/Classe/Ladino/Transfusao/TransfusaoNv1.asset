@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0f1af9d3e9f814fafa02cbb00209d2, type: 3}
   m_Name: TransfusaoNv1
   m_EditorClassIdentifier: 
-  nome: 
-  descricao: 
+  nome: "Traunsfus\xE3o"
+  descricao: "Aumenta os efeitos negativos causados em +2 segundos de dura\xE7\xE3o.\r"
   tipoDeHabilidade: 0
-  modoDeAtivacao: 0
-  nivel: 0
-  spriteHabilidade: {fileID: 0}
-  idHabilidade: 
-  habilidadeProximoNivel: {fileID: 0}
+  modoDeAtivacao: 1
+  nivel: 1
+  spriteHabilidade: {fileID: 21300000, guid: 098dafe51c34c254286ed83a925ed4d5, type: 3}
+  idHabilidade: HabilidadeTransfusao
+  habilidadeProximoNivel: {fileID: 11400000, guid: b837b98a7118a6b4ea0cf89c45cdddfb, type: 2}
   tempoExtraEfeitosNegativos: 2
