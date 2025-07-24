@@ -52,7 +52,10 @@ public class HabilidadeAscenderNv1 : HabilidadePassiva
             foreach (var buff in dados.buffsAtaqueAtivos)
             {
                 if (buff != null)
+                {
                     personagem.StopCoroutine(buff);
+                }
+                    
             }
             dados.buffsAtaqueAtivos.Clear();
         }

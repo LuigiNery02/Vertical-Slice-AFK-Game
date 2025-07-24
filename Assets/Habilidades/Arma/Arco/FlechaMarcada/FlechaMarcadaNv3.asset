@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86824278c93caea46952e1f3f1ec6643, type: 3}
+  m_Name: FlechaMarcadaNv3
+  m_EditorClassIdentifier: 
+  nome: Flecha Marcada
+  descricao: "Ataca o inimigo com maior vida de qualquer dist\xE3ncia, causando 1575%
+    de ATQ\nElemento: Neutro\nCast Fixo: 1 segundos\nCast Vari\xE1vel: 1 segundos\nCusto
+    de Mana: 32\nCooldown: 4 segundos\r\r"
+  tipoDeHabilidade: 1
+  modoDeAtivacao: 0
+  nivel: 3
+  spriteHabilidade: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}
+  idHabilidade: HabilidadeFlechaMarcada
+  habilidadeProximoNivel: {fileID: 0}
+  elemento: 0
+  custoDeMana: 32
+  castFixo: 1
+  castVariavel: 1
+  tempoDeEfeito: 0
+  tempoDeRecarga: 4
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
+  multiplicadorDeDano: 1.75
+  vfx: {fileID: 7155335147208632822, guid: 97c43495f80a3244fad1301dfafbe252, type: 3}

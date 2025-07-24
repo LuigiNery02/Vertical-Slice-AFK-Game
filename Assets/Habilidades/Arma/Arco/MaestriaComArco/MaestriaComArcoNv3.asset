@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297153e038d553f4e81fc25259f02419, type: 3}
+  m_Name: MaestriaComArcoNv3
+  m_EditorClassIdentifier: 
+  nome: Maestria com Arco
+  descricao: "Fornece +60 de Atq utilizando Arcos\r"
+  tipoDeHabilidade: 1
+  modoDeAtivacao: 1
+  nivel: 3
+  spriteHabilidade: {fileID: 21300000, guid: 8d95bcf261f259f4786a397bc66e3705, type: 3}
+  idHabilidade: HabilidadeMaestriaComArco
+  habilidadeProximoNivel: {fileID: 0}
+  buffAtaque: 60

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41c27534df4447419aeff1ad3cba511, type: 3}
+  m_Name: FlechaPorFlechaNv1
+  m_EditorClassIdentifier: 
+  nome: Flecha por Flecha
+  descricao: 'Reduz velocidade de ataque em 50%, ataques causam 200% do dano
+
+    
+
+    
+
+    
+
+'
+  tipoDeHabilidade: 1
+  modoDeAtivacao: 1
+  nivel: 1
+  spriteHabilidade: {fileID: 21300000, guid: 313eb4d0157f6ec418d857892d7b44ad, type: 3}
+  idHabilidade: HabilidadeFlechaPorFlecha
+  habilidadeProximoNivel: {fileID: 11400000, guid: bffdd62c5ad10c546873f118086396b3, type: 2}
+  multiplicadorDeDano: 2
+  reducaoVelocidadeDeAtaque: 0.5

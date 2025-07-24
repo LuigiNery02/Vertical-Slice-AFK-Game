@@ -15285,6 +15285,8 @@ MonoBehaviour:
   habilidadesAtivasClasseLadino:
   - {fileID: 11400000, guid: ddd6a40d16e19134e92231f908d40081, type: 2}
   - {fileID: 11400000, guid: f630e0d0b6cf8e144b49a0abbcb81452, type: 2}
+  - {fileID: 11400000, guid: 0d967705463bbe441bc673980170eabd, type: 2}
+  - {fileID: 11400000, guid: de2617f716c237c4d8e3f6ac02df7470, type: 2}
   habilidadesAtivasClasseElementalista:
   - {fileID: 11400000, guid: d2c2f61535b69b64c91d3e8e8cb8a59f, type: 2}
   - {fileID: 11400000, guid: 3133ad2651e586f46a14e7ec8075f699, type: 2}
@@ -15300,6 +15302,8 @@ MonoBehaviour:
   habilidadesAtivasArco:
   - {fileID: 11400000, guid: 7972503614d1fed499cbfa6b5137e8d1, type: 2}
   - {fileID: 11400000, guid: 07e2872f49ca0fe41af67fd6086a22e2, type: 2}
+  - {fileID: 11400000, guid: 83de40175ab8a424eac5d6d330aa736a, type: 2}
+  - {fileID: 11400000, guid: f94fb8392e8b39c4f8a3b644750c8e4d, type: 2}
   habilidadesAtivasLivro:
   - {fileID: 11400000, guid: 09a4ad5d39ec9d1478105c5e64746742, type: 2}
   - {fileID: 11400000, guid: 4b943c8073ad6a84c95add5caf9a2f6d, type: 2}
@@ -15311,6 +15315,9 @@ MonoBehaviour:
   habilidadesPassivasClasseLadino:
   - {fileID: 11400000, guid: 5011450fec9dba843bc219da8f21bbd7, type: 2}
   - {fileID: 11400000, guid: ffdaa52a9497b3e45a49d8d333acbbbc, type: 2}
+  - {fileID: 11400000, guid: 804a4e908601a16439f02d9fa9edcde7, type: 2}
+  - {fileID: 11400000, guid: 568bb27e7f56a174491c6aebd6400b9a, type: 2}
+  - {fileID: 11400000, guid: 849814a90785f9344825305820340b6f, type: 2}
   habilidadesPassivasClasseElementalista:
   - {fileID: 11400000, guid: 12a56fbe3f64673498a88e93af57ca4c, type: 2}
   - {fileID: 11400000, guid: 3810149df4478c54f95d8064746ffa4b, type: 2}
@@ -15325,6 +15332,9 @@ MonoBehaviour:
   habilidadesPassivasArco:
   - {fileID: 11400000, guid: d98f5c1e62a7e9f44b45e96d115334c0, type: 2}
   - {fileID: 11400000, guid: 4c81759c548dad34d9a7cb7b18e9e513, type: 2}
+  - {fileID: 11400000, guid: 7b3cf89289b1b664eaaeef9ae94e4359, type: 2}
+  - {fileID: 11400000, guid: e6cce20a66dcbb8409cefc5c1bee6c90, type: 2}
+  - {fileID: 11400000, guid: 80036400942745b4ea82c9655a6e535e, type: 2}
   habilidadesPassivasLivro:
   - {fileID: 11400000, guid: 35b8a8189fbe7104c8ecf235565d81f8, type: 2}
   - {fileID: 11400000, guid: 331909ccfa714204c8dee22cf08299f6, type: 2}

@@ -84,8 +84,6 @@ public class HabilidadePosturaDeBrigaNv2 : HabilidadePassiva
 
     private void AplicarBonus(IAPersonagemBase personagem, DadosHabilidadePassiva dados)
     {
-        
-
         personagem.defesa += bonusDefesas;
         personagem.defesaMagica += bonusDefesas;
 

@@ -52,7 +52,7 @@ public class IAPersonagemBase : MonoBehaviour
     public float precisao; //precisão do personagem
     //[HideInInspector]
     public float _dano; //valor do dano do ataque do personagem
-    [HideInInspector]
+    //[HideInInspector]
     public float _velocidadeDeAtaque; //valor da velocidade de ataque do personagem
     private float _cooldownAtual = 0f; //tempo atual para o personagem poder atacar novamente
     [HideInInspector]
@@ -372,13 +372,13 @@ public class IAPersonagemBase : MonoBehaviour
         _spMaximoEInicial = personagem.sp;
         spRegeneracao = personagem.spRegeneracao;
 
-        if (habilidadePassivaClasse != null && podeAtivarEfeitoHabilidadePassivaClasse)
+        if (habilidadePassivaClasse != null && podeAtivarEfeitoHabilidadePassivaClasse && !_sistemaDeBatalha.fimDeBatalha)
         {
             habilidadePassivaClasse.RemoverEfeito(this);
             habilidadePassivaClasse.AtivarEfeito(this);
         }
 
-        if (habilidadePassivaArma != null && podeAtivarEfeitoHabilidadePassivaArma)
+        if (habilidadePassivaArma != null && podeAtivarEfeitoHabilidadePassivaArma && !_sistemaDeBatalha.fimDeBatalha)
         {
             habilidadePassivaArma.RemoverEfeito(this);
             habilidadePassivaArma.AtivarEfeito(this);

@@ -67,7 +67,7 @@ public class HabilidadeTransfusaoNv2 : HabilidadePassiva
                     {
                         if (!dados.alvosComBonus.Contains(inimigo))
                         {
-                            inimigo.multiplicadorEfeitosNegativos = 0.2f;
+                            inimigo.multiplicadorEfeitosNegativos += multiplicadorEfeitosNegativos;
                             dados.alvosComBonus.Add(inimigo);
                         }
                     }
@@ -75,7 +75,7 @@ public class HabilidadeTransfusaoNv2 : HabilidadePassiva
                     {
                         if (dados.alvosComBonus.Contains(inimigo))
                         {
-                            inimigo.multiplicadorEfeitosNegativos = 0f;
+                            inimigo.multiplicadorEfeitosNegativos -= multiplicadorEfeitosNegativos;
                             dados.alvosComBonus.Remove(inimigo);
                         }
                     }

@@ -42,9 +42,9 @@ public class HabilidadeAssassinatoEmCadeiaNv3 : HabilidadePassiva
 
     IEnumerator EsperarBuffAtaque(IAPersonagemBase personagem)
     {
-        float danoOriginal = personagem._dano;
-        personagem._dano += (danoOriginal * multiplicadorAtaque);
+        float bonus = personagem._dano * multiplicadorAtaque;
+        personagem._dano += bonus;
         yield return new WaitForSeconds(tempoDeBuffDeAtaque);
-        personagem._dano = danoOriginal;
+        personagem._dano -= bonus;
     }
 }
