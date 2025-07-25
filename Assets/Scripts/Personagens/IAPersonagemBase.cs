@@ -1376,7 +1376,7 @@ public class IAPersonagemBase : MonoBehaviour
         }
     }
 
-    private void AtivacaoHabildiadesInimigo()
+    private void AtivacaoHabilidadesInimigo()
     {
         int habilidade = UnityEngine.Random.Range(0, 2);
 
@@ -1405,7 +1405,7 @@ public class IAPersonagemBase : MonoBehaviour
         yield return new WaitForSeconds(tempo);
         if(_comportamento != EstadoDoPersonagem.MORTO)
         {
-            AtivacaoHabildiadesInimigo();
+            AtivacaoHabilidadesInimigo();
         }
     }
 

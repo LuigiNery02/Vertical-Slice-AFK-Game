@@ -27,10 +27,8 @@ public class HabilidadePunhoDaDisciplinaNv3 : HabilidadeAtiva
                 {
                     personagem.efeitoPorAtaqueAtivado = true;
 
-                    float danoOriginal = personagem._dano;
-
                     Dictionary<IAPersonagemBase, Coroutine> debuffsAtivos = new();
-                    Dictionary<IAPersonagemBase, float> danosOriginais = new();
+                    Dictionary<IAPersonagemBase, float> valoresSubtraidos = new();
 
                     personagem.AtivarEfeitoPorAtaque("PunhoDaDisciplinaNv3", (bool acerto) =>
                     {
@@ -56,24 +54,30 @@ public class HabilidadePunhoDaDisciplinaNv3 : HabilidadeAtiva
                                 if (debuffsAtivos.TryGetValue(inimigo, out var coroutine))
                                 {
                                     personagem.StopCoroutine(coroutine);
-                                    inimigo._dano = danosOriginais[inimigo];
+
+                                    if (valoresSubtraidos.TryGetValue(inimigo, out float valorAnterior))
+                                    {
+                                        inimigo._dano += valorAnterior;
+                                    }
                                 }
 
-                                float danoOriginalInimigo = inimigo._dano;
-                                danosOriginais[inimigo] = danoOriginalInimigo;
-                                inimigo._dano *= debuffFinal;
+                                float valorReduzido = inimigo._dano * debuffFinal;
+                                inimigo._dano -= valorReduzido;
                                 inimigo.recebeuDebuffPunhoDisciplina = true;
                                 inimigo.ataqueDiminuido = true;
 
-                                Coroutine novaCorrotina = personagem.StartCoroutine(TempoEfeitoDiminuirDano(inimigo, tempoFinal, danoOriginalInimigo, () =>
+                                valoresSubtraidos[inimigo] = valorReduzido;
+
+                                Coroutine novaCorrotina = personagem.StartCoroutine(TempoEfeitoDiminuirDano(inimigo, tempoFinal, valorReduzido, () =>
                                 {
-                                    danosOriginais.Remove(inimigo);
+                                    valoresSubtraidos.Remove(inimigo);
                                     debuffsAtivos.Remove(inimigo);
                                 }));
 
                                 debuffsAtivos[inimigo] = novaCorrotina;
                             }
 
+                            float danoOriginal = personagem._dano;
                             personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal));
                         }
                         else
@@ -81,6 +85,7 @@ public class HabilidadePunhoDaDisciplinaNv3 : HabilidadeAtiva
                             RemoverEfeito(personagem);
                         }
                     });
+
 
                     if (personagem.vfxHabilidadeAtivaClasse == null)
                     {
@@ -110,7 +115,7 @@ public class HabilidadePunhoDaDisciplinaNv3 : HabilidadeAtiva
         RemoverEfeito(personagem);
     }
 
-    private IEnumerator TempoEfeitoDiminuirDano(IAPersonagemBase inimigo, float tempo, float danoOriginal, System.Action aoFinalizar)
+    private IEnumerator TempoEfeitoDiminuirDano(IAPersonagemBase inimigo, float tempo, float valorReduzido, System.Action aoFinalizar)
     {
         GameObject vfxInstanciado = null;
         if (vfxInimigo != null)
@@ -122,7 +127,7 @@ public class HabilidadePunhoDaDisciplinaNv3 : HabilidadeAtiva
 
         if (inimigo != null)
         {
-            inimigo._dano = danoOriginal;
+            inimigo._dano += valorReduzido;
             inimigo.recebeuDebuffPunhoDisciplina = false;
             inimigo.ataqueDiminuido = false;
         }

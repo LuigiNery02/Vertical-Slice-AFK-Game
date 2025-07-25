@@ -28,6 +28,8 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
     //Área referente à UI
     [Header("UI")]
     [SerializeField]
+    private GameObject _telaBatalha;
+    [SerializeField]
     private Button _botaoBatalhaContinua;
     [SerializeField]
     private GameObject _telasDeResultaDeVitoria; //tela de resultado de vitoria
@@ -203,12 +205,19 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         //verifica se ao iniciar a batalha continua estava como verdadeira ao sair do jogo
         if (_acontecendoBatalhaContinua)
         {
+            if (_gerenciadorDePersonagens._personagensSelecionados == 3)
+            {
+                _telaBatalha.SetActive(true);
+            }
+
             if (_tempoAtualBatalhaContinua <= 0)
             {
                 _telaRecompensasDrop.SetActive(true);
                 _dropsGanhos = _dropsRestantes;
                 _tempoAtualBatalhaContinua = 0f;
                 _batalhasRestantesSimuladas = 0;
+
+                
             }
             else
             {

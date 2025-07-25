@@ -14,7 +14,7 @@ public class GerenciadorDePersonagens : MonoBehaviour
     public GameObject telaBatalha; //tela de batalha
 
     [SerializeField]
-    private int _personagensSelecionados; //número de personagens selecionados à batalha
+    public int _personagensSelecionados; //número de personagens selecionados à batalha
 
     private void Awake()
     {
@@ -101,6 +101,8 @@ public class GerenciadorDePersonagens : MonoBehaviour
                         {
                             _personagensSelecionados = 3;
                         }
+
+                        personagemIA.ReceberDadosPersonagem();
                         break;
                     }
                 }

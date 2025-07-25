@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FlechaMarcadaNv3
   m_EditorClassIdentifier: 
   nome: Flecha Marcada
-  descricao: "Ataca o inimigo com maior vida de qualquer dist\xE3ncia, causando 1575%
+  descricao: "Ataca o inimigo com maior vida de qualquer dist\xE3ncia, causando 175%
     de ATQ\nElemento: Neutro\nCast Fixo: 1 segundos\nCast Vari\xE1vel: 1 segundos\nCusto
     de Mana: 32\nCooldown: 4 segundos\r\r"
   tipoDeHabilidade: 1

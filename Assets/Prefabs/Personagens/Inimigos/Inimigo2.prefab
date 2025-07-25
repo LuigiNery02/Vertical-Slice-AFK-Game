@@ -171,10 +171,12 @@ MonoBehaviour:
   valorEscudo: 0
   escudoVfx: {fileID: 0}
   willPower: 0
-  habilidadeAtivaClasse: {fileID: 0}
-  habilidadeAtivaArma: {fileID: 0}
-  habilidadePassivaClasse: {fileID: 0}
-  habilidadePassivaArma: {fileID: 0}
+  marcadoresDeAlvo: 0
+  efeitoMarcadorDeAlvo: 0
+  habilidadeAtivaClasse: {fileID: 11400000, guid: ddd6a40d16e19134e92231f908d40081, type: 2}
+  habilidadeAtivaArma: {fileID: 11400000, guid: 7972503614d1fed499cbfa6b5137e8d1, type: 2}
+  habilidadePassivaClasse: {fileID: 11400000, guid: 568bb27e7f56a174491c6aebd6400b9a, type: 2}
+  habilidadePassivaArma: {fileID: 11400000, guid: d98f5c1e62a7e9f44b45e96d115334c0, type: 2}
   podeAtivarEfeitoHabilidadeAtivaClasse: 1
   podeAtivarEfeitoHabilidadeAtivaArma: 1
   podeAtivarEfeitoHabilidadePassivaClasse: 1
@@ -192,6 +194,7 @@ MonoBehaviour:
   id: 0
   _personagemAlvo: {fileID: 0}
   _alvoAtual: {fileID: 0}
+  _hitAtaquePersonagem: {fileID: 0}
   posicaoInicial: {x: 0, y: 0, z: 0}
   rotacaoInicial: {x: 0, y: 0, z: 0, w: 0}
   executandoMovimentoEspecial: 0
@@ -199,6 +202,7 @@ MonoBehaviour:
   efeitoPorAtaqueAtivado: 0
   efeitoPorAtaqueRecebidoAtivado: 0
   efeitoPorDanoCausadoAtivado: 0
+  efeitoPorMorteCausadaAtivada: 0
   stunado: 0
   tempoDeStun: 0
   ataqueDiminuido: 0
@@ -209,7 +213,13 @@ MonoBehaviour:
   _vfxSangramento: {fileID: 0}
   medo: 0
   reducaoDanoMedo: 0
+  multiplicadorEfeitosNegativos: 0
+  multiplicadorEfeitosPositivosParaEfeitosNegativos: 0
   recebeuDebuffPunhoDisciplina: 0
+  rebaterHit: 0
+  numeroDeRebatesDoHit: 0
+  rebatesRestantesFlechaEstatica: 0
+  atravessarHit: 0
   conjurandoHabilidade: 0
   tempoDeCast: 0
   habilidadeSendoConjurada: 0

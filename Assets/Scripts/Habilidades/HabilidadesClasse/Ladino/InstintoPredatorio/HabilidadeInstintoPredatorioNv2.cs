@@ -53,24 +53,28 @@ public class HabilidadeInstintoPredatorioNv2 : HabilidadePassiva
             yield return new WaitForSeconds(0.2f);
 
             var alvo = personagem._personagemAlvo;
-            float hpEfeito = alvo._hpMaximoEInicial * valorHpInimigo;
 
-            if (alvo != null && alvo.hpAtual <= hpEfeito)
+            if (alvo != null)
             {
-                if (!dados.bonusAplicado)
+                float hpEfeito = alvo._hpMaximoEInicial * valorHpInimigo;
+
+                if (alvo != null && alvo.hpAtual <= hpEfeito)
                 {
-                    AplicarBonus(personagem, dados);
-                    dados.bonusAplicado = true;
+                    if (!dados.bonusAplicado)
+                    {
+                        AplicarBonus(personagem, dados);
+                        dados.bonusAplicado = true;
+                    }
                 }
-            }
-            else
-            {
-                if (dados.bonusAplicado)
+                else
                 {
-                    RemoverBonus(personagem, dados);
-                    dados.bonusAplicado = false;
+                    if (dados.bonusAplicado)
+                    {
+                        RemoverBonus(personagem, dados);
+                        dados.bonusAplicado = false;
+                    }
                 }
-            }
+            } 
         }
     }
 

@@ -26,8 +26,6 @@ public class HabilidadePunhoDaDisciplinaNv2 : HabilidadeAtiva
                 {
                     personagem.efeitoPorAtaqueAtivado = true;
 
-                    float danoOriginal = personagem._dano;
-
                     personagem.AtivarEfeitoPorAtaque("PunhoDaDisciplinaNv2", (bool acerto) =>
                     {
                         if (acerto)
@@ -41,12 +39,13 @@ public class HabilidadePunhoDaDisciplinaNv2 : HabilidadeAtiva
                                 inimigo.recebeuDebuffPunhoDisciplina = true;
                                 inimigo.ataqueDiminuido = true;
 
-                                float inimigoDanoOriginal = inimigo._dano;
-                                inimigo._dano *= multiplicadorDiminuicaoDeDanoInimigo;
+                                float reducaoDano = inimigo._dano * multiplicadorDiminuicaoDeDanoInimigo;
+                                inimigo._dano -= reducaoDano;
 
-                                personagem.StartCoroutine(TempoEfeitoDiminuirDano(inimigo, inimigoDanoOriginal));
+                                personagem.StartCoroutine(TempoEfeitoDiminuirDano(inimigo, reducaoDano));
                             }
 
+                            float danoOriginal = personagem._dano;
                             personagem.StartCoroutine(EsperarFrame(personagem, danoOriginal));
                         }
                         else
@@ -83,7 +82,7 @@ public class HabilidadePunhoDaDisciplinaNv2 : HabilidadeAtiva
         RemoverEfeito(personagem);
     }
 
-    private IEnumerator TempoEfeitoDiminuirDano(IAPersonagemBase inimigo, float danoOriginal)
+    private IEnumerator TempoEfeitoDiminuirDano(IAPersonagemBase inimigo, float dano)
     {
         GameObject vfxInstanciado = null;
         if (vfxInimigo != null)
@@ -95,7 +94,7 @@ public class HabilidadePunhoDaDisciplinaNv2 : HabilidadeAtiva
 
         if (inimigo != null)
         {
-            inimigo._dano = danoOriginal;
+            inimigo._dano += dano;
             inimigo.recebeuDebuffPunhoDisciplina = false;
             inimigo.ataqueDiminuido = false;
         }
