@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -84,6 +85,9 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("Habilidades")]
     public int willPower;
     public int marcadoresDeAlvo;
+    public int cargasDeGelo;
+    public int cargasDeFogo;
+    public int cargasDeRaio;
     public EfeitoMarcadorDeAlvo efeitoMarcadorDeAlvo;
     //[HideInInspector]
     public HabilidadeAtiva habilidadeAtivaClasse; //habilidade ativa de classe do personagem
@@ -195,6 +199,11 @@ public class IAPersonagemBase : MonoBehaviour
     public bool sangramento;
     [SerializeField]
     private GameObject _vfxSangramento;
+    //[HideInInspector]
+    public bool queimadura;
+    [SerializeField]
+    private GameObject _vfxQueimadura;
+    private Coroutine queimaduraCoroutine;
     [HideInInspector]
     public bool medo;
     [HideInInspector]
@@ -518,6 +527,9 @@ public class IAPersonagemBase : MonoBehaviour
 
         willPower = 0;
         marcadoresDeAlvo = 0;
+        cargasDeGelo = 0;
+        cargasDeFogo = 0;
+        cargasDeRaio = 0;
         efeitoMarcadorDeAlvo = EfeitoMarcadorDeAlvo.NENHUM;
         stunado = false;
         conjurandoHabilidade = false;
@@ -525,6 +537,7 @@ public class IAPersonagemBase : MonoBehaviour
         imuneAStun = false;
         imuneAKnockback = false;
         sangramento = false;
+        queimadura = false;
         medo = false;
         tempoDeStun = 0;
         reducaoDanoMedo = 0;
@@ -1375,6 +1388,49 @@ public class IAPersonagemBase : MonoBehaviour
                 break;
         }
     }
+    public void AtualizarCargasElementais(string elemento)
+    {
+        int cargasTotais = cargasDeGelo + cargasDeFogo + cargasDeRaio;
+
+        if(cargasTotais < 3)
+        {
+            switch (elemento)
+            {
+                case "gelo":
+                    cargasDeGelo++;
+                    break;
+                case "fogo":
+                    cargasDeFogo++;
+                    break;
+                case "raio":
+                    cargasDeRaio++;
+                    break;
+            }
+        }
+    }
+
+    public void CausarEfeitoCargasElementais(int cargaGelo, int cargaFogo, int cargaRaio, float danoBase)
+    {
+        if (cargaGelo > 0)
+        {
+            float reducaoTotal = _velocidadeDeAtaque * (0.03f * cargaGelo);
+            _velocidadeDeAtaque += reducaoTotal;
+        }
+
+        if (cargaFogo > 0)
+        {
+            float danoQueimadura = danoBase * 0.01f * cargaFogo;
+            Queimadura(danoQueimadura, 1);
+        }
+
+        if (cargaRaio > 0)
+        {
+            float reducaoDef = defesa * (0.03f * cargaRaio);
+            float reducaoDefM = defesaMagica * (0.03f * cargaRaio);
+            defesa -= reducaoDef;
+            defesaMagica -= reducaoDefM;
+        }
+    }
 
     private void AtivacaoHabilidadesInimigo()
     {
@@ -1574,6 +1630,36 @@ public class IAPersonagemBase : MonoBehaviour
         {
             Sangramento(1, 1, 1);
         }
+    }
+
+    public void Queimadura(float dano, float intervalo)
+    {
+        if (queimaduraCoroutine != null)
+        {
+            StopCoroutine(queimaduraCoroutine);
+        } 
+
+        queimadura = true;
+        _vfxQueimadura.SetActive(true);
+        queimaduraCoroutine = StartCoroutine(EsperarTempoQueimadura(dano, intervalo));
+    }
+
+    public IEnumerator EsperarTempoQueimadura(float danoPorTick, float intervalo)
+    {
+        while (queimadura)
+        {
+            if (_comportamento == EstadoDoPersonagem.MORTO)
+            {
+                _vfxQueimadura.SetActive(false);
+                yield break;
+            }
+
+            SofrerDano(danoPorTick, false, this);
+            yield return new WaitForSeconds(intervalo);
+        }
+
+        queimadura = false;
+        _vfxQueimadura.SetActive(false);
     }
 
     public bool VerificarEfeitoNegativo()

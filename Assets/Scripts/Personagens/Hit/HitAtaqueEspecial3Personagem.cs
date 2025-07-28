@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HitAtaqueEspecial2Personagem : MonoBehaviour
+public class HitAtaqueEspecial3Personagem : MonoBehaviour
 {
     [HideInInspector]
     public IAPersonagemBase _personagemPai; //personagem que criou este ataque
@@ -11,9 +11,9 @@ public class HitAtaqueEspecial2Personagem : MonoBehaviour
     [HideInInspector]
     public Transform _alvo;
     [HideInInspector]
-    public int valorMarcadores;
+    public string elemento;
     [HideInInspector]
-    public TrailRenderer _trailRenderer; //trilha da movimentação do hit
+    public GameObject vfxImpacto;
 
     private void OnTriggerEnter(Collider other) //quando colidir com um objeto
     {
@@ -21,26 +21,23 @@ public class HitAtaqueEspecial2Personagem : MonoBehaviour
         {
             IAPersonagemBase alvo = other.GetComponent<IAPersonagemBase>(); //define o personagem colidido como alvo
 
-            if (other != _personagemPai && alvo._comportamento != EstadoDoPersonagem.MORTO && alvo.controlador != _personagemPai.controlador)
+            if (alvo != _personagemPai && alvo._comportamento != EstadoDoPersonagem.MORTO && alvo.controlador != _personagemPai.controlador)
             {
-                //define para o personagem que este ataque colidiu com um personagem
-                IAPersonagemBase alvoDoDano = other.GetComponent<IAPersonagemBase>();
+                alvo.SofrerDano(dano, false, _personagemPai);
 
-                //verifica o tipo de dano que causará (físico ou mágico)
-                switch (_personagemPai.personagem.arma.armaDano)
+                int cargaGelo = _personagemPai.cargasDeGelo;
+                int cargaFogo = _personagemPai.cargasDeFogo;
+                int cargaRaio = _personagemPai.cargasDeRaio;
+                float danoBase = _personagemPai._dano;
+
+                if (cargaGelo != 0 || cargaFogo != 0 || cargaRaio != 0)
                 {
-                    case TipoDeDano.DANO_MELEE:
-                        alvoDoDano.SofrerDano(dano, false, _personagemPai);
-                        break;
-                    case TipoDeDano.DANO_RANGED:
-                        alvoDoDano.SofrerDano(dano, false, _personagemPai);
-                        break;
-                    case TipoDeDano.DANO_MAGICO:
-                        alvoDoDano.SofrerDano(dano, false, _personagemPai);
-                        break;
+                    alvo.CausarEfeitoCargasElementais(cargaGelo, cargaFogo, cargaRaio, danoBase);
                 }
+                _personagemPai.AtualizarCargasElementais(elemento);
 
-                alvoDoDano.AtualizarMarcadoresDeAlvo(valorMarcadores, true);
+                GameObject vfxInstanciado = Instantiate(vfxImpacto, other.transform.position, Quaternion.identity, other.transform);
+                Destroy(vfxInstanciado, 2f);
 
                 Destroy(gameObject);
             }
@@ -83,12 +80,5 @@ public class HitAtaqueEspecial2Personagem : MonoBehaviour
 
         _alvo = alvo;
         velocidadeDeMovimento = velocidade;
-
-        //ativa a trilha 
-        _trailRenderer = GetComponent<TrailRenderer>();
-        if (_trailRenderer != null)
-        {
-            _trailRenderer.enabled = true;
-        }
     }
 }

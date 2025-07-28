@@ -43,9 +43,21 @@ public class HabilidadeCorteRasteiroNv3 : HabilidadeAtiva
 
     IEnumerator EsperarTempoParaInstanciarHit(IAPersonagemBase personagem, float dano)
     {
+        Transform posicao = null;
+
         yield return new WaitForSeconds(0.5f);
         //instancia o hit 
-        Transform posicao = personagem.GetComponentInChildren<AtivarArmaPersonagem>().maoBone;
+        if (personagem.GetComponentInChildren<AtivarArmaPersonagem>() != null)
+        {
+            posicao = personagem.GetComponentInChildren<AtivarArmaPersonagem>().maoBone;
+        }
+        else
+        {
+            Vector3 posicaoValor = personagem.transform.position;
+            posicaoValor.y += 1.5f;
+            posicao.position = posicaoValor;
+        }
+
         GameObject corteRasteiro = Instantiate(hit, posicao.position, hit.transform.rotation);
 
         HitAtaqueEspecial2Personagem hitComponente = corteRasteiro.GetComponent<HitAtaqueEspecial2Personagem>();

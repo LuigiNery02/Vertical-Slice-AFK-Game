@@ -28,3 +28,11 @@ MonoBehaviour:
   castVariavel: 1.5
   tempoDeEfeito: 0
   tempoDeRecarga: 1
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
+  multiplicadorDeAtaque: 3
+  hit: {fileID: 825099416496924361, guid: f2eef8359db6df443baa6968b6475ac6, type: 3}
+  quantidadeDeLancas: 2
+  tempoEntreLancas: 0.15
+  vfx: {fileID: 5162910912013668194, guid: cf82839c411151342a7b2337bda9fb34, type: 3}
+  velocidadeDeMovimento: 20
