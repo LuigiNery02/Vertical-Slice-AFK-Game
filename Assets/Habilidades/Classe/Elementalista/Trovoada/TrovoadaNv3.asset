@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1861db01215be4e4fbb829d3fc3baffc, type: 3}
+  m_Name: TrovoadaNv3
+  m_EditorClassIdentifier: 
+  nome: Trovoada
+  descricao: "Conjura uma trovoada, causando 3 hits de 300% de ATQM em \xE1rea\nElemento:
+    Vento\nCast Fixo: 3 segundo\nCast Vari\xE1vel: 3 segundo\nCusto de Mana: 258\nCooldown:
+    3 segundo\r"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 0
+  nivel: 3
+  spriteHabilidade: {fileID: 21300000, guid: 21df9195ed43b004394e6d7913b03149, type: 3}
+  idHabilidade: HabilidadeTrovoada
+  habilidadeProximoNivel: {fileID: 0}
+  elemento: 3
+  custoDeMana: 258
+  castFixo: 3
+  castVariavel: 3
+  tempoDeEfeito: 0
+  tempoDeRecarga: 3
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
+  multiplicadorDeAtaque: 3
+  raioVfx: 10
+  tempoDeVfx: 2.5
+  numeroDeHits: 3
+  vfx: {fileID: 7478731271839673279, guid: 4d3c8045dd8857a4b8d34c2361c61045, type: 3}

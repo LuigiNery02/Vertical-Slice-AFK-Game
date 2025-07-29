@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1eeeded31d57c45b024469889a7afd, type: 3}
+  m_Name: MeteoroNv3
+  m_EditorClassIdentifier: 
+  nome: Meteoro
+  descricao: "Conjura um meteoro, causando 3 hits de 350% de ATQM em \xE1rea\nElemento:
+    Fogo\nCast Fixo: 3 segundo\nCast Vari\xE1vel: 3 segundo\nCusto de Mana: 258\nCooldown:
+    3 segundo\r"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 0
+  nivel: 3
+  spriteHabilidade: {fileID: 21300000, guid: 21df9195ed43b004394e6d7913b03149, type: 3}
+  idHabilidade: HabilidadeMeteoro
+  habilidadeProximoNivel: {fileID: 0}
+  elemento: 2
+  custoDeMana: 258
+  castFixo: 3
+  castVariavel: 3
+  tempoDeEfeito: 0
+  tempoDeRecarga: 3
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
+  multiplicadorDeAtaque: 3.5
+  raioVfx: 10
+  tempoDeVfx: 2.75
+  numeroDeHits: 3
+  vfx: {fileID: 7957833072274404953, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}

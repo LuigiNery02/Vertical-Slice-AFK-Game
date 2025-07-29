@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 429e39eb0cfc2ac4daebad9a45ef8224, type: 3}
+  m_Name: NevascaNv2
+  m_EditorClassIdentifier: 
+  nome: Nevasca
+  descricao: "Conjura uma nevasca de gelo, causando 2hits de 300% de ATQM em \xE1rea\nElemento:
+    \xC1gua\nCast Fixo: 3 segundo\nCast Vari\xE1vel: 3 segundo\nCusto de Mana: 172\nCooldown:
+    3 segundo\r"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 0
+  nivel: 2
+  spriteHabilidade: {fileID: 21300000, guid: f5ab3f534c1138f4786f23cd74103223, type: 3}
+  idHabilidade: HabilidadeNevasca
+  habilidadeProximoNivel: {fileID: 11400000, guid: 99d417bf7887c7846ab3c4bcdfa129bb, type: 2}
+  elemento: 1
+  custoDeMana: 172
+  castFixo: 3
+  castVariavel: 3
+  tempoDeEfeito: 0
+  tempoDeRecarga: 3
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
+  multiplicadorDeAtaque: 3
+  raioVfx: 10
+  tempoDeVfx: 3
+  numeroDeHits: 2
+  vfx: {fileID: 161766660727748596, guid: 05ce920d629922a4eb4795ef7494ce5c, type: 3}
