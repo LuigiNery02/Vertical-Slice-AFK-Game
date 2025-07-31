@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a193e4d3b2e7194ea130ae943045fb4, type: 3}
+  m_Name: SegredosDoSangueNv2
+  m_EditorClassIdentifier: 
+  nome: Segredos do Sangue
+  descricao: "Uma vez ativada, consome 10% do HP do sacerdote para restaurar 6% SP
+    de todos ao redor.\nElemento: Sagrado\nCast Fixo: 2 segundos\nCast Vari\xE1vel:
+    2 segundos\nCusto de Mana: 90/seg\nCooldown: 8 segundos segundos\r"
+  tipoDeHabilidade: 1
+  modoDeAtivacao: 0
+  nivel: 2
+  spriteHabilidade: {fileID: 21300000, guid: 824a48daf7b55394e80e1df5048db839, type: 3}
+  idHabilidade: HabilidadeSegredosDoSangue
+  habilidadeProximoNivel: {fileID: 11400000, guid: c0e2e50d5513f6f4297289d6eee9e194, type: 2}
+  elemento: 4
+  custoDeMana: 90
+  castFixo: 2
+  castVariavel: 2
+  tempoDeEfeito: 0
+  tempoDeRecarga: 8
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
+  reducaoHP: 0.1
+  multiplicadorSP: 0.06
+  tempoParaRestaurarSP: 1
+  raioCura: 10
+  vfx: {fileID: 3744133877081091469, guid: a2a060732547fe64581bb0cb3c2bdf1d, type: 3}
+  vfxAliado: {fileID: 7053385775836331393, guid: 354b6251e950209409c75ab984acf000, type: 3}

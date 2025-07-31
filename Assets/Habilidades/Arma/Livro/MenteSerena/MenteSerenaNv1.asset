@@ -24,7 +24,13 @@ MonoBehaviour:
   habilidadeProximoNivel: {fileID: 11400000, guid: 90ec35177f5acb747a931e4425bdac28, type: 2}
   elemento: 4
   custoDeMana: 30
-  castFixo: 0
+  castFixo: 10
   castVariavel: 0
-  tempoDeEfeito: 10
+  tempoDeEfeito: 0
   tempoDeRecarga: 0
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
+  multiplicadorSP: 0.03
+  tempoParaRestaurarSP: 1
+  vfx: {fileID: 7155335147208632822, guid: 97c43495f80a3244fad1301dfafbe252, type: 3}
+  vfxAliado: {fileID: 7053385775836331393, guid: 354b6251e950209409c75ab984acf000, type: 3}

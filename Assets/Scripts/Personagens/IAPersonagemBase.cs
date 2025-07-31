@@ -1099,6 +1099,11 @@ public class IAPersonagemBase : MonoBehaviour
             }
         }
     }
+
+    public void CurarAliado(IAPersonagemBase personagem, float hp)
+    {
+        personagem.ReceberHP(hp);
+    }
     #endregion
 
     #region SP
@@ -1125,7 +1130,6 @@ public class IAPersonagemBase : MonoBehaviour
         }
         
     }
-
     private void AtualizarFeedbackSP()
     {
         if (pontosDeHabilidadeTexto != null)

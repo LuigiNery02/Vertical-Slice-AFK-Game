@@ -11,9 +11,9 @@ public class HabilidadeAtiva : HabilidadeBase
     public float tempoDeEfeito;
     public float tempoDeRecarga;
 
-    //[HideInInspector]
+    [HideInInspector]
     public float reducaoCastFixo;
-    //[HideInInspector]
+    [HideInInspector]
     public float reducaoCastVariavel;
 
     public override void AtivarEfeito(IAPersonagemBase personagem)
