@@ -19,6 +19,8 @@ public class HabilidadeNevascaNv1 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
+                personagem.GastarSP(custoDeMana);
+
                 base.ChecarCastingHabilidade1(personagem, () =>
                 {
                     //movimento especial

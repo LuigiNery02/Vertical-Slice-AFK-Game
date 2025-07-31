@@ -19,13 +19,15 @@ public class HabilidadeMeteoroNv1 : HabilidadeAtiva
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
+                personagem.GastarSP(custoDeMana);
+
                 base.ChecarCastingHabilidade1(personagem, () =>
                 {
                     //movimento especial
                     personagem.movimentoEspecial = "LancaElemento";
                     personagem.VerificarComportamento("movimentoEspecial");
 
-                    personagem.StartCoroutine(Nevasca(personagem));
+                    personagem.StartCoroutine(Meteoro(personagem));
                 });
             }
         }
@@ -37,7 +39,7 @@ public class HabilidadeMeteoroNv1 : HabilidadeAtiva
         base.RemoverEfeito(personagem);
     }
 
-    IEnumerator Nevasca(IAPersonagemBase personagem)
+    IEnumerator Meteoro(IAPersonagemBase personagem)
     {
         float dano = personagem._dano * multiplicadorDeAtaque;
 
@@ -55,6 +57,7 @@ public class HabilidadeMeteoroNv1 : HabilidadeAtiva
 
             if (inimigo != null && inimigo.controlador != personagem.controlador && inimigo._comportamento != EstadoDoPersonagem.MORTO)
             {
+                Debug.Log(dano);
                 inimigo.SofrerDano(dano, false, personagem);
                 if (personagem.cargasDeGelo != 0 || personagem.cargasDeFogo != 0 || personagem.cargasDeRaio != 0)
                 {

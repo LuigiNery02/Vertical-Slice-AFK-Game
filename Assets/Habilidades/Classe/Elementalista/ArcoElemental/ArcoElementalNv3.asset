@@ -9,18 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f819bf497d86d0142821fabade702caa, type: 3}
-  m_Name: ConjuracaoFocadaNv3
+  m_Script: {fileID: 11500000, guid: 475d317487bf2d34e927601a71c1e3f8, type: 3}
+  m_Name: ArcoElementalNv3
   m_EditorClassIdentifier: 
-  nome: "Conjura\xE7\xE3o Focada"
-  descricao: Possui 5% de chance de reduzir o cast fixo da habilidade conjurada em
-    100%
+  nome: Arco Elemental
+  descricao: "Alternar entre magias de elementos diferentes reduz o cast fixo da
+    pr\xF3xima magia em 30% por elemento diferente anterior (m\xE1x 30%).\r"
   tipoDeHabilidade: 0
   modoDeAtivacao: 1
   nivel: 3
-  spriteHabilidade: {fileID: 21300000, guid: 2456dd2824f5ec540830760922f5bac6, type: 3}
-  idHabilidade: HabilidadeConjuracaoFocada
+  spriteHabilidade: {fileID: 21300000, guid: feb8709f10385a94095b55fe8d0f625c, type: 3}
+  idHabilidade: HabilidadeArcoElemental
   habilidadeProximoNivel: {fileID: 0}
-  chanceDeReducaoDeCastFixo: 0.05
+  buffCastFixo: 0.3
+  buffMaximo: 0.3
   vfx: {fileID: 7155335147208632822, guid: 97c43495f80a3244fad1301dfafbe252, type: 3}
   tempoDeVfx: 2

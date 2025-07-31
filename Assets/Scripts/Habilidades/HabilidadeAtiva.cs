@@ -11,9 +11,9 @@ public class HabilidadeAtiva : HabilidadeBase
     public float tempoDeEfeito;
     public float tempoDeRecarga;
 
-    [HideInInspector]
+    //[HideInInspector]
     public float reducaoCastFixo;
-    [HideInInspector]
+    //[HideInInspector]
     public float reducaoCastVariavel;
 
     public override void AtivarEfeito(IAPersonagemBase personagem)
@@ -53,14 +53,22 @@ public class HabilidadeAtiva : HabilidadeBase
 
     public bool ChecarAtivacao(IAPersonagemBase personagem)
     {
-        if(personagem.spAtual >= custoDeMana)
+        if (!personagem.spSemCusto)
         {
-            return true;
+            if (personagem.spAtual >= custoDeMana)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
-            return false;
+            return true;
         }
+        
     }
 
     public bool ChecarRuna(IAPersonagemBase personagem, int nivel)

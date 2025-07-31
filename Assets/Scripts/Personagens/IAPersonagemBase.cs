@@ -44,6 +44,8 @@ public class IAPersonagemBase : MonoBehaviour
     public float spAtual; //valor atual do SP (pontos de habilidade) do personagem
     [HideInInspector]
     public float spRegeneracao; //valor por segundo que o personagem recuperará de sp
+    [HideInInspector]
+    public bool spSemCusto;
 
     private Coroutine regeneracaoCoroutine; //coroutine de regeneração de hp e sp
 
@@ -181,6 +183,8 @@ public class IAPersonagemBase : MonoBehaviour
 
     public event Action<int> aoGastarWillPower;
     public event Action<int> aoReceberWillPower;
+
+    public event Action<HabilidadeAtiva> aoConjurarHabilidade;
 
     [HideInInspector]
     public bool stunado;
@@ -1110,12 +1114,16 @@ public class IAPersonagemBase : MonoBehaviour
 
     public void GastarSP(float sp) //função que recebe sp
     {
-        spAtual -= sp; //recebe o sp
-        if (spAtual <= 0)
+        if (!spSemCusto)
         {
-            spAtual = 0;
+            spAtual -= sp; //recebe o sp
+            if (spAtual <= 0)
+            {
+                spAtual = 0;
+            }
+            AtualizarFeedbackSP();
         }
-        AtualizarFeedbackSP();
+        
     }
 
     private void AtualizarFeedbackSP()
@@ -1227,9 +1235,20 @@ public class IAPersonagemBase : MonoBehaviour
             {
                 VerificarComportamento("selecionarAlvo");
             }
+
+            if(habilidadeSendoConjurada == 1 && habilidadeAtivaClasse != null)
+            {
+                aoConjurarHabilidade?.Invoke(habilidadeAtivaClasse);
+            }
+            else if(habilidadeSendoConjurada == 2 && habilidadeAtivaArma != null)
+            {
+                aoConjurarHabilidade?.Invoke(habilidadeAtivaArma);
+            }
+
             habilidadeSendoConjurada = 0;
 
             aoConcluir?.Invoke();
+            
         }
         else
         {
