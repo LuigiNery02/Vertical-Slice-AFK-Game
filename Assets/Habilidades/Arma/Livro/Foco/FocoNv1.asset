@@ -21,3 +21,6 @@ MonoBehaviour:
   spriteHabilidade: {fileID: 21300000, guid: 824a48daf7b55394e80e1df5048db839, type: 3}
   idHabilidade: HabilidadeFoco
   habilidadeProximoNivel: {fileID: 11400000, guid: 3c9df54c325ed7f4fb38907678ccb1e1, type: 2}
+  multiplicadorRecuperacaoSP: 0.01
+  probabilidadeDeRecuperacaoSP: 20
+  vfx: {fileID: 7053385775836331393, guid: 354b6251e950209409c75ab984acf000, type: 3}

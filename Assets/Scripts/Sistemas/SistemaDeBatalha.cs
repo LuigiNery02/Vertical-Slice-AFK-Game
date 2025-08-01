@@ -493,6 +493,13 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                 personagem.habilidadePassivaArma.RemoverEfeito(personagem);
             }
 
+            if (personagem.escudoAtivado)
+            {
+                personagem.valorEscudo = 0;
+                personagem.escudoAtivado = false;
+                personagem.escudoVfx.SetActive(false);
+            }
+
             personagem.RemoverEfeitosActions();
         }
 

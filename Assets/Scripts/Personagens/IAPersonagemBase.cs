@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -180,6 +179,15 @@ public class IAPersonagemBase : MonoBehaviour
     public Dictionary<string, EfeitoPorMorteCausada> efeitosPorMortesCausadas = new();
     [HideInInspector]
     public event EfeitoPorMorteCausada OnMorteCausadaComEfeito;
+
+    public delegate void EfeitoPorAliadoCurado();
+    public EfeitoPorAliadoCurado efeitoPorAliadoCurado;
+    [HideInInspector]
+    public bool efeitoPorAliadoCuradoAtivado; //verifica se efeitos por aliados curados de habilidades estão ativados
+    [HideInInspector]
+    public Dictionary<string, EfeitoPorAliadoCurado> efeitosPorAliadosCurados = new();
+    [HideInInspector]
+    public event EfeitoPorAliadoCurado OnAliadoCuradoComEfeito;
 
     public event Action<int> aoGastarWillPower;
     public event Action<int> aoReceberWillPower;
@@ -1103,6 +1111,11 @@ public class IAPersonagemBase : MonoBehaviour
     public void CurarAliado(IAPersonagemBase personagem, float hp)
     {
         personagem.ReceberHP(hp);
+
+        if (efeitoPorAliadoCuradoAtivado)
+        {
+            ExecutarEfeitosDeAliadoCurado();
+        }
     }
     #endregion
 
@@ -1592,6 +1605,31 @@ public class IAPersonagemBase : MonoBehaviour
         OnMorteCausadaComEfeito?.Invoke();
     }
 
+    public void AtivarEfeitoPorAliadoCurado(string chave, EfeitoPorAliadoCurado efeito)
+    {
+        if (efeitosPorAliadosCurados.ContainsKey(chave))
+        {
+            OnAliadoCuradoComEfeito -= efeitosPorAliadosCurados[chave];
+        }
+
+        efeitosPorAliadosCurados[chave] = efeito;
+        OnAliadoCuradoComEfeito += efeito;
+    }
+
+    public void RemoverEfeitoPorAliadoCurado(string chave)
+    {
+        if (efeitosPorAliadosCurados.TryGetValue(chave, out var efeito))
+        {
+            OnAliadoCuradoComEfeito -= efeito;
+            efeitosPorAliadosCurados.Remove(chave);
+        }
+    }
+
+    public void ExecutarEfeitosDeAliadoCurado()
+    {
+        OnAliadoCuradoComEfeito?.Invoke();
+    }
+
     public void Stun()
     {
         if (!imuneAStun)
@@ -1710,6 +1748,7 @@ public class IAPersonagemBase : MonoBehaviour
         efeitoPorAtaqueRecebidoAtivado = false;
         efeitoPorDanoCausadoAtivado = false;
         efeitoPorMorteCausadaAtivada = false;
+        efeitoPorAliadoCuradoAtivado = false;
     }
     #endregion
 

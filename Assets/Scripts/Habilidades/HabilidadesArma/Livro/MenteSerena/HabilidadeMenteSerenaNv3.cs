@@ -14,7 +14,7 @@ public class HabilidadeMenteSerenaNv3 : HabilidadeAtiva
     private GameObject vfxAliado;
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
-        if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
+        if (personagem.podeAtivarEfeitoHabilidadeAtivaArma)
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
@@ -58,7 +58,9 @@ public class HabilidadeMenteSerenaNv3 : HabilidadeAtiva
 
     IEnumerator ChecarCondicaoDeEfeito(IAPersonagemBase personagem, IAPersonagemBase aliado, float sp, GameObject vfx)
     {
-        while (base.ChecarAtivacao(personagem) && aliado != null && aliado._comportamento != EstadoDoPersonagem.MORTO)
+        SistemaDeBatalha sistemaDeBatalha = FindObjectOfType<SistemaDeBatalha>();
+
+        while (base.ChecarAtivacao(personagem) && aliado != null && aliado._comportamento != EstadoDoPersonagem.MORTO && !sistemaDeBatalha.fimDeBatalha)
         {
             personagem.GastarSP(custoDeMana);
 

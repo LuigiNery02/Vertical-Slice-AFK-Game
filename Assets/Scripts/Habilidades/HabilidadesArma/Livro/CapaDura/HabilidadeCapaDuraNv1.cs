@@ -14,7 +14,7 @@ public class HabilidadeCapaDuraNv1 : HabilidadeAtiva
     private float tempoDeVfxAliado = 1;
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
-        if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
+        if (personagem.podeAtivarEfeitoHabilidadeAtivaArma)
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {

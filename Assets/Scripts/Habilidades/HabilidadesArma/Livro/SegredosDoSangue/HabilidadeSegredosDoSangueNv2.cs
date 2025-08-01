@@ -19,7 +19,7 @@ public class HabilidadeSegredosDoSangueNv2 : HabilidadeAtiva
 
     public override void AtivarEfeito(IAPersonagemBase personagem)
     {
-        if (personagem.podeAtivarEfeitoHabilidadeAtivaClasse)
+        if (personagem.podeAtivarEfeitoHabilidadeAtivaArma)
         {
             if (base.ChecarAtivacao(personagem) && base.ChecarRuna(personagem, nivel))
             {
@@ -46,7 +46,9 @@ public class HabilidadeSegredosDoSangueNv2 : HabilidadeAtiva
 
     private IEnumerator ChecarCondicaoDeEfeito(IAPersonagemBase personagem, GameObject vfx)
     {
-        while (base.ChecarAtivacao(personagem) && personagem != null && personagem._comportamento != EstadoDoPersonagem.MORTO)
+        SistemaDeBatalha sistemaDeBatalha = FindObjectOfType<SistemaDeBatalha>();
+
+        while (base.ChecarAtivacao(personagem) && personagem != null && personagem._comportamento != EstadoDoPersonagem.MORTO && !sistemaDeBatalha.fimDeBatalha)
         {
             personagem.GastarSP(custoDeMana);
 
