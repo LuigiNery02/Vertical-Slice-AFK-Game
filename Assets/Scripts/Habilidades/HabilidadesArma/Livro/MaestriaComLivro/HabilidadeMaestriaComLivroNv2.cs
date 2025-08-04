@@ -1,6 +1,59 @@
 using UnityEngine;
 
-public class HabilidadeMaestriaComLivroNv2 : MonoBehaviour
-{
+[CreateAssetMenu(menuName = "Habilidades/Passiva/Arma/Livro/Maestria com Livro/Nv2")]
 
+public class HabilidadeMaestriaComLivroNv2 : HabilidadePassiva
+{
+    [SerializeField]
+    private float bonusRecuperacao = 0.2f;
+    public override void AtivarEfeito(IAPersonagemBase personagem)
+    {
+        if (personagem.podeAtivarEfeitoHabilidadePassivaArma)
+        {
+            if (base.ChecarRuna(personagem, nivel))
+            {
+                foreach (IAPersonagemBase aliado in GameObject.FindObjectsOfType<IAPersonagemBase>())
+                {
+                    if (aliado != null && aliado.controlador == personagem.controlador && aliado._comportamento != EstadoDoPersonagem.MORTO)
+                    {
+                        if (!aliado.dadosDasHabilidadesPassivas.ContainsKey(this))
+                        {
+                            aliado.dadosDasHabilidadesPassivas[this] = new DadosHabilidadePassiva();
+                        }
+
+                        var dados = aliado.dadosDasHabilidadesPassivas[this];
+
+                        if (!dados.bonusAplicado)
+                        {
+                            float bonusSP = aliado.multiplicadorBonusRecuperacaoSP * bonusRecuperacao;
+
+                            aliado.multiplicadorBonusRecuperacaoSP += bonusSP;
+
+                            dados.bonusMultiplicadorRecuperacaoSP = bonusSP;
+                            dados.bonusAplicado = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public override void RemoverEfeito(IAPersonagemBase personagem)
+    {
+        foreach (IAPersonagemBase aliado in GameObject.FindObjectsOfType<IAPersonagemBase>())
+        {
+            if (aliado != null && aliado.controlador == personagem.controlador)
+            {
+                if (aliado.dadosDasHabilidadesPassivas.TryGetValue(this, out var dados))
+                {
+                    if (dados.bonusAplicado)
+                    {
+                        aliado.multiplicadorBonusRecuperacaoSP -= dados.bonusMultiplicadorRecuperacaoSP;
+                    }
+
+                    aliado.dadosDasHabilidadesPassivas.Remove(this);
+                }
+            }
+        }
+    }
 }

@@ -20,6 +20,8 @@ public class HabilidadeRetiradaTaticaNv1 : HabilidadeAtiva
                 base.ChecarCastingHabilidade1(personagem, () =>
                 {
                     personagem.StartCoroutine(EsperarTempoDeDesaparecimento(personagem));
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

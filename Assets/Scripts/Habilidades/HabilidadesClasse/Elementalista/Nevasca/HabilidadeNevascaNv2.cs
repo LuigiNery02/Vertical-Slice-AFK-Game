@@ -30,6 +30,8 @@ public class HabilidadeNevascaNv2 : HabilidadeAtiva
                     personagem.VerificarComportamento("movimentoEspecial");
 
                     personagem.StartCoroutine(Nevasca(personagem));
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

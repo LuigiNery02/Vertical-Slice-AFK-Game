@@ -57,6 +57,8 @@ public class HabilidadeGolpeDeterminadoNv2 : HabilidadeAtiva
                     {
                         personagem.GerenciarVFXHabilidade(1, true);
                     }
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

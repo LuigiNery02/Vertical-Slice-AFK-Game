@@ -28,6 +28,8 @@ public class HabilidadeMeteoroNv1 : HabilidadeAtiva
                     personagem.VerificarComportamento("movimentoEspecial");
 
                     personagem.StartCoroutine(Meteoro(personagem));
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

@@ -24,6 +24,8 @@ public class HabilidadeCantoDeBatalhaNv1 : HabilidadeAtiva
                 base.ChecarCastingHabilidade1(personagem, () =>
                 {
                     personagem.StartCoroutine(ExecutarBuff(personagem));
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

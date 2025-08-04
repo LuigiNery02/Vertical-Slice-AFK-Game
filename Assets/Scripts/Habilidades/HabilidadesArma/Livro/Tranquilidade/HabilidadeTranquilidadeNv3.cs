@@ -26,6 +26,8 @@ public class HabilidadeTranquilidadeNv3 : HabilidadeAtiva
                 vfxInstanciado.transform.localScale = (Vector3.one * (raioCura - (raioCura * 0.25f)));
 
                 personagem.StartCoroutine(ChecarCondicaoDeEfeito(personagem, vfxInstanciado));
+
+                base.ChecarEfeitosAoAtivarHabilidade(personagem);
             });
         }
     }

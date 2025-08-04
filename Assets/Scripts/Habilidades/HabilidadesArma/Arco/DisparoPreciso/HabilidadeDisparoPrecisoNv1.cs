@@ -54,6 +54,8 @@ public class HabilidadeDisparoPrecisoNv1 : HabilidadeAtiva
                     {
                         personagem.VerificarComportamento("selecionarAlvo");
                     }
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

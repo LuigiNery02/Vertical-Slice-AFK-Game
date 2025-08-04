@@ -40,6 +40,8 @@ public class HabilidadeBombaDeFumacaNv1 : HabilidadeAtiva
 
                     personagem.VerificarComportamento("selecionarAlvo");
                     personagem.StartCoroutine(EsperarVFX(personagem));
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }  

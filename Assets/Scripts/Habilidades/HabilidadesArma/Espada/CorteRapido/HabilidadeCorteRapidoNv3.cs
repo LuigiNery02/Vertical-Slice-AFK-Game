@@ -66,6 +66,8 @@ public class HabilidadeCorteRapidoNv3 : HabilidadeAtiva
 
                     personagem.movimentoEspecial = "CorteRapido";
                     personagem.VerificarComportamento("movimentoEspecial");
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

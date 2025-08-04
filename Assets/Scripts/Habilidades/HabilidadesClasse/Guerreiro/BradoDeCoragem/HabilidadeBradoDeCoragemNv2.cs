@@ -31,6 +31,7 @@ public class HabilidadeBradoDeCoragemNv2 : HabilidadeAtiva
                     }
 
                     base.AtivarEfeito(personagem);
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

@@ -149,4 +149,17 @@ public class HabilidadeAtiva : HabilidadeBase
         }
     }
 
+    public void ChecarEfeitosAoAtivarHabilidade(IAPersonagemBase personagem)
+    {
+        foreach (IAPersonagemBase aliado in GameObject.FindObjectsOfType<IAPersonagemBase>())
+        {
+            if (aliado != null && aliado.controlador == personagem.controlador && aliado._comportamento != EstadoDoPersonagem.MORTO && aliado != personagem)
+            {
+                if (aliado.efeitoPorHabilidadeAliadoAtivado)
+                {
+                    aliado.ExecutarEfeitosDeHabilidadeAliado();
+                }
+            }
+        }
+    }
 }

@@ -34,6 +34,7 @@ public class HabilidadeRetiradaTaticaNv3 : HabilidadeAtiva
                     personagem.RemoverTodosEfeitosNegativos();
                     personagem.StartCoroutine(EsperarTempoDeDesaparecimento(personagem));
 
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

@@ -46,6 +46,8 @@ public class HabilidadeFlechaEstaticaNv2 : HabilidadeAtiva
                     {
                         personagem.GerenciarVFXHabilidade(2, true);
                     }
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

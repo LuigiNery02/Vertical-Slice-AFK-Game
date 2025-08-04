@@ -45,6 +45,8 @@ public class HabilidadeAtaqueFurtivoNv2 : HabilidadeAtiva
                     personagem.VerificarComportamento("selecionarAlvo");
 
                     personagem.StartCoroutine(EsperarVFX(personagem));
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

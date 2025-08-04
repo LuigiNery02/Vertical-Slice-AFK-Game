@@ -45,6 +45,8 @@ public class HabilidadeMenteSerenaNv3 : HabilidadeAtiva
                     GameObject vfxAliadoInstanciado = GameObject.Instantiate(vfxAliado, aliadoEncontrado.transform.position + Vector3.zero, aliadoEncontrado.transform.rotation, aliadoEncontrado.transform);
 
                     personagem.StartCoroutine(ChecarCondicaoDeEfeito(personagem, aliadoEncontrado, sp, vfxAliadoInstanciado));
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

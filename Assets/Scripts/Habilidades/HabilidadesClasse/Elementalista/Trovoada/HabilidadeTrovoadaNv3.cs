@@ -30,6 +30,8 @@ public class HabilidadeTrovoadaNv3 : HabilidadeAtiva
                     personagem.VerificarComportamento("movimentoEspecial");
 
                     personagem.StartCoroutine(Trovoada(personagem));
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

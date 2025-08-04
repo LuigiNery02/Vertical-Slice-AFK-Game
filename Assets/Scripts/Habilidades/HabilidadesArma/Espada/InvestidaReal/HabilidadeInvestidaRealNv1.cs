@@ -22,6 +22,8 @@ public class HabilidadeInvestidaRealNv1 : HabilidadeAtiva
                 base.ChecarCastingHabilidade2(personagem, () =>
                 {
                     personagem.StartCoroutine(ExecutarInvestida(personagem));
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

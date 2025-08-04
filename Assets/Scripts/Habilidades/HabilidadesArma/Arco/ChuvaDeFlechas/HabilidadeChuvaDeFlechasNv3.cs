@@ -26,6 +26,8 @@ public class HabilidadeChuvaDeFlechasNv3 : HabilidadeAtiva
                     personagem.VerificarComportamento("movimentoEspecial");
 
                     personagem.StartCoroutine(TempoDeVfx(personagem));
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

@@ -34,6 +34,8 @@ public class IAPersonagemBase : MonoBehaviour
     public float hpAtual; //valor atual do hp (vida) do personagem
     [HideInInspector]
     public float hpRegeneracao; //valor por segundo que o personagem recuperará de hp
+    //[HideInInspector]
+    public float multiplicadorBonusRecuperacaoHP = 1;
 
     //área referente ao sp (pontos de habilidade) do personagem
     [Header("SP")]
@@ -45,6 +47,8 @@ public class IAPersonagemBase : MonoBehaviour
     public float spRegeneracao; //valor por segundo que o personagem recuperará de sp
     [HideInInspector]
     public bool spSemCusto;
+    //[HideInInspector]
+    public float multiplicadorBonusRecuperacaoSP = 1;
 
     private Coroutine regeneracaoCoroutine; //coroutine de regeneração de hp e sp
 
@@ -188,6 +192,15 @@ public class IAPersonagemBase : MonoBehaviour
     public Dictionary<string, EfeitoPorAliadoCurado> efeitosPorAliadosCurados = new();
     [HideInInspector]
     public event EfeitoPorAliadoCurado OnAliadoCuradoComEfeito;
+
+    public delegate void EfeitoPorHabilidadeAliado();
+    public EfeitoPorHabilidadeAliado efeitoPorHabilidadeAliado;
+    [HideInInspector]
+    public bool efeitoPorHabilidadeAliadoAtivado;
+    [HideInInspector]
+    public Dictionary<string, EfeitoPorHabilidadeAliado> efeitosPorHabilidadesAliados = new();
+    [HideInInspector]
+    public event EfeitoPorHabilidadeAliado OnHabilidadeAliadoComEfeito;
 
     public event Action<int> aoGastarWillPower;
     public event Action<int> aoReceberWillPower;
@@ -560,6 +573,8 @@ public class IAPersonagemBase : MonoBehaviour
         numeroDeRebatesDoHit = 0;
         rebatesRestantesFlechaEstatica = 0;
         atravessarHit = false;
+        multiplicadorBonusRecuperacaoHP = 1;
+        multiplicadorBonusRecuperacaoSP = 1;
     }
 
     private void Update()
@@ -1086,7 +1101,7 @@ public class IAPersonagemBase : MonoBehaviour
     {
         if(efeitoMarcadorDeAlvo != EfeitoMarcadorDeAlvo.CORTACURA)
         {
-            hpAtual += cura; //recebe hp
+            hpAtual += (cura * multiplicadorBonusRecuperacaoHP); //recebe hp
 
             if (hpAtual >= _hpMaximoEInicial)
             {
@@ -1122,7 +1137,7 @@ public class IAPersonagemBase : MonoBehaviour
     #region SP
     public void ReceberSP(float sp) //função que recebe sp
     {
-        spAtual += sp; //recebe o sp
+        spAtual += (sp * multiplicadorBonusRecuperacaoSP); //recebe o sp
         if(spAtual >= _spMaximoEInicial)
         {
             spAtual = _spMaximoEInicial;
@@ -1628,6 +1643,31 @@ public class IAPersonagemBase : MonoBehaviour
     public void ExecutarEfeitosDeAliadoCurado()
     {
         OnAliadoCuradoComEfeito?.Invoke();
+    }
+
+    public void AtivarEfeitoPorHabilidadeAliado(string chave, EfeitoPorHabilidadeAliado efeito)
+    {
+        if (efeitosPorHabilidadesAliados.ContainsKey(chave))
+        {
+            OnHabilidadeAliadoComEfeito -= efeitosPorHabilidadesAliados[chave];
+        }
+
+        efeitosPorHabilidadesAliados[chave] = efeito;
+        OnHabilidadeAliadoComEfeito += efeito;
+    }
+
+    public void RemoverEfeitoPorHabilidadeAliado(string chave)
+    {
+        if (efeitosPorHabilidadesAliados.TryGetValue(chave, out var efeito))
+        {
+            OnHabilidadeAliadoComEfeito -= efeito;
+            efeitosPorHabilidadesAliados.Remove(chave);
+        }
+    }
+
+    public void ExecutarEfeitosDeHabilidadeAliado()
+    {
+        OnHabilidadeAliadoComEfeito?.Invoke();
     }
 
     public void Stun()

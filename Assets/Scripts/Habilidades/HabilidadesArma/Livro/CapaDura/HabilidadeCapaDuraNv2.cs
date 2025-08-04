@@ -58,6 +58,8 @@ public class HabilidadeCapaDuraNv2 : HabilidadeAtiva
 
                     GameObject vfxAliadoInstanciado = GameObject.Instantiate(vfxAliado, aliadoComMenorHP.transform.position + Vector3.zero, aliadoComMenorHP.transform.rotation, aliadoComMenorHP.transform);
                     personagem.StartCoroutine(EsperarVFXAliado(personagem, vfxAliadoInstanciado));
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

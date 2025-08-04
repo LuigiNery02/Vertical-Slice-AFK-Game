@@ -31,6 +31,8 @@ public class HabilidadeCorteRasteiroNv1 : HabilidadeAtiva
                     personagem.VerificarComportamento("movimentoEspecial");
 
                     personagem.StartCoroutine(EsperarTempoParaInstanciarHit(personagem, dano));
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

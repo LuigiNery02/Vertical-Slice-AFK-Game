@@ -26,6 +26,8 @@ public class DadosHabilidadePassiva
     public int sequencia;
     public bool buffProximaHabilidade;
     public Dictionary<HabilidadeAtiva, float>habilidadesBuffadas;
+    public float bonusMultiplicadorRecuperacaoHP;
+    public float bonusMultiplicadorRecuperacaoSP;
 
     public System.Action<int> eventoWillPowerLideranca;
     public System.Action<HabilidadeAtiva> eventoConjuracaoFocada;

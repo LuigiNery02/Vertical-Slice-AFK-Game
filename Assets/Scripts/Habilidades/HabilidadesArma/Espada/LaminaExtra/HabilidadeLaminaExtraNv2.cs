@@ -42,6 +42,8 @@ public class HabilidadeLaminaExtraNv2 : HabilidadeAtiva
                     {
                         personagem.GerenciarVFXHabilidade(2, true);
                     }
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

@@ -61,6 +61,8 @@ public class HabilidadeFlechaMarcadaNv2 : HabilidadeAtiva
                     {
                         personagem.GerenciarVFXHabilidade(2, true);
                     }
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

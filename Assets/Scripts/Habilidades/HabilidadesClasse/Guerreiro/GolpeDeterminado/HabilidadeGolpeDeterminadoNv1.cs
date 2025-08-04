@@ -57,6 +57,8 @@ public class HabilidadeGolpeDeterminadoNv1 : HabilidadeAtiva
                     {
                         personagem.VerificarComportamento("selecionarAlvo");
                     }
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

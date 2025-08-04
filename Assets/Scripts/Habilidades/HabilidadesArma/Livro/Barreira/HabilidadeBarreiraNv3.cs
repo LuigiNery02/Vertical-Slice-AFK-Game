@@ -55,6 +55,8 @@ public class HabilidadeBarreiraNv3 : HabilidadeAtiva
                     }
 
                     personagem.StartCoroutine(EsperarTempoVFX(personagem));
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }

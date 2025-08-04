@@ -96,6 +96,8 @@ public class HabilidadePunhoDaDisciplinaNv3 : HabilidadeAtiva
                     {
                         personagem.GerenciarVFXHabilidade(1, true);
                     }
+
+                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
                 });
             }
         }
