@@ -20,6 +20,14 @@ sealed class SistemaDeAtalhos : MonoBehaviour
     private InputAction _acao5; //ação 5 do input
     [SerializeField]
     private InputAction _acao6; //ação 6 do input
+    [SerializeField]
+    private InputAction _acao7; //ação 7 do input
+    [SerializeField]
+    private InputAction _acao8; //ação 8 do input
+    [SerializeField]
+    private InputAction _acao9; //ação 9 do input
+    [SerializeField]
+    private InputAction _acao10; //ação 10 do input
 
     //área referente aos eventos
     [Header("Event")]
@@ -46,6 +54,18 @@ sealed class SistemaDeAtalhos : MonoBehaviour
         _acao6.Enable();
         _acao6.performed += ctx => ChamarEvento(5);
 
+        _acao7.Enable();
+        _acao7.performed += ctx => ChamarEvento(6);
+
+        _acao8.Enable();
+        _acao8.performed += ctx => ChamarEvento(7);
+
+        _acao9.Enable();
+        _acao9.performed += ctx => ChamarEvento(8);
+
+        _acao10.Enable();
+        _acao10.performed += ctx => ChamarEvento(9);
+
     }
 
     private void OnDisable()
@@ -56,6 +76,10 @@ sealed class SistemaDeAtalhos : MonoBehaviour
         _acao4.Disable();
         _acao5.Disable();
         _acao6.Disable();
+        _acao7.Disable();
+        _acao8.Disable();
+        _acao9.Disable();
+        _acao10.Disable();
     }
 
     private void ChamarEvento(int idEvento) //função de chamar o evento de input

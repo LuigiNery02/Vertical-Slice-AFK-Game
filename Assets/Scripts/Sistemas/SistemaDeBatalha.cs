@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,26 +6,26 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 public enum EstadoDeBatalha { MANUAL, CONTINUA} //estados do sistema de batalha
-public enum PrimeiroAlvo { ALVO_PROXIMO, ALVO_VISTO} //tipos de como os personagens v„o definir seus alvos na batalha
+public enum PrimeiroAlvo { ALVO_PROXIMO, ALVO_VISTO} //tipos de como os personagens v√£o definir seus alvos na batalha
 
 sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
 {
-    //¡rea referente aos estados da batalha
+    //√Årea referente aos estados da batalha
     [Header("Estado de Batalha")]
     public EstadoDeBatalha estado;
 
-    //¡rea referente aos ajustes da batalha
+    //√Årea referente aos ajustes da batalha
     [Header("Ajustes de Batalha")]
     public PrimeiroAlvo primeiroAlvo;
 
-    //¡rea referente aos resultados de batalha
+    //√Årea referente aos resultados de batalha
     [Header("Eventos")]
     [SerializeField]
-    private UnityEvent _quandoVencer; //evento de vitÛria
+    private UnityEvent _quandoVencer; //evento de vit√≥ria
     [SerializeField]
     private UnityEvent _quandoPerder; //evento de derrota
 
-    //¡rea referente ‡ UI
+    //√Årea referente √† UI
     [Header("UI")]
     [SerializeField]
     private GameObject _telaBatalha;
@@ -36,25 +36,27 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
     [SerializeField]
     private GameObject _telasDeResultaDeDerrota; //tela de resultado de derrota
     [SerializeField]
-    private GameObject _botaoConfiguracao; //botao de configuraÁıes do jogo
+    private GameObject _botaoConfiguracao; //botao de configura√ß√µes do jogo
     [SerializeField]
-    private Dropdown _dropdown; //dropdown de seleÁ„o de estado de batalha
+    private Dropdown _dropdown; //dropdown de sele√ß√£o de estado de batalha
     [SerializeField]
-    private GameObject _telaDuracaoBatalha; //tela de duraÁ„o da batalha
+    private GameObject _telaDuracaoBatalha; //tela de dura√ß√£o da batalha
     [SerializeField]
     private GameObject _telaRecompensasDrop; //tela de recompensas do drop
     [SerializeField]
     private Text _textoRecompensasDrop; //texto de recompensas de drop;
     [SerializeField]
-    private GameObject[] _uiSelecaoPersonagens; //ui referente ‡ seleÁ„o de personagens
+    private GameObject[] _uiSelecaoPersonagens; //ui referente √† sele√ß√£o de personagens
     [SerializeField]
-    private Image[] _uiBotoesPersonagens; //imagens referentes aos botıes dos personagens
+    private Image[] _uiBotoesPersonagens; //imagens referentes aos bot√µes dos personagens
     [SerializeField]
-    private Sprite[] _spritesBotoesPersonagens; //sprites referentes ‡s imagens dos botıes dos personagens
+    private Sprite[] _spritesBotoesPersonagens; //sprites referentes √†s imagens dos bot√µes dos personagens
     [SerializeField]
-    private GameObject _uiBotaoPersonagens; //tela referente aos botıes dos personagens
+    private GameObject _uiBotaoPersonagens; //tela referente aos bot√µes dos personagens
+    [SerializeField]
+    private Button[] _botoesPersonagensBatalha;
 
-    //¡rea de SFX
+    //√Årea de SFX
     [Header("SFX")]
     [SerializeField]
     private AudioSource _audio;
@@ -63,50 +65,52 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
     [SerializeField]
     private AudioClip _vitoriaClip;
 
-    //¡rea referente os feedbacks visuais
-    public static bool usarAnimaÁıes = true; //vari·vel para verificar se os personagens devem usar as animaÁıes
-    public static bool usarSfxs = true; //vari·vel para verificar se deve haver SFX
-    public static bool usarSliders = true; //vari·vel para verificar se os personagens devem ter sliders para representar suas vidas
+    //√Årea referente os feedbacks visuais
+    public static bool usarAnima√ß√µes = true; //vari√°vel para verificar se os personagens devem usar as anima√ß√µes
+    public static bool usarSfxs = true; //vari√°vel para verificar se deve haver SFX
+    public static bool usarSliders = true; //vari√°vel para verificar se os personagens devem ter sliders para representar suas vidas
 
-    //¡rea referente aos times
+    //√Årea referente aos times
     [SerializeField]
     private List<IAPersonagemBase> _personagensJogador = new List<IAPersonagemBase>(); //time do jogador
     private List<IAPersonagemBase> _personagensInimigos = new List<IAPersonagemBase>(); //time do inimigo
     [SerializeField]
-    private int _integrantesTimeJogador; //n˙mero de integrantes do time do jogador
+    private int _integrantesTimeJogador; //n√∫mero de integrantes do time do jogador
     [SerializeField]
-    private int _integrantesTimeInimigo; //n˙mero de integrantes do time inimigo
-    private List<string> _codigosIDPersonagensBatalhaContinua = new List<string>(); //cÛdigos ID dos personagens da ˙ltima batalha continua
+    private int _integrantesTimeInimigo; //n√∫mero de integrantes do time inimigo
+    private List<string> _codigosIDPersonagensBatalhaContinua = new List<string>(); //c√≥digos ID dos personagens da √∫ltima batalha continua
 
-    //¡rea referente ao save
+    //√Årea referente ao save
     private DateTime _tempo; //tempo do sistema de batalha
-    private float _duracaoBatalhaContinua; //duraÁ„o em segundos da batalha continua
-    private float _tempoAtualBatalhaContinua; //tempo atual da batalha contÌnua
-    private bool _acontecendoBatalhaContinua; //vari·vel para verificar se a batalha continua est· acontecendo
+    private float _duracaoBatalhaContinua; //dura√ß√£o em segundos da batalha continua
+    private float _tempoAtualBatalhaContinua; //tempo atual da batalha cont√≠nua
+    private bool _acontecendoBatalhaContinua; //vari√°vel para verificar se a batalha continua est√° acontecendo
 
-    //¡rea referente ‡ simulaÁ„o
+    //√Årea referente √† simula√ß√£o
     private int _batalhasRestantesSimuladas = 0; //valor de batalhas simuladas
     private int _dropsRestantes = 0;
-    private float _tempoPorBatalha = 30f; //tempo mÈdio para uma batalha terminar em segundos
-    private bool _simular; //vari·vel que verifica se deve simular a batalha
+    private float _tempoPorBatalha = 30f; //tempo m√©dio para uma batalha terminar em segundos
+    private bool _simular; //vari√°vel que verifica se deve simular a batalha
     private int _dropsGanhos; //valor dos drops que o jogador ganhou enquanto estava afk
 
 
     [HideInInspector]
-    public bool batalhaIniciou; //vari·vel que define se a batalha foi iniciada 
-    private bool _batalhaAlvoVisto; //vari·vel para verificar se inicialmente È uma batalha de primeiro alvo visto
-    private bool _podeComeÁarBatalha = true; //vari·vel para verificar se pode iniciar batalha
+    public bool batalhaIniciou; //vari√°vel que define se a batalha foi iniciada 
+    private bool _batalhaAlvoVisto; //vari√°vel para verificar se inicialmente √© uma batalha de primeiro alvo visto
+    private bool _podeCome√ßarBatalha = true; //vari√°vel para verificar se pode iniciar batalha
     [HideInInspector]
-    public bool fimDeBatalha; //vari·vel para verificar o fim da batalha
+    public bool fimDeBatalha; //vari√°vel para verificar o fim da batalha
     private SistemaDeDrop _sisemaDeDrop; //sistema de drop
     private GerenciadorDePersonagens _gerenciadorDePersonagens; //gerenciador de personagens
+    private SelecaoDePersonagem _selecaoDePersonagem;
 
     private void Awake()
     {
         _gerenciadorDePersonagens = FindFirstObjectByType<GerenciadorDePersonagens>();
+        _selecaoDePersonagem = FindFirstObjectByType<SelecaoDePersonagem>();
     }
 
-    public void CarregarSave(GameData data) //funÁ„o que carrega os dados do save
+    public void CarregarSave(GameData data) //fun√ß√£o que carrega os dados do save
     {
         _tempo = DateTime.Parse(data.tempo);
         _duracaoBatalhaContinua = data.duracaoBatalhaContinua;
@@ -166,7 +170,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
     }
 
 
-    public void SalvarSave(GameData data) //funÁ„o de salvar os dados do save
+    public void SalvarSave(GameData data) //fun√ß√£o de salvar os dados do save
     {
         if (_acontecendoBatalhaContinua)
         {
@@ -205,7 +209,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         //verifica se ao iniciar a batalha continua estava como verdadeira ao sair do jogo
         if (_acontecendoBatalhaContinua)
         {
-            if (_gerenciadorDePersonagens._personagensSelecionados == 3)
+            if (_gerenciadorDePersonagens._personagensSelecionados > 0)
             {
                 _telaBatalha.SetActive(true);
             }
@@ -230,7 +234,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                     _batalhasRestantesSimuladas = 0;
                 }
 
-                //gera drops para batalhas que j· aconteceram
+                //gera drops para batalhas que j√° aconteceram
                 int dropsGanhos = 0;
                 for (int i = 0; i < batalhasQueJaAconteceram; i++)
                 {
@@ -243,7 +247,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                 VerificarBotao();
                 IniciarBatalhaContinua(_tempoAtualBatalhaContinua);
             }
-            SimulaÁ„oDeRecompensas();
+            Simula√ß√£oDeRecompensas();
         }
         else
         {
@@ -267,18 +271,33 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
             }
         }
     }
-    public void IniciarBatalha() //funÁ„o que inicia a batalha
+    public void IniciarBatalha() //fun√ß√£o que inicia a batalha
     {
-        if(!batalhaIniciou && _podeComeÁarBatalha) //checa se a batalha j· n„o foi iniciada e se pode comeÁar
+        if(!batalhaIniciou && _podeCome√ßarBatalha) //checa se a batalha j√° n√£o foi iniciada e se pode come√ßar
         {
             batalhaIniciou = true; //define a batalha como iniciada
-            _podeComeÁarBatalha = false; //n„o pode comeÁara batalha novamente
-            _botaoConfiguracao.SetActive(false); //desativa o bot„o de configuraÁıes
+            _podeCome√ßarBatalha = false; //n√£o pode come√ßara batalha novamente
+            _botaoConfiguracao.SetActive(false); //desativa o bot√£o de configura√ß√µes
             if(primeiroAlvo == PrimeiroAlvo.ALVO_VISTO)
             {
                 _batalhaAlvoVisto = true;
             }
-            EncontrarPersonagens(); //chama a funÁ„o de encontrar personagens
+
+            // desativa todos os personagens n√£o selecionados
+            for (int i = 0; i < _gerenciadorDePersonagens.personagem.Length; i++)
+            {
+                var p = _gerenciadorDePersonagens.personagem[i];
+                if (p != null)
+                {
+                    //se o personagem n√£o foi selecionado para a batalha, desativa o GameObject
+                    if (p.personagem == null || string.IsNullOrEmpty(p.personagem.codigoID))
+                    {
+                        p.gameObject.SetActive(false);
+                    }
+                }
+            }
+
+            EncontrarPersonagens(); //chama a fun√ß√£o de encontrar personagens
             if(estado == EstadoDeBatalha.CONTINUA)
             {
                 _acontecendoBatalhaContinua = true;
@@ -286,57 +305,12 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
             _uiSelecaoPersonagens[0].SetActive(false);
             _uiSelecaoPersonagens[1].SetActive(false);
             _uiBotaoPersonagens.SetActive(true);
-            switch (_gerenciadorDePersonagens.personagem[0].personagem.classe)
-            {
-                case Classe.Guerreiro:
-                    _uiBotoesPersonagens[0].sprite = _spritesBotoesPersonagens[0];
-                    break;
-                case Classe.Ladino:
-                    _uiBotoesPersonagens[0].sprite = _spritesBotoesPersonagens[1];
-                    break;
-                case Classe.Elementalista:
-                    _uiBotoesPersonagens[0].sprite = _spritesBotoesPersonagens[2];
-                    break;
-                case Classe.Sacerdote:
-                    _uiBotoesPersonagens[0].sprite = _spritesBotoesPersonagens[3];
-                    break;
-            }
 
-            switch (_gerenciadorDePersonagens.personagem[1].personagem.classe)
-            {
-                case Classe.Guerreiro:
-                    _uiBotoesPersonagens[1].sprite = _spritesBotoesPersonagens[0];
-                    break;
-                case Classe.Ladino:
-                    _uiBotoesPersonagens[1].sprite = _spritesBotoesPersonagens[1];
-                    break;
-                case Classe.Elementalista:
-                    _uiBotoesPersonagens[1].sprite = _spritesBotoesPersonagens[2];
-                    break;
-                case Classe.Sacerdote:
-                    _uiBotoesPersonagens[1].sprite = _spritesBotoesPersonagens[3];
-                    break;
-            }
-
-            switch (_gerenciadorDePersonagens.personagem[2].personagem.classe)
-            {
-                case Classe.Guerreiro:
-                    _uiBotoesPersonagens[2].sprite = _spritesBotoesPersonagens[0];
-                    break;
-                case Classe.Ladino:
-                    _uiBotoesPersonagens[2].sprite = _spritesBotoesPersonagens[1];
-                    break;
-                case Classe.Elementalista:
-                    _uiBotoesPersonagens[2].sprite = _spritesBotoesPersonagens[2];
-                    break;
-                case Classe.Sacerdote:
-                    _uiBotoesPersonagens[2].sprite = _spritesBotoesPersonagens[3];
-                    break;
-            }
+            AtualizarBotoes();
         }
     }
 
-    public void IniciarBatalhaContinua(float duracao) //funÁ„o que inicia a batalha continua
+    public void IniciarBatalhaContinua(float duracao) //fun√ß√£o que inicia a batalha continua
     {
         _duracaoBatalhaContinua = duracao;
         _tempoAtualBatalhaContinua = duracao;
@@ -344,11 +318,11 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         //define a batalha como continua
         estado = EstadoDeBatalha.CONTINUA;
 
-        //chama a funÁ„o de iniciar a batalha
+        //chama a fun√ß√£o de iniciar a batalha
         IniciarBatalha();
     }
 
-    public void DefinirBatalhaContinua() //define se o estado da batalha È continuo ou n„o
+    public void DefinirBatalhaContinua() //define se o estado da batalha √© continuo ou n√£o
     {
         //checa o estado da batalha, se for manual fica continua, e sor continua fica manual
         if(estado == EstadoDeBatalha.MANUAL)
@@ -357,7 +331,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
             _acontecendoBatalhaContinua = true;
             if (!batalhaIniciou)
             {
-                _telaDuracaoBatalha.SetActive(true); //ativa a tela de duraÁ„o de batalha
+                _telaDuracaoBatalha.SetActive(true); //ativa a tela de dura√ß√£o de batalha
             }
         }
         else
@@ -367,7 +341,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         }
     }
 
-    private void EncontrarPersonagens() //funÁ„o que encontra todos os personagens na cena
+    private void EncontrarPersonagens() //fun√ß√£o que encontra todos os personagens na cena
     {
         //Reseta os times
         if (!_acontecendoBatalhaContinua)
@@ -381,9 +355,9 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
 
         foreach (IAPersonagemBase personagem in personagens)
         {
-            if (personagem.controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR) //verifica se È personagem do jogador
+            if (personagem.controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR) //verifica se √© personagem do jogador
             {
-                //salvar posiÁ„o e rotaÁ„o inicial dos personagens
+                //salvar posi√ß√£o e rota√ß√£o inicial dos personagens
                 personagem.posicaoInicial = personagem.transform.position;
                 personagem.rotacaoInicial = personagem.transform.rotation;
             }
@@ -409,7 +383,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                 AtualizarTime(("adicionar"), ("inimigo"), personagem);
             }
 
-            personagem.IniciarBatalha(); //chama a funÁ„o "IniciarBatalha" de todos os personagens encontrados
+            personagem.IniciarBatalha(); //chama a fun√ß√£o "IniciarBatalha" de todos os personagens encontrados
         }
 
         if(estado == EstadoDeBatalha.CONTINUA)
@@ -417,7 +391,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
             SimularBatalha();
         }
 
-        primeiroAlvo = PrimeiroAlvo.ALVO_PROXIMO; //define a batalha como alvo prÛximo para os prÛximos alvos dos personagens
+        primeiroAlvo = PrimeiroAlvo.ALVO_PROXIMO; //define a batalha como alvo pr√≥ximo para os pr√≥ximos alvos dos personagens
 
         if(SistemaDeSalvamento.instancia != null)
         {
@@ -425,7 +399,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         }
     }
 
-    public void AtualizarTime(string atualizacao, string time, IAPersonagemBase personagem) //funÁ„o que atualiza os times
+    public void AtualizarTime(string atualizacao, string time, IAPersonagemBase personagem) //fun√ß√£o que atualiza os times
     {
         if(atualizacao == ("adicionar")) //adiciona personagem
         {
@@ -447,7 +421,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                 //_personagensJogador.Remove(personagem);
                 _integrantesTimeJogador--;
 
-                //chama o fim da batalha caso o n˙mero de integrantes de um time chegar a 0
+                //chama o fim da batalha caso o n√∫mero de integrantes de um time chegar a 0
                 if (_integrantesTimeJogador <= 0)
                 {
                     StartCoroutine(FimDeBatalha("derrota"));
@@ -459,7 +433,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                 _personagensInimigos.Remove(personagem);
                 _integrantesTimeInimigo--;
 
-                //chama o fim da batalha caso o n˙mero de integrantes de um time chegar a 0
+                //chama o fim da batalha caso o n√∫mero de integrantes de um time chegar a 0
                 if (_integrantesTimeInimigo <= 0)
                 {
                     ChecarSFX("vitoria");
@@ -469,12 +443,12 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         }
     }
 
-    IEnumerator FimDeBatalha(string resultado) //funÁ„o que determina o resultado da batalha
+    IEnumerator FimDeBatalha(string resultado) //fun√ß√£o que determina o resultado da batalha
     {
         batalhaIniciou = false;
         fimDeBatalha = true;
 
-        RemoverSimulaÁ„o(1);
+        RemoverSimula√ß√£o(1);
 
         //reseta todas as habilidades
         IAPersonagemBase[] personagens = FindObjectsOfType<IAPersonagemBase>();
@@ -507,7 +481,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
 
         if(resultado == "vitoria")
         {
-            _quandoVencer.Invoke(); //chama o evento de vitÛria
+            _quandoVencer.Invoke(); //chama o evento de vit√≥ria
         }
         else if(resultado == "derrota")
         {
@@ -523,7 +497,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
 
         _uiSelecaoPersonagens[0].SetActive(true);
         _uiBotaoPersonagens.SetActive(false);
-        //recomeÁa a batalha se o estado de batalha for continua
+        //recome√ßa a batalha se o estado de batalha for continua
         if (estado == EstadoDeBatalha.CONTINUA)
         {
             yield return new WaitForSeconds(1f);
@@ -535,16 +509,16 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
             {
                 _telasDeResultaDeDerrota.SetActive(false);
             }
-            RecomeÁarBatalha();
+            Recome√ßarBatalha();
 
             yield return new WaitForSeconds(0.5f);
 
-            _podeComeÁarBatalha = true;
+            _podeCome√ßarBatalha = true;
             IniciarBatalha();
         }
     }
 
-    public void RecomeÁarBatalha() //funÁ„o para resetar a batalha
+    public void Recome√ßarBatalha() //fun√ß√£o para resetar a batalha
     {
         _integrantesTimeInimigo = 0;
         _integrantesTimeJogador = 0;
@@ -554,8 +528,8 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         }
         else
         {
-            _botaoConfiguracao.SetActive(true); //reativa o bot„o de configuraÁıes
-            _podeComeÁarBatalha = true;
+            _botaoConfiguracao.SetActive(true); //reativa o bot√£o de configura√ß√µes
+            _podeCome√ßarBatalha = true;
         }
         if (_batalhaAlvoVisto)
         {
@@ -566,18 +540,18 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
 
         foreach (IAPersonagemBase personagem in personagens)
         {
-            personagem.ResetarEstado(); //chama a funÁ„o para resetar HP, animaÁ„o, status, etc.
+            personagem.ResetarEstado(); //chama a fun√ß√£o para resetar HP, anima√ß√£o, status, etc.
             if(personagem.controlador == ControladorDoPersonagem.PERSONAGEM_DO_JOGADOR)
             {
                 personagem.AtualizarDadosPersonagem();
             }
         }
     }
-    private void MudarEstadoDeBatalha(int indice) //funÁ„o que muda o estado de batalha
+    private void MudarEstadoDeBatalha(int indice) //fun√ß√£o que muda o estado de batalha
     {
         string opcaoSelecionada = _dropdown.options[indice].text;
 
-        if(opcaoSelecionada == "Alvo PrÛximo")
+        if(opcaoSelecionada == "Alvo Pr√≥ximo")
         {
             _batalhaAlvoVisto = false;
             primeiroAlvo = PrimeiroAlvo.ALVO_PROXIMO;
@@ -589,8 +563,73 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         }
     }
 
-    #region SimulaÁ„o de Batalha
-    private void SimularBatalha() //funÁ„o que simula a batalha
+    public void AtualizarBotoes()
+    {
+        List<IAPersonagemBase> PersonagensAtivosJogador = _gerenciadorDePersonagens.personagensAtivos;
+
+        foreach (var botao in _botoesPersonagensBatalha)
+        {
+            botao.onClick.RemoveAllListeners();
+            botao.gameObject.SetActive(false);
+        }
+
+        for (int i = PersonagensAtivosJogador.Count; i < _uiBotoesPersonagens.Length; i++)
+        {
+            Transform pai = _uiBotoesPersonagens[i].transform.parent;
+            if (pai != null)
+            {
+                pai.gameObject.SetActive(false);
+            }   
+        }
+
+        for (int i = 0; i < PersonagensAtivosJogador.Count; i++)
+        {
+            var p = PersonagensAtivosJogador[i];
+            var botao = _botoesPersonagensBatalha[i];
+
+            if (p != null && p.personagem != null)
+            {
+                switch (p.personagem.classe)
+                {
+                    case Classe.Guerreiro:
+                        _uiBotoesPersonagens[i].sprite = _spritesBotoesPersonagens[0];
+                        break;
+                    case Classe.Ladino:
+                        _uiBotoesPersonagens[i].sprite = _spritesBotoesPersonagens[1];
+                        break;
+                    case Classe.Elementalista:
+                        _uiBotoesPersonagens[i].sprite = _spritesBotoesPersonagens[2];
+                        break;
+                    case Classe.Sacerdote:
+                        _uiBotoesPersonagens[i].sprite = _spritesBotoesPersonagens[3];
+                        break;
+                }
+
+                Transform pai = _uiBotoesPersonagens[i].transform.parent;
+                if (pai != null)
+                {
+                    pai.gameObject.SetActive(true);
+                }
+
+                _uiBotoesPersonagens[i].gameObject.SetActive(true);
+                botao.gameObject.SetActive(true);
+
+                Text textoSP = botao.transform.GetChild(1).GetComponent<Text>();
+                Text textoWP = botao.transform.GetChild(2).GetComponent<Text>();
+
+                p.pontosDeHabilidadeTexto = textoSP;
+                p.textoWillPower = textoWP;
+
+                var personagemCapturado = p;
+                botao.onClick.AddListener(() => _selecaoDePersonagem.SelecionarPersonagem(personagemCapturado));
+            }
+        }
+    }
+
+
+
+    #region Simula√ß√£o de Batalha
+    private void SimularBatalha() //fun√ß√£o que simula a batalha
     {
         if (_simular)
         {
@@ -626,21 +665,21 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
                     }
                 }
 
-                //c·lculo do DPS do jogador
+                //c√°lculo do DPS do jogador
                 float dpsJogadorTotal = 0f;
                 foreach (IAPersonagemBase personagem in _personagensJogador)
                 {
                     dpsJogadorTotal += personagem._dano / personagem._velocidadeDeAtaque;
                 }
 
-                //c·lculo do DPS dos inimigos sorteados
+                //c√°lculo do DPS dos inimigos sorteados
                 float dpsInimigoTotal = 0f;
                 foreach (IAPersonagemBase inimigo in inimigosNaBatalha)
                 {
                     dpsInimigoTotal += inimigo._dano / inimigo._velocidadeDeAtaque;
                 }
 
-                //calcula chance de vitÛria
+                //calcula chance de vit√≥ria
                 float chanceDeVitoria = (dpsJogadorTotal + 2f) / (dpsJogadorTotal + dpsInimigoTotal);
                 Debug.Log(chanceDeVitoria);
 
@@ -666,7 +705,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         }
     }
 
-    public void RemoverSimulaÁ„o(int remocao) //funÁ„o que remove cada simulaÁ„o de batalha
+    public void RemoverSimula√ß√£o(int remocao) //fun√ß√£o que remove cada simula√ß√£o de batalha
     {
         if(remocao == 1)
         {
@@ -684,7 +723,7 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         } 
     }
 
-    private void SimulaÁ„oDeRecompensas() //funÁ„o que mostra a tela de recompensas do jogador ao voltar ao game enquanto o jogo estava em afk
+    private void Simula√ß√£oDeRecompensas() //fun√ß√£o que mostra a tela de recompensas do jogador ao voltar ao game enquanto o jogo estava em afk
     {
         _telaRecompensasDrop.SetActive(true);
         _textoRecompensasDrop.text = (_dropsGanhos * 5).ToString();
@@ -705,16 +744,16 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
             _botaoBatalhaContinua.image.color = Color.gray;
         }
     }
-    public void ChecarSFX(string sfx) //funÁ„o para checar quais sfx utilizar
+    public void ChecarSFX(string sfx) //fun√ß√£o para checar quais sfx utilizar
     {
         if (usarSfxs)
         {
-            if(sfx == "botao") //sfx do bot„o
+            if(sfx == "botao") //sfx do bot√£o
             {
                 _audio.clip = _botaoClip;
                 _audio.Play();
             }
-            else if(sfx == "vitoria") //sfx de vitÛria
+            else if(sfx == "vitoria") //sfx de vit√≥ria
             {
                 _audio.clip = _vitoriaClip;
                 _audio.Play();
@@ -722,11 +761,11 @@ sealed class SistemaDeBatalha : MonoBehaviour, Salvamento
         }
     }
 
-    public void DefinirFeedbackVisual(string feedback) //funÁ„o para definir quais feedbacks visuais ser„o usados
+    public void DefinirFeedbackVisual(string feedback) //fun√ß√£o para definir quais feedbacks visuais ser√£o usados
     {
-        if(feedback == "animaÁ„o") //feedback visual de animaÁ„o
+        if(feedback == "anima√ß√£o") //feedback visual de anima√ß√£o
         {
-            usarAnimaÁıes = !usarAnimaÁıes;
+            usarAnima√ß√µes = !usarAnima√ß√µes;
         }
         else if (feedback == "sfx") //feedback visual de sfx
         {

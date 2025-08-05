@@ -1,20 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GerenciadorDePersonagens : MonoBehaviour
 {
-    public List<PersonagemData> personagens = new List<PersonagemData>(); //lista de personagens criados
-
-    public IAPersonagemBase[] personagem; //personagens do jogador
-
+    public List<PersonagemData> personagens = new List<PersonagemData>();
+    public IAPersonagemBase[] personagem; //personagens fixos na cena
+    public List<IAPersonagemBase> personagensAtivos = new List<IAPersonagemBase>();
     public GerenciadorDeSlotsBatalha gerenciadorDeSlots;
-
-    public GameObject telaBatalha; //tela de batalha
-
-    [SerializeField]
-    public int _personagensSelecionados; //número de personagens selecionados à batalha
+    public GameObject telaBatalha;
+    [HideInInspector] 
+    public int _personagensSelecionados;
 
     private void Awake()
     {
@@ -25,66 +20,100 @@ public class GerenciadorDePersonagens : MonoBehaviour
         }
     }
 
-    public void SelecionarPersonagem(PersonagemData personagemBase, SlotPersonagemBatalha slot) //função que seleciona os personagens para à batalha
+    public void SelecionarPersonagem(PersonagemData personagemBase, SlotPersonagemBatalha slot)
     {
-        if (!slot.slotSelecionado && _personagensSelecionados != 3)
+        if (!slot.slotSelecionado)
         {
             int indiceLivre = EncontrarIndiceLivre();
-
             if (indiceLivre != -1)
             {
                 slot.slotSelecionado = true;
                 slot.personagemIndice = indiceLivre;
                 personagem[indiceLivre].personagem = personagemBase;
                 _personagensSelecionados++;
-                if (_personagensSelecionados >= 3)
-                {
-                    _personagensSelecionados = 3;
-                }
+
                 personagem[indiceLivre].gameObject.SetActive(true);
                 personagem[indiceLivre].ReceberDadosPersonagem();
+
+                AtualizarListaAtivos();
             }
         }
         else
         {
-            if (slot.slotSelecionado)
+            slot.slotSelecionado = false;
+            personagem[slot.personagemIndice].ResetarDadosPersonagem();
+            personagem[slot.personagemIndice].personagem = null;
+            slot.personagemIndice = -1;
+            _personagensSelecionados--;
+            if (_personagensSelecionados < 0)
             {
-                slot.slotSelecionado = false;
-                personagem[slot.personagemIndice].ResetarDadosPersonagem();
-                personagem[slot.personagemIndice].personagem = null;
-                slot.personagemIndice = -1;
-                _personagensSelecionados--;
-                if(_personagensSelecionados <= 0)
-                {
-                    _personagensSelecionados = 0;
-                }
+                _personagensSelecionados = 0;
             }
+
+            AtualizarListaAtivos();
         }
 
-        if(_personagensSelecionados == 3)
-        {
-            telaBatalha.SetActive(true);
-        }
-        else
-        {
-            telaBatalha.SetActive(false);
-        }
+        telaBatalha.SetActive(_personagensSelecionados > 0);
     }
-    private int EncontrarIndiceLivre() //encontra o índice livre dentre os personagens
+
+    private int EncontrarIndiceLivre()
     {
         for (int i = 0; i < personagem.Length; i++)
         {
-            if (personagem[i].personagem == null || personagem[i].personagem.codigoID == "" || personagem[i].personagem.codigoID == null)
-            {
+            if (personagem[i].personagem == null || string.IsNullOrEmpty(personagem[i].personagem.codigoID))
                 return i;
-            }
         }
         return -1;
     }
 
-    public void RestaurarSlotsSelecionados() //função que restaura os slots selecionados
+    private void AtualizarListaAtivos()
     {
+        personagensAtivos.Clear();
+
         SlotPersonagemBatalha[] slots = FindObjectsOfType<SlotPersonagemBatalha>(true);
+
+        foreach (var p in personagem)
+        {
+            bool estaSelecionado = false;
+
+            foreach (var slot in slots)
+            {
+                if (slot.slotSelecionado && slot.personagemIndice >= 0 && personagem[slot.personagemIndice] == p)
+                {
+                    estaSelecionado = true;
+                    break;
+                }
+            }
+
+            if (estaSelecionado && p != null && p.personagem != null)
+            {
+                personagensAtivos.Add(p);
+            }
+        }
+    }
+
+    public void RestaurarSlotsSelecionados()
+    {
+        _personagensSelecionados = 0;
+        personagensAtivos.Clear();
+
+        SlotPersonagemBatalha[] slots = FindObjectsOfType<SlotPersonagemBatalha>(true);
+        foreach (var slot in slots)
+        {
+            slot.slotSelecionado = false;
+            slot.personagemIndice = -1;
+            slot.check.SetActive(false);
+        }
+
+        foreach (var p in personagem)
+        {
+            if (p != null)
+            {
+                p.ResetarDadosPersonagem();
+                p.personagem = null;
+                p.gameObject.SetActive(false);
+            }
+        }
 
         foreach (var personagemIA in personagem)
         {
@@ -92,26 +121,30 @@ public class GerenciadorDePersonagens : MonoBehaviour
             {
                 foreach (var slot in slots)
                 {
-                    if (slot.personagemData.codigoID == personagemIA.personagem.codigoID)
+                    if (slot.personagemData != null && slot.personagemData.codigoID == personagemIA.personagem.codigoID)
                     {
                         slot.slotSelecionado = true;
                         slot.personagemIndice = EncontrarIndiceDoPersonagem(personagemIA);
+                        slot.check.SetActive(true);
+
                         _personagensSelecionados++;
-                        if (_personagensSelecionados >= 3)
+                        if (!personagensAtivos.Contains(personagemIA))
                         {
-                            _personagensSelecionados = 3;
+                            personagensAtivos.Add(personagemIA);
                         }
 
                         personagemIA.ReceberDadosPersonagem();
+                        personagemIA.gameObject.SetActive(true);
                         break;
                     }
                 }
             }
         }
+
+        telaBatalha.SetActive(_personagensSelecionados > 0);
     }
 
-
-    private int EncontrarIndiceDoPersonagem(IAPersonagemBase p) //função que encontra um índice disponível para o personagem
+    private int EncontrarIndiceDoPersonagem(IAPersonagemBase p)
     {
         for (int i = 0; i < personagem.Length; i++)
         {
@@ -122,4 +155,5 @@ public class GerenciadorDePersonagens : MonoBehaviour
         }
         return -1;
     }
+
 }

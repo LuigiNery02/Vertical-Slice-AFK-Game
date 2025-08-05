@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public enum ControladorDoPersonagem { PERSONAGEM_DO_JOGADOR, PERSONAGEM_INIMIGO } //quem controla o personagem, se é controlado pelo jogador ou pela IA inimiga
 public enum TipoDeArma { CURTA_DISTANCIA, LONGA_DISTANCIA } //características referente ao comportamento de ataque da arma do personagem, se é um ataque de curta ou longa distância
 public enum EstadoDoPersonagem { IDLE, PERSEGUINDO, ATACANDO, MORTO, MOVIMENTO_ESPECIAL, STUNADO, CONJURANDO_HABILIDADE} //estados de comportamento do personagem
-
 public enum EfeitoMarcadorDeAlvo { NENHUM, EXPOSTO, SANGRAMENTO, ATORDOADO, CORTACURA, MARCADO_PARA_EXECUCAO}
 
 public class IAPersonagemBase : MonoBehaviour
@@ -262,7 +261,9 @@ public class IAPersonagemBase : MonoBehaviour
     private Animator _animator; //animator do personagem
     private Slider _slider; //slider do hp do personagem
     public Text textoHP; //texto mostrando a atualização do hp do personagem
+    [HideInInspector]
     public Text textoWillPower; //texto mostrando a atualização do willpower do personagem
+    [HideInInspector]
     public Text pontosDeHabilidadeTexto; //texto referente aos pontos de habilidade do personagem
     private bool _usarAnimações; //variável para verificar se deve usar as animações
     private bool _usarSliders; //variável para verificar se deve usar os sliders

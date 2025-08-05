@@ -25,6 +25,10 @@ public class GerenciadorDeSlotsBatalha : MonoBehaviour
             //ativa um slot para cada personagem
             for (int i = 0; i < gerenciadirDePersonagens.personagens.Count; i++)
             {
+                if (i >= slots.Count)
+                {
+                    break; //evita erro se tiver mais personagens que slots
+                }
                 slots[i].gameObject.SetActive(true);
                 slots[i].ReceberDadosPersonagem(gerenciadirDePersonagens.personagens[i]);
             }
