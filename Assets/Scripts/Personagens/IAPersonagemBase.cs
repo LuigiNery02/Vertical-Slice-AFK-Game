@@ -236,6 +236,14 @@ public class IAPersonagemBase : MonoBehaviour
     public float multiplicadorEfeitosNegativos;
     [HideInInspector]
     public float multiplicadorEfeitosPositivosParaEfeitosNegativos;
+    [HideInInspector]
+    public bool marcado;
+    [HideInInspector]
+    public float multiplicadorDanoMarcado;
+    [HideInInspector]
+    public bool barreiraProjetil;
+    [HideInInspector]
+    public float barreiraProjetilValor;
 
     [HideInInspector]
     public bool recebeuDebuffPunhoDisciplina;
@@ -576,6 +584,10 @@ public class IAPersonagemBase : MonoBehaviour
         atravessarHit = false;
         multiplicadorBonusRecuperacaoHP = 1;
         multiplicadorBonusRecuperacaoSP = 1;
+        marcado = false;
+        multiplicadorDanoMarcado = 0;
+        barreiraProjetil = false;
+        barreiraProjetilValor = 0;
     }
 
     private void Update()
@@ -1025,6 +1037,12 @@ public class IAPersonagemBase : MonoBehaviour
                 danoMarcadoExecucao = 0;
             }
             dano *= danoMarcadoExecucao;
+        }
+
+        if (marcado)
+        {
+            float danoMarcado = dano * multiplicadorDanoMarcado;
+            dano += danoMarcado;
         }
 
         if (escudoAtivado)

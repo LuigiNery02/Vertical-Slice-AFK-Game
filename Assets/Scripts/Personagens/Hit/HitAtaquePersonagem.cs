@@ -150,10 +150,34 @@ public class HitAtaquePersonagem : MonoBehaviour
                             _personagemPai.CausarDano(alvoDoDano, 0);
                             break;
                         case TipoDeDano.DANO_RANGED:
-                            _personagemPai.CausarDano(alvoDoDano, 0);
+                            if (alvoDoDano.barreiraProjetil)
+                            {
+                                alvoDoDano.barreiraProjetilValor--;
+
+                                if(alvoDoDano.barreiraProjetilValor <= 0)
+                                {
+                                    alvoDoDano.barreiraProjetilValor = 0;
+                                }
+                            }
+                            else
+                            {
+                                _personagemPai.CausarDano(alvoDoDano, 0);
+                            }
                             break;
                         case TipoDeDano.DANO_MAGICO:
-                            _personagemPai.CausarDano(alvoDoDano, 1);
+                            if (alvoDoDano.barreiraProjetil)
+                            {
+                                alvoDoDano.barreiraProjetilValor--;
+
+                                if (alvoDoDano.barreiraProjetilValor <= 0)
+                                {
+                                    alvoDoDano.barreiraProjetilValor = 0;
+                                }
+                            }
+                            else
+                            {
+                                _personagemPai.CausarDano(alvoDoDano, 1);
+                            }
                             break;
                     }
 

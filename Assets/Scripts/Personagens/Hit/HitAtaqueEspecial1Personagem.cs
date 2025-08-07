@@ -37,10 +37,34 @@ public class HitAtaqueEspecial1Personagem : MonoBehaviour
                         alvoDoDano.SofrerDano(dano, false, _personagemPai);
                         break;
                     case TipoDeDano.DANO_RANGED:
-                        alvoDoDano.SofrerDano(dano, false, _personagemPai);
+                        if (alvoDoDano.barreiraProjetil)
+                        {
+                            alvoDoDano.barreiraProjetilValor--;
+
+                            if (alvoDoDano.barreiraProjetilValor <= 0)
+                            {
+                                alvoDoDano.barreiraProjetilValor = 0;
+                            }
+                        }
+                        else
+                        {
+                            alvoDoDano.SofrerDano(dano, false, _personagemPai);
+                        }
                         break;
                     case TipoDeDano.DANO_MAGICO:
-                        alvoDoDano.SofrerDano(dano, false, _personagemPai);
+                        if (alvoDoDano.barreiraProjetil)
+                        {
+                            alvoDoDano.barreiraProjetilValor--;
+
+                            if (alvoDoDano.barreiraProjetilValor <= 0)
+                            {
+                                alvoDoDano.barreiraProjetilValor = 0;
+                            }
+                        }
+                        else
+                        {
+                            alvoDoDano.SofrerDano(dano, false, _personagemPai);
+                        }
                         break;
                 }
             }

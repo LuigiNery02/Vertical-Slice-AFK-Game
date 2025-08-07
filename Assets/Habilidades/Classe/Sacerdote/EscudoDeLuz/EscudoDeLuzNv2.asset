@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827a49060b68efb4a86d1e6ef1aa7f77, type: 3}
+  m_Name: EscudoDeLuzNv2
+  m_EditorClassIdentifier: 
+  nome: Escudo de Luz
+  descricao: "Aplica Barreira que absorve proj\xE9teis. Dura at\xE9 absorver 12 proj\xE9teis
+    ou por 10 segundos\nElemento: Sagrado\nCast Fixo: Instant\xE2neo\nCast Vari\xE1vel:
+    Instant\xE2neo\nCusto de Mana: 60\nCooldown: 12 segundo\r"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 0
+  nivel: 2
+  spriteHabilidade: {fileID: 21300000, guid: c46d83f2b73aaa141bd5015819342d81, type: 3}
+  idHabilidade: HabilidadeEscudoDeLuz
+  habilidadeProximoNivel: {fileID: 11400000, guid: 207fa148f9f30f94693d1f68f2ea5b0c, type: 2}
+  elemento: 4
+  custoDeMana: 60
+  castFixo: 0
+  castVariavel: 0
+  tempoDeEfeito: 10
+  tempoDeRecarga: 12
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
+  barreiraProjetilValor: 12
+  vfx: {fileID: 6424583148328831481, guid: d2ffbc8b168cdf74a9dbb7c6c1cfdf2f, type: 3}
