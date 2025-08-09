@@ -161,5 +161,10 @@ public class HabilidadeAtiva : HabilidadeBase
                 }
             }
         }
+
+        if (personagem.efeitoPorHabilidadeAtivada)
+        {
+            personagem.ExecutarEfeitosDeHabilidade();
+        }
     }
 }

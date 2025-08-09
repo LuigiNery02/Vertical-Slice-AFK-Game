@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3107605fcb1bc34f8a8a2569a00e6ef, type: 3}
+  m_Name: RejuvenescerNv1
+  m_EditorClassIdentifier: 
+  nome: Rejuvenescer
+  descricao: "Cura o aliado em 50% do ATQM em 3 ticks\nElemento: Sagrado\nCast Fixo:
+    1 segundo\nCast Vari\xE1vel: Instant\xE2neo\nCusto de Mana: 60\nCooldown: 3 segundo\r"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 0
+  nivel: 1
+  spriteHabilidade: {fileID: 21300000, guid: 0ad2337320c1b5841ba3ceb24de6e91a, type: 3}
+  idHabilidade: HabilidadeRejuvenescer
+  habilidadeProximoNivel: {fileID: 11400000, guid: 758aca94c551a024ba31e1f2b97fed80, type: 2}
+  elemento: 4
+  custoDeMana: 60
+  castFixo: 1
+  castVariavel: 0
+  tempoDeEfeito: 0
+  tempoDeRecarga: 3
+  reducaoCastFixo: 0
+  reducaoCastVariavel: 0
+  multiplicadorCura: 0.5
+  numeroDeTicks: 3
+  tempoPorTick: 1
+  vfx: {fileID: 7155335147208632822, guid: 97c43495f80a3244fad1301dfafbe252, type: 3}
+  vfxAliado: {fileID: 9017484664307500583, guid: 1245b8d2997d5b34fb1637be70a7eb05, type: 3}

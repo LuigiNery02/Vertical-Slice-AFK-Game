@@ -84,6 +84,9 @@ public class IAPersonagemBase : MonoBehaviour
     public bool escudoAtivado; //define se o escudo está ativado ou não
     public float valorEscudo; //valor em % do escudo
     public GameObject escudoVfx;
+    public bool barreiraAtivada; //define se a barreira está ativada ou não
+    public GameObject barreiraVfx;
+
 
     //área referente à habilidades
     [Header("Habilidades")]
@@ -192,6 +195,15 @@ public class IAPersonagemBase : MonoBehaviour
     [HideInInspector]
     public event EfeitoPorAliadoCurado OnAliadoCuradoComEfeito;
 
+    public delegate void EfeitoPorHabilidade();
+    public EfeitoPorHabilidade efeitoPorHabilidade;
+    [HideInInspector]
+    public bool efeitoPorHabilidadeAtivada;
+    [HideInInspector]
+    public Dictionary<string, EfeitoPorHabilidade> efeitosPorHabilidades = new();
+    [HideInInspector]
+    public event EfeitoPorHabilidade OnHabilidadeComEfeito;
+
     public delegate void EfeitoPorHabilidadeAliado();
     public EfeitoPorHabilidadeAliado efeitoPorHabilidadeAliado;
     [HideInInspector]
@@ -223,7 +235,7 @@ public class IAPersonagemBase : MonoBehaviour
     public bool sangramento;
     [SerializeField]
     private GameObject _vfxSangramento;
-    //[HideInInspector]
+    [HideInInspector]
     public bool queimadura;
     [SerializeField]
     private GameObject _vfxQueimadura;
@@ -244,6 +256,7 @@ public class IAPersonagemBase : MonoBehaviour
     public bool barreiraProjetil;
     [HideInInspector]
     public float barreiraProjetilValor;
+    private int habilidadesSacerdoteAtivadas;
 
     [HideInInspector]
     public bool recebeuDebuffPunhoDisciplina;
@@ -455,6 +468,24 @@ public class IAPersonagemBase : MonoBehaviour
             habilidadePassivaArma.AtivarEfeito(this);
         }
 
+        if(personagem.classe == Classe.Sacerdote)
+        {
+            efeitoPorHabilidadeAtivada = true;
+
+            AtivarEfeitoPorHabilidade("StatusEspecialBarreira", () =>
+            {
+                habilidadesSacerdoteAtivadas++;
+
+                if(habilidadesSacerdoteAtivadas >= 2)
+                {
+                    habilidadesSacerdoteAtivadas = 0;
+
+                    barreiraAtivada = true;
+                    barreiraVfx.SetActive(true);
+                }
+            });
+        }
+
         if(controlador == ControladorDoPersonagem.PERSONAGEM_INIMIGO)
         {
             if(habilidadeAtivaClasse != null || habilidadeAtivaArma!= null)
@@ -588,6 +619,9 @@ public class IAPersonagemBase : MonoBehaviour
         multiplicadorDanoMarcado = 0;
         barreiraProjetil = false;
         barreiraProjetilValor = 0;
+        habilidadesSacerdoteAtivadas = 0;
+        efeitoPorHabilidadeAtivada = false;
+        RemoverEfeitoPorHabilidade("StatusEspecialBarreira");
     }
 
     private void Update()
@@ -1018,102 +1052,111 @@ public class IAPersonagemBase : MonoBehaviour
 
     public void SofrerDano(float dano, bool critico, IAPersonagemBase inimigo) //função para sofrer dano
     {
-        if (efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.EXPOSTO)
+        if (!barreiraAtivada)
         {
-            float danoExposto = 0.2f + multiplicadorEfeitosNegativos;
-            danoExposto -= multiplicadorEfeitosPositivosParaEfeitosNegativos;
-            if(danoExposto <= 0)
+            if (efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.EXPOSTO)
             {
-                danoExposto = 0;
+                float danoExposto = 0.2f + multiplicadorEfeitosNegativos;
+                danoExposto -= multiplicadorEfeitosPositivosParaEfeitosNegativos;
+                if (danoExposto <= 0)
+                {
+                    danoExposto = 0;
+                }
+                dano *= (1 + danoExposto);
             }
-            dano *= (1 + danoExposto);
-        }
-        else if (efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.MARCADO_PARA_EXECUCAO)
-        {
-            float danoMarcadoExecucao = 3 + multiplicadorEfeitosNegativos;
-            danoMarcadoExecucao -= multiplicadorEfeitosPositivosParaEfeitosNegativos;
-            if(danoMarcadoExecucao <= 0)
+            else if (efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.MARCADO_PARA_EXECUCAO)
             {
-                danoMarcadoExecucao = 0;
+                float danoMarcadoExecucao = 3 + multiplicadorEfeitosNegativos;
+                danoMarcadoExecucao -= multiplicadorEfeitosPositivosParaEfeitosNegativos;
+                if (danoMarcadoExecucao <= 0)
+                {
+                    danoMarcadoExecucao = 0;
+                }
+                dano *= danoMarcadoExecucao;
             }
-            dano *= danoMarcadoExecucao;
-        }
 
-        if (marcado)
-        {
-            float danoMarcado = dano * multiplicadorDanoMarcado;
-            dano += danoMarcado;
-        }
-
-        if (escudoAtivado)
-        {
-            valorEscudo -= dano;
-            if(valorEscudo <= 0)
+            if (marcado)
             {
-                valorEscudo = 0;
-                escudoAtivado = false;
-                escudoVfx.SetActive(false);
+                float danoMarcado = dano * multiplicadorDanoMarcado;
+                dano += danoMarcado;
             }
-        }
-        else
-        {
-            hpAtual -= dano; //sofre o dano
-        } 
 
-        if (_usarSliders && _slider != null)
-        {
-            //atualiza o slider e o texto de hp
-            _slider.value = hpAtual;
-            if (critico && !escudoAtivado)
+            if (escudoAtivado)
             {
-                textoHP.gameObject.SetActive(true);
-                textoHP.text = ("-" + dano + " (Crítico)");
+                valorEscudo -= dano;
+                if (valorEscudo <= 0)
+                {
+                    valorEscudo = 0;
+                    escudoAtivado = false;
+                    escudoVfx.SetActive(false);
+                }
             }
             else
             {
-                if (!escudoAtivado)
+                hpAtual -= dano; //sofre o dano
+            }
+
+            if (_usarSliders && _slider != null)
+            {
+                //atualiza o slider e o texto de hp
+                _slider.value = hpAtual;
+                if (critico && !escudoAtivado)
                 {
                     textoHP.gameObject.SetActive(true);
-                    textoHP.text = ("-" + dano);
+                    textoHP.text = ("-" + dano + " (Crítico)");
+                }
+                else
+                {
+                    if (!escudoAtivado)
+                    {
+                        textoHP.gameObject.SetActive(true);
+                        textoHP.text = ("-" + dano);
+                    }
+                }
+                StartCoroutine(DesativarTextoHP(this));
+            }
+
+            if (hpAtual <= 0)
+            {
+                hpAtual = 0;
+                medo = false;
+                VerificarComportamento("morrer");
+
+                if (inimigo != null && inimigo != this && inimigo.efeitoPorMorteCausadaAtivada)
+                {
+                    inimigo.ExecutarEfeitosDeMorteCausada();
                 }
             }
-            StartCoroutine(DesativarTextoHP(this));
-        }
-
-        if (hpAtual <= 0)
-        {
-            hpAtual = 0;
-            medo = false;
-            VerificarComportamento("morrer");
-
-            if(inimigo != null && inimigo != this && inimigo.efeitoPorMorteCausadaAtivada)
+            else
             {
-                inimigo.ExecutarEfeitosDeMorteCausada();
+                if (efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.ATORDOADO)
+                {
+                    if (!stunado)
+                    {
+                        if (tempoDeStun == 0)
+                        {
+                            if (multiplicadorEfeitosPositivosParaEfeitosNegativos != 0)
+                            {
+                                tempoDeStun = 0.25f;
+                                float tempoStun = tempoDeStun * multiplicadorEfeitosPositivosParaEfeitosNegativos;
+                                tempoDeStun -= tempoStun;
+                            }
+                            else
+                            {
+                                tempoDeStun = 0.25f;
+                            }
+                        }
+                        Stun();
+                    }
+                }
             }
         }
         else
         {
-            if(efeitoMarcadorDeAlvo == EfeitoMarcadorDeAlvo.ATORDOADO)
-            {
-                if (!stunado)
-                {
-                    if(tempoDeStun == 0)
-                    {
-                        if(multiplicadorEfeitosPositivosParaEfeitosNegativos != 0)
-                        {
-                            tempoDeStun = 0.25f;
-                            float tempoStun = tempoDeStun * multiplicadorEfeitosPositivosParaEfeitosNegativos;
-                            tempoDeStun -= tempoStun;
-                        }
-                        else
-                        {
-                            tempoDeStun = 0.25f;
-                        }
-                    }
-                    Stun();
-                }
-            }
+            barreiraAtivada = false;
+            barreiraVfx.SetActive(false);
         }
+        
     }
 
     public void ReceberHP(float cura) //função para receber hp
@@ -1662,6 +1705,31 @@ public class IAPersonagemBase : MonoBehaviour
     public void ExecutarEfeitosDeAliadoCurado()
     {
         OnAliadoCuradoComEfeito?.Invoke();
+    }
+
+    public void AtivarEfeitoPorHabilidade(string chave, EfeitoPorHabilidade efeito)
+    {
+        if (efeitosPorHabilidades.ContainsKey(chave))
+        {
+            OnHabilidadeComEfeito -= efeitosPorHabilidades[chave];
+        }
+
+        efeitosPorHabilidades[chave] = efeito;
+        OnHabilidadeComEfeito += efeito;
+    }
+
+    public void RemoverEfeitoPorHabilidade(string chave)
+    {
+        if (efeitosPorHabilidades.TryGetValue(chave, out var efeito))
+        {
+            OnHabilidadeComEfeito -= efeito;
+            efeitosPorHabilidades.Remove(chave);
+        }
+    }
+
+    public void ExecutarEfeitosDeHabilidade()
+    {
+        OnHabilidadeComEfeito?.Invoke();
     }
 
     public void AtivarEfeitoPorHabilidadeAliado(string chave, EfeitoPorHabilidadeAliado efeito)
