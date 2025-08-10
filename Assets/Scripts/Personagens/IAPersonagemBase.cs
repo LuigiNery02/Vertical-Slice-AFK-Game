@@ -257,6 +257,8 @@ public class IAPersonagemBase : MonoBehaviour
     [HideInInspector]
     public float barreiraProjetilValor;
     private int habilidadesSacerdoteAtivadas;
+    [HideInInspector]
+    public float multiplicadorBonusCura;
 
     [HideInInspector]
     public bool recebeuDebuffPunhoDisciplina;
@@ -621,6 +623,7 @@ public class IAPersonagemBase : MonoBehaviour
         barreiraProjetilValor = 0;
         habilidadesSacerdoteAtivadas = 0;
         efeitoPorHabilidadeAtivada = false;
+        multiplicadorBonusCura = 0;
         RemoverEfeitoPorHabilidade("StatusEspecialBarreira");
     }
 
@@ -1187,6 +1190,9 @@ public class IAPersonagemBase : MonoBehaviour
 
     public void CurarAliado(IAPersonagemBase personagem, float hp)
     {
+        float bonus = hp * multiplicadorBonusCura;
+        hp += bonus;
+
         personagem.ReceberHP(hp);
 
         if (efeitoPorAliadoCuradoAtivado)

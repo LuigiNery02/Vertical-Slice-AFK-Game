@@ -28,6 +28,7 @@ public class DadosHabilidadePassiva
     public Dictionary<HabilidadeAtiva, float>habilidadesBuffadas;
     public float bonusMultiplicadorRecuperacaoHP;
     public float bonusMultiplicadorRecuperacaoSP;
+    public float bonusMultiplicadorCura;
 
     public System.Action<int> eventoWillPowerLideranca;
     public System.Action<HabilidadeAtiva> eventoConjuracaoFocada;
