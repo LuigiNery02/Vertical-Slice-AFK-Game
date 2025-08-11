@@ -21,3 +21,4 @@ MonoBehaviour:
   spriteHabilidade: {fileID: 21300000, guid: 1458237dbb3c6d54f8fe9d39c0175d00, type: 3}
   idHabilidade: HabilidadeBarreiraReforcada
   habilidadeProximoNivel: {fileID: 0}
+  multiplicadorBonusCura: 2

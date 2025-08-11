@@ -18,7 +18,7 @@ public class HabilidadeFocoNv3 : HabilidadePassiva
             {
                 personagem.efeitoPorAliadoCuradoAtivado = true;
 
-                personagem.AtivarEfeitoPorAliadoCurado("FocoNv3", () =>
+                personagem.AtivarEfeitoPorAliadoCurado("FocoNv3", (IAPersonagemBase aliado, float cura) =>
                 {
                     if (CalcularProbabilidadeDeRecuperacao())
                     {

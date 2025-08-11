@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a60abba3aabe424da03ca4592d3961e, type: 3}
+  m_Name: FonteDeLuzNv2
+  m_EditorClassIdentifier: 
+  nome: Fonte de Luz
+  descricao: "Aumenta velocidade de ataque de todos aliados em 10%\r"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 1
+  nivel: 2
+  spriteHabilidade: {fileID: 21300000, guid: feb8709f10385a94095b55fe8d0f625c, type: 3}
+  idHabilidade: HabilidadeFonteDeLuz
+  habilidadeProximoNivel: {fileID: 11400000, guid: eac2261f9b32a134aaadc7c770e3bcc5, type: 2}
+  multiplicadorVelocidadeDeAtaqueAliados: 0.1

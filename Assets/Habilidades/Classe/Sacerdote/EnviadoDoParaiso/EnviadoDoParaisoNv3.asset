@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 308572afdf1f89b479999ed2afc99375, type: 3}
+  m_Name: EnviadoDoParaisoNv3
+  m_EditorClassIdentifier: 
+  nome: "Enviado do Para\xEDso"
+  descricao: "Suas habilidades de cura tamb\xE9m criam uma barreira no alvo de 20%
+    da cura oferecida\r"
+  tipoDeHabilidade: 0
+  modoDeAtivacao: 1
+  nivel: 3
+  spriteHabilidade: {fileID: 21300000, guid: 0ad2337320c1b5841ba3ceb24de6e91a, type: 3}
+  idHabilidade: HabilidadeEnviadoDoParaiso
+  habilidadeProximoNivel: {fileID: 0}
+  multiplicadorCuraEscudo: 0.2
+  vfx: {fileID: 1289543790355709915, guid: b99922c2f59b1a542bdd06ae8bee47ae, type: 3}

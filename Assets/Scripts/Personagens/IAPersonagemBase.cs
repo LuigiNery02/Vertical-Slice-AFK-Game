@@ -33,7 +33,7 @@ public class IAPersonagemBase : MonoBehaviour
     public float hpAtual; //valor atual do hp (vida) do personagem
     [HideInInspector]
     public float hpRegeneracao; //valor por segundo que o personagem recuperará de hp
-    //[HideInInspector]
+    [HideInInspector]
     public float multiplicadorBonusRecuperacaoHP = 1;
 
     //área referente ao sp (pontos de habilidade) do personagem
@@ -46,7 +46,7 @@ public class IAPersonagemBase : MonoBehaviour
     public float spRegeneracao; //valor por segundo que o personagem recuperará de sp
     [HideInInspector]
     public bool spSemCusto;
-    //[HideInInspector]
+    [HideInInspector]
     public float multiplicadorBonusRecuperacaoSP = 1;
 
     private Coroutine regeneracaoCoroutine; //coroutine de regeneração de hp e sp
@@ -186,7 +186,7 @@ public class IAPersonagemBase : MonoBehaviour
     [HideInInspector]
     public event EfeitoPorMorteCausada OnMorteCausadaComEfeito;
 
-    public delegate void EfeitoPorAliadoCurado();
+    public delegate void EfeitoPorAliadoCurado(IAPersonagemBase aliado, float cura);
     public EfeitoPorAliadoCurado efeitoPorAliadoCurado;
     [HideInInspector]
     public bool efeitoPorAliadoCuradoAtivado; //verifica se efeitos por aliados curados de habilidades estão ativados
@@ -478,7 +478,7 @@ public class IAPersonagemBase : MonoBehaviour
             {
                 habilidadesSacerdoteAtivadas++;
 
-                if(habilidadesSacerdoteAtivadas >= 2)
+                if(habilidadesSacerdoteAtivadas >= 6)
                 {
                     habilidadesSacerdoteAtivadas = 0;
 
@@ -625,6 +625,12 @@ public class IAPersonagemBase : MonoBehaviour
         efeitoPorHabilidadeAtivada = false;
         multiplicadorBonusCura = 0;
         RemoverEfeitoPorHabilidade("StatusEspecialBarreira");
+
+        if (barreiraAtivada)
+        {
+            barreiraAtivada = false;
+            barreiraVfx.SetActive(false);
+        }
     }
 
     private void Update()
@@ -1197,7 +1203,7 @@ public class IAPersonagemBase : MonoBehaviour
 
         if (efeitoPorAliadoCuradoAtivado)
         {
-            ExecutarEfeitosDeAliadoCurado();
+            ExecutarEfeitosDeAliadoCurado(personagem, hp);
         }
     }
     #endregion
@@ -1708,9 +1714,9 @@ public class IAPersonagemBase : MonoBehaviour
         }
     }
 
-    public void ExecutarEfeitosDeAliadoCurado()
+    public void ExecutarEfeitosDeAliadoCurado(IAPersonagemBase aliado, float cura)
     {
-        OnAliadoCuradoComEfeito?.Invoke();
+        OnAliadoCuradoComEfeito?.Invoke(aliado, cura);
     }
 
     public void AtivarEfeitoPorHabilidade(string chave, EfeitoPorHabilidade efeito)

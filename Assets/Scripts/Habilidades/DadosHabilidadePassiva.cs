@@ -38,8 +38,16 @@ public class DadosHabilidadePassiva
     public System.Action<HabilidadeAtiva> eventoRemocaoBuff;
     public List<System.Action<int>> eventosExternos;
 
+    public Dictionary<HabilidadeAtiva, float> cooldownsAliados;
+    public Dictionary<IAPersonagemBase, float> velocidadesDeAtaqueAliados;
+    public Dictionary<IAPersonagemBase, float> danosAliados;
+
+
     public DadosHabilidadePassiva()
     {
         alvosComBonus = new HashSet<IAPersonagemBase>();
+        cooldownsAliados = new Dictionary<HabilidadeAtiva, float>();
+        velocidadesDeAtaqueAliados = new Dictionary<IAPersonagemBase, float>();
+        danosAliados = new Dictionary<IAPersonagemBase, float>();
     }
 }

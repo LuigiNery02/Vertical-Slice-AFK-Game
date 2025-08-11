@@ -15297,6 +15297,9 @@ MonoBehaviour:
   habilidadesAtivasClasseSacerdote:
   - {fileID: 11400000, guid: 45160bec2cfb6144292dd7642acbaeab, type: 2}
   - {fileID: 11400000, guid: 6567e6231ddcbf243830aa49ad4c8b57, type: 2}
+  - {fileID: 11400000, guid: 23b894b4ec94ae3408a8d6f500927db2, type: 2}
+  - {fileID: 11400000, guid: 5fc2a5346aa93c94582ac2e49cf517e2, type: 2}
+  - {fileID: 11400000, guid: 7084fedc548b064469b715ae9a218138, type: 2}
   habilidadesAtivasEspada:
   - {fileID: 11400000, guid: 00ed042d54728d14d96bdc07ae13e4f7, type: 2}
   - {fileID: 11400000, guid: abd1d24847f8ce540a0d53d4026a3d74, type: 2}
@@ -15332,6 +15335,8 @@ MonoBehaviour:
   habilidadesPassivasClasseSacerdote:
   - {fileID: 11400000, guid: 54c75953c12686645a5dcaff6f085d21, type: 2}
   - {fileID: 11400000, guid: 17f7088ceb5ee5f4cbca06c99b0d9359, type: 2}
+  - {fileID: 11400000, guid: 3124711fb7f8e004eb1fe77d14aebd9c, type: 2}
+  - {fileID: 11400000, guid: c18ab495cd7ff944088cd0f87fd0afda, type: 2}
   habilidadesPassivasEspada:
   - {fileID: 11400000, guid: 2c28ef7c1dbe1bc48847b108662e7369, type: 2}
   - {fileID: 11400000, guid: db631b1883a25454bbb7277220e2dd50, type: 2}
