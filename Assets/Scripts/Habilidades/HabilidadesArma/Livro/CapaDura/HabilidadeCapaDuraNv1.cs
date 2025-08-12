@@ -53,13 +53,20 @@ public class HabilidadeCapaDuraNv1 : HabilidadeAtiva
                         }
                     }
 
-                    float cura = aliadoComMenorHP._dano * multiplicadorCura;
-                    personagem.CurarAliado(aliadoComMenorHP, cura);
+                    if( aliadoComMenorHP != null)
+                    {
+                        float cura = aliadoComMenorHP._dano * multiplicadorCura;
+                        personagem.CurarAliado(aliadoComMenorHP, cura);
 
-                    GameObject vfxAliadoInstanciado = GameObject.Instantiate(vfxAliado, aliadoComMenorHP.transform.position + Vector3.zero, aliadoComMenorHP.transform.rotation, aliadoComMenorHP.transform);
-                    personagem.StartCoroutine(EsperarVFXAliado(personagem, vfxAliadoInstanciado));
+                        GameObject vfxAliadoInstanciado = GameObject.Instantiate(vfxAliado, aliadoComMenorHP.transform.position + Vector3.zero, aliadoComMenorHP.transform.rotation, aliadoComMenorHP.transform);
+                        personagem.StartCoroutine(EsperarVFXAliado(personagem, vfxAliadoInstanciado));
 
-                    base.ChecarEfeitosAoAtivarHabilidade(personagem);
+                        base.ChecarEfeitosAoAtivarHabilidade(personagem);
+                    }
+                    else
+                    {
+                        RemoverEfeito(personagem);
+                    }
                 });
             }
         }

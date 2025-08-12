@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public enum ControladorDoPersonagem { PERSONAGEM_DO_JOGADOR, PERSONAGEM_INIMIGO } //quem controla o personagem, se é controlado pelo jogador ou pela IA inimiga
 public enum TipoDeArma { CURTA_DISTANCIA, LONGA_DISTANCIA } //características referente ao comportamento de ataque da arma do personagem, se é um ataque de curta ou longa distância
 public enum EstadoDoPersonagem { IDLE, PERSEGUINDO, ATACANDO, MORTO, MOVIMENTO_ESPECIAL, STUNADO, CONJURANDO_HABILIDADE} //estados de comportamento do personagem
-public enum EfeitoMarcadorDeAlvo { NENHUM, EXPOSTO, SANGRAMENTO, ATORDOADO, CORTACURA, MARCADO_PARA_EXECUCAO}
+public enum EfeitoMarcadorDeAlvo { NENHUM, EXPOSTO, SANGRAMENTO, ATORDOADO, CORTACURA, MARCADO_PARA_EXECUCAO} //efeitos dos marcadores de alvo do ladino no personagem
 
 public class IAPersonagemBase : MonoBehaviour
 {
@@ -34,7 +34,7 @@ public class IAPersonagemBase : MonoBehaviour
     [HideInInspector]
     public float hpRegeneracao; //valor por segundo que o personagem recuperará de hp
     [HideInInspector]
-    public float multiplicadorBonusRecuperacaoHP = 1;
+    public float multiplicadorBonusRecuperacaoHP = 1; //valor multiplicado do bonus de recuperação do hp
 
     //área referente ao sp (pontos de habilidade) do personagem
     [Header("SP")]
@@ -45,9 +45,9 @@ public class IAPersonagemBase : MonoBehaviour
     [HideInInspector]
     public float spRegeneracao; //valor por segundo que o personagem recuperará de sp
     [HideInInspector]
-    public bool spSemCusto;
+    public bool spSemCusto; //verifica se o personagem não deve gastar sp
     [HideInInspector]
-    public float multiplicadorBonusRecuperacaoSP = 1;
+    public float multiplicadorBonusRecuperacaoSP = 1; //valor multiplicado do bonus de recuperação do sp
 
     private Coroutine regeneracaoCoroutine; //coroutine de regeneração de hp e sp
 
@@ -55,16 +55,18 @@ public class IAPersonagemBase : MonoBehaviour
     [Header("Ataque")]
     [HideInInspector]
     public float precisao; //precisão do personagem
-    //[HideInInspector]
+    [HideInInspector]
     public float _dano; //valor do dano do ataque do personagem
-    //[HideInInspector]
+    [HideInInspector]
     public float _velocidadeDeAtaque; //valor da velocidade de ataque do personagem
     private float _cooldownAtual = 0f; //tempo atual para o personagem poder atacar novamente
     [HideInInspector]
     public float esquiva; //valor da esquiva do personagem
     private bool _podeAtacar; //variável que verifica se o personagem pode atacar
-    public float chanceCritico;
-    public float multiplicadorCritico;
+    [HideInInspector]
+    public float chanceCritico; //valor da probabilidade de crítico
+    [HideInInspector]
+    public float multiplicadorCritico; //valor multiplicado do multiplicador de crítico
 
     //área referente às definições do personagem de longa distancia
     [Header("Definições Longa Distância")]
@@ -72,53 +74,80 @@ public class IAPersonagemBase : MonoBehaviour
 
     //área referente ao movimento do personagem
     [Header("Movimento")]
+    [HideInInspector]
     public float _velocidade = 1; //valor da velocidade de movimento do personagem
 
     //área referente à defesa do personagem
     [Header("Defesa")]
+    [HideInInspector]
     public float defesa; //defesa do personagem
+    [HideInInspector]
     public float defesaMagica; //defesa mágica do personagem
 
     //área referente ao escudo do personagem
     [Header("Escudo")]
+    [HideInInspector]
     public bool escudoAtivado; //define se o escudo está ativado ou não
+    [HideInInspector]
     public float valorEscudo; //valor em % do escudo
-    public GameObject escudoVfx;
-    public bool barreiraAtivada; //define se a barreira está ativada ou não
-    public GameObject barreiraVfx;
-
-
+    
+    
     //área referente à habilidades
     [Header("Habilidades")]
-    public int willPower;
-    public int marcadoresDeAlvo;
-    public int cargasDeGelo;
-    public int cargasDeFogo;
-    public int cargasDeRaio;
-    public EfeitoMarcadorDeAlvo efeitoMarcadorDeAlvo;
-    //[HideInInspector]
     public HabilidadeAtiva habilidadeAtivaClasse; //habilidade ativa de classe do personagem
-    //[HideInInspector]
     public HabilidadeAtiva habilidadeAtivaArma; //habilidade ativa de arma do personagem
-    //[HideInInspector]
     public HabilidadePassiva habilidadePassivaClasse; //habilidade passiva de classe do personagem
-    //[HideInInspector]
     public HabilidadePassiva habilidadePassivaArma; //habilidade passiva de arma do personagem
-    public bool podeAtivarEfeitoHabilidadeAtivaClasse = false; //variável que determina se pode ativar ou não o efeito da habilidade ativa de classe
-    public bool podeAtivarEfeitoHabilidadeAtivaArma = false; //variável que determina se pode ativar ou não o efeito da habilidade ativa de arma
-    public bool podeAtivarEfeitoHabilidadePassivaClasse = false; //variável que determina se pode ativar ou não o efeito da habilidade passiva de classe
-    public bool podeAtivarEfeitoHabilidadePassivaArma = false; //variável que determina se pode ativar ou não o efeito da habilidade passiva de arma
-    public Dictionary<HabilidadePassiva, DadosHabilidadePassiva> dadosDasHabilidadesPassivas = new();
-    public GameObject vfxHabilidadeAtivaClasse;
-    public GameObject vfxHabilidadeAtivaArma;
-    public GameObject vfxHabilidadePassivaClasse;
-    public GameObject vfxHabilidadePassivaArma;
     [HideInInspector]
-    public bool executandoHabilidadeAtiva;
+    public bool podeAtivarEfeitoHabilidadeAtivaClasse = false; //variável que determina se pode ativar ou não o efeito da habilidade ativa de classe
+    [HideInInspector]
+    public bool podeAtivarEfeitoHabilidadeAtivaArma = false; //variável que determina se pode ativar ou não o efeito da habilidade ativa de arma
+    [HideInInspector]
+    public bool podeAtivarEfeitoHabilidadePassivaClasse = false; //variável que determina se pode ativar ou não o efeito da habilidade passiva de classe
+    [HideInInspector]
+    public bool podeAtivarEfeitoHabilidadePassivaArma = false; //variável que determina se pode ativar ou não o efeito da habilidade passiva de arma
+    public Dictionary<HabilidadePassiva, DadosHabilidadePassiva> dadosDasHabilidadesPassivas = new(); //dados das habilidades passivas
+    [HideInInspector]
+    public bool executandoHabilidadeAtiva; //verifica se o personagem está executando uma habilidade ativa
+    [HideInInspector]
+    public string movimentoEspecial; //nome do movimento especial que o personagem executará
+    [HideInInspector]
+    public bool executandoMovimentoEspecial; //variável para verificar se o personagem está executando o movimento especial
+
+    //área referente aos status especiais de cada classe específica
+    [Header("Status Especiais")]
+    [HideInInspector]
+    public int willPower; //valor de willpower do personagem guerreiro
+    [HideInInspector]
+    public int marcadoresDeAlvo; //valor dos marcadores de alvo no personagem
+    [HideInInspector]
+    public EfeitoMarcadorDeAlvo efeitoMarcadorDeAlvo;
+    [HideInInspector]
+    public int cargasDeGelo; //valor de cargas de gelo do personagem elementalista
+    [HideInInspector]
+    public int cargasDeFogo; //valor de cargas de fogo do personagem elementalista
+    [HideInInspector]
+    public int cargasDeRaio; //valor de cargas de raio do personagem elementalista
+    private int habilidadesSacerdoteAtivadas; //valor do numero de habilidades ativadas do personagem (apenas se for da classe sacerdote)
+    [HideInInspector]
+    public bool barreiraAtivada; //define se a barreira está ativada ou não
 
     //Área referente às animações
     [Header("Animação")]
     public RuntimeAnimatorController[] controllerAnimatorArma; //controller animator referente à arma do personagem
+
+    //Área referente aos vfx
+    [Header("VFX")]
+    public GameObject vfxHabilidadeAtivaClasse; //vfx da habilidade ativa de classe
+    public GameObject vfxHabilidadeAtivaArma; //vfx da habilidade ativa de arma
+    public GameObject vfxHabilidadePassivaClasse; //vfx da habilidade passiva de classe
+    public GameObject vfxHabilidadePassivaArma; //vfx da habilidade passiva de arma
+    public GameObject escudoVfx; //vfx do escudo
+    public GameObject barreiraVfx; //vfx da barreira
+    [SerializeField]
+    private GameObject _vfxSangramento; //vfx de sangramento do personagem
+    [SerializeField]
+    private GameObject _vfxQueimadura; //vfx de queimadura do personagem
 
     //Área referente aos sfx
     [Header("SFX")]
@@ -130,6 +159,7 @@ public class IAPersonagemBase : MonoBehaviour
     [SerializeField]
     public AudioClip _habilidadeSFX; //áudio sfx da habilidade
 
+    //Área referente à variáveis gerais
     [HideInInspector]
     public int id; //variável para verificar o id do personagem
     [HideInInspector]
@@ -145,10 +175,14 @@ public class IAPersonagemBase : MonoBehaviour
     [HideInInspector]
     public Quaternion rotacaoInicial; //rotação inicial do personagem
     [HideInInspector]
-    public bool executandoMovimentoEspecial; //variável para verificar se o personagem está executando o movimento especial
+    public bool conjurandoHabilidade; //verifica se o personagem está conjurando uma habilidade
     [HideInInspector]
-    public string movimentoEspecial;
+    public float tempoDeCast; //valor do tempo de cast da habilidade sendo conjurada pelo personagem
+    [HideInInspector]
+    public int habilidadeSendoConjurada; //índice da habilidade sendo conjurada pelo personagem
+    private bool atualizandoDados = false; //verifica se os dados do personagem estão sendo atualizados
 
+    //Área referente aos efeitos do personagem
     //função que é ativada quando há um efeito por ataque
     public delegate void EfeitoPorAtaque(bool acerto);
     public EfeitoPorAtaque efeitoPorAtaque;
@@ -159,6 +193,7 @@ public class IAPersonagemBase : MonoBehaviour
     [HideInInspector]
     public event EfeitoPorAtaque OnAtaqueComEfeito;
 
+    //função que é ativada quando há um efeito por ataque recebido
     public delegate void EfeitoPorAtaqueRecebido(bool acerto);
     public EfeitoPorAtaqueRecebido efeitoPorAtaqueRecebido;
     [HideInInspector]
@@ -168,6 +203,7 @@ public class IAPersonagemBase : MonoBehaviour
     [HideInInspector]
     public event EfeitoPorAtaqueRecebido OnAtaqueRecebidoComEfeito;
 
+    //função que é ativada quando há um efeito por dano causado
     public delegate void EfeitoPorDanoCausado();
     public EfeitoPorDanoCausado efeitoPorDanoCausado;
     [HideInInspector]
@@ -177,6 +213,7 @@ public class IAPersonagemBase : MonoBehaviour
     [HideInInspector]
     public event EfeitoPorDanoCausado OnDanoCausadoComEfeito;
 
+    //função que é ativada quando há um efeito por morte causada
     public delegate void EfeitoPorMorteCausada();
     public EfeitoPorMorteCausada efeitoPorMorteCausada;
     [HideInInspector]
@@ -186,6 +223,7 @@ public class IAPersonagemBase : MonoBehaviour
     [HideInInspector]
     public event EfeitoPorMorteCausada OnMorteCausadaComEfeito;
 
+    //função que é ativada quando há um efeito de curar aliado
     public delegate void EfeitoPorAliadoCurado(IAPersonagemBase aliado, float cura);
     public EfeitoPorAliadoCurado efeitoPorAliadoCurado;
     [HideInInspector]
@@ -195,90 +233,77 @@ public class IAPersonagemBase : MonoBehaviour
     [HideInInspector]
     public event EfeitoPorAliadoCurado OnAliadoCuradoComEfeito;
 
+    //função que é ativada quando há um efeito por habilidade ativada
     public delegate void EfeitoPorHabilidade();
     public EfeitoPorHabilidade efeitoPorHabilidade;
     [HideInInspector]
-    public bool efeitoPorHabilidadeAtivada;
+    public bool efeitoPorHabilidadeAtivada; //verifica se efeitos por habilidades ativadas estão ativados
     [HideInInspector]
     public Dictionary<string, EfeitoPorHabilidade> efeitosPorHabilidades = new();
     [HideInInspector]
     public event EfeitoPorHabilidade OnHabilidadeComEfeito;
 
+    //função que é ativada quando há um efeito por habilidade de aliado ativada
     public delegate void EfeitoPorHabilidadeAliado();
     public EfeitoPorHabilidadeAliado efeitoPorHabilidadeAliado;
     [HideInInspector]
-    public bool efeitoPorHabilidadeAliadoAtivado;
+    public bool efeitoPorHabilidadeAliadoAtivado; //verifica se efeitos por habilidades de aliados ativadas estão ativados
     [HideInInspector]
     public Dictionary<string, EfeitoPorHabilidadeAliado> efeitosPorHabilidadesAliados = new();
     [HideInInspector]
     public event EfeitoPorHabilidadeAliado OnHabilidadeAliadoComEfeito;
 
-    public event Action<int> aoGastarWillPower;
-    public event Action<int> aoReceberWillPower;
+    public event Action<int> aoGastarWillPower; //action ao gastar willpower
+    public event Action<int> aoReceberWillPower; //action ao receber willpower
 
-    public event Action<HabilidadeAtiva> aoConjurarHabilidade;
+    public event Action<HabilidadeAtiva> aoConjurarHabilidade; //action ao terminar conjuração da habilidade
 
     [HideInInspector]
-    public bool stunado;
+    public bool stunado; //verifica se o personagem está com efeito de stun
     [HideInInspector]
-    public float tempoDeStun;
+    public float tempoDeStun; //tempo de stun do personagem
     public HashSet<IAPersonagemBase> bonusStunAplicado = new HashSet<IAPersonagemBase>();
     [HideInInspector]
-    public bool ataqueDiminuido;
+    public bool ataqueDiminuido; //verifica se o personagem está com efeito de ataque diminuido
     [HideInInspector]
-    public bool imuneAMagias;
+    public bool imuneAMagias; //verifica se o personagem está com efeito imune à magias
     [HideInInspector]
-    public bool imuneAStun;
+    public bool imuneAStun; //verifica se o personagem está com efeito imune à stun
     [HideInInspector]
-    public bool imuneAKnockback;
+    public bool imuneAKnockback; //verifica se o personagem está com efeito imune à knockback
     [HideInInspector]
-    public bool sangramento;
-    [SerializeField]
-    private GameObject _vfxSangramento;
+    public bool sangramento; //verifica se o personagem está com efeito de sangramento
     [HideInInspector]
-    public bool queimadura;
-    [SerializeField]
-    private GameObject _vfxQueimadura;
-    private Coroutine queimaduraCoroutine;
+    public bool queimadura; //verifica se o personagem está com efeito de queimadura
+    private Coroutine queimaduraCoroutine; //coroutine de queimadura
     [HideInInspector]
-    public bool medo;
+    public bool medo; //verifica se o personagem está com efeito de medo
     [HideInInspector]
-    public float reducaoDanoMedo;
+    public float reducaoDanoMedo; //valor da redução do dano causado por conta do efeito de medo
     [HideInInspector]
-    public float multiplicadorEfeitosNegativos;
+    public float multiplicadorEfeitosNegativos; //valor do multiplicador de efeitos negativos
     [HideInInspector]
     public float multiplicadorEfeitosPositivosParaEfeitosNegativos;
     [HideInInspector]
-    public bool marcado;
+    public bool marcado; //verifica se o personagem está marcado
     [HideInInspector]
-    public float multiplicadorDanoMarcado;
+    public float multiplicadorDanoMarcado; //valor do multiplicador do dano por efeito marcado
     [HideInInspector]
-    public bool barreiraProjetil;
+    public bool barreiraProjetil; //verifica se o personagem está com barreira que defende projéteis
     [HideInInspector]
-    public float barreiraProjetilValor;
-    private int habilidadesSacerdoteAtivadas;
+    public float barreiraProjetilValor; //valor da barreira que defende projéteis
     [HideInInspector]
-    public float multiplicadorBonusCura;
-
+    public float multiplicadorBonusCura; //valor do multipliacador da cura do personagem
     [HideInInspector]
-    public bool recebeuDebuffPunhoDisciplina;
+    public bool recebeuDebuffPunhoDisciplina; //verifica se o personagem está com efeito de debuff da habilidade "punho da disciplina"
     [HideInInspector]
-    public bool rebaterHit;
+    public bool rebaterHit; //verifica se o personagem está com efeito de rebater hit
     [HideInInspector]
-    public int numeroDeRebatesDoHit;
+    public int numeroDeRebatesDoHit; //valor do número de rebates de hit que o personagem pode utilizar
     [HideInInspector]
-    public int rebatesRestantesFlechaEstatica;
+    public int rebatesRestantesFlechaEstatica; //valor do numero de rebates restantes referente à habilidade flecha estática
     [HideInInspector]
-    public bool atravessarHit;
-
-    [HideInInspector]
-    public bool conjurandoHabilidade;
-    [HideInInspector]
-    public float tempoDeCast;
-    [HideInInspector]
-    public int habilidadeSendoConjurada;
-
-    private bool atualizandoDados = false;
+    public bool atravessarHit; //verifica se o personagem está com efeito de atravessar hit
 
     //Área de feedback visuais
     private Animator _animator; //animator do personagem
@@ -592,6 +617,7 @@ public class IAPersonagemBase : MonoBehaviour
             _animator.Rebind();
         }
 
+        //reseta todos os efeitos do personagem
         willPower = 0;
         marcadoresDeAlvo = 0;
         cargasDeGelo = 0;
@@ -625,6 +651,12 @@ public class IAPersonagemBase : MonoBehaviour
         efeitoPorHabilidadeAtivada = false;
         multiplicadorBonusCura = 0;
         RemoverEfeitoPorHabilidade("StatusEspecialBarreira");
+
+        if (escudoAtivado)
+        {
+            escudoAtivado = false;
+            escudoVfx.SetActive(false);
+        }
 
         if (barreiraAtivada)
         {
@@ -1249,6 +1281,26 @@ public class IAPersonagemBase : MonoBehaviour
         {
             StopCoroutine(regeneracaoCoroutine);
             regeneracaoCoroutine = null;
+        }
+
+        if(habilidadeAtivaClasse != null)
+        {
+            habilidadeAtivaClasse.RemoverEfeito(this);
+        }
+
+        if (habilidadeAtivaArma != null)
+        {
+            habilidadeAtivaArma.RemoverEfeito(this);
+        }
+
+        if (habilidadePassivaClasse != null)
+        {
+            habilidadePassivaClasse.RemoverEfeito(this);
+        }
+
+        if (habilidadePassivaArma != null)
+        {
+            habilidadePassivaArma.RemoverEfeito(this);
         }
 
         //se remove do time em que faz parte
