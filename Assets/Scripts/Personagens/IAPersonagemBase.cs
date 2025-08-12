@@ -1283,24 +1283,9 @@ public class IAPersonagemBase : MonoBehaviour
             regeneracaoCoroutine = null;
         }
 
-        if(habilidadeAtivaClasse != null)
+        if (conjurandoHabilidade)
         {
-            habilidadeAtivaClasse.RemoverEfeito(this);
-        }
-
-        if (habilidadeAtivaArma != null)
-        {
-            habilidadeAtivaArma.RemoverEfeito(this);
-        }
-
-        if (habilidadePassivaClasse != null)
-        {
-            habilidadePassivaClasse.RemoverEfeito(this);
-        }
-
-        if (habilidadePassivaArma != null)
-        {
-            habilidadePassivaArma.RemoverEfeito(this);
+            CancelarHabilidade();
         }
 
         //se remove do time em que faz parte
@@ -1361,10 +1346,13 @@ public class IAPersonagemBase : MonoBehaviour
     {
         conjurandoHabilidade = false;
         habilidadeSendoConjurada = 0;
-        _comportamento = EstadoDoPersonagem.IDLE;
-        _animator.ResetTrigger("Cast");
-        _animator.SetTrigger("Idle");
-        VerificarComportamento("selecionarAlvo");
+        if(_comportamento != EstadoDoPersonagem.MORTO)
+        {
+            _comportamento = EstadoDoPersonagem.IDLE;
+            _animator.ResetTrigger("Cast");
+            _animator.SetTrigger("Idle");
+            VerificarComportamento("selecionarAlvo");
+        }
     }
 
     public void ConjurarHabilidadeComCallback(float tempoDeCast, int idHabilidade, System.Action aoConcluir)
